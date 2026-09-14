@@ -194,57 +194,103 @@
 <!-- Modal Checkout Pass -->
 <div class="c-modal" id="passCheckoutModal" role="dialog" aria-hidden="true">
   <div class="c-modal__backdrop" data-close-modal="passCheckoutModal"></div>
-  <div class="c-modal__dialog" style="max-width: 540px;">
-    <div class="c-modal__header">
-      <h3 style="font-size: 1.25rem; font-family: var(--font-heading); color: var(--clr-dark-900); display: flex; align-items: center; gap: 8px;">
-        <i class="fi fi-rr-shopping-bag" style="color: var(--clr-sea-600);"></i> Finaliser ma Réservation
-      </h3>
-      <button class="c-modal__close" data-close-modal="passCheckoutModal">&times;</button>
+  <div class="c-modal__dialog" style="max-width: 560px; border-radius: 24px; overflow: hidden; border: 1px solid rgba(245, 158, 11, 0.3); box-shadow: 0 25px 50px rgba(0, 0, 0, 0.35);">
+    
+    <!-- Premium Modal Header -->
+    <div style="background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); color: #fff; padding: 1.75rem 2rem 1.5rem 2rem; border-bottom: 1px solid rgba(255, 255, 255, 0.1); position: relative;">
+      <div style="display: flex; align-items: center; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="width: 44px; height: 44px; border-radius: 14px; background: rgba(245, 158, 11, 0.18); border: 1px solid #F59E0B; display: flex; align-items: center; justify-content: center; font-size: 1.35rem; color: #F59E0B;">
+            <i class="fi fi-rr-shopping-bag"></i>
+          </div>
+          <div>
+            <h3 style="font-size: 1.35rem; font-family: var(--font-heading); color: #FFFFFF; font-weight: 800; margin: 0; line-height: 1.2;">
+              Finaliser ma Réservation
+            </h3>
+            <span style="font-size: 0.82rem; color: var(--clr-sand-500); display: block; margin-top: 3px;">
+              Sécurisez votre Pass Séjour Djerba & vos Activités 2026
+            </span>
+          </div>
+        </div>
+        <button class="c-modal__close" data-close-modal="passCheckoutModal" style="color: #94A3B8; font-size: 1.6rem; background: rgba(255,255,255,0.06); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; transition: all 0.2s;">&times;</button>
+      </div>
     </div>
 
-    <form id="passCheckoutForm" class="c-modal__body" style="padding: 1.5rem;">
-      <div id="checkoutFormError" style="color: #EF4444; font-size: 0.85rem; margin-bottom: 1rem; font-weight: 600;"></div>
+    <form id="passCheckoutForm" class="c-modal__body" style="padding: 1.75rem 2rem 2rem 2rem; background: #FFFFFF;">
+      <div id="checkoutFormError" style="color: #EF4444; font-size: 0.88rem; margin-bottom: 1rem; font-weight: 700; background: #FEF2F2; padding: 10px 14px; border-radius: 10px; border: 1px solid #FCA5A5; display: none;"></div>
 
       <!-- Payment Mode Toggle -->
-      <label style="display: block; font-size: 0.88rem; font-weight: 700; color: var(--clr-dark-900); margin-bottom: 0.5rem;">
-        Choisissez votre formule de paiement :
-      </label>
-      <div class="c-payment-mode-grid">
-        <div class="c-payment-mode-card active" data-mode="full">
-          <div style="font-weight: 700; color: var(--clr-sea-900); font-size: 0.95rem;">Paiement Intégral</div>
-          <div style="font-size: 0.75rem; color: var(--clr-gray-500); margin-top: 2px;">Remise maximale appliquée</div>
-        </div>
-        <div class="c-payment-mode-card" data-mode="deposit">
-          <div style="font-weight: 700; color: var(--clr-sea-900); font-size: 0.95rem;">Acompte 30%</div>
-          <div style="font-size: 0.75rem; color: var(--clr-gray-500); margin-top: 2px;">Bloque les places, solde sur place</div>
+      <div style="margin-bottom: 1.5rem;">
+        <label style="display: flex; align-items: center; justify-content: space-between; font-size: 0.9rem; font-weight: 700; color: var(--clr-dark-900); margin-bottom: 0.75rem;">
+          <span>Formule de Règlement :</span>
+          <span style="font-size: 0.78rem; color: #10B981; font-weight: 700;"><i class="fi fi-rr-shield-check"></i> Sans Frais Cachés</span>
+        </label>
+        
+        <div class="c-payment-mode-grid">
+          <div class="c-payment-mode-card active" data-mode="full">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+              <div style="font-weight: 800; color: var(--clr-sea-900); font-size: 0.98rem;">Paiement Intégral</div>
+              <i class="fi fi-rr-check-circle" style="color: #10B981; font-size: 1.1rem;"></i>
+            </div>
+            <div style="font-size: 0.78rem; color: var(--clr-gray-500); line-height: 1.3;">Remise maximale appliquée (-10% à -15%)</div>
+          </div>
+          
+          <div class="c-payment-mode-card" data-mode="deposit">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+              <div style="font-weight: 800; color: var(--clr-sea-900); font-size: 0.98rem;">Acompte 30%</div>
+              <i class="fi fi-rr-check-circle" style="color: var(--clr-sea-600); font-size: 1.1rem; opacity: 0.4;"></i>
+            </div>
+            <div style="font-size: 0.78rem; color: var(--clr-gray-500); line-height: 1.3;">Bloque vos dates, solde sur place à Djerba</div>
+          </div>
         </div>
       </div>
 
       <!-- Contact Fields -->
-      <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
+      <div style="display: flex; flex-direction: column; gap: 1.1rem; margin-top: 1rem;">
         <div>
-          <label for="clientName" style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 4px; color: var(--clr-dark-800);">Prénom & Nom</label>
-          <input type="text" id="clientName" required class="input" placeholder="Ex: Thomas Dubois" style="width: 100%;">
+          <label for="clientName" style="display: block; font-size: 0.88rem; font-weight: 700; margin-bottom: 6px; color: var(--clr-dark-900);">
+            <i class="fi fi-rr-user" style="color: var(--clr-sea-600); margin-right: 4px;"></i> Prénom & Nom du Voyageur
+          </label>
+          <input type="text" id="clientName" required class="input" placeholder="Ex: Thomas Dubois" style="width: 100%; padding: 0.8rem 1rem; border-radius: 12px; border: 1px solid #CBD5E1; font-size: 0.95rem; outline: none; transition: border-color 0.2s;">
         </div>
+        
         <div>
-          <label for="clientEmail" style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 4px; color: var(--clr-dark-800);">Adresse Email (pour vos vouchers)</label>
-          <input type="email" id="clientEmail" required class="input" placeholder="thomas@example.com" style="width: 100%;">
+          <label for="clientEmail" style="display: block; font-size: 0.88rem; font-weight: 700; margin-bottom: 6px; color: var(--clr-dark-900);">
+            <i class="fi fi-rr-envelope" style="color: var(--clr-sea-600); margin-right: 4px;"></i> Adresse Email (pour vos vouchers & accès planning)
+          </label>
+          <input type="email" id="clientEmail" required class="input" placeholder="thomas@example.com" style="width: 100%; padding: 0.8rem 1rem; border-radius: 12px; border: 1px solid #CBD5E1; font-size: 0.95rem; outline: none; transition: border-color 0.2s;">
         </div>
+        
         <div>
-          <label for="clientPhone" style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 4px; color: var(--clr-dark-800);">Numéro Téléphone / WhatsApp</label>
-          <input type="tel" id="clientPhone" class="input" placeholder="+33 6 12 34 56 78 (pour le chauffeur)" style="width: 100%;">
+          <label for="clientPhone" style="display: block; font-size: 0.88rem; font-weight: 700; margin-bottom: 6px; color: var(--clr-dark-900);">
+            <i class="fi fi-rr-phone-call" style="color: var(--clr-sea-600); margin-right: 4px;"></i> Téléphone / WhatsApp (pour le chauffeur navette)
+          </label>
+          <input type="tel" id="clientPhone" class="input" placeholder="+33 6 12 34 56 78" style="width: 100%; padding: 0.8rem 1rem; border-radius: 12px; border: 1px solid #CBD5E1; font-size: 0.95rem; outline: none; transition: border-color 0.2s;">
         </div>
       </div>
 
-      <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 0.85rem; margin-top: 1.25rem; font-size: 0.82rem; color: var(--clr-gray-500); line-height: 1.4;">
-        <i class="fi fi-rr-info" style="color: var(--clr-sea-600);"></i> <strong>Étape suivante :</strong> Dès validation, vous accédez directement à votre planning pour choisir la date et l'heure de chacune de vos activités et renseigner votre vol.
+      <!-- Planning Explanation Box -->
+      <div style="background: linear-gradient(135deg, rgba(0, 119, 182, 0.06) 0%, rgba(16, 185, 129, 0.06) 100%); border: 1px solid rgba(0, 119, 182, 0.2); border-radius: 14px; padding: 1rem; margin-top: 1.5rem; font-size: 0.85rem; color: var(--clr-dark-800); line-height: 1.5;">
+        <div style="font-weight: 700; color: var(--clr-sea-900); margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+          <i class="fi fi-rr-calendar-clock" style="color: var(--clr-sea-600);"></i> Comment fonctionne votre réservation ?
+        </div>
+        Dès validation du règlement, vous êtes automatiquement redirigé vers votre <strong>Planning Personnalisé</strong> pour choisir la date et l'heure exacte de chacune de vos activités et saisir votre numéro de vol DJE.
       </div>
 
-      <div style="margin-top: 1.5rem; display: flex; justify-content: flex-end; gap: 0.75rem;">
-        <button type="button" class="c-button c-button--outline" data-close-modal="passCheckoutModal">Annuler</button>
-        <button type="submit" class="c-button c-button--primary" id="submitPassOrderBtn">
-          <i class="fi fi-rr-lock"></i> Valider & Bloquer mon Tarif
+      <!-- Action Buttons -->
+      <div style="margin-top: 1.75rem; display: flex; justify-content: flex-end; align-items: center; gap: 0.85rem; flex-wrap: wrap;">
+        <button type="button" class="c-button c-button--outline" data-close-modal="passCheckoutModal" style="padding: 0.8rem 1.4rem; border-radius: 12px; font-weight: 600;">
+          Annuler
         </button>
+        <button type="submit" class="c-button c-button--primary" id="submitPassOrderBtn" style="padding: 0.85rem 1.75rem; border-radius: 12px; font-weight: 700; font-size: 0.98rem; box-shadow: 0 6px 20px rgba(0, 119, 182, 0.3);">
+          <i class="fi fi-rr-lock"></i> Valider & Régler via Stripe
+        </button>
+      </div>
+
+      <div style="text-align: center; margin-top: 1rem; font-size: 0.78rem; color: #94A3B8; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 12px;">
+        <span><i class="fi fi-rr-lock" style="color: #10B981;"></i> Cryptage SSL 256-bit</span>
+        <span>•</span>
+        <span><i class="fi fi-rr-shield-check" style="color: #0077B6;"></i> Annulation Gratuite 24h</span>
       </div>
     </form>
   </div>
