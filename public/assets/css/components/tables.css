@@ -1,0 +1,40 @@
+.c-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+}
+
+.c-table th, .c-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--clr-sand-200);
+}
+
+.c-table th {
+  background: var(--clr-sand-200);
+  font-family: var(--font-heading);
+}
+
+.c-pagination {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.c-pagination__button {
+  background: var(--clr-sand-200);
+  border: none;
+  padding: 0.5rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.c-pagination__button.is-active {
+  background: var(--clr-sea-600);
+  color: #fff;
+}
+PHP,Description:

@@ -1,0 +1,35 @@
+.c-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.c-navbar__logo {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--clr-sea-900);
+}
+
+.c-navbar__menu {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+}
+
+.c-navbar__link {
+  font-weight: 500;
+  color: var(--clr-dark-900);
+}
+
+.c-navbar__link:hover {
+  color: var(--clr-sea-600);
+}
+PHP,Description:

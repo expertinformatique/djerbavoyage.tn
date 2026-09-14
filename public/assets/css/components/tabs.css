@@ -1,0 +1,33 @@
+.c-tabs__header {
+  display: flex;
+  gap: 1rem;
+  border-bottom: 2px solid var(--clr-sand-200);
+  margin-bottom: 1.5rem;
+}
+
+.c-tabs__button {
+  background: none;
+  border: none;
+  padding: 0.75rem 1rem;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--clr-dark-800);
+  border-bottom: 3px solid transparent;
+  transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+.c-tabs__button.is-active {
+  color: var(--clr-sea-600);
+  border-bottom-color: var(--clr-sea-600);
+}
+
+.c-tabs__content {
+  display: none;
+}
+
+.c-tabs__content.is-active {
+  display: block;
+  animation: fadeInUp 0.4s ease;
+}
+PHP,Description:

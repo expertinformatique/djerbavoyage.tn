@@ -1,0 +1,28 @@
+:root {
+  --clr-sand-100: #FBF8F3;
+  --clr-sand-200: #F4ECE1;
+  --clr-sand-500: #D8C3A5;
+  
+  --clr-sea-400: #00B4D8;
+  --clr-sea-600: #0077B6;
+  --clr-sea-900: #03045E;
+
+  --clr-terracotta-500: #E07A5F;
+  --clr-terracotta-600: #C85A3C;
+
+  --clr-dark-900: #0F172A;
+  --clr-dark-800: #1E293B;
+
+  --font-heading: 'Plus Jakarta Sans', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  --shadow-soft: 0 10px 30px rgba(15, 23, 42, 0.05);
+  --shadow-hover: 0 20px 40px rgba(0, 119, 182, 0.12);
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-blur: blur(16px);
+
+  --transition-smooth: cubic-bezier(0.16, 1, 0.3, 1) 0.4s;
+  --radius-card: 16px;
+  --radius-pill: 999px;
+}
+PHP,Description:
