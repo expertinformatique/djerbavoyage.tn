@@ -20,4 +20,3 @@ export class ModalManager {
     this.activeModals = this.activeModals.filter(m => m !== modal);
   }
 }
-PHP,Description:

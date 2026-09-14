@@ -22,6 +22,13 @@ class PdoOrderRepository implements OrderRepositoryInterface {
         return $data ? Order::fromArray($data) : null;
     }
 
+    public function findByOrderNumber(string $orderNumber): ?Order {
+        $stmt = $this->pdo->prepare("SELECT * FROM orders WHERE order_number = :order_number");
+        $stmt->execute(['order_number' => $orderNumber]);
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $data ? Order::fromArray($data) : null;
+    }
+
     public function create(Order $order): Order {
         $stmt = $this->pdo->prepare("
             INSERT INTO orders (order_number, customer_email, total_amount, currency, stripe_session_id, status, type)

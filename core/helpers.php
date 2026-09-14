@@ -13,20 +13,34 @@ if (!function_exists('asset')) {
         $v = file_exists($fullPath) ? filemtime($fullPath) : '1.0.0';
 
         $scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
-        $baseDir = rtrim(dirname($scriptName), '/\\');
+        $baseDir = str_replace('\\', '/', dirname($scriptName));
+        $baseDir = rtrim($baseDir, '/');
         
-        $prefix = ($baseDir && $baseDir !== '/' && $baseDir !== '\\') ? $baseDir : '';
+        $prefix = ($baseDir && $baseDir !== '/') ? $baseDir : '';
+        $requestUri = $_SERVER['REQUEST_URI'] ?? '';
+        if ($prefix === '/public' || str_ends_with($prefix, '/public')) {
+            if (!str_contains($requestUri, '/public')) {
+                $prefix = preg_replace('#/public$#', '', $prefix);
+            }
+        }
 
-        return $prefix . '/assets/' . $cleanPath . '?v=' . $v;
+        return rtrim($prefix, '/') . '/assets/' . $cleanPath . '?v=' . $v;
     }
 }
 
 if (!function_exists('url')) {
     function url(string $path = ''): string {
         $scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
-        $baseDir = rtrim(dirname($scriptName), '/\\');
-        $prefix = ($baseDir && $baseDir !== '/' && $baseDir !== '\\') ? $baseDir : '';
-        return $prefix . '/' . ltrim($path, '/');
+        $baseDir = str_replace('\\', '/', dirname($scriptName));
+        $baseDir = rtrim($baseDir, '/');
+        $prefix = ($baseDir && $baseDir !== '/') ? $baseDir : '';
+        $requestUri = $_SERVER['REQUEST_URI'] ?? '';
+        if ($prefix === '/public' || str_ends_with($prefix, '/public')) {
+            if (!str_contains($requestUri, '/public')) {
+                $prefix = preg_replace('#/public$#', '', $prefix);
+            }
+        }
+        return rtrim($prefix, '/') . '/' . ltrim($path, '/');
     }
 }
 

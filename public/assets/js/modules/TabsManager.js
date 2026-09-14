@@ -19,4 +19,3 @@ export class TabsManager {
     });
   }
 }
-PHP,Description:

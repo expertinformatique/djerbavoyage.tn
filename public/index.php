@@ -7,6 +7,10 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+if (!defined('ROOT_PATH')) {
+    define('ROOT_PATH', dirname(__DIR__));
+}
+
 require_once __DIR__ . '/../core/helpers.php';
 
 // Autoloading simple pour App\ et Core\
@@ -35,10 +39,16 @@ use App\Interfaces\OrderRepositoryInterface;
 use App\Interfaces\ProductRepositoryInterface;
 use App\Interfaces\SettingsRepositoryInterface;
 use App\Interfaces\CacheInterface;
+use App\Interfaces\LocalServiceRepositoryInterface;
+use App\Interfaces\BookingScheduleRepositoryInterface;
+use App\Interfaces\ReviewRepositoryInterface;
 use App\Repositories\PdoArticleRepository;
 use App\Repositories\PdoOrderRepository;
 use App\Repositories\PdoProductRepository;
 use App\Repositories\PdoSettingsRepository;
+use App\Repositories\PdoLocalServiceRepository;
+use App\Repositories\PdoBookingScheduleRepository;
+use App\Repositories\PdoReviewRepository;
 use App\Services\CacheService;
 use App\Services\SettingsService;
 use App\Services\LoggerService;
@@ -46,6 +56,9 @@ use App\Services\FraudDetectionService;
 use App\Services\AnalyticsService;
 use App\Services\DownloadService;
 use App\Services\StripeService;
+use App\Services\PricingEstimationService;
+use App\Services\ReviewService;
+use App\Services\PassVoucherService;
 
 // 1. Initialisation Container & Services Core
 $container = new Container();
@@ -61,11 +74,20 @@ $analyticsService = new AnalyticsService($pdo);
 $fraudService = new FraudDetectionService($pdo, $logger);
 $downloadService = new DownloadService($pdo);
 $stripeService = new StripeService();
+$pricingService = new PricingEstimationService();
+$localServiceRepo = new PdoLocalServiceRepository($pdo);
+$bookingScheduleRepo = new PdoBookingScheduleRepository($pdo);
+$reviewRepo = new PdoReviewRepository($pdo);
+$reviewService = new ReviewService($reviewRepo);
+$voucherService = new PassVoucherService();
 
 // 2. Liaisons Repositories (DI Container)
 $container->bind(ArticleRepositoryInterface::class, fn() => new PdoArticleRepository($pdo));
 $container->bind(OrderRepositoryInterface::class, fn() => new PdoOrderRepository($pdo));
 $container->bind(ProductRepositoryInterface::class, fn() => new PdoProductRepository($pdo));
+$container->bind(LocalServiceRepositoryInterface::class, fn() => $localServiceRepo);
+$container->bind(BookingScheduleRepositoryInterface::class, fn() => $bookingScheduleRepo);
+$container->bind(ReviewRepositoryInterface::class, fn() => $reviewRepo);
 $container->bind(SettingsRepositoryInterface::class, fn() => $settingsRepo);
 $container->bind(CacheInterface::class, fn() => $cache);
 $container->bind(SettingsService::class, fn() => $settingsService);
@@ -73,12 +95,23 @@ $container->bind(AnalyticsService::class, fn() => $analyticsService);
 $container->bind(FraudDetectionService::class, fn() => $fraudService);
 $container->bind(DownloadService::class, fn() => $downloadService);
 $container->bind(StripeService::class, fn() => $stripeService);
+$container->bind(PricingEstimationService::class, fn() => $pricingService);
+$container->bind(ReviewService::class, fn() => $reviewService);
+$container->bind(PassVoucherService::class, fn() => $voucherService);
 
 // 3. Configuration des Routes
 $router = new Router();
 
 // Routes Publiques
 $router->get('/', [App\Controllers\HomeController::class, 'index']);
+$router->get('/services', [App\Controllers\LocalServicesController::class, 'index']);
+$router->post('/api/services/estimate', [App\Controllers\LocalServicesController::class, 'estimate']);
+$router->post('/api/services/checkout', [App\Controllers\LocalServicesController::class, 'checkout']);
+$router->get('/reservation/planning/{orderNumber}', [App\Controllers\LocalServicesController::class, 'planning']);
+$router->get('/pass/voucher/{orderNumber}', [App\Controllers\LocalServicesController::class, 'voucher']);
+$router->post('/api/services/update-schedule', [App\Controllers\LocalServicesController::class, 'updateSchedule']);
+$router->post('/api/services/update-airport', [App\Controllers\LocalServicesController::class, 'updateAirport']);
+
 $router->get('/guide', [App\Controllers\GuideController::class, 'index']);
 $router->get('/guide/{slug}', [App\Controllers\GuideController::class, 'show']);
 $router->get('/destinations/{slug}', [App\Controllers\DestinationController::class, 'show']);
@@ -110,6 +143,8 @@ $router->get('/admin/login', [App\Controllers\Admin\AuthController::class, 'logi
 $router->post('/admin/login', [App\Controllers\Admin\AuthController::class, 'login']);
 $router->get('/admin/logout', [App\Controllers\Admin\AuthController::class, 'logout']);
 $router->get('/admin/dashboard', [App\Controllers\Admin\DashboardController::class, 'index']);
+$router->get('/admin/services-bookings', [App\Controllers\Admin\ServicesAdminController::class, 'index']);
+$router->post('/api/admin/services/transfer-status', [App\Controllers\Admin\ServicesAdminController::class, 'updateTransfer']);
 $router->get('/admin/settings', [App\Controllers\Admin\SettingsAdminController::class, 'index']);
 $router->post('/admin/settings', [App\Controllers\Admin\SettingsAdminController::class, 'index']);
 $router->get('/admin/analytics', [App\Controllers\Admin\AnalyticsAdminController::class, 'index']);

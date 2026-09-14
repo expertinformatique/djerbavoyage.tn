@@ -18,4 +18,3 @@ export class ScrollAnimate {
     });
   }
 }
-PHP,Description:

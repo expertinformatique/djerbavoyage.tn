@@ -1,0 +1,222 @@
+/* Module Services Builder & Itinerary Planner — Djerba Voyage */
+
+.c-builder-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  max-width: 100vw;
+}
+
+@media (min-width: 1024px) {
+  .c-builder-layout {
+    grid-template-columns: 1fr 380px;
+    align-items: start;
+  }
+}
+
+/* Category Filter Chips */
+.c-filter-chips {
+  display: flex;
+  gap: 0.6rem;
+  overflow-x: auto;
+  padding-bottom: 0.75rem;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+
+.c-filter-chip {
+  padding: 0.55rem 1.1rem;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid var(--clr-sand-300, #E2E8F0);
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--clr-dark-800, #1E293B);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: var(--transition-smooth, all 0.2s ease);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.c-filter-chip:hover {
+  border-color: var(--clr-sea-600, #0077B6);
+  color: var(--clr-sea-600, #0077B6);
+}
+
+.c-filter-chip.active {
+  background: var(--clr-sea-600, #0077B6);
+  color: #fff;
+  border-color: var(--clr-sea-600, #0077B6);
+  box-shadow: 0 4px 14px rgba(0, 119, 182, 0.25);
+}
+
+/* Service Card Item */
+.c-service-card {
+  background: #fff;
+  border-radius: var(--radius-card, 16px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.c-service-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+  border-color: var(--clr-sea-400, #00B4D8);
+}
+
+.c-service-card.is-selected {
+  border: 2px solid var(--clr-sea-600, #0077B6);
+  background: rgba(0, 180, 216, 0.02);
+}
+
+.c-service-card__thumb {
+  position: relative;
+  height: 190px;
+  overflow: hidden;
+}
+
+.c-service-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.c-service-card:hover .c-service-card__img {
+  transform: scale(1.04);
+}
+
+.c-service-card__badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(8px);
+  color: #F59E0B;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.c-service-card__body {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.c-service-card__meta {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.8rem;
+  color: var(--clr-sea-600, #0077B6);
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.c-service-card__qty-control {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--clr-sand-100, #F8FAFC);
+  border: 1px solid #E2E8F0;
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+
+.c-service-card__qty-btn {
+  background: none;
+  border: none;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--clr-dark-800, #1E293B);
+}
+
+/* Sticky Pass Summary Estimator */
+.c-pass-summary {
+  background: #fff;
+  border-radius: var(--radius-card, 16px);
+  border: 1px solid #E2E8F0;
+  padding: 1.5rem;
+  position: sticky;
+  top: 90px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+}
+
+.c-discount-gauge {
+  background: #F1F5F9;
+  border-radius: 999px;
+  height: 10px;
+  overflow: hidden;
+  margin: 0.75rem 0 0.5rem 0;
+}
+
+.c-discount-gauge__bar {
+  background: linear-gradient(90deg, var(--clr-sea-400, #00B4D8), var(--clr-terracotta-500, #E07A5F));
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+.c-free-perk-box {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(224, 122, 95, 0.1) 100%);
+  border: 1px dashed var(--clr-terracotta-500, #E07A5F);
+  border-radius: 12px;
+  padding: 0.85rem;
+  margin: 1rem 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+/* Schedule Card for Planning View */
+.c-schedule-card {
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid #E2E8F0;
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+  transition: border-color 0.2s ease;
+}
+
+.c-schedule-card.is-confirmed {
+  border-left: 4px solid #10B981;
+}
+
+.c-schedule-card.is-waiting {
+  border-left: 4px solid #F59E0B;
+}
+
+/* Payment Mode Selector */
+.c-payment-mode-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin: 1.25rem 0;
+}
+
+.c-payment-mode-card {
+  border: 2px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 0.9rem;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.c-payment-mode-card.active {
+  border-color: var(--clr-sea-600, #0077B6);
+  background: rgba(0, 119, 182, 0.04);
+}

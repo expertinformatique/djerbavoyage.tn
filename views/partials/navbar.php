@@ -13,6 +13,7 @@
     <!-- Primary Menu Links -->
     <ul class="c-navbar__menu" id="mainNavMenu">
       <li><a href="<?= url('/') ?>" class="c-navbar__link">Accueil</a></li>
+      <li><a href="<?= url('/services') ?>" class="c-navbar__link" style="color:var(--clr-terracotta-500); font-weight:700;"><i class="fi fi-rr-sparkles"></i> Pass Séjour</a></li>
       <li><a href="<?= url('/activites') ?>" class="c-navbar__link">Activités</a></li>
       <li><a href="<?= url('/itineraires') ?>" class="c-navbar__link">Itinéraires</a></li>
       <li><a href="<?= url('/hotels-restaurants') ?>" class="c-navbar__link">Hôtels & Restos</a></li>

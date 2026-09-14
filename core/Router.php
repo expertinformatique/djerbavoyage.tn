@@ -21,10 +21,20 @@ class Router {
     public function dispatch(string $method, string $uri, Container $container): mixed {
         $path = parse_url($uri, PHP_URL_PATH);
         
-        // Nettoyer le préfixe si sous-dossier (ex: /Voyage/public)
+        // Nettoyer le préfixe si sous-dossier (ex: /djerbavoyage/public ou /djerbavoyage)
         $scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
-        $baseDir = dirname($scriptName);
-        if ($baseDir !== '/' && stristr($path, $baseDir) === $path) {
+        $baseDir = str_replace('\\', '/', dirname($scriptName));
+        $baseDir = rtrim($baseDir, '/');
+
+        // Si l'application s'exécute via une réécriture transparente depuis la racine
+        // ($baseDir se termine par /public mais l'URI demandée ne contient pas /public)
+        if ($baseDir === '/public' || str_ends_with($baseDir, '/public')) {
+            if (!str_contains($uri, '/public')) {
+                $baseDir = preg_replace('#/public$#', '', $baseDir);
+            }
+        }
+
+        if ($baseDir !== '' && $baseDir !== '/' && stripos($path, $baseDir) === 0) {
             $path = substr($path, strlen($baseDir));
         }
         $path = '/' . trim($path, '/');

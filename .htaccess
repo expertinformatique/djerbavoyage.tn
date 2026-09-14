@@ -1,0 +1,12 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Sécurité : Bloquer l'accès direct aux fichiers et dossiers sensibles du backend
+    RewriteRule ^(\.git|\.env|config|core|src|storage|database|tests|schema\.sql|seeder\.php) - [F,L]
+
+    # Si la requête cible déjà le dossier public, ne pas réécrire
+    RewriteRule ^public(/.*)?$ - [L]
+
+    # Réécriture transparente de la racine vers le dossier /public/
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>

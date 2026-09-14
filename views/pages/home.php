@@ -43,6 +43,28 @@
   </div>
 </section>
 
+<!-- NOUVEAU : Bandeau Pass Séjour & Activités Sur-Mesure -->
+<section style="background: linear-gradient(135deg, #03045E 0%, #0077B6 100%); color: #fff; padding: 3rem 0; margin-top: 2rem;">
+  <div class="l-container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">
+    <div style="max-width: 680px;">
+      <span style="background: rgba(245, 158, 11, 0.25); border: 1px solid #F59E0B; color: #F59E0B; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase;">
+        <i class="fi fi-rr-sparkles"></i> Djerba Experience Pass 2026
+      </span>
+      <h2 style="font-size: 1.85rem; margin: 10px 0; font-weight: 800; line-height: 1.25; color: #fff;">
+        Composez Votre Séjour & Activités : Jusqu'à -15% + Navette Aéroport OFFERTE !
+      </h2>
+      <p style="font-size: 0.95rem; opacity: 0.9; line-height: 1.6;">
+        Base nautique, quads lagune, balade à dos de chameau, excursion Sahara 4x4 et dîner spectacle. Bloquez vos tarifs remisés dès maintenant et choisissez vos dates et heures en toute liberté après paiement !
+      </p>
+    </div>
+    <div>
+      <a href="<?= url('/services') ?>" class="c-button c-button--primary" style="background: #F59E0B; border-color: #F59E0B; color: #0F172A; padding: 1rem 1.8rem; font-weight: 800; font-size: 1.05rem; box-shadow: 0 10px 25px rgba(245, 158, 11, 0.4); display: inline-flex; align-items: center; gap: 8px;">
+        <i class="fi fi-rr-sparkles"></i> Configurer Mon Pass Séjour <i class="fi fi-rr-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
 <!-- Promotional Banner: Personalized PDF with Name & Photo -->
 <section style="background: linear-gradient(135deg, #E07A5F 0%, #C85A3C 100%); color: #fff; padding: 2.5rem 0; margin: 3rem 0;">
   <div class="l-container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem;">
@@ -64,6 +86,91 @@
   <?php require __DIR__ . '/../partials/sales_funnel_quiz.php'; ?>
 </div>
 
+<style>
+/* Animation Vidéo Continue : Zoom Léger & Balayage Directionnel */
+.c-destination-card {
+  padding: 0 !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  border: 1px solid var(--clr-sand-300) !important;
+  background: #ffffff !important;
+  transition: transform 0.35s ease, box-shadow 0.35s ease !important;
+}
+
+.c-destination-card:hover {
+  transform: translateY(-8px) !important;
+  box-shadow: 0 20px 40px rgba(0, 119, 182, 0.18) !important;
+}
+
+.c-destination-media {
+  position: relative !important;
+  height: 225px !important;
+  width: 100% !important;
+  overflow: hidden !important;
+  background: #0f172a !important;
+  border-radius: 16px 16px 0 0 !important;
+}
+
+.c-destination-media img.c-card__video-img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+  transform-origin: center center !important;
+  will-change: transform !important;
+  backface-visibility: hidden !important;
+}
+
+/* 6 Variantes CSS de Balayage Directionnel & Zoom Vidéo Continu */
+.video-anim-1 {
+  animation: djerbaPan1 5.5s ease-in-out infinite alternate !important;
+}
+@keyframes djerbaPan1 {
+  0% { transform: scale(1.06) translate(-8%, 0%); }
+  100% { transform: scale(1.26) translate(8%, 0%); }
+}
+
+.video-anim-2 {
+  animation: djerbaPan2 6.2s ease-in-out infinite alternate !important;
+}
+@keyframes djerbaPan2 {
+  0% { transform: scale(1.26) translate(0%, -6%); }
+  100% { transform: scale(1.06) translate(0%, 6%); }
+}
+
+.video-anim-3 {
+  animation: djerbaPan3 5.8s ease-in-out infinite alternate !important;
+}
+@keyframes djerbaPan3 {
+  0% { transform: scale(1.08) translate(-6%, 6%); }
+  100% { transform: scale(1.28) translate(6%, -6%); }
+}
+
+.video-anim-4 {
+  animation: djerbaPan4 6.5s ease-in-out infinite alternate !important;
+}
+@keyframes djerbaPan4 {
+  0% { transform: scale(1.26) translate(7%, -3%); }
+  100% { transform: scale(1.08) translate(-7%, 3%); }
+}
+
+.video-anim-5 {
+  animation: djerbaPan5 5.6s ease-in-out infinite alternate !important;
+}
+@keyframes djerbaPan5 {
+  0% { transform: scale(1.06) translate(0%, 7%); }
+  100% { transform: scale(1.26) translate(0%, -7%); }
+}
+
+.video-anim-6 {
+  animation: djerbaPan6 6.0s ease-in-out infinite alternate !important;
+}
+@keyframes djerbaPan6 {
+  0% { transform: scale(1.28) translate(6%, -5%); }
+  100% { transform: scale(1.06) translate(-6%, 5%); }
+}
+</style>
+
 <!-- Destinations Section (6 Destinations) -->
 <section class="l-container" style="margin: 4rem auto;">
   <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:2rem; flex-wrap:wrap; gap:1rem;">
@@ -77,11 +184,11 @@
   </div>
   
   <div class="l-grid-cards" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.75rem;">
-    <?php foreach ($destinations as $dest): ?>
-      <article class="c-card" data-animate style="border-radius: 16px; overflow: hidden; border: 1px solid var(--clr-sand-300);">
-        <div class="c-card__media" style="height: 200px; overflow: hidden; position: relative;">
-          <img src="<?= asset($dest['image_url'] ?? 'images/hero.png') ?>" alt="<?= e($dest['name_fr']) ?>" style="width: 100%; height: 100%; object-fit: cover;">
-          <span style="position: absolute; top: 12px; left: 12px; background: rgba(15,23,42,0.7); backdrop-filter: blur(4px); color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 600;">Djerba 2026</span>
+    <?php foreach ($destinations as $index => $dest): ?>
+      <article class="c-card c-destination-card" data-animate>
+        <div class="c-destination-media">
+          <img src="<?= asset($dest['image_url'] ?? 'images/hero.png') ?>" alt="<?= e($dest['name_fr']) ?>" class="c-card__video-img video-anim-<?= ($index % 6) + 1 ?>">
+          <span style="position: absolute; top: 12px; left: 12px; background: rgba(15,23,42,0.7); backdrop-filter: blur(4px); color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 600; z-index: 2;">Djerba 2026</span>
         </div>
         <div class="c-card__content" style="padding: 1.25rem;">
           <h3 class="c-card__title" style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--clr-dark-900);"><?= e($dest['name_fr']) ?></h3>
@@ -93,6 +200,43 @@
       </article>
     <?php endforeach; ?>
   </div>
+
+  <script>
+  (function() {
+    function startVideoMotion() {
+      const motions = [
+        { start: 'scale(1.06) translate(-8%, 0%)', end: 'scale(1.26) translate(8%, 0%)', duration: 5500 },
+        { start: 'scale(1.26) translate(0%, -6%)', end: 'scale(1.06) translate(0%, 6%)', duration: 6200 },
+        { start: 'scale(1.08) translate(-6%, 6%)', end: 'scale(1.28) translate(6%, -6%)', duration: 5800 },
+        { start: 'scale(1.26) translate(7%, -3%)', end: 'scale(1.08) translate(-7%, 3%)', duration: 6500 },
+        { start: 'scale(1.06) translate(0%, 7%)', end: 'scale(1.26) translate(0%, -7%)', duration: 5600 },
+        { start: 'scale(1.28) translate(6%, -5%)', end: 'scale(1.06) translate(-6%, 5%)', duration: 6000 }
+      ];
+
+      const images = document.querySelectorAll('.c-destination-media img.c-card__video-img');
+      images.forEach((img, i) => {
+        const m = motions[i % motions.length];
+        if (typeof img.animate === 'function') {
+          img.animate([
+            { transform: m.start },
+            { transform: m.end }
+          ], {
+            duration: m.duration,
+            iterations: Infinity,
+            direction: 'alternate',
+            easing: 'ease-in-out'
+          });
+        }
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', startVideoMotion);
+    } else {
+      startVideoMotion();
+    }
+  })();
+  </script>
 </section>
 
 <!-- VIP Concierge Feature Banner -->

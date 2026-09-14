@@ -15,6 +15,7 @@
         </h2>
         <ul style="list-style:none; display:flex; flex-direction:column; gap:1rem;">
           <li><a href="/admin/dashboard" style="color:#fff;"><i class="fi fi-rr-dashboard"></i> Tableau de bord</a></li>
+          <li><a href="/admin/services-bookings" style="color:#fff;"><i class="fi fi-rr-plane-arrival"></i> Pass & Activités</a></li>
           <li><a href="/admin/analytics" style="color:#fff;"><i class="fi fi-rr-chart-histogram"></i> Analytics GA-Like</a></li>
           <li><a href="/admin/settings" style="color:#fff;"><i class="fi fi-rr-settings-sliders"></i> Configuration Site</a></li>
           <li><a href="/admin/audit" style="color:#fff;"><i class="fi fi-rr-shield-check"></i> Audit & Anti-Fraude</a></li>

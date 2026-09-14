@@ -31,6 +31,14 @@
   --transition-smooth: cubic-bezier(0.16, 1, 0.3, 1) 0.4s;
   --radius-card: 20px;
   --radius-pill: 999px;
+
+  /* Aliases & Accent Tokens */
+  --clr-gold: #F59E0B;
+  --clr-sand-300: #EADBC8;
+  --color-gold: #F59E0B;
+  --color-gold-hover: #D97706;
+  --color-muted: var(--clr-gray-500);
+  --color-text: var(--clr-dark-900);
 }
 
 /* 2. RESET & BASE FLUID RESPONSIVE */
@@ -66,11 +74,27 @@ img {
   display: block;
 }
 
-.l-container {
+.l-container, .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1.5rem;
   width: 100%;
+}
+
+.section {
+  padding: 3.5rem 0;
+}
+
+.section-title {
+  margin-bottom: 2.5rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-muted {
+  color: var(--clr-gray-500);
 }
 
 /* FLUID TYPOGRAPHY REGULATION */
@@ -282,6 +306,240 @@ h3, .heading-3 {
   border: 1px solid rgba(15, 23, 42, 0.06);
   padding: 1.35rem;
   transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
+}
+
+/* 6.1 BADGES */
+.badge, .c-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.badge--gold {
+  background: rgba(245, 158, 11, 0.12);
+  color: #F59E0B;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.badge--sea {
+  background: rgba(0, 119, 182, 0.1);
+  color: var(--clr-sea-600);
+  border: 1px solid rgba(0, 119, 182, 0.2);
+}
+
+.badge--terracotta {
+  background: rgba(224, 122, 95, 0.12);
+  color: var(--clr-terracotta-500);
+  border: 1px solid rgba(224, 122, 95, 0.25);
+}
+
+/* 6.2 TABS NAVIGATION */
+.tabs, .c-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.tab-btn, .c-tabs__btn {
+  background: #ffffff;
+  color: var(--clr-dark-800);
+  border: 1px solid var(--clr-sand-300);
+  padding: 0.65rem 1.4rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+.tab-btn:hover, .c-tabs__btn:hover {
+  border-color: var(--clr-sea-600);
+  color: var(--clr-sea-600);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 119, 182, 0.15);
+}
+
+.tab-btn.active, .tab-btn.is-active, .c-tabs__btn.is-active {
+  background: linear-gradient(135deg, var(--clr-sea-600), var(--clr-sea-900));
+  color: #ffffff;
+  border-color: var(--clr-sea-900);
+  box-shadow: 0 6px 18px rgba(0, 119, 182, 0.3);
+}
+
+/* 6.3 ITINERARY TIMELINE */
+.c-timeline {
+  position: relative;
+  padding-left: 2.2rem;
+  margin: 2rem 0;
+}
+
+.c-timeline::before {
+  content: '';
+  position: absolute;
+  left: 17px;
+  top: 15px;
+  bottom: 25px;
+  width: 3px;
+  background: linear-gradient(180deg, var(--clr-terracotta-500) 0%, var(--clr-sea-600) 100%);
+  border-radius: 2px;
+}
+
+.c-timeline__item {
+  position: relative;
+  margin-bottom: 2.25rem;
+}
+
+.c-timeline__dot {
+  position: absolute;
+  left: -2.2rem;
+  top: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 3px solid var(--clr-terracotta-500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--clr-dark-900);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  font-family: var(--font-heading);
+}
+
+.c-timeline__card {
+  background: #ffffff;
+  border-radius: var(--radius-card);
+  padding: 1.5rem;
+  border: 1px solid var(--clr-sand-300);
+  box-shadow: var(--shadow-soft);
+  margin-left: 0.85rem;
+  transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
+}
+
+.c-timeline__card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* 6.4 CINEMATIC KEN BURNS VIDEO MOTION (DESTINATIONS PHARES) */
+.c-destination-card {
+  padding: 0 !important;
+  transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
+}
+
+.c-destination-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 119, 182, 0.18);
+}
+
+.c-destination-card .c-card__media {
+  position: relative;
+  height: 225px;
+  overflow: hidden;
+  border-radius: 16px 16px 0 0;
+  background: #0f172a;
+}
+
+/* Vignette & scanline video overlay */
+.c-destination-card .c-card__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(15, 23, 42, 0.08) 0%,
+    rgba(15, 23, 42, 0.02) 40%,
+    rgba(15, 23, 42, 0.55) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity 0.4s ease;
+}
+
+.c-destination-card:hover .c-card__media::after {
+  opacity: 0.75;
+}
+
+/* Image animée en mouvement fluide continu style vidéo (Ken Burns) */
+.c-card__video-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform-origin: center center;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* 6 Variantes de Balayage Directionnel & Zoom simulant un drone/caméra vidéo */
+.c-destination-card:nth-child(6n+1) .c-card__video-img {
+  animation: videoKenBurns-1 5.5s ease-in-out infinite alternate !important;
+}
+
+.c-destination-card:nth-child(6n+2) .c-card__video-img {
+  animation: videoKenBurns-2 6.2s ease-in-out infinite alternate !important;
+}
+
+.c-destination-card:nth-child(6n+3) .c-card__video-img {
+  animation: videoKenBurns-3 5.8s ease-in-out infinite alternate !important;
+}
+
+.c-destination-card:nth-child(6n+4) .c-card__video-img {
+  animation: videoKenBurns-4 6.5s ease-in-out infinite alternate !important;
+}
+
+.c-destination-card:nth-child(6n+5) .c-card__video-img {
+  animation: videoKenBurns-5 5.6s ease-in-out infinite alternate !important;
+}
+
+.c-destination-card:nth-child(6n+6) .c-card__video-img {
+  animation: videoKenBurns-6 6.0s ease-in-out infinite alternate !important;
+}
+
+/* Keyframes fluides et visibles (60fps GPU acceleration) */
+@keyframes videoKenBurns-1 {
+  0% { transform: scale(1.06) translate(-8%, 0%); }
+  100% { transform: scale(1.26) translate(8%, 0%); }
+}
+
+@keyframes videoKenBurns-2 {
+  0% { transform: scale(1.26) translate(0%, -6%); }
+  100% { transform: scale(1.06) translate(0%, 6%); }
+}
+
+@keyframes videoKenBurns-3 {
+  0% { transform: scale(1.08) translate(-6%, 6%); }
+  100% { transform: scale(1.28) translate(6%, -6%); }
+}
+
+@keyframes videoKenBurns-4 {
+  0% { transform: scale(1.26) translate(7%, -3%); }
+  100% { transform: scale(1.08) translate(-7%, 3%); }
+}
+
+@keyframes videoKenBurns-5 {
+  0% { transform: scale(1.06) translate(0%, 7%); }
+  100% { transform: scale(1.26) translate(0%, -7%); }
+}
+
+@keyframes videoKenBurns-6 {
+  0% { transform: scale(1.28) translate(6%, -5%); }
+  100% { transform: scale(1.06) translate(-6%, 5%); }
 }
 
 /* 7. MODALS & POPUPS */

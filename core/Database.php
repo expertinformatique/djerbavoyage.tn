@@ -29,4 +29,8 @@ class Database {
         }
         return self::$instance;
     }
+
+    public static function setInstance(?PDO $pdo): void {
+        self::$instance = $pdo;
+    }
 }
