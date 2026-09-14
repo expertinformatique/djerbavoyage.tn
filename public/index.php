@@ -112,6 +112,10 @@ $router->get('/pass/voucher/{orderNumber}', [App\Controllers\LocalServicesContro
 $router->post('/api/services/update-schedule', [App\Controllers\LocalServicesController::class, 'updateSchedule']);
 $router->post('/api/services/update-airport', [App\Controllers\LocalServicesController::class, 'updateAirport']);
 
+// SEO & Indexation Routes
+$router->get('/sitemap.xml', [App\Controllers\SitemapController::class, 'sitemap']);
+$router->get('/robots.txt', [App\Controllers\SitemapController::class, 'robots']);
+
 $router->get('/guide', [App\Controllers\GuideController::class, 'index']);
 $router->get('/guide/{slug}', [App\Controllers\GuideController::class, 'show']);
 $router->get('/destinations/{slug}', [App\Controllers\DestinationController::class, 'show']);

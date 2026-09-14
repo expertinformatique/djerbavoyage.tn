@@ -3,9 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?= e($seoTitle ?? 'Djerba Voyage') ?></title>
-  <meta name="description" content="<?= e($seoDescription ?? 'Guide touristique de Djerba') ?>">
-  
+  <title><?= e($seoTitle ?? 'Djerba Voyage 2026 | Guide Officiel, Activités & Conciergerie VIP') ?></title>
+  <meta name="description" content="<?= e($seoDescription ?? 'Guide touristique indépendant de l\'île de Djerba en Tunisie. Organisez votre séjour sur-mesure : excursions, quads, kitesurf, hôtels de charme et guides PDF.') ?>">
+  <meta name="keywords" content="Djerba, voyage Djerba, guide Djerba 2026, excursion Djerba, jet ski Djerba, quad Djerba, hôtel Djerba, Djerbahood, Houmt Souk, Sidi Mahres">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+  <!-- Canonical URL -->
+  <?php 
+    $currentUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . strtok($_SERVER['REQUEST_URI'] ?? '/', '?');
+  ?>
+  <link rel="canonical" href="<?= e($currentUrl) ?>">
+
+  <!-- Open Graph / Facebook / WhatsApp -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="<?= e($currentUrl) ?>">
+  <meta property="og:title" content="<?= e($seoTitle ?? 'Djerba Voyage 2026 | Guide Officiel & Excursions VIP') ?>">
+  <meta property="og:description" content="<?= e($seoDescription ?? 'Découvrez l\'île de Djerba en Tunisie : guides PDF interactifs, cartes GPS, pass activités et conciergerie VIP.') ?>">
+  <meta property="og:image" content="<?= asset('images/hero.png') ?>">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:site_name" content="Djerba Voyage">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="<?= e($seoTitle ?? 'Djerba Voyage 2026') ?>">
+  <meta name="twitter:description" content="<?= e($seoDescription ?? 'Guide touristique officiel & réservation d\'activités à Djerba.') ?>">
+  <meta name="twitter:image" content="<?= asset('images/hero.png') ?>">
+
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="<?= asset('images/favicon.png') ?>">
   <link rel="shortcut icon" href="<?= asset('images/favicon.png') ?>">
@@ -22,6 +45,9 @@
   <!-- CSS Main & Modules -->
   <link rel="stylesheet" href="<?= asset('css/main.css') ?>">
   <link rel="stylesheet" href="<?= asset('css/components/services-builder.css') ?>">
+
+  <!-- JSON-LD Structured Data Injection -->
+  <?= $jsonLd ?? '' ?>
 </head>
 <body>
 

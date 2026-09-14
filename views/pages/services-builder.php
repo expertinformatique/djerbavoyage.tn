@@ -49,14 +49,17 @@
     <button class="c-filter-chip" data-category="sahara">
       <i class="fi fi-rr-sun"></i> Excursion Sahara 4x4
     </button>
+    <button class="c-filter-chip" data-category="restaurant">
+      <i class="fi fi-rr-restaurant"></i> Restaurants & Gastronomie
+    </button>
     <button class="c-filter-chip" data-category="diner">
-      <i class="fi fi-rr-restaurant"></i> Dîner Bédouin
+      <i class="fi fi-rr-utensils"></i> Dîner Bédouin
     </button>
     <button class="c-filter-chip" data-category="hotel">
-      <i class="fi fi-rr-bed"></i> Hôtels 4*
+      <i class="fi fi-rr-bed"></i> Hôtels & Resorts 5★
     </button>
     <button class="c-filter-chip" data-category="maison">
-      <i class="fi fi-rr-home"></i> Maisons d'Hôtes / Menzel
+      <i class="fi fi-rr-home"></i> Maisons d'Hôtes / Ryads
     </button>
   </div>
 

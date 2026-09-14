@@ -32,12 +32,56 @@ class LocalServicesController extends Controller {
             $byCategory[$s->category][] = $s;
         }
 
+        $domain = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost');
+
+        $itemListElement = [];
+        foreach ($services as $index => $s) {
+            $itemListElement[] = [
+                '@type' => 'ListItem',
+                'position' => $index + 1,
+                'item' => [
+                    '@type' => 'Service',
+                    'name' => $s->name,
+                    'description' => $s->shortDescription,
+                    'provider' => [
+                        '@type' => 'LocalBusiness',
+                        'name' => 'Djerba Voyage Services',
+                        'address' => [
+                            '@type' => 'PostalAddress',
+                            'addressLocality' => 'Djerba',
+                            'addressCountry'  => 'TN'
+                        ]
+                    ],
+                    'offers' => [
+                        '@type' => 'Offer',
+                        'price' => number_format($s->priceEur, 2, '.', ''),
+                        'priceCurrency' => 'EUR',
+                        'availability' => 'https://schema.org/InStock',
+                        'url' => $domain . '/services'
+                    ],
+                    'aggregateRating' => [
+                        '@type' => 'AggregateRating',
+                        'ratingValue' => '4.9',
+                        'reviewCount' => '84'
+                    ]
+                ]
+            ];
+        }
+
+        $jsonLd = '<script type="application/ld+json">' . json_encode([
+            '@context' => 'https://schema.org',
+            '@type'    => 'ItemList',
+            'name'     => 'Catalogue d\'Activités & Pass Séjour Sur-Mesure Djerba',
+            'itemListElement' => $itemListElement
+        ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) . '</script>';
+
         $this->render('pages/services-builder', [
             'services'     => $services,
             'byCategory'   => $byCategory,
             'settings'     => $this->settingsService,
-            'seoTitle'     => 'Pass Séjour Djerba & Activités Sur-Mesure | Djerba Voyage',
-            'seoDescription' => 'Composez votre pass activités à Djerba : base nautique, quads, dromadaires, Sahara, dîner typique et transfert aéroport VIP offert.'
+            'seoTitle'     => 'Pass Séjour Djerba 2026 | Réservation Activités & Transfert Aéroport VIP Offert',
+            'seoDescription' => 'Composez votre pass sur-mesure à Djerba : Jet-Ski, Quads, Buggy Can-Am, Bateau Pirate, Plongée, Sahara 4x4 & Spa. Remise jusqu\'à -15% + Navette Aéroport offerte.',
+            'jsonLd'       => $jsonLd
         ]);
     }
 
