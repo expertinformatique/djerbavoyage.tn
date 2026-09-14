@@ -252,7 +252,12 @@
 
 <script type="module">
   import { ServicesBuilder } from '<?= asset('js/modules/services-builder.js') ?>';
+  import { ModalManager } from '<?= asset('js/modules/ModalManager.js') ?>';
+
+  window.ModalManager = ModalManager;
+  window.APP_BASE_URL = '<?= url('') ?>';
+
   document.addEventListener('DOMContentLoaded', () => {
-    new ServicesBuilder();
+    new ServicesBuilder({ baseUrl: '<?= url('') ?>' });
   });
 </script>

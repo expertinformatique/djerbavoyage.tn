@@ -1,11 +1,13 @@
 /**
  * Module Djerba Services Builder & Estimator
+ * Version 2.0 - Multi-environment URL support & Client-Side Fallback
  */
 export class ServicesBuilder {
-  constructor() {
+  constructor(options = {}) {
     this.selected = {};
-    this.includeAirport = false;
+    this.includeAirport = true;
     this.paymentMode = 'full'; // 'full' or 'deposit'
+    this.baseUrl = options.baseUrl || (window.APP_BASE_URL || '');
     this.init();
   }
 
@@ -15,6 +17,7 @@ export class ServicesBuilder {
     this.bindAirportToggle();
     this.bindPaymentModeSelector();
     this.bindCheckoutForm();
+    this.bindCheckoutModalTrigger();
     this.recalculate();
   }
 
@@ -51,7 +54,8 @@ export class ServicesBuilder {
       const minusBtn = card.querySelector('.js-qty-minus');
 
       if (addBtn) {
-        addBtn.addEventListener('click', () => {
+        addBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
           if (this.selected[id]) {
             delete this.selected[id];
             card.classList.remove('is-selected');
@@ -114,11 +118,23 @@ export class ServicesBuilder {
     });
   }
 
+  bindCheckoutModalTrigger() {
+    const btn = document.getElementById('openCheckoutModalBtn');
+    if (btn) {
+      btn.addEventListener('click', () => {
+        if (!btn.disabled && window.ModalManager) {
+          window.ModalManager.open('passCheckoutModal');
+        }
+      });
+    }
+  }
+
   async recalculate() {
     const items = Object.values(this.selected);
 
     try {
-      const res = await fetch('/api/services/estimate', {
+      const endpoint = (this.baseUrl.replace(/\/$/, '') + '/api/services/estimate');
+      const res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -128,12 +144,74 @@ export class ServicesBuilder {
         })
       });
 
-      if (!res.ok) throw new Error('Erreur estimation');
+      if (!res.ok) throw new Error('Erreur estimation HTTP ' + res.status);
       const data = await res.json();
       this.updateUI(data);
     } catch (err) {
-      console.error('[Estimator Error]', err);
+      console.warn('[Estimator API fallback to local calculation]', err);
+      // Fallback local instantané
+      const localData = this.calculateLocalEstimate(items);
+      this.updateUI(localData);
     }
+  }
+
+  calculateLocalEstimate(items) {
+    let subtotal = 0;
+    let totalItemsCount = 0;
+    items.forEach(item => {
+      subtotal += item.unit_price * item.quantity;
+      totalItemsCount += item.quantity;
+    });
+
+    let discountPercent = 0;
+    if (totalItemsCount >= 3) {
+      discountPercent = 15;
+    } else if (totalItemsCount === 2) {
+      discountPercent = 10;
+    }
+
+    const discountAmount = subtotal * (discountPercent / 100);
+    const subtotalAfterDiscount = subtotal - discountAmount;
+
+    const isAirportFree = totalItemsCount >= 3;
+    let airportCost = 0;
+    if (this.includeAirport && !isAirportFree) {
+      airportCost = 35.00;
+    }
+
+    const grandTotal = subtotalAfterDiscount + airportCost;
+    const amountToPayNow = this.paymentMode === 'deposit' ? (grandTotal * 0.30) : grandTotal;
+    const remainingBalance = this.paymentMode === 'deposit' ? (grandTotal * 0.70) : 0;
+
+    let nextTierMsg = "Ajoutez des activités pour économiser !";
+    if (totalItemsCount === 0) {
+      nextTierMsg = "Sélectionnez 2 activités (-10%) ou 3+ (-15% + Navette Offerte)";
+    } else if (totalItemsCount === 1) {
+      nextTierMsg = "Encore 1 activité pour débloquer -10% de remise !";
+    } else if (totalItemsCount === 2) {
+      nextTierMsg = "Encore 1 activité pour passer à -15% et Navette Aéroport OFFERTE !";
+    } else {
+      nextTierMsg = "🎉 Remise Maximale -15% & Accueil Aéroport Offert !";
+    }
+
+    let packLabel = "Pass Découverte";
+    if (totalItemsCount >= 3) packLabel = "Pass VIP Sur-Mesure (-15%)";
+    else if (totalItemsCount === 2) packLabel = "Pass Duo (-10%)";
+
+    return {
+      subtotal,
+      discount_percent: discountPercent,
+      discount_amount: discountAmount,
+      subtotal_after_discount: subtotalAfterDiscount,
+      airport_transfer_free: isAirportFree,
+      airport_cost: airportCost,
+      grand_total: grandTotal,
+      amount_to_pay_now: amountToPayNow,
+      remaining_balance: remainingBalance,
+      next_tier_message: nextTierMsg,
+      pack_label: packLabel,
+      items_count: totalItemsCount
+    };
   }
 
   updateUI(data) {
@@ -147,6 +225,7 @@ export class ServicesBuilder {
     const airportPriceEl = document.getElementById('airportPerkPrice');
     const itemsListEl = document.getElementById('selectedItemsList');
     const checkoutBtn = document.getElementById('openCheckoutModalBtn');
+    const packBadgeTitle = document.getElementById('packBadgeTitle');
 
     if (subtotalEl) subtotalEl.textContent = data.subtotal.toFixed(2) + ' €';
     if (discountEl) {
@@ -154,8 +233,12 @@ export class ServicesBuilder {
     }
     if (totalEl) totalEl.textContent = data.amount_to_pay_now.toFixed(2) + ' €';
 
+    if (packBadgeTitle && data.pack_label) {
+      packBadgeTitle.textContent = data.pack_label;
+    }
+
     if (depositNoticeEl) {
-      if (this.paymentMode === 'deposit') {
+      if (this.paymentMode === 'deposit' && data.remaining_balance > 0) {
         depositNoticeEl.style.display = 'block';
         depositNoticeEl.innerHTML = `<i class="fi fi-rr-info"></i> Acompte de 30% réglé aujourd'hui. Reste à payer sur place : <strong>${data.remaining_balance.toFixed(2)} €</strong>`;
       } else {
@@ -166,7 +249,7 @@ export class ServicesBuilder {
     if (nextTierEl) nextTierEl.textContent = data.next_tier_message;
 
     if (gaugeBar) {
-      const pct = Math.min(100, Math.round((data.items_count / 4) * 100));
+      const pct = Math.min(100, Math.round((data.items_count / 3) * 100));
       gaugeBar.style.width = pct + '%';
     }
 
@@ -174,9 +257,9 @@ export class ServicesBuilder {
       if (data.airport_transfer_free) {
         airportBadgeEl.textContent = 'OFFERT';
         airportBadgeEl.className = 'badge badge--gold';
-        airportPriceEl.innerHTML = '<del style="color:#94A3B8; font-size:0.85rem;">35 €</del> <strong>0 €</strong>';
+        airportPriceEl.innerHTML = '<del style="color:#94A3B8; font-size:0.85rem;">35 €</del> <strong style="color:#10B981;">0 €</strong>';
       } else {
-        airportBadgeEl.textContent = 'En Option';
+        airportBadgeEl.textContent = 'En Option (35€)';
         airportBadgeEl.className = 'badge badge--sea';
         airportPriceEl.textContent = '35 €';
       }
@@ -185,11 +268,17 @@ export class ServicesBuilder {
     if (itemsListEl) {
       const items = Object.values(this.selected);
       if (items.length === 0) {
-        itemsListEl.innerHTML = '<p style="color:#94A3B8; font-size:0.85rem; font-style:italic;">Aucune activité ajoutée pour le moment. Cliquez sur "Ajouter au Pass" pour composer votre séjour.</p>';
+        itemsListEl.innerHTML = `
+          <div style="text-align:center; padding: 1.5rem 0; color:#94A3B8;">
+            <i class="fi fi-rr-shopping-bag" style="font-size:2rem; margin-bottom:0.5rem; display:block; opacity:0.6;"></i>
+            <p style="font-size:0.88rem; margin:0;">Votre Pass est actuellement vide.</p>
+            <p style="font-size:0.78rem; margin-top:4px;">Cliquez sur <strong>"Ajouter au Pass"</strong> pour choisir vos activités.</p>
+          </div>
+        `;
       } else {
         itemsListEl.innerHTML = items.map(item => `
-          <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.85rem; padding:0.4rem 0; border-bottom:1px dashed #E2E8F0;">
-            <span><strong>${item.quantity}x</strong> ${item.name}</span>
+          <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.88rem; padding:0.5rem 0; border-bottom:1px dashed #E2E8F0;">
+            <span><strong style="color:var(--clr-sea-900);">${item.quantity}x</strong> ${item.name}</span>
             <span style="font-weight:700; color:var(--clr-sea-900);">${(item.unit_price * item.quantity).toFixed(2)} €</span>
           </div>
         `).join('');
@@ -197,8 +286,10 @@ export class ServicesBuilder {
     }
 
     if (checkoutBtn) {
-      checkoutBtn.disabled = data.items_count === 0;
-      checkoutBtn.style.opacity = data.items_count === 0 ? '0.5' : '1';
+      const hasItems = data.items_count > 0;
+      checkoutBtn.disabled = !hasItems;
+      checkoutBtn.style.opacity = hasItems ? '1' : '0.5';
+      checkoutBtn.style.cursor = hasItems ? 'pointer' : 'not-allowed';
     }
   }
 
@@ -225,7 +316,8 @@ export class ServicesBuilder {
         }
 
         try {
-          const res = await fetch('/api/services/checkout', {
+          const endpoint = (this.baseUrl.replace(/\/$/, '') + '/api/services/checkout');
+          const res = await fetch(endpoint, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
