@@ -1,173 +1,625 @@
 <!-- Tunnel de Vente / Planificateur de Séjour Sur-Mesure IA -->
-<div class="card" id="salesFunnelQuiz" style="background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); color: #fff; border-radius: 24px; padding: 2.5rem; border: 1px solid var(--clr-terracotta-500); box-shadow: 0 20px 40px rgba(0,0,0,0.4); max-width: 900px; margin: 3rem auto; position: relative;">
+<div class="c-ai-quiz-container" id="salesFunnelQuiz">
     
     <!-- AI Status Indicator Header -->
-    <div style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-bottom: 1.25rem;">
-        <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #10B981; box-shadow: 0 0 10px #10B981; animation: pulseGlow 1.5s infinite;"></span>
-        <span style="font-size: 0.78rem; font-weight: 700; color: #10B981; letter-spacing: 1px; text-transform: uppercase;">Assistant IA Djerba • En Ligne</span>
+    <div class="c-ai-quiz__status-bar">
+        <span class="c-ai-quiz__status-dot"></span>
+        <span class="c-ai-quiz__status-text">
+            <i class="fi fi-rr-sparkles" style="color: #10B981; font-size: 0.9rem;"></i> Assistant IA Djerba • En Ligne
+        </span>
     </div>
 
-    <div style="text-align: center; margin-bottom: 2rem;">
-        <span class="badge badge--gold" style="background: rgba(212,175,55,0.2); color: #F59E0B; padding: 6px 16px; border-radius: 50px; font-weight: 700; font-size: 0.85rem;">
-            🎯 Recommandation par Intelligence Artificielle
+    <div class="c-ai-quiz__header">
+        <span class="c-ai-quiz__badge">
+            <i class="fi fi-rr-sparkles"></i> Recommandation par Intelligence Artificielle
         </span>
         
-        <h2 id="aiTypedHeader" style="font-size: 2rem; font-weight: 800; margin: 0.75rem 0 0.5rem; color: #fff; min-height: 50px;">
-            <span class="ai-text-target"></span><span class="ai-cursor">▋</span>
+        <h2 id="aiTypedHeader" class="c-ai-quiz__title">
+            <span class="ai-text-target"></span><span class="ai-cursor"></span>
         </h2>
         
-        <p id="aiTypedSubtitle" style="color: var(--clr-sand-500); font-size: 0.95rem; min-height: 44px; max-width: 680px; margin: 0 auto;">
-            <span class="ai-text-target"></span><span class="ai-cursor">▋</span>
+        <p id="aiTypedSubtitle" class="c-ai-quiz__subtitle">
+            <span class="ai-text-target"></span><span class="ai-cursor"></span>
         </p>
     </div>
 
-    <!-- Wizard Steps Indicators -->
-    <div style="display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem;">
-        <div class="quiz-step-indicator active" id="stepInd1" style="width: 35px; height: 35px; border-radius: 50%; background: var(--clr-terracotta-500); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem;">1</div>
-        <div class="quiz-step-indicator" id="stepInd2" style="width: 35px; height: 35px; border-radius: 50%; background: rgba(255,255,255,0.1); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem;">2</div>
-        <div class="quiz-step-indicator" id="stepInd3" style="width: 35px; height: 35px; border-radius: 50%; background: rgba(255,255,255,0.1); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem;">3</div>
+    <!-- Wizard Steps Indicators with Connecting Line -->
+    <div class="c-ai-quiz__steps-nav">
+        <div class="c-ai-quiz__step-item active" id="stepInd1">
+            <span class="c-ai-quiz__step-num">1</span>
+            <span class="c-ai-quiz__step-lbl">Voyageurs</span>
+        </div>
+        <div class="c-ai-quiz__step-line" id="stepLine1"></div>
+        <div class="c-ai-quiz__step-item" id="stepInd2">
+            <span class="c-ai-quiz__step-num">2</span>
+            <span class="c-ai-quiz__step-lbl">Objectif</span>
+        </div>
+        <div class="c-ai-quiz__step-line" id="stepLine2"></div>
+        <div class="c-ai-quiz__step-item" id="stepInd3">
+            <span class="c-ai-quiz__step-num">3</span>
+            <span class="c-ai-quiz__step-lbl">Durée</span>
+        </div>
     </div>
 
     <!-- Step 1: Type de Voyageur -->
     <div class="quiz-step" id="quizStep1" style="display: block;">
-        <h3 id="step1Title" style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1.25rem; text-align: center; color: var(--clr-sand-100); min-height: 32px;">
-            <span class="ai-text-target"></span><span class="ai-cursor">▋</span>
+        <h3 id="step1Title" class="c-ai-quiz__step-title">
+            <span class="ai-text-target"></span><span class="ai-cursor"></span>
         </h3>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem;">
-            <button class="quiz-opt-btn" onclick="selectQuizOption('traveler', 'couple', 2)" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 1.25rem; color: #fff; text-align: center; cursor: pointer; transition: all 0.3s ease; opacity: 0; transform: translateY(15px); pointer-events: none;">
-                <div style="font-size: 2rem; margin-bottom: 0.5rem;">👩‍❤️‍👨</div>
-                <div style="font-weight: 700; font-size: 1rem;">En Couple</div>
-                <div style="font-size: 0.8rem; color: var(--clr-sand-500); margin-top: 4px;">Romantique & Détente</div>
+        <div class="c-ai-quiz__grid">
+            <button class="quiz-opt-btn" onclick="selectQuizOption('traveler', 'couple', 2)">
+                <div class="quiz-opt-btn__icon quiz-opt-btn__icon--rose">
+                    <i class="fi fi-rr-heart"></i>
+                </div>
+                <div class="quiz-opt-btn__title">En Couple</div>
+                <div class="quiz-opt-btn__desc">Romantique & Détente</div>
             </button>
-            <button class="quiz-opt-btn" onclick="selectQuizOption('traveler', 'family', 2)" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 1.25rem; color: #fff; text-align: center; cursor: pointer; transition: all 0.3s ease; opacity: 0; transform: translateY(15px); pointer-events: none;">
-                <div style="font-size: 2rem; margin-bottom: 0.5rem;">👨‍👩‍👧‍👦</div>
-                <div style="font-weight: 700; font-size: 1rem;">En Famille</div>
-                <div style="font-size: 0.8rem; color: var(--clr-sand-500); margin-top: 4px;">Activités Tous Âges</div>
+            <button class="quiz-opt-btn" onclick="selectQuizOption('traveler', 'family', 2)">
+                <div class="quiz-opt-btn__icon quiz-opt-btn__icon--blue">
+                    <i class="fi fi-rr-users"></i>
+                </div>
+                <div class="quiz-opt-btn__title">En Famille</div>
+                <div class="quiz-opt-btn__desc">Activités Tous Âges</div>
             </button>
-            <button class="quiz-opt-btn" onclick="selectQuizOption('traveler', 'solo', 2)" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 1.25rem; color: #fff; text-align: center; cursor: pointer; transition: all 0.3s ease; opacity: 0; transform: translateY(15px); pointer-events: none;">
-                <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎒</div>
-                <div style="font-weight: 700; font-size: 1rem;">Solo / Nomad</div>
-                <div style="font-size: 0.8rem; color: var(--clr-sand-500); margin-top: 4px;">Découverte & Liberté</div>
+            <button class="quiz-opt-btn" onclick="selectQuizOption('traveler', 'solo', 2)">
+                <div class="quiz-opt-btn__icon quiz-opt-btn__icon--gold">
+                    <i class="fi fi-rr-user"></i>
+                </div>
+                <div class="quiz-opt-btn__title">Solo / Nomad</div>
+                <div class="quiz-opt-btn__desc">Découverte & Liberté</div>
             </button>
-            <button class="quiz-opt-btn" onclick="selectQuizOption('traveler', 'friends', 2)" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 1.25rem; color: #fff; text-align: center; cursor: pointer; transition: all 0.3s ease; opacity: 0; transform: translateY(15px); pointer-events: none;">
-                <div style="font-size: 2rem; margin-bottom: 0.5rem;">🥳</div>
-                <div style="font-weight: 700; font-size: 1rem;">Entre Amis</div>
-                <div style="font-size: 0.8rem; color: var(--clr-sand-500); margin-top: 4px;">Fête, Quad & Sports</div>
+            <button class="quiz-opt-btn" onclick="selectQuizOption('traveler', 'friends', 2)">
+                <div class="quiz-opt-btn__icon quiz-opt-btn__icon--emerald">
+                    <i class="fi fi-rr-drink-alt"></i>
+                </div>
+                <div class="quiz-opt-btn__title">Entre Amis</div>
+                <div class="quiz-opt-btn__desc">Fête, Quad & Sports</div>
             </button>
         </div>
     </div>
 
     <!-- Step 2: Style de Séjour -->
     <div class="quiz-step" id="quizStep2" style="display: none;">
-        <h3 id="step2Title" style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1.25rem; text-align: center; color: var(--clr-sand-100); min-height: 32px;">
-            <span class="ai-text-target"></span><span class="ai-cursor">▋</span>
+        <h3 id="step2Title" class="c-ai-quiz__step-title">
+            <span class="ai-text-target"></span><span class="ai-cursor"></span>
         </h3>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem;">
-            <button class="quiz-opt-btn" onclick="selectQuizOption('style', 'culture', 3)" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 1.25rem; color: #fff; text-align: center; cursor: pointer; transition: all 0.3s ease; opacity: 0; transform: translateY(15px); pointer-events: none;">
-                <div style="font-size: 2rem; margin-bottom: 0.5rem;">🏺</div>
-                <div style="font-weight: 700; font-size: 1rem;">Culture & Souks</div>
-                <div style="font-size: 0.8rem; color: var(--clr-sand-500); margin-top: 4px;">Djerbahood & Guellala</div>
+        <div class="c-ai-quiz__grid">
+            <button class="quiz-opt-btn" onclick="selectQuizOption('style', 'culture', 3)">
+                <div class="quiz-opt-btn__icon quiz-opt-btn__icon--gold">
+                    <i class="fi fi-rr-museum"></i>
+                </div>
+                <div class="quiz-opt-btn__title">Culture & Souks</div>
+                <div class="quiz-opt-btn__desc">Djerbahood & Guellala</div>
             </button>
-            <button class="quiz-opt-btn" onclick="selectQuizOption('style', 'beach', 3)" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 1.25rem; color: #fff; text-align: center; cursor: pointer; transition: all 0.3s ease; opacity: 0; transform: translateY(15px); pointer-events: none;">
-                <div style="font-size: 2rem; margin-bottom: 0.5rem;">🏖️</div>
-                <div style="font-weight: 700; font-size: 1rem;">Détente & Plage</div>
-                <div style="font-size: 0.8rem; color: var(--clr-sand-500); margin-top: 4px;">Sidi Mahres & Spas</div>
+            <button class="quiz-opt-btn" onclick="selectQuizOption('style', 'beach', 3)">
+                <div class="quiz-opt-btn__icon quiz-opt-btn__icon--teal">
+                    <i class="fi fi-rr-umbrella-beach"></i>
+                </div>
+                <div class="quiz-opt-btn__title">Détente & Plage</div>
+                <div class="quiz-opt-btn__desc">Sidi Mahres & Spas</div>
             </button>
-            <button class="quiz-opt-btn" onclick="selectQuizOption('style', 'adventure', 3)" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 1.25rem; color: #fff; text-align: center; cursor: pointer; transition: all 0.3s ease; opacity: 0; transform: translateY(15px); pointer-events: none;">
-                <div style="font-size: 2rem; margin-bottom: 0.5rem;">🏄‍♂️</div>
-                <div style="font-weight: 700; font-size: 1rem;">Sensations & Quad</div>
-                <div style="font-size: 0.8rem; color: var(--clr-sand-500); margin-top: 4px;">Kitesurf & Désert</div>
+            <button class="quiz-opt-btn" onclick="selectQuizOption('style', 'adventure', 3)">
+                <div class="quiz-opt-btn__icon quiz-opt-btn__icon--rose">
+                    <i class="fi fi-rr-motorcycle"></i>
+                </div>
+                <div class="quiz-opt-btn__title">Sensations & Quad</div>
+                <div class="quiz-opt-btn__desc">Kitesurf & Désert</div>
             </button>
-            <button class="quiz-opt-btn" onclick="selectQuizOption('style', 'food', 3)" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 1.25rem; color: #fff; text-align: center; cursor: pointer; transition: all 0.3s ease; opacity: 0; transform: translateY(15px); pointer-events: none;">
-                <div style="font-size: 2rem; margin-bottom: 0.5rem;">🦞</div>
-                <div style="font-weight: 700; font-size: 1rem;">Gastronomie Luxe</div>
-                <div style="font-size: 0.8rem; color: var(--clr-sand-500); margin-top: 4px;">Ryads & Poisson frais</div>
+            <button class="quiz-opt-btn" onclick="selectQuizOption('style', 'food', 3)">
+                <div class="quiz-opt-btn__icon quiz-opt-btn__icon--emerald">
+                    <i class="fi fi-rr-restaurant"></i>
+                </div>
+                <div class="quiz-opt-btn__title">Gastronomie Luxe</div>
+                <div class="quiz-opt-btn__desc">Ryads & Poisson frais</div>
             </button>
         </div>
     </div>
 
     <!-- Step 3: Durée -->
     <div class="quiz-step" id="quizStep3" style="display: none;">
-        <h3 id="step3Title" style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1.25rem; text-align: center; color: var(--clr-sand-100); min-height: 32px;">
-            <span class="ai-text-target"></span><span class="ai-cursor">▋</span>
+        <h3 id="step3Title" class="c-ai-quiz__step-title">
+            <span class="ai-text-target"></span><span class="ai-cursor"></span>
         </h3>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
-            <button class="quiz-opt-btn" onclick="finishQuiz('3j')" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 1.25rem; color: #fff; text-align: center; cursor: pointer; transition: all 0.3s ease; opacity: 0; transform: translateY(15px); pointer-events: none;">
-                <div style="font-size: 1.8rem; font-weight: 800; color: #F59E0B; margin-bottom: 0.2rem;">3 Jours</div>
-                <div style="font-weight: 700; font-size: 0.95rem;">Week-end Express</div>
+        <div class="c-ai-quiz__grid c-ai-quiz__grid--3col">
+            <button class="quiz-opt-btn" onclick="finishQuiz('3j')">
+                <div class="quiz-opt-btn__icon quiz-opt-btn__icon--gold">
+                    <i class="fi fi-rr-time-fast"></i>
+                </div>
+                <div class="quiz-opt-btn__title" style="color: #F59E0B; font-size: 1.2rem;">3 Jours</div>
+                <div class="quiz-opt-btn__desc">Week-end Express</div>
             </button>
-            <button class="quiz-opt-btn" onclick="finishQuiz('5j')" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 1.25rem; color: #fff; text-align: center; cursor: pointer; transition: all 0.3s ease; opacity: 0; transform: translateY(15px); pointer-events: none;">
-                <div style="font-size: 1.8rem; font-weight: 800; color: #F59E0B; margin-bottom: 0.2rem;">5 Jours</div>
-                <div style="font-weight: 700; font-size: 0.95rem;">Équilibre Parfait</div>
+            <button class="quiz-opt-btn" onclick="finishQuiz('5j')">
+                <div class="quiz-opt-btn__icon quiz-opt-btn__icon--rose">
+                    <i class="fi fi-rr-calendar"></i>
+                </div>
+                <div class="quiz-opt-btn__title" style="color: #F59E0B; font-size: 1.2rem;">5 Jours</div>
+                <div class="quiz-opt-btn__desc">Équilibre Parfait</div>
             </button>
-            <button class="quiz-opt-btn" onclick="finishQuiz('7j')" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 1.25rem; color: #fff; text-align: center; cursor: pointer; transition: all 0.3s ease; opacity: 0; transform: translateY(15px); pointer-events: none;">
-                <div style="font-size: 1.8rem; font-weight: 800; color: #F59E0B; margin-bottom: 0.2rem;">7 Jours +</div>
-                <div style="font-weight: 700; font-size: 0.95rem;">Immersion Totale</div>
+            <button class="quiz-opt-btn" onclick="finishQuiz('7j')">
+                <div class="quiz-opt-btn__icon quiz-opt-btn__icon--teal">
+                    <i class="fi fi-rr-sun"></i>
+                </div>
+                <div class="quiz-opt-btn__title" style="color: #F59E0B; font-size: 1.2rem;">7 Jours +</div>
+                <div class="quiz-opt-btn__desc">Immersion Totale</div>
             </button>
         </div>
     </div>
 
     <!-- Loading Shimmer while AI analyzes -->
-    <div id="aiAnalyzingBox" style="display: none; text-align: center; padding: 3rem 1rem;">
-        <div style="font-size: 2.5rem; margin-bottom: 1rem; animation: spinGlow 2s linear infinite; display: inline-block;">🤖</div>
-        <div id="aiAnalyzingText" style="font-weight: 700; font-size: 1.2rem; color: #F59E0B; margin-bottom: 0.5rem;">
-            <span class="ai-text-target"></span><span class="ai-cursor">▋</span>
+    <div id="aiAnalyzingBox" class="c-ai-quiz__loader-box">
+        <div class="c-ai-quiz__loader-icon">
+            <i class="fi fi-rr-sparkles"></i>
         </div>
-        <div style="max-width: 400px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; margin: 1.5rem auto; overflow: hidden;">
-            <div style="width: 100%; height: 100%; background: linear-gradient(90deg, #E07A5F, #F59E0B); animation: loadingPulse 1.2s ease-in-out infinite;"></div>
+        <div id="aiAnalyzingText" class="c-ai-quiz__loader-text">
+            <span class="ai-text-target"></span><span class="ai-cursor"></span>
+        </div>
+        <div class="c-ai-quiz__loader-bar">
+            <div class="c-ai-quiz__loader-fill"></div>
         </div>
     </div>
 
     <!-- Step Result Recommendation -->
-    <div class="quiz-step" id="quizResult" style="display: none; background: rgba(255,255,255,0.05); border-radius: 20px; padding: 2rem; border: 1px solid var(--clr-terracotta-500);">
-        <div style="text-align: center; margin-bottom: 1.5rem;">
-            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">✨🎉</div>
-            <h3 style="font-size: 1.5rem; font-weight: 800; color: var(--clr-terracotta-500); margin-bottom: 0.5rem; min-height: 40px;" id="resTitle">
-                <span class="ai-text-target"></span><span class="ai-cursor">▋</span>
+    <div class="quiz-step" id="quizResult" class="c-ai-quiz__result-box" style="display: none;">
+        <div class="c-ai-quiz__result-header">
+            <div class="c-ai-quiz__result-icon">
+                <i class="fi fi-rr-badge-check"></i>
+            </div>
+            <h3 id="resTitle" class="c-ai-quiz__result-title">
+                <span class="ai-text-target"></span><span class="ai-cursor"></span>
             </h3>
-            <p style="color: var(--clr-sand-100); font-size: 0.95rem; max-width: 600px; margin: 0 auto; min-height: 36px;" id="resDesc">
-                <span class="ai-text-target"></span><span class="ai-cursor">▋</span>
+            <p id="resDesc" class="c-ai-quiz__result-desc">
+                <span class="ai-text-target"></span><span class="ai-cursor"></span>
             </p>
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; margin-bottom: 2rem;">
-            <div style="background: rgba(15,23,42,0.6); padding: 1.25rem; border-radius: 14px; border: 1px solid rgba(255,255,255,0.1);">
-                <div style="font-size: 0.78rem; color: var(--clr-terracotta-500); font-weight: 700; text-transform: uppercase;">Itinéraire Recommandé</div>
-                <div style="font-weight: 700; font-size: 1.05rem; color: #fff; margin: 4px 0; min-height: 28px;" id="resItinerary">
-                    <span class="ai-text-target"></span><span class="ai-cursor">▋</span>
+        <div class="c-ai-quiz__result-grid">
+            <div class="c-ai-quiz__result-card">
+                <div class="c-ai-quiz__result-card-tag">
+                    <i class="fi fi-rr-compass"></i> Itinéraire Recommandé
                 </div>
-                <div style="font-size: 0.85rem; color: var(--clr-sand-500); min-height: 40px;" id="resItineraryDetails">
-                    <span class="ai-text-target"></span><span class="ai-cursor">▋</span>
+                <div id="resItinerary" class="c-ai-quiz__result-card-head">
+                    <span class="ai-text-target"></span><span class="ai-cursor"></span>
+                </div>
+                <div id="resItineraryDetails" class="c-ai-quiz__result-card-sub">
+                    <span class="ai-text-target"></span><span class="ai-cursor"></span>
                 </div>
             </div>
 
-            <div style="background: rgba(15,23,42,0.6); padding: 1.25rem; border-radius: 14px; border: 1px solid rgba(255,255,255,0.1);">
-                <div style="font-size: 0.78rem; color: var(--clr-terracotta-500); font-weight: 700; text-transform: uppercase;">Hôtel Sélectionné</div>
-                <div style="font-weight: 700; font-size: 1.05rem; color: #fff; margin: 4px 0; min-height: 28px;" id="resHotel">
-                    <span class="ai-text-target"></span><span class="ai-cursor">▋</span>
+            <div class="c-ai-quiz__result-card">
+                <div class="c-ai-quiz__result-card-tag">
+                    <i class="fi fi-rr-hotel"></i> Hôtel Sélectionné
                 </div>
-                <div style="font-size: 0.85rem; color: var(--clr-sand-500); min-height: 40px;" id="resHotelDetails">
-                    <span class="ai-text-target"></span><span class="ai-cursor">▋</span>
+                <div id="resHotel" class="c-ai-quiz__result-card-head">
+                    <span class="ai-text-target"></span><span class="ai-cursor"></span>
+                </div>
+                <div id="resHotelDetails" class="c-ai-quiz__result-card-sub">
+                    <span class="ai-text-target"></span><span class="ai-cursor"></span>
                 </div>
             </div>
         </div>
 
-        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-            <button class="c-button c-button--primary" onclick="openPersonalizedModalFromQuiz()" style="padding: 0.9rem 1.75rem;">
+        <div class="c-ai-quiz__result-actions">
+            <button class="c-button c-button--primary" onclick="openPersonalizedModalFromQuiz()" style="padding: 0.95rem 1.85rem; font-weight: 700; box-shadow: 0 8px 25px rgba(224, 122, 95, 0.4);">
                 <i class="fi fi-rr-document-signed"></i> Commander Mon Guide Personnalisé (9,90 €)
             </button>
-            <a href="<?= url('/hotels-restaurants') ?>" class="c-button c-button--secondary" style="padding: 0.9rem 1.75rem; background: rgba(255,255,255,0.1); color: #fff;">
-                Voir la sélection Hôtels & Restaurants
+            <a href="<?= url('/hotels-restaurants') ?>" class="c-button c-button--secondary" style="padding: 0.95rem 1.85rem; background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.2);">
+                <i class="fi fi-rr-hotel"></i> Voir la sélection Hôtels & Restaurants
             </a>
         </div>
     </div>
 </div>
 
 <style>
+/* Main Container Styling */
+.c-ai-quiz-container {
+    background: linear-gradient(145deg, #0F172A 0%, #1E293B 60%, #0F172A 100%);
+    color: #fff;
+    border-radius: 28px;
+    padding: 3rem 2.5rem;
+    border: 1px solid rgba(245, 158, 11, 0.35);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    max-width: 920px;
+    margin: 3.5rem auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.c-ai-quiz-container::before {
+    content: '';
+    position: absolute;
+    top: -120px;
+    right: -120px;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, rgba(224, 122, 95, 0) 70%);
+    pointer-events: none;
+    border-radius: 50%;
+}
+
+/* AI Status Header Bar */
+.c-ai-quiz__status-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 1.5rem;
+}
+
+.c-ai-quiz__status-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #10B981;
+    box-shadow: 0 0 12px #10B981;
+    animation: pulseGlow 1.8s ease-in-out infinite;
+}
+
+.c-ai-quiz__status-text {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #10B981;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+}
+
+/* Header Text & Badge */
+.c-ai-quiz__header {
+    text-align: center;
+    margin-bottom: 2.25rem;
+}
+
+.c-ai-quiz__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(245, 158, 11, 0.15);
+    color: #F59E0B;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    padding: 6px 18px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.1);
+}
+
+.c-ai-quiz__title {
+    font-size: 2.1rem;
+    font-weight: 800;
+    margin: 1rem 0 0.5rem;
+    color: #FFFFFF;
+    min-height: 55px;
+    line-height: 1.3;
+    letter-spacing: -0.5px;
+}
+
+.c-ai-quiz__subtitle {
+    color: var(--clr-sand-500, #CBD5E1);
+    font-size: 1rem;
+    min-height: 48px;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Steps Indicators Navigation */
+.c-ai-quiz__steps-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 2.5rem;
+    max-width: 450px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.c-ai-quiz__step-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #94A3B8;
+    transition: all 0.4s ease;
+}
+
+.c-ai-quiz__step-item.active {
+    background: linear-gradient(135deg, var(--clr-terracotta-500, #E07A5F) 0%, #F59E0B 100%);
+    border-color: #F59E0B;
+    color: #FFFFFF;
+    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.35);
+}
+
+.c-ai-quiz__step-num {
+    font-weight: 800;
+    font-size: 0.9rem;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.c-ai-quiz__step-lbl {
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.c-ai-quiz__step-line {
+    flex: 1;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 2px;
+    transition: background 0.4s ease;
+}
+
+.c-ai-quiz__step-line.active {
+    background: linear-gradient(90deg, var(--clr-terracotta-500, #E07A5F), #F59E0B);
+}
+
+.c-ai-quiz__step-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: #F8FAFC;
+    min-height: 38px;
+}
+
+/* Option Cards Grid & Professional Buttons */
+.c-ai-quiz__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 1.25rem;
+}
+
+.c-ai-quiz__grid--3col {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.quiz-opt-btn {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 20px;
+    padding: 1.5rem 1.25rem;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity: 0;
+    transform: translateY(18px);
+    pointer-events: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.quiz-opt-btn:hover {
+    background: linear-gradient(145deg, rgba(224, 122, 95, 0.18) 0%, rgba(245, 158, 11, 0.12) 100%);
+    border-color: rgba(245, 158, 11, 0.6);
+    transform: translateY(-5px) scale(1.02) !important;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(245, 158, 11, 0.25);
+}
+
+.quiz-opt-btn__icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin: 0 auto 0.85rem;
+    transition: transform 0.3s ease;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.quiz-opt-btn:hover .quiz-opt-btn__icon {
+    transform: scale(1.12) rotate(-3deg);
+}
+
+/* Icon Gradient Color Variants */
+.quiz-opt-btn__icon--rose {
+    background: linear-gradient(135deg, rgba(224, 122, 95, 0.3), rgba(224, 122, 95, 0.1));
+    color: #E07A5F;
+    border: 1px solid rgba(224, 122, 95, 0.4);
+}
+
+.quiz-opt-btn__icon--blue {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(59, 130, 246, 0.1));
+    color: #60A5FA;
+    border: 1px solid rgba(59, 130, 246, 0.4);
+}
+
+.quiz-opt-btn__icon--gold {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.3), rgba(245, 158, 11, 0.1));
+    color: #F59E0B;
+    border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+.quiz-opt-btn__icon--emerald {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(16, 185, 129, 0.1));
+    color: #34D399;
+    border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+.quiz-opt-btn__icon--teal {
+    background: linear-gradient(135deg, rgba(20, 184, 166, 0.3), rgba(20, 184, 166, 0.1));
+    color: #2DD4BF;
+    border: 1px solid rgba(20, 184, 166, 0.4);
+}
+
+.quiz-opt-btn__title {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: #FFFFFF;
+    margin-bottom: 4px;
+}
+
+.quiz-opt-btn__desc {
+    font-size: 0.82rem;
+    color: #94A3B8;
+    line-height: 1.4;
+}
+
+/* AI Analyzing Loading Shimmer Box */
+.c-ai-quiz__loader-box {
+    text-align: center;
+    padding: 3rem 1.5rem;
+}
+
+.c-ai-quiz__loader-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(224, 122, 95, 0.2));
+    border: 1px solid #F59E0B;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: #F59E0B;
+    margin-bottom: 1.25rem;
+    animation: spinGlow 2.5s linear infinite;
+    box-shadow: 0 0 25px rgba(245, 158, 11, 0.3);
+}
+
+.c-ai-quiz__loader-text {
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: #F59E0B;
+    margin-bottom: 1rem;
+    min-height: 34px;
+}
+
+.c-ai-quiz__loader-bar {
+    max-width: 420px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    margin: 1.5rem auto 0;
+    overflow: hidden;
+}
+
+.c-ai-quiz__loader-fill {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #E07A5F, #F59E0B, #10B981);
+    animation: loadingPulse 1.4s ease-in-out infinite;
+}
+
+/* Result Box */
+.c-ai-quiz__result-box {
+    background: rgba(15, 23, 42, 0.7);
+    border-radius: 24px;
+    padding: 2.25rem;
+    border: 1px solid rgba(245, 158, 11, 0.4);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+}
+
+.c-ai-quiz__result-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.c-ai-quiz__result-icon {
+    font-size: 3rem;
+    color: #F59E0B;
+    margin-bottom: 0.5rem;
+    display: inline-block;
+}
+
+.c-ai-quiz__result-title {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #F59E0B;
+    margin-bottom: 0.5rem;
+    min-height: 44px;
+}
+
+.c-ai-quiz__result-desc {
+    color: #E2E8F0;
+    font-size: 1rem;
+    max-width: 650px;
+    margin: 0 auto;
+    min-height: 38px;
+}
+
+.c-ai-quiz__result-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+.c-ai-quiz__result-card {
+    background: rgba(30, 41, 59, 0.8);
+    padding: 1.5rem;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.c-ai-quiz__result-card-tag {
+    font-size: 0.8rem;
+    color: #F59E0B;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 6px;
+}
+
+.c-ai-quiz__result-card-head {
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: #FFFFFF;
+    margin-bottom: 6px;
+    min-height: 30px;
+}
+
+.c-ai-quiz__result-card-sub {
+    font-size: 0.88rem;
+    color: #94A3B8;
+    line-height: 1.5;
+    min-height: 44px;
+}
+
+.c-ai-quiz__result-actions {
+    display: flex;
+    gap: 1.25rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Ultra Sleek AI Typewriter Cursor */
+.ai-cursor {
+    display: inline-block;
+    width: 3px;
+    height: 1.15em;
+    background: linear-gradient(180deg, #F59E0B 0%, #E07A5F 100%);
+    border-radius: 3px;
+    vertical-align: -0.15em;
+    margin-left: 4px;
+    animation: blinkCursor 0.75s ease-in-out infinite;
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.7);
+}
+
+@keyframes blinkCursor {
+    0%, 100% { opacity: 1; transform: scaleY(1); }
+    50% { opacity: 0.15; transform: scaleY(0.7); }
+}
+
 @keyframes pulseGlow {
-    0% { opacity: 0.4; transform: scale(0.95); }
-    50% { opacity: 1; transform: scale(1.15); }
-    100% { opacity: 0.4; transform: scale(0.95); }
+    0% { opacity: 0.4; transform: scale(0.92); }
+    50% { opacity: 1; transform: scale(1.18); }
+    100% { opacity: 0.4; transform: scale(0.92); }
 }
 
 @keyframes loadingPulse {
@@ -180,17 +632,36 @@
     100% { transform: rotate(360deg); }
 }
 
-.ai-cursor {
-    display: inline-block;
-    color: #F59E0B;
-    font-weight: bold;
-    animation: blinkCursor 0.6s infinite;
-    margin-left: 2px;
-}
+@media (max-width: 600px) {
+    .c-ai-quiz-container {
+        padding: 2rem 1.25rem;
+        border-radius: 20px;
+    }
 
-@keyframes blinkCursor {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
+    .c-ai-quiz__title {
+        font-size: 1.5rem;
+        min-height: 65px;
+    }
+
+    .c-ai-quiz__grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.85rem;
+    }
+
+    .quiz-opt-btn {
+        padding: 1.1rem 0.85rem;
+    }
+
+    .quiz-opt-btn__icon {
+        width: 44px;
+        height: 44px;
+        font-size: 1.25rem;
+        border-radius: 12px;
+    }
+
+    .c-ai-quiz__step-lbl {
+        display: none;
+    }
 }
 </style>
 
@@ -230,7 +701,7 @@ function hideStepOptions(stepId) {
     const buttons = step.querySelectorAll('.quiz-opt-btn');
     buttons.forEach(btn => {
         btn.style.opacity = '0';
-        btn.style.transform = 'translateY(15px)';
+        btn.style.transform = 'translateY(18px)';
         btn.style.pointerEvents = 'none';
     });
 }
@@ -293,13 +764,27 @@ function selectQuizOption(key, val, nextStep) {
     const nextElem = document.getElementById('quizStep' + nextStep);
     nextElem.style.display = 'block';
 
-    document.querySelectorAll('.quiz-step-indicator').forEach((ind, i) => {
-        if (i + 1 <= nextStep) {
-            ind.style.background = 'var(--clr-terracotta-500)';
-        } else {
-            ind.style.background = 'rgba(255,255,255,0.1)';
+    // Update step indicators
+    for (let i = 1; i <= 3; i++) {
+        const ind = document.getElementById('stepInd' + i);
+        if (ind) {
+            if (i <= nextStep) {
+                ind.classList.add('active');
+            } else {
+                ind.classList.remove('active');
+            }
         }
-    });
+    }
+    for (let i = 1; i <= 2; i++) {
+        const line = document.getElementById('stepLine' + i);
+        if (line) {
+            if (i < nextStep) {
+                line.classList.add('active');
+            } else {
+                line.classList.remove('active');
+            }
+        }
+    }
 
     if (nextStep === 2) {
         hideStepOptions('quizStep2');
@@ -323,7 +808,7 @@ function finishQuiz(durationVal) {
     const aiBox = document.getElementById('aiAnalyzingBox');
     aiBox.style.display = 'block';
 
-    typeText('aiAnalyzingText', "🤖 Analyse de vos critères en cours par l'IA Djerba...", 18, () => {
+    typeText('aiAnalyzingText', "Analyse de vos critères en cours par l'IA Djerba...", 18, () => {
         setTimeout(() => {
             aiBox.style.display = 'none';
             const resElem = document.getElementById('quizResult');
