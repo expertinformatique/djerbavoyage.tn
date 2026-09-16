@@ -87,7 +87,7 @@
     <div class="l-container c-footer__grid">
       <div class="c-footer__col">
         <h3 class="c-footer__brand-title">
-          <i class="fi fi-rr-map-marker c-footer__brand-icon"></i> <?= e($settings->get('site_name', 'Djerba Voyage')) ?>
+          <i class="fi fi-rr-map-marker c-footer__brand-icon"></i> <?= e((isset($settings) && $settings) ? $settings->get('site_name', 'Djerba Voyage') : 'Djerba Voyage') ?>
         </h3>
         <p class="c-footer__brand-desc">
           <?= __('footer.description') ?>
@@ -141,7 +141,7 @@
     </div>
 
     <div class="l-container c-footer__bottom">
-      <p><?= __('footer.copyright', ['year' => date('Y'), 'name' => e($settings->get('site_name', 'Djerba Voyage'))]) ?></p>
+      <p><?= __('footer.copyright', ['year' => date('Y'), 'name' => e((isset($settings) && $settings) ? $settings->get('site_name', 'Djerba Voyage') : 'Djerba Voyage')]) ?></p>
       <p><?= __('footer.payments') ?> <i class="fi fi-rr-lock c-footer__lock-icon"></i> <strong>Stripe</strong></p>
     </div>
   </footer>

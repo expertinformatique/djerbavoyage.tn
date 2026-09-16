@@ -16,7 +16,7 @@
       <p>Toutes les transactions bancaires sont traitées de manière hautement sécurisée par notre prestataire de paiement agréé <strong>Stripe</strong>. Aucune donnée de carte bancaire n'est stockée ni hébergée sur nos serveurs.</p>
 
       <h2 style="font-family:var(--font-heading); font-size:1.4rem; margin:1.5rem 0 0.5rem 0;">3. Vos Droits (Accès & Suppression)</h2>
-      <p>Conformément au Règlement Général sur la Protection des Données (RGPD), vous disposez d'un droit d'accès, de rectification et de suppression de vos données personnelles sur simple e-mail à : <code><?= e($settings->get('contact_email', 'contact@djerba-voyage.tn')) ?></code>.</p>
+      <p>Conformément au Règlement Général sur la Protection des Données (RGPD), vous disposez d'un droit d'accès, de rectification et de suppression de vos données personnelles sur simple e-mail à : <code><?= e((isset($settings) && $settings) ? $settings->get('contact_email', 'contact@djerba-voyage.tn') : 'contact@djerba-voyage.tn') ?></code>.</p>
     </div>
   </article>
 </div>

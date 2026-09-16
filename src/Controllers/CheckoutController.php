@@ -9,13 +9,16 @@ use App\Services\StripeService;
 use App\Services\DownloadService;
 use App\Services\FraudDetectionService;
 
+use App\Services\SettingsService;
+
 class CheckoutController extends Controller {
     public function __construct(
         private ProductRepositoryInterface $productRepo,
         private OrderRepositoryInterface $orderRepo,
         private StripeService $stripeService,
         private DownloadService $downloadService,
-        private FraudDetectionService $fraudService
+        private FraudDetectionService $fraudService,
+        private ?SettingsService $settingsService = null
     ) {}
 
     public function createSession(): void {
@@ -69,11 +72,18 @@ class CheckoutController extends Controller {
 
     public function success(): void {
         $sessionId = $_GET['session_id'] ?? '';
+        $orderNumber = $_GET['order_number'] ?? '';
         $token = $_GET['token'] ?? '';
+
+        if (!empty($orderNumber) && strpos($orderNumber, 'DJE-PASS-') === 0) {
+            $this->redirect('/reservation/planning/' . urlencode($orderNumber));
+            return;
+        }
 
         $this->render('pages/success', [
             'sessionId' => $sessionId,
-            'token'     => $token
+            'token'     => $token,
+            'settings'  => $this->settingsService
         ]);
     }
 }

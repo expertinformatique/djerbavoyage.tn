@@ -25,7 +25,7 @@
       <div style="background:#fff; padding:2rem; border-radius:16px; border:1px solid var(--clr-sand-300); box-shadow:var(--shadow-soft);">
         <h3 style="font-family:var(--font-heading); font-size:1.4rem; color:var(--clr-dark-900); margin-bottom:0.5rem;">Excursions Populaires à <?= e($destination['name_fr']) ?></h3>
         <p style="margin-bottom:1.5rem; color:#666; font-size:1rem;">Réservez vos visites guidées et activités nautiques via notre partenaire GetYourGuide :</p>
-        <a href="https://www.getyourguide.com/djerba-l32386/?partner_id=<?= e($settings->get('getyourguide_partner_id')) ?>" target="_blank" rel="sponsored noopener" class="c-button c-button--primary" style="font-weight:700; font-size:0.95rem; padding:0.85rem 1.6rem;">
+        <a href="https://www.getyourguide.com/djerba-l32386/?partner_id=<?= e((isset($settings) && $settings) ? $settings->get('getyourguide_partner_id', '8073836') : '8073836') ?>" target="_blank" rel="sponsored noopener" class="c-button c-button--primary" style="font-weight:700; font-size:0.95rem; padding:0.85rem 1.6rem;">
           Réserver une Excursion GetYourGuide <i class="fi fi-rr-arrow-up-right"></i>
         </a>
       </div>

@@ -2,7 +2,7 @@
 /**
  * Modal Grande Popup avec iframe Booking.com — Reste sur le site sans redirection externe
  */
-$partnerId = $settings->get('booking_partner_id', 'booking_djerba_123');
+$partnerId = (isset($settings) && $settings) ? $settings->get('booking_partner_id', '8073836') : '8073836';
 ?>
 <script>
 const DEFAULT_BOOKING_URL = "https://www.booking.com/city/tn/houmt-souk.html?aid=<?= e($partnerId) ?>";
