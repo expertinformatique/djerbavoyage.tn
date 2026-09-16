@@ -25,13 +25,16 @@ class OrdersAdminController extends Controller {
         
         $ordersData = $this->orderRepo->getPaginated($page, $limit, $search);
         
+        $total = $ordersData['total'] ?? 0;
+        $items = $ordersData['items'] ?? $ordersData['orders'] ?? [];
+        
         $this->render('admin/orders/index', [
-            'orders'      => $ordersData['orders'],
-            'total'       => $ordersData['total'],
+            'orders'      => $items,
+            'total'       => $total,
             'page'        => $page,
             'limit'       => $limit,
             'search'      => $search,
-            'totalPages'  => ceil($ordersData['total'] / $limit)
+            'totalPages'  => $total > 0 ? (int)ceil($total / $limit) : 1
         ], 'layouts/admin');
     }
 }
