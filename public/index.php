@@ -11,6 +11,22 @@ if (!defined('ROOT_PATH')) {
     define('ROOT_PATH', dirname(__DIR__));
 }
 
+// Chargement automatique des variables d'environnement (.env)
+if (file_exists(ROOT_PATH . '/.env')) {
+    $envLines = file(ROOT_PATH . '/.env', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    foreach ($envLines as $line) {
+        $line = trim($line);
+        if ($line === '' || strpos($line, '#') === 0) continue;
+        if (strpos($line, '=') !== false) {
+            list($name, $val) = explode('=', $line, 2);
+            $name = trim($name);
+            $val = trim($val, " \t\n\r\0\x0B\"'");
+            $_ENV[$name] = $val;
+            putenv("{$name}={$val}");
+        }
+    }
+}
+
 require_once __DIR__ . '/../core/helpers.php';
 
 // Autoloading simple pour App\ et Core\
@@ -188,6 +204,10 @@ $router->get('/meteo-climat', [App\Controllers\PageController::class, 'meteo']);
 $router->get('/transports', [App\Controllers\PageController::class, 'transports']);
 $router->get('/gastronomie', [App\Controllers\PageController::class, 'gastronomie']);
 
+// Bindings Repository dans le container
+$container->bind(\App\Interfaces\ProductRepositoryInterface::class, fn() => new \App\Repositories\PdoProductRepository(\Core\Database::getInstance()));
+$container->bind(\App\Interfaces\OrderRepositoryInterface::class, fn() => new \App\Repositories\PdoOrderRepository(\Core\Database::getInstance()));
+
 // Routes Administration
 $router->get('/admin/login', [App\Controllers\Admin\AuthController::class, 'login']);
 $router->post('/admin/login', [App\Controllers\Admin\AuthController::class, 'login']);
@@ -200,6 +220,16 @@ $router->post('/admin/settings', [App\Controllers\Admin\SettingsAdminController:
 $router->get('/admin/analytics', [App\Controllers\Admin\AnalyticsAdminController::class, 'index']);
 $router->get('/admin/newsletter', [App\Controllers\Admin\NewsletterAdminController::class, 'index']);
 $router->get('/admin/audit', [App\Controllers\Admin\AuditAdminController::class, 'index']);
+
+// Nouvelles routes pour Produits et Commandes
+$router->get('/admin/products', [App\Controllers\Admin\ProductsAdminController::class, 'index']);
+$router->get('/admin/products/create', [App\Controllers\Admin\ProductsAdminController::class, 'create']);
+$router->post('/admin/products/create', [App\Controllers\Admin\ProductsAdminController::class, 'create']);
+$router->get('/admin/products/edit', [App\Controllers\Admin\ProductsAdminController::class, 'edit']);
+$router->post('/admin/products/edit', [App\Controllers\Admin\ProductsAdminController::class, 'edit']);
+$router->post('/admin/products/delete', [App\Controllers\Admin\ProductsAdminController::class, 'delete']);
+
+$router->get('/admin/orders', [App\Controllers\Admin\OrdersAdminController::class, 'index']);
 
 // Route de changement de locale (langue + devise)
 $router->post('/api/locale', [LocaleController::class, 'switch']);

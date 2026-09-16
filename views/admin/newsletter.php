@@ -1,57 +1,96 @@
-<h1 style="font-family:var(--font-heading); margin-bottom:1.5rem;">Gestion de la Newsletter & Club Privé</h1>
-
-<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1.5rem; margin-bottom:2rem;">
-  <div style="background:#fff; padding:1.5rem; border-radius:12px; box-shadow:var(--shadow-soft);">
-    <span style="color:#666; font-size:0.9rem;">Abonnés Actifs</span>
-    <h2 style="font-size:2rem; font-family:var(--font-heading); color:var(--clr-sea-600);"><?= (int)$activeCount ?></h2>
-  </div>
-  <div style="background:#fff; padding:1.5rem; border-radius:12px; box-shadow:var(--shadow-soft);">
-    <span style="color:#666; font-size:0.9rem;">Serveur SMTP Sortant</span>
-    <div style="font-weight:700; font-size:1.1rem; color:var(--clr-sea-900); margin-top:0.4rem;">mail.djerbavoyage.tn:465</div>
-    <span style="font-size:0.75rem; color:#10B981;">SSL/TLS Actif</span>
-  </div>
-  <div style="background:#fff; padding:1.5rem; border-radius:12px; box-shadow:var(--shadow-soft);">
-    <span style="color:#666; font-size:0.9rem;">Boîte de Réception</span>
-    <div style="font-weight:700; font-size:1.1rem; color:var(--clr-terracotta-500); margin-top:0.4rem;">reservation@djerbavoyage.tn</div>
-    <span style="font-size:0.75rem; color:#64748B;">IMAP 993 / POP3 995</span>
+<div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+  <div>
+    <h1 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Newsletter & Club Privé</h1>
+    <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Suivi des abonnés à la liste de diffusion et configuration SMTP.</p>
   </div>
 </div>
 
-<h2 style="font-family:var(--font-heading); margin-bottom:1rem;">Liste des Inscrits</h2>
+<!-- Info Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+  <div class="bg-white dark:bg-slate-900 rounded-xl p-4 border border-slate-200/90 dark:border-slate-800 shadow-sm">
+    <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Abonnés Actifs</span>
+    <h3 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white mt-1"><?= (int)$activeCount ?></h3>
+    <p class="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium mt-1">
+      Opt-in confirmés
+    </p>
+  </div>
 
-<table class="c-table">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Adresse E-mail</th>
-      <th>Statut</th>
-      <th>IP</th>
-      <th>Date Inscription</th>
-      <th>Désinscription</th>
-    </tr>
-  </thead>
-  <tbody>
-    <?php if (empty($subscribers)): ?>
-      <tr>
-        <td colspan="6" style="text-align:center; padding:1.5rem;">Aucun inscrit pour le moment.</td>
-      </tr>
-    <?php else: ?>
-      <?php foreach ($subscribers as $sub): ?>
+  <div class="bg-white dark:bg-slate-900 rounded-xl p-4 border border-slate-200/90 dark:border-slate-800 shadow-sm">
+    <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Serveur SMTP Sortant</span>
+    <h4 class="text-sm font-bold text-slate-900 dark:text-white mt-1">mail.djerbavoyage.tn:465</h4>
+    <p class="text-[11px] text-emerald-600 font-medium mt-1 flex items-center gap-1">
+      <i class="fi fi-rr-lock"></i> SSL/TLS Chiffré
+    </p>
+  </div>
+
+  <div class="bg-white dark:bg-slate-900 rounded-xl p-4 border border-slate-200/90 dark:border-slate-800 shadow-sm">
+    <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Boîte de Réception</span>
+    <h4 class="text-sm font-bold text-[#635bff] dark:text-indigo-400 mt-1 truncate">reservation@djerbavoyage.tn</h4>
+    <p class="text-[11px] text-slate-400 font-medium mt-1">
+      IMAP 993 / POP3 995
+    </p>
+  </div>
+</div>
+
+<!-- Subscribers Table -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200/90 dark:border-slate-800 shadow-sm overflow-hidden">
+  <div class="p-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30">
+    <h2 class="text-sm font-bold text-slate-900 dark:text-white">Liste des Inscrits</h2>
+    <p class="text-xs text-slate-500 dark:text-slate-400">Carnet d'adresses pour les campagnes promotionnelles</p>
+  </div>
+  
+  <div class="overflow-x-auto w-full">
+    <table class="w-full text-xs text-left">
+      <thead class="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase bg-slate-50/75 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800">
         <tr>
-          <td><?= (int)$sub['id'] ?></td>
-          <td><strong><?= e($sub['email']) ?></strong></td>
-          <td>
-            <?php if ($sub['status'] === 'active'): ?>
-              <span style="background:#dcfce7; color:#15803d; padding:0.2rem 0.6rem; border-radius:4px; font-weight:600; font-size:0.85rem;">Actif</span>
-            <?php else: ?>
-              <span style="background:#fee2e2; color:#b91c1c; padding:0.2rem 0.6rem; border-radius:4px; font-weight:600; font-size:0.85rem;">Désinscrit</span>
-            <?php endif; ?>
-          </td>
-          <td><?= e($sub['ip_address'] ?? '-') ?></td>
-          <td><?= e($sub['created_at']) ?></td>
-          <td><?= e($sub['unsubscribed_at'] ?? '-') ?></td>
+          <th class="px-5 py-2.5">ID</th>
+          <th class="px-5 py-2.5">Adresse E-mail</th>
+          <th class="px-5 py-2.5">Statut</th>
+          <th class="px-5 py-2.5">Adresse IP</th>
+          <th class="px-5 py-2.5">Date Inscription</th>
+          <th class="px-5 py-2.5">Désinscription</th>
         </tr>
-      <?php endforeach; ?>
-    <?php endif; ?>
-  </tbody>
-</table>
+      </thead>
+      <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+        <?php if (empty($subscribers)): ?>
+          <tr>
+            <td colspan="6" class="px-5 py-8 text-center text-slate-400">
+              Aucun abonné enregistré pour le moment.
+            </td>
+          </tr>
+        <?php else: ?>
+          <?php foreach ($subscribers as $sub): ?>
+            <tr class="hover:bg-slate-50/75 dark:hover:bg-slate-800/50 transition-colors">
+              <td class="px-5 py-3 font-mono text-slate-400 text-[11px]">
+                #<?= (int)$sub['id'] ?>
+              </td>
+              <td class="px-5 py-3 font-semibold text-slate-900 dark:text-white">
+                <?= e($sub['email']) ?>
+              </td>
+              <td class="px-5 py-3">
+                <?php if ($sub['status'] === 'active'): ?>
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200/80 dark:bg-emerald-950/40 dark:text-emerald-400">
+                    Actif
+                  </span>
+                <?php else: ?>
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-red-50 text-red-700 border border-red-200 dark:bg-red-950/40 dark:text-red-400">
+                    Désinscrit
+                  </span>
+                <?php endif; ?>
+              </td>
+              <td class="px-5 py-3 text-slate-500 dark:text-slate-400 font-mono text-[11px]">
+                <?= e($sub['ip_address'] ?? '-') ?>
+              </td>
+              <td class="px-5 py-3 text-slate-500 dark:text-slate-400 whitespace-nowrap">
+                <?= e($sub['created_at']) ?>
+              </td>
+              <td class="px-5 py-3 text-slate-400 whitespace-nowrap">
+                <?= e($sub['unsubscribed_at'] ?? '-') ?>
+              </td>
+            </tr>
+          <?php endforeach; ?>
+        <?php endif; ?>
+      </tbody>
+    </table>
+  </div>
+</div>

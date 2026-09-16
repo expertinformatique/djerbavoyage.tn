@@ -1,65 +1,77 @@
-<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
+<div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
   <div>
-    <h1 style="font-family:var(--font-heading); margin-bottom:0.25rem;">Gestion des Pass Séjour & Activités</h1>
-    <p style="color:#64748B; font-size:0.9rem;">Suivi des réservations d'activités, des plannings clients et des accueils aéroport.</p>
+    <h1 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Pass Séjour & Activités</h1>
+    <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Suivi des plannings d'excursions, accueils aéroport et réservations d'activités.</p>
   </div>
-  <a href="/services" target="_blank" class="c-button c-button--outline" style="background:#fff; font-size:0.85rem;">
-    <i class="fi fi-rr-eye"></i> Voir le Configurateur
+  <a href="<?= url('/services') ?>" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 rounded-md text-xs font-semibold hover:bg-slate-50 shadow-sm transition-colors">
+    <i class="fi fi-rr-eye text-slate-400"></i> Voir le Configurateur
   </a>
 </div>
 
-<div style="background:#fff; border-radius:12px; padding:1.5rem; box-shadow:var(--shadow-soft); margin-bottom:2rem; overflow-x:auto;">
-  <table class="c-table" style="width:100%;">
-    <thead>
-      <tr>
-        <th style="padding:0.75rem 1rem; text-align:left;">Référence Pass</th>
-        <th style="padding:0.75rem 1rem; text-align:left;">Client</th>
-        <th style="padding:0.75rem 1rem; text-align:left;">Total Réglé</th>
-        <th style="padding:0.75rem 1rem; text-align:left;">Vol Arrivée (DJE)</th>
-        <th style="padding:0.75rem 1rem; text-align:left;">Accueil Chauffeur</th>
-        <th style="padding:0.75rem 1rem; text-align:right;">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php if (empty($passes)): ?>
-        <tr><td colspan="6" style="text-align:center; padding:2rem; color:#94A3B8;">Aucune commande de pass séjour pour l'instant.</td></tr>
-      <?php else: ?>
-        <?php foreach ($passes as $p): ?>
-          <tr style="border-bottom:1px solid #F1F5F9;">
-            <td style="padding:0.75rem 1rem; font-weight:700; color:var(--clr-sea-900);">
-              <?= e($p['order_number']) ?>
-            </td>
-            <td style="padding:0.75rem 1rem; font-size:0.9rem;">
-              <?= e($p['customer_email']) ?>
-            </td>
-            <td style="padding:0.75rem 1rem; font-weight:700;">
-              <?= number_format((float)$p['total_amount'], 2) ?> €
-            </td>
-            <td style="padding:0.75rem 1rem; font-size:0.85rem;">
-              <?php if (!empty($p['flight_number'])): ?>
-                <strong><?= e($p['flight_number']) ?></strong><br>
-                <span style="color:#64748B;"><?= e($p['arrival_date']) ?> à <?= e($p['arrival_time']) ?></span>
-              <?php else: ?>
-                <span style="color:#F59E0B; font-style:italic;">En attente infos vol</span>
-              <?php endif; ?>
-            </td>
-            <td style="padding:0.75rem 1rem;">
-              <?php if (!empty($p['transfer_status'])): ?>
-                <span style="background:<?= $p['transfer_status'] === 'confirmed' ? '#DCFCE7; color:#166534;' : '#FEF3C7; color:#92400E;' ?> padding:0.25rem 0.6rem; border-radius:20px; font-size:0.78rem; font-weight:700;">
-                  <?= e($p['transfer_status']) ?>
-                </span>
-              <?php else: ?>
-                <span style="color:#94A3B8; font-size:0.82rem;">Non requis</span>
-              <?php endif; ?>
-            </td>
-            <td style="padding:0.75rem 1rem; text-align:right;">
-              <a href="/reservation/planning/<?= urlencode($p['order_number']) ?>" target="_blank" class="c-button c-button--outline" style="padding:0.4rem 0.8rem; font-size:0.8rem;">
-                <i class="fi fi-rr-calendar"></i> Planning
-              </a>
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200/90 dark:border-slate-800 shadow-sm overflow-hidden">
+  <div class="overflow-x-auto w-full">
+    <table class="w-full text-xs text-left">
+      <thead class="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase bg-slate-50/75 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800">
+        <tr>
+          <th class="px-5 py-2.5">Référence Pass</th>
+          <th class="px-5 py-2.5">Client</th>
+          <th class="px-5 py-2.5">Total Réglé</th>
+          <th class="px-5 py-2.5">Vol Arrivée (DJE)</th>
+          <th class="px-5 py-2.5">Transfert Chauffeur</th>
+          <th class="px-5 py-2.5 text-right">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+        <?php if (empty($passes)): ?>
+          <tr>
+            <td colspan="6" class="px-5 py-8 text-center text-slate-400">
+              Aucune commande de pass séjour pour l'instant.
             </td>
           </tr>
-        <?php endforeach; ?>
-      <?php endif; ?>
-    </tbody>
-  </table>
+        <?php else: ?>
+          <?php foreach ($passes as $p): ?>
+            <tr class="hover:bg-slate-50/75 dark:hover:bg-slate-800/50 transition-colors">
+              <td class="px-5 py-3 font-semibold text-slate-900 dark:text-white">
+                <?= e($p['order_number']) ?>
+              </td>
+              <td class="px-5 py-3 text-slate-600 dark:text-slate-300">
+                <?= e($p['customer_email']) ?>
+              </td>
+              <td class="px-5 py-3 font-semibold text-slate-900 dark:text-white">
+                <?= number_format((float)$p['total_amount'], 2) ?> €
+              </td>
+              <td class="px-5 py-3">
+                <?php if (!empty($p['flight_number'])): ?>
+                  <span class="font-semibold text-slate-900 dark:text-white"><?= e($p['flight_number']) ?></span><br>
+                  <span class="text-slate-400 text-[11px]"><?= e($p['arrival_date']) ?> à <?= e($p['arrival_time']) ?></span>
+                <?php else: ?>
+                  <span class="text-amber-500 italic text-[11px]">En attente infos vol</span>
+                <?php endif; ?>
+              </td>
+              <td class="px-5 py-3">
+                <?php if (!empty($p['transfer_status'])): ?>
+                  <?php if ($p['transfer_status'] === 'confirmed'): ?>
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200/80 dark:bg-emerald-950/40 dark:text-emerald-400">
+                      Confirmé
+                    </span>
+                  <?php else: ?>
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-amber-50 text-amber-700 border border-amber-200/80 dark:bg-amber-950/40 dark:text-amber-400">
+                      <?= e($p['transfer_status']) ?>
+                    </span>
+                  <?php endif; ?>
+                <?php else: ?>
+                  <span class="text-slate-400 text-[11px]">Non requis</span>
+                <?php endif; ?>
+              </td>
+              <td class="px-5 py-3 text-right">
+                <a href="/reservation/planning/<?= urlencode($p['order_number']) ?>" target="_blank" class="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium text-[#635bff] bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-950/50 dark:text-indigo-400 rounded transition-colors">
+                  <i class="fi fi-rr-calendar text-[10px]"></i> Planning
+                </a>
+              </td>
+            </tr>
+          <?php endforeach; ?>
+        <?php endif; ?>
+      </tbody>
+    </table>
+  </div>
 </div>

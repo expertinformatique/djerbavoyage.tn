@@ -14,8 +14,8 @@ class AuthController extends Controller {
             $password = $_POST['password'] ?? '';
 
             $pdo = Database::getInstance();
-            $stmt = $pdo->prepare("SELECT * FROM users WHERE username = :user OR email = :user");
-            $stmt->execute(['user' => $username]);
+            $stmt = $pdo->prepare("SELECT * FROM users WHERE username = :username OR email = :email");
+            $stmt->execute(['username' => $username, 'email' => $username]);
             $user = $stmt->fetch();
 
             if ($user && password_verify($password, $user['password'])) {

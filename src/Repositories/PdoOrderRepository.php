@@ -61,17 +61,18 @@ class PdoOrderRepository implements OrderRepositoryInterface {
         $offset = ($page - 1) * $limit;
         $searchQuery = "%{$search}%";
 
-        $countStmt = $this->pdo->prepare("SELECT COUNT(*) FROM orders WHERE customer_email LIKE :search OR order_number LIKE :search");
-        $countStmt->execute(['search' => $searchQuery]);
+        $countStmt = $this->pdo->prepare("SELECT COUNT(*) FROM orders WHERE customer_email LIKE :search_email OR order_number LIKE :search_order");
+        $countStmt->execute(['search_email' => $searchQuery, 'search_order' => $searchQuery]);
         $total = (int)$countStmt->fetchColumn();
 
         $stmt = $this->pdo->prepare("
             SELECT * FROM orders 
-            WHERE customer_email LIKE :search OR order_number LIKE :search
+            WHERE customer_email LIKE :search_email OR order_number LIKE :search_order
             ORDER BY created_at DESC 
             LIMIT :limit OFFSET :offset
         ");
-        $stmt->bindValue(':search', $searchQuery, PDO::PARAM_STR);
+        $stmt->bindValue(':search_email', $searchQuery, PDO::PARAM_STR);
+        $stmt->bindValue(':search_order', $searchQuery, PDO::PARAM_STR);
         $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
         $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
         $stmt->execute();

@@ -1,0 +1,10 @@
+/.git/
+/.gitignore
+/.git-ftp-ignore
+/tests/
+.env
+*.log
+google_analytics.md
+djerba-travel-platform-spec-fr.md
+/storage/cache/*
+/storage/logs/*

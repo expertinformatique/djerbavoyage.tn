@@ -29,8 +29,9 @@ abstract class Controller {
         exit;
     }
 
-    protected function redirect(string $url): void {
-        header("Location: {$url}");
+    protected function redirect(string $path): void {
+        $finalUrl = (strpos($path, 'http') === 0) ? $path : url($path);
+        header("Location: {$finalUrl}");
         exit;
     }
 }
