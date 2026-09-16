@@ -20,6 +20,8 @@ return [
     'nav.transport.desc'    => 'Taxis, car rentals & airport transfers',
     'nav.weather'           => 'Weather & Best Time to Visit',
     'nav.weather.desc'      => 'Climate, ideal seasons & temperatures',
+    'nav.guides'            => 'Guides & Travel Blog',
+    'nav.guides.desc'       => 'All our articles, tips & top spots',
     'nav.pass'              => 'Pass & Concierge',
     'nav.pass_activities'   => 'Custom Activities Pass',
     'nav.pass_activities.desc' => 'Build your package with up to -15% discount',

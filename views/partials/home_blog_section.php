@@ -75,6 +75,8 @@ if (empty($recentArticles)) {
                 </a>
               <?php endif; ?>
             </div>
+
+
           </div>
         </article>
       <?php endforeach; ?>

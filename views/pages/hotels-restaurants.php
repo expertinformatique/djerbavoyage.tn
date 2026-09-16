@@ -15,14 +15,15 @@
     </div>
 
     <!-- Cards Grid -->
-    <div class="l-grid-cards" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem;">
+    <div class="l-grid-cards l-grid-cards--3cols">
+
         
         <!-- Hotel 1 -->
-        <article class="c-card resto-item" data-type="hotel" style="background: #fff; border-radius: 20px; overflow: hidden; border: 1px solid var(--clr-sand-300);">
+        <article class="c-card resto-item" data-type="hotel">
             <div style="height: 220px; position: relative;">
                 <img src="<?= asset('images/concierge.png') ?>" alt="Dar Dhiafa Erriadh" style="width: 100%; height: 100%; object-fit: cover;">
-                <span style="position: absolute; top: 12px; left: 12px; background: rgba(15,23,42,0.8); color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">Menzel de Charme</span>
-                <span style="position: absolute; top: 12px; right: 12px; background: var(--clr-terracotta-500); color: #fff; padding: 4px 10px; border-radius: 20px; font-size: 0.85rem; font-weight: 700;">★ 4.9</span>
+                <span class="c-card__badge-tag">Menzel de Charme</span>
+                <span class="c-card__badge-rating">★ 4.9</span>
             </div>
             <div style="padding: 1.5rem;">
                 <div style="font-size: 0.8rem; color: var(--clr-sea-600); font-weight: 700; text-transform: uppercase;">Erriadh (Djerbahood)</div>
@@ -31,9 +32,9 @@
                     Véritable bijou d'architecture djerbienne niché au cœur d'Erriadh. Cours intérieures avec palmiers, deux piscines d'eau tiède et suites décorées d'objets d'artisanat.
                 </p>
                 <div style="display: flex; flex-direction: column; gap: 0.75rem; border-top: 1px solid var(--clr-sand-200); padding-top: 1rem;">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <span style="font-weight: 800; font-size: 1.15rem; color: var(--clr-sea-900);">À partir de 110 € <span style="font-size: 0.8rem; font-weight: normal;">/ nuit</span></span>
-                        <a href="<?= url('/concierge') ?>" class="btn btn--gold" style="padding: 6px 14px; font-size: 0.85rem;">Réserver via VIP</a>
+                    <div class="c-card__price-row">
+                        <span class="c-card__price">À partir de <strong>110 €</strong> <span class="c-card__price-unit">/ nuit</span></span>
+                        <a href="<?= url('/concierge') ?>" class="btn btn--gold c-card__btn-vip">Réserver via VIP</a>
                     </div>
                     <div class="c-card__icon-group" style="justify-content: flex-end;">
                         <button type="button" class="c-icon-btn c-icon-btn--booking" title="Voir sur Booking.com (Partenaire Officiel)" onclick="openBookingHotelsModal('Dar Dhiafa Erriadh', 'https://www.booking.com/city/tn/houmt-souk.html?aid=8073836')">
@@ -54,11 +55,11 @@
         </article>
 
         <!-- Hotel 2 -->
-        <article class="c-card resto-item" data-type="hotel" style="background: #fff; border-radius: 20px; overflow: hidden; border: 1px solid var(--clr-sand-300);">
+        <article class="c-card resto-item" data-type="hotel">
             <div style="height: 220px; position: relative;">
                 <img src="<?= asset('images/sidi_mahres.png') ?>" alt="Radisson Blu Palace Djerba" style="width: 100%; height: 100%; object-fit: cover;">
-                <span style="position: absolute; top: 12px; left: 12px; background: rgba(15,23,42,0.8); color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">Resort & Thalasso 5★</span>
-                <span style="position: absolute; top: 12px; right: 12px; background: var(--clr-terracotta-500); color: #fff; padding: 4px 10px; border-radius: 20px; font-size: 0.85rem; font-weight: 700;">★ 4.8</span>
+                <span class="c-card__badge-tag">Resort & Thalasso 5★</span>
+                <span class="c-card__badge-rating">★ 4.8</span>
             </div>
             <div style="padding: 1.5rem;">
                 <div style="font-size: 0.8rem; color: var(--clr-sea-600); font-weight: 700; text-transform: uppercase;">Sidi Mahres Beach</div>
@@ -67,9 +68,9 @@
                     Espaces somptueux situés directement sur la plage de sable blanc. Centre de thalassothérapie Athénée Thalasso de renommée internationale.
                 </p>
                 <div style="display: flex; flex-direction: column; gap: 0.75rem; border-top: 1px solid var(--clr-sand-200); padding-top: 1rem;">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <span style="font-weight: 800; font-size: 1.15rem; color: var(--clr-sea-900);">À partir de 145 € <span style="font-size: 0.8rem; font-weight: normal;">/ nuit</span></span>
-                        <a href="<?= url('/concierge') ?>" class="btn btn--gold" style="padding: 6px 14px; font-size: 0.85rem;">Réserver via VIP</a>
+                    <div class="c-card__price-row">
+                        <span class="c-card__price">À partir de <strong>145 €</strong> <span class="c-card__price-unit">/ nuit</span></span>
+                        <a href="<?= url('/concierge') ?>" class="btn btn--gold c-card__btn-vip">Réserver via VIP</a>
                     </div>
                     <div class="c-card__icon-group" style="justify-content: flex-end;">
                         <button type="button" class="c-icon-btn c-icon-btn--booking" title="Voir sur Booking.com (Partenaire Officiel)" onclick="openBookingHotelsModal('Radisson Blu Palace', 'https://www.booking.com/city/tn/houmt-souk.html?aid=8073836')">
@@ -90,11 +91,11 @@
         </article>
 
         <!-- Restaurant 1 -->
-        <article class="c-card resto-item" data-type="resto" style="background: #fff; border-radius: 20px; overflow: hidden; border: 1px solid var(--clr-sand-300);">
+        <article class="c-card resto-item" data-type="resto">
             <div style="height: 220px; position: relative;">
                 <img src="<?= asset('images/houmt_souk.png') ?>" alt="El Fondouk Restaurant" style="width: 100%; height: 100%; object-fit: cover;">
-                <span style="position: absolute; top: 12px; left: 12px; background: rgba(15,23,42,0.8); color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">Gastronomie Traditionnelle</span>
-                <span style="position: absolute; top: 12px; right: 12px; background: var(--clr-terracotta-500); color: #fff; padding: 4px 10px; border-radius: 20px; font-size: 0.85rem; font-weight: 700;">★ 5.0</span>
+                <span class="c-card__badge-tag">Gastronomie Traditionnelle</span>
+                <span class="c-card__badge-rating">★ 5.0</span>
             </div>
             <div style="padding: 1.5rem;">
                 <div style="font-size: 0.8rem; color: var(--clr-sea-600); font-weight: 700; text-transform: uppercase;">Houmt Souk (Fondouk)</div>
@@ -103,9 +104,9 @@
                     Niché dans un caravanserail du XVIIIe siècle magnifiquement restauré. Dégustez le fameux couscous au mérou et les briques djerbiennes sous les arcades.
                 </p>
                 <div style="display: flex; flex-direction: column; gap: 0.75rem; border-top: 1px solid var(--clr-sand-200); padding-top: 1rem;">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <span style="font-weight: 800; font-size: 1.1rem; color: var(--clr-sea-900);">Budget : 25 € - 45 €</span>
-                        <a href="<?= url('/concierge') ?>" class="btn btn--gold" style="padding: 6px 14px; font-size: 0.85rem;">Réserver une Table</a>
+                    <div class="c-card__price-row">
+                        <span class="c-card__price">Budget : <strong>25 € - 45 €</strong></span>
+                        <a href="<?= url('/concierge') ?>" class="btn btn--gold c-card__btn-vip">Réserver via VIP</a>
                     </div>
                     <div class="c-card__icon-group" style="justify-content: flex-end;">
                         <button type="button" class="c-icon-btn c-icon-btn--booking" title="Voir sur Booking.com (Partenaire Officiel)" onclick="openBookingHotelsModal('Restaurant El Fondouk', 'https://www.booking.com/city/tn/houmt-souk.html?aid=8073836')">
@@ -126,11 +127,11 @@
         </article>
 
         <!-- Restaurant 2 -->
-        <article class="c-card resto-item" data-type="resto" style="background: #fff; border-radius: 20px; overflow: hidden; border: 1px solid var(--clr-sand-300);">
+        <article class="c-card resto-item" data-type="resto">
             <div style="height: 220px; position: relative;">
                 <img src="<?= asset('images/hero.png') ?>" alt="Restaurant Haroun" style="width: 100%; height: 100%; object-fit: cover;">
-                <span style="position: absolute; top: 12px; left: 12px; background: rgba(15,23,42,0.8); color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">Fruits de Mer & Marina</span>
-                <span style="position: absolute; top: 12px; right: 12px; background: var(--clr-terracotta-500); color: #fff; padding: 4px 10px; border-radius: 20px; font-size: 0.85rem; font-weight: 700;">★ 4.9</span>
+                <span class="c-card__badge-tag">Fruits de Mer & Marina</span>
+                <span class="c-card__badge-rating">★ 4.9</span>
             </div>
             <div style="padding: 1.5rem;">
                 <div style="font-size: 0.8rem; color: var(--clr-sea-600); font-weight: 700; text-transform: uppercase;">Marina d'Houmt Souk</div>
@@ -139,9 +140,9 @@
                     Installé directement au bord des bateaux de pêche. Spécialités de crevettes royales grillées, calamars farcis et poissons sauvages fraîchement pechés.
                 </p>
                 <div style="display: flex; flex-direction: column; gap: 0.75rem; border-top: 1px solid var(--clr-sand-200); padding-top: 1rem;">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <span style="font-weight: 800; font-size: 1.1rem; color: var(--clr-sea-900);">Budget : 30 € - 55 €</span>
-                        <a href="<?= url('/concierge') ?>" class="btn btn--gold" style="padding: 6px 14px; font-size: 0.85rem;">Réserver une Table</a>
+                    <div class="c-card__price-row">
+                        <span class="c-card__price">Budget : <strong>30 € - 55 €</strong></span>
+                        <a href="<?= url('/concierge') ?>" class="btn btn--gold c-card__btn-vip">Réserver via VIP</a>
                     </div>
                     <div class="c-card__icon-group" style="justify-content: flex-end;">
                         <button type="button" class="c-icon-btn c-icon-btn--booking" title="Voir sur Booking.com (Partenaire Officiel)" onclick="openBookingHotelsModal('Le Haroun Table du Port', 'https://www.booking.com/city/tn/houmt-souk.html?aid=8073836')">
@@ -162,11 +163,11 @@
         </article>
 
         <!-- Hotel 3: Guellala & Ajim -->
-        <article class="c-card resto-item" data-type="hotel" style="background: #fff; border-radius: 20px; overflow: hidden; border: 1px solid var(--clr-sand-300);">
+        <article class="c-card resto-item" data-type="hotel">
             <div style="height: 220px; position: relative;">
                 <img src="<?= asset('images/guellala.png') ?>" alt="Menzel Guellala Sunset" style="width: 100%; height: 100%; object-fit: cover;">
-                <span style="position: absolute; top: 12px; left: 12px; background: rgba(15,23,42,0.8); color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">Ecolodge & Sunset</span>
-                <span style="position: absolute; top: 12px; right: 12px; background: var(--clr-terracotta-500); color: #fff; padding: 4px 10px; border-radius: 20px; font-size: 0.85rem; font-weight: 700;">★ 4.9</span>
+                <span class="c-card__badge-tag">Ecolodge & Sunset</span>
+                <span class="c-card__badge-rating">★ 4.9</span>
             </div>
             <div style="padding: 1.5rem;">
                 <div style="font-size: 0.8rem; color: var(--clr-sea-600); font-weight: 700; text-transform: uppercase;">Guellala (Village Potiers)</div>
@@ -175,9 +176,9 @@
                     Menzel éco-responsable dominant les collines de potiers avec vue imprenable sur les couchers de soleil du Golfe de Boughrara.
                 </p>
                 <div style="display: flex; flex-direction: column; gap: 0.75rem; border-top: 1px solid var(--clr-sand-200); padding-top: 1rem;">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <span style="font-weight: 800; font-size: 1.15rem; color: var(--clr-sea-900);">À partir de 85 € <span style="font-size: 0.8rem; font-weight: normal;">/ nuit</span></span>
-                        <a href="<?= url('/concierge') ?>" class="btn btn--gold" style="padding: 6px 14px; font-size: 0.85rem;">Réserver via VIP</a>
+                    <div class="c-card__price-row">
+                        <span class="c-card__price">À partir de <strong>85 €</strong> <span class="c-card__price-unit">/ nuit</span></span>
+                        <a href="<?= url('/concierge') ?>" class="btn btn--gold c-card__btn-vip">Réserver via VIP</a>
                     </div>
                     <div class="c-card__icon-group" style="justify-content: flex-end;">
                         <button type="button" class="c-icon-btn c-icon-btn--booking" title="Voir sur Booking.com (Partenaire Officiel)" onclick="openBookingHotelsModal('Menzel Guellala', 'https://www.booking.com/city/tn/houmt-souk.html?aid=8073836')">
@@ -198,11 +199,11 @@
         </article>
 
         <!-- Restaurant 3: Ajim Port -->
-        <article class="c-card resto-item" data-type="resto" style="background: #fff; border-radius: 20px; overflow: hidden; border: 1px solid var(--clr-sand-300);">
+        <article class="c-card resto-item" data-type="resto">
             <div style="height: 220px; position: relative;">
                 <img src="<?= asset('images/ajim.png') ?>" alt="Le Pêcheur Ajim" style="width: 100%; height: 100%; object-fit: cover;">
-                <span style="position: absolute; top: 12px; left: 12px; background: rgba(15,23,42,0.8); color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">Authentique Pêcheurs</span>
-                <span style="position: absolute; top: 12px; right: 12px; background: var(--clr-terracotta-500); color: #fff; padding: 4px 10px; border-radius: 20px; font-size: 0.85rem; font-weight: 700;">★ 4.8</span>
+                <span class="c-card__badge-tag">Authentique Pêcheurs</span>
+                <span class="c-card__badge-rating">★ 4.8</span>
             </div>
             <div style="padding: 1.5rem;">
                 <div style="font-size: 0.8rem; color: var(--clr-sea-600); font-weight: 700; text-transform: uppercase;">Ajim & El Melga</div>
@@ -211,9 +212,9 @@
                     Petite table authentique tenue par une famille de pêcheurs d'éponges. Poulpes grillés, soupe de poisson au cumin djerbien et terrasse sur le port.
                 </p>
                 <div style="display: flex; flex-direction: column; gap: 0.75rem; border-top: 1px solid var(--clr-sand-200); padding-top: 1rem;">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <span style="font-weight: 800; font-size: 1.1rem; color: var(--clr-sea-900);">Budget : 18 € - 30 €</span>
-                        <a href="<?= url('/concierge') ?>" class="btn btn--gold" style="padding: 6px 14px; font-size: 0.85rem;">Réserver une Table</a>
+                    <div class="c-card__price-row">
+                        <span class="c-card__price">Budget : <strong>18 € - 30 €</strong></span>
+                        <a href="<?= url('/concierge') ?>" class="btn btn--gold c-card__btn-vip">Réserver via VIP</a>
                     </div>
                     <div class="c-card__icon-group" style="justify-content: flex-end;">
                         <button type="button" class="c-icon-btn c-icon-btn--booking" title="Voir sur Booking.com (Partenaire Officiel)" onclick="openBookingHotelsModal('Bistrot de la Marine Ajim', 'https://www.booking.com/city/tn/houmt-souk.html?aid=8073836')">

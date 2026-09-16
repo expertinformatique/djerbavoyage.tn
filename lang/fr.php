@@ -20,6 +20,8 @@ return [
     'nav.transport.desc'    => 'Taxis, locations & transferts aéroport',
     'nav.weather'           => 'Météo & Quand Partir',
     'nav.weather.desc'      => 'Climat, saisons idéales & températures',
+    'nav.guides'            => 'Guides & Carnets de Voyage',
+    'nav.guides.desc'       => 'Tous nos articles, conseils & bons plans',
     'nav.pass'              => 'Pass & Conciergerie',
     'nav.pass_activities'   => 'Pass Activités Sur-Mesure',
     'nav.pass_activities.desc' => "Composez votre pack avec remises jusqu'à -15%",

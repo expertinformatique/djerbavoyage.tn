@@ -1,4 +1,6 @@
 <?php
+$partnerId = (isset($settings) && $settings) ? $settings->get('booking_partner_id', '8073836') : '8073836';
+
 /** 
  * Vue Liste des Guides — Djerba Voyage
  * Style Classique Méditerranéen & Cartes Riches
@@ -27,6 +29,39 @@ $getCategory = function(string $title, string $desc = ''): array {
 };
 ?>
 
+<style>
+.c-button--booking-affiliate {
+  background-color: #003580;
+  color: #ffffff !important;
+  border: 1px solid #00224f;
+  padding: 0.75rem 1.4rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 53, 128, 0.25);
+  transition: all 0.25s ease;
+  cursor: pointer;
+  text-decoration: none;
+}
+.c-button--booking-affiliate:hover {
+  background-color: #00224f;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 53, 128, 0.35);
+  color: #ffffff !important;
+}
+.c-button--booking-affiliate .badge-discount {
+  background: #febb02;
+  color: #003580;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 12px;
+  margin-left: 4px;
+}
+</style>
 <div class="l-container">
   
   <!-- En-tête Classique Méditerranéen (Ancien Style Conservé) -->
@@ -40,6 +75,15 @@ $getCategory = function(string $title, string $desc = ''): array {
     <p class="text-muted">
       Conseils pratiques, météo en direct, excursions incontournables et bons plans vérifiés pour préparer et vivre un séjour inoubliable à Djerba.
     </p>
+
+    <!-- Bouton Affiliation Booking.com -->
+    <div style="margin-top: 1.25rem; display: flex; justify-content: center; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+      <button type="button" class="c-button--booking-affiliate" onclick="openBookingHotelsModal('Hôtels & Hébergements à Djerba', 'https://www.booking.com/city/tn/houmt-souk.html?aid=<?= e($partnerId) ?>')">
+        <i class="fi fi-rr-bed" style="font-size: 1.1rem;"></i>
+        <span>Réserver un Hôtel à Djerba (Booking.com)</span>
+        <span class="badge-discount">-15% Partenaire</span>
+      </button>
+    </div>
   </div>
 
   <!-- Barre de Recherche et Filtres par Thématiques -->
@@ -136,14 +180,22 @@ $getCategory = function(string $title, string $desc = ''): array {
 
             <div class="c-card__footer">
               <a href="<?= url('/guide/' . e($art->slug)) ?>" class="c-button c-button--secondary c-button--sm">
-                <span>Lire le guide complet</span>
+                <span>Lire le guide</span>
                 <i class="fi fi-rr-arrow-right"></i>
               </a>
-              <a href="<?= url('/guide/' . e($art->slug) . '/pdf') ?>" target="_blank" class="c-card__pdf-btn" title="Télécharger la fiche pratique PDF">
-                <i class="fi fi-rr-file-pdf"></i>
-                <span>PDF</span>
-              </a>
+              <div class="c-card__actions-group">
+                <button type="button" class="c-card__booking-btn" title="Voir les Hôtels proches sur Booking.com" onclick="openBookingHotelsModal('<?= e(addslashes($art->titleFr)) ?>', 'https://www.booking.com/city/tn/houmt-souk.html?aid=<?= e($partnerId) ?>')">
+                  <i class="fi fi-rr-bed"></i>
+                  <span>Hôtels</span>
+                </button>
+                <a href="<?= url('/guide/' . e($art->slug) . '/pdf') ?>" target="_blank" class="c-card__pdf-btn" title="Télécharger la fiche pratique PDF">
+                  <i class="fi fi-rr-file-pdf"></i>
+                  <span>PDF</span>
+                </a>
+              </div>
             </div>
+
+
           </div>
         </article>
       <?php endforeach; ?>
@@ -154,6 +206,15 @@ $getCategory = function(string $title, string $desc = ''): array {
     <i class="fi fi-rr-search c-blog-no-results__icon"></i>
     <h3 class="c-blog-no-results__title">Aucun guide ne correspond à votre recherche</h3>
     <p class="c-blog-no-results__text">Essayez un autre mot-clé ou sélectionnez une autre thématique ci-dessus.</p>
+
+    <!-- Bouton Affiliation Booking.com -->
+    <div style="margin-top: 1.25rem; display: flex; justify-content: center; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+      <button type="button" class="c-button--booking-affiliate" onclick="openBookingHotelsModal('Hôtels & Hébergements à Djerba', 'https://www.booking.com/city/tn/houmt-souk.html?aid=<?= e($partnerId) ?>')">
+        <i class="fi fi-rr-bed" style="font-size: 1.1rem;"></i>
+        <span>Réserver un Hôtel à Djerba (Booking.com)</span>
+        <span class="badge-discount">-15% Partenaire</span>
+      </button>
+    </div>
   </div>
 
 </div>

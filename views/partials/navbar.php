@@ -85,8 +85,18 @@ $_currentCurrency = \Core\Currency::getCurrency();
               <span class="c-navbar__dropdown-desc"><?= __('nav.weather.desc') ?></span>
             </span>
           </a>
+          <a href="<?= url('/guide') ?>" class="c-navbar__dropdown-item">
+            <span class="c-navbar__dropdown-icon c-navbar__dropdown-icon--emerald">
+              <i class="fi fi-rr-book-alt"></i>
+            </span>
+            <span class="c-navbar__dropdown-info">
+              <span class="c-navbar__dropdown-title"><?= __('nav.guides') ?></span>
+              <span class="c-navbar__dropdown-desc"><?= __('nav.guides.desc') ?></span>
+            </span>
+          </a>
         </div>
       </li>
+
 
       <!-- Sous-menu 2 : Pass & Services VIP -->
       <li class="c-navbar__item c-navbar__item--has-dropdown">

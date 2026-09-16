@@ -5,6 +5,29 @@
   margin: 2rem 0;
 }
 
+/* 3 Columns Responsive Cards Grid */
+.l-grid-cards--3cols {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+  margin: 2rem 0;
+}
+
+@media (max-width: 992px) {
+  .l-grid-cards--3cols {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .l-grid-cards--3cols {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+
 .c-card {
   background: var(--clr-sand-100);
   border-radius: var(--radius-card);
@@ -160,5 +183,67 @@
   transform: translateY(0);
   pointer-events: auto;
 }
+
+/* Card Badges */
+.c-card__badge-tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(15, 23, 42, 0.8);
+  color: #ffffff;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.c-card__badge-rating {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--clr-terracotta-500);
+  color: #ffffff;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+/* Card Price & Action Row (Compact single-line styling) */
+.c-card__price-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: nowrap;
+  width: 100%;
+}
+
+.c-card__price {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--clr-sea-900);
+  white-space: nowrap;
+}
+
+.c-card__price strong {
+  font-size: 0.98rem;
+  font-weight: 800;
+}
+
+.c-card__price-unit {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--clr-gray-500);
+}
+
+.c-card__btn-vip {
+  padding: 5px 11px;
+  font-size: 0.78rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+  line-height: 1.2;
+}
+
 
 

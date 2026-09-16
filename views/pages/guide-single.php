@@ -1,4 +1,6 @@
 <?php
+$partnerId = (isset($settings) && $settings) ? $settings->get('booking_partner_id', '8073836') : '8073836';
+
 /** 
  * Vue Article Unique — Djerba Voyage (Magazine Luxe Méditerranéen)
  * Architecture MVC, Zéro style inline, Responsive fluide
@@ -65,8 +67,32 @@ $currentUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' 
              rel="noopener noreferrer" 
              class="c-article-share-btn c-article-share-btn--whatsapp" 
              title="Partager sur WhatsApp">
-            <i class="fi fi-rr-share"></i>
+            <i class="fi fi-rr-paper-plane"></i>
             <span>WhatsApp</span>
+          </a>
+          <a href="https://www.facebook.com/sharer/sharer.php?u=<?= urlencode($currentUrl) ?>" 
+             target="_blank" 
+             rel="noopener noreferrer" 
+             class="c-article-share-btn c-article-share-btn--facebook" 
+             title="Partager sur Facebook">
+            <i class="fi fi-rr-share"></i>
+            <span>Facebook</span>
+          </a>
+          <a href="https://twitter.com/intent/tweet?url=<?= urlencode($currentUrl) ?>&text=<?= urlencode($article->titleFr) ?>" 
+             target="_blank" 
+             rel="noopener noreferrer" 
+             class="c-article-share-btn c-article-share-btn--twitter" 
+             title="Partager sur X (Twitter)">
+            <i class="fi fi-rr-share"></i>
+            <span>X</span>
+          </a>
+          <a href="https://www.linkedin.com/sharing/share-offsite/?url=<?= urlencode($currentUrl) ?>" 
+             target="_blank" 
+             rel="noopener noreferrer" 
+             class="c-article-share-btn c-article-share-btn--linkedin" 
+             title="Partager sur LinkedIn">
+            <i class="fi fi-rr-share"></i>
+            <span>LinkedIn</span>
           </a>
           <button type="button" 
                   class="c-article-share-btn" 
@@ -114,6 +140,79 @@ $currentUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' 
     <!-- Corps Rédactionnel de l'article -->
     <div class="c-article-body">
       <?= $article->contentFr ?>
+    </div>
+
+    <!-- Barre de Partage Réseaux Sociaux en bas d'article -->
+    <div class="c-article-share-bar">
+      <h4 class="c-article-share-bar__title">
+        <i class="fi fi-rr-share"></i> Partagez cet article avec vos proches :
+      </h4>
+      <div class="c-article-share-bar__buttons">
+        <a href="https://api.whatsapp.com/send?text=<?= urlencode($article->titleFr . ' - ' . $currentUrl) ?>" 
+           target="_blank" 
+           rel="noopener noreferrer" 
+           class="c-article-share-btn c-article-share-btn--whatsapp" 
+           title="Partager sur WhatsApp">
+          <i class="fi fi-rr-paper-plane"></i>
+          <span>WhatsApp</span>
+        </a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=<?= urlencode($currentUrl) ?>" 
+           target="_blank" 
+           rel="noopener noreferrer" 
+           class="c-article-share-btn c-article-share-btn--facebook" 
+           title="Partager sur Facebook">
+          <i class="fi fi-rr-share"></i>
+          <span>Facebook</span>
+        </a>
+        <a href="https://twitter.com/intent/tweet?url=<?= urlencode($currentUrl) ?>&text=<?= urlencode($article->titleFr) ?>" 
+           target="_blank" 
+           rel="noopener noreferrer" 
+           class="c-article-share-btn c-article-share-btn--twitter" 
+           title="Partager sur X (Twitter)">
+          <i class="fi fi-rr-share"></i>
+          <span>X / Twitter</span>
+        </a>
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=<?= urlencode($currentUrl) ?>" 
+           target="_blank" 
+           rel="noopener noreferrer" 
+           class="c-article-share-btn c-article-share-btn--linkedin" 
+           title="Partager sur LinkedIn">
+          <i class="fi fi-rr-share"></i>
+          <span>LinkedIn</span>
+        </a>
+        <a href="https://t.me/share/url?url=<?= urlencode($currentUrl) ?>&text=<?= urlencode($article->titleFr) ?>" 
+           target="_blank" 
+           rel="noopener noreferrer" 
+           class="c-article-share-btn c-article-share-btn--telegram" 
+           title="Partager sur Telegram">
+          <i class="fi fi-rr-paper-plane"></i>
+          <span>Telegram</span>
+        </a>
+        <button type="button" 
+                class="c-article-share-btn" 
+                onclick="copyArticleLink(this)" 
+                title="Copier le lien du guide">
+          <i class="fi fi-rr-copy"></i>
+          <span class="btn-text">Copier</span>
+        </button>
+      </div>
+    </div>
+
+    
+    <!-- Bannière Affiliation Booking.com -->
+    <div class="c-article-pdf-banner mb-4" style="background: linear-gradient(135deg, #003580 0%, #00224f 100%); color: #ffffff; border: 1px solid #001838; margin-top: 1.5rem; margin-bottom: 1.5rem; border-radius: 12px; padding: 1.25rem;">
+      <div>
+        <h3 class="c-article-pdf-banner__title" style="color: #ffffff; font-size: 1.15rem; font-weight: 800; margin-bottom: 0.35rem;">
+          <i class="fi fi-rr-bed" style="color: #febb02; margin-right: 0.5rem;"></i> Réservez votre séjour à Djerba
+        </h3>
+        <p class="c-article-pdf-banner__text" style="color: rgba(255, 255, 255, 0.85); font-size: 0.9rem; margin: 0;">
+          Comparez et réservez les meilleurs hôtels, ryads et villas au meilleur prix garanti via notre partenaire Booking.com.
+        </p>
+      </div>
+      <button type="button" class="c-button" style="background-color: #febb02; color: #003580; font-weight: 800; border: none; padding: 0.75rem 1.25rem; border-radius: 8px; cursor: pointer; white-space: nowrap; margin-top: 0.75rem;" onclick="openBookingHotelsModal('<?= e(addslashes($article->titleFr)) ?>', 'https://www.booking.com/city/tn/houmt-souk.html?aid=<?= e($partnerId) ?>')">
+        <span>Voir les Hôtels sur Booking</span>
+        <i class="fi fi-rr-arrow-right" style="margin-left: 0.4rem;"></i>
+      </button>
     </div>
 
     <!-- Bannière Téléchargement PDF -->
