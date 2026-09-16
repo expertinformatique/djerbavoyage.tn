@@ -6,9 +6,35 @@ class AiImageService {
      * Génère une image correspondant exactement au sujet de l'article
      * via Pollinations AI (Flux model) et l'enregistre en local si possible.
      */
+    public function resolveThemeImage(string $text, array $context): string {
+        $t = strtolower($text . ' ' . ($context['angle']['theme'] ?? ''));
+        if (preg_match('/guellala|poterie|potter|argile|craftsman/i', $t)) {
+            return 'images/guellala.png';
+        }
+        if (preg_match('/ajim|éponge|sponge|marin|pech|sailor/i', $t)) {
+            return 'images/ajim.png';
+        }
+        if (preg_match('/djerbahood|erriadh|mural|street\s*art/i', $t)) {
+            return 'images/djerbahood.png';
+        }
+        if (preg_match('/souk|poisson|fish|culinaire|cuisine|gastronomie|criée/i', $t)) {
+            return 'images/houmt_souk.png';
+        }
+        if (preg_match('/menzel|houch|architecture|patrimoine|hotel|charme/i', $t)) {
+            return 'images/concierge.png';
+        }
+        if (preg_match('/quad|buggy|desert|sahara|dune|caravane|chameau|dromadaire/i', $t)) {
+            return 'images/service_quad.jpg';
+        }
+        if (preg_match('/kitesurf|kite|jet\s*ski|planche|glisse/i', $t)) {
+            return 'images/service_kitesurf.jpg';
+        }
+        return $context['angle']['fallback_local_image'] ?? 'images/sidi_mahres.png';
+    }
+
     public function generateForArticle(string $imagePrompt, string $slug, array $context): string {
         $rootPath = defined('ROOT_PATH') ? ROOT_PATH : dirname(__DIR__, 2);
-        $fallback = $context['angle']['fallback_local_image'] ?? 'images/sidi_mahres.png';
+        $fallback = $this->resolveThemeImage($imagePrompt, $context);
 
         $cleanPrompt = trim(preg_replace('/\s+/', ' ', $imagePrompt));
         if (empty($cleanPrompt)) {

@@ -22,7 +22,7 @@ class AiArticleGeneratorService {
         if (!empty($apiKey)) {
             $articleData = $this->generateWithGemini($apiKey, $context);
         } else {
-            $articleData = $this->generateFallbackArticle($context);
+            $articleData = (new DjerbaStoryFallbackService())->generate($context);
         }
 
         // Nettoyage strict : titre épuré avec mot-clé Djerba, sans préfixe "ce jour" ni heure
@@ -81,18 +81,21 @@ class AiArticleGeneratorService {
         $weather = $context['weather'];
         $angle = $context['angle'];
 
-        $prompt = "Tu es un rédacteur web expert en tourisme à Djerba, Tunisie. Écris un article captivant, unique et optimisé SEO/GEO.\n"
-            . "Thème: {$angle['theme']}\n"
-            . "Météo actuelle à Djerba: {$weather['temp_c']}°C, {$weather['condition']}, vent {$weather['wind_speed']} km/h.\n"
+        $prompt = "Tu es un écrivain voyageur et conteur passionné, expert des légendes, de l'histoire et des traditions de l'île de Djerba en Tunisie.\n"
+            . "Sujet de l'article : {$angle['theme']}\n"
+            . "Ambiance & Météo actuelle : {$weather['temp_c']}°C, {$weather['condition']}.\n"
+            . "MISSION CRITIQUE :\n"
+            . "Écris un véritable RÉCIT D'AVENTURE ET D'HISTOIRE, immersif et captivant. Plonge le lecteur au cœur des traditions de Djerba, de son histoire millénaire et de ses légendes (les Lotophages d'Homère, les potiers berbères troglodytes, les marins d'Ajim, les caravanes sahariennes, les Menzel fortifiés, etc.).\n"
+            . "Le texte ne doit pas être une banale liste publicitaire, mais une histoire vivante, sensorielle et pleine d'authenticité.\n"
             . "Format de réponse JSON strict avec les clés suivantes :\n"
-            . "- title_fr: Titre direct avec le mot-clé 'Djerba' (Ex: 'Excursion Désert, Buggy & Quad depuis Djerba sous {$weather['temp_c']}°C'). RÈGLE STRICTE: Ne JAMAIS mettre de préfixe comme 'Djerba :', 'Djerba ce jour :', 'Évasion à Djerba :' ni aucune heure ou horodatage.\n"
-            . "- title_en: Direct English title with keyword 'Djerba'. NEVER include prefixes or timestamps.\n"
-            . "- content_fr: HTML complet de l'article avec <h2>, <h3>, <p>, <ul>, <li> et des appels à l'action vers la réservation d'excursions à Djerba\n"
-            . "- content_en: Version anglaise condensée du contenu\n"
-            . "- seo_description: Description Meta de 150 caractères\n"
+            . "- title_fr: Titre direct et percutant avec le mot-clé 'Djerba' (Exemple: 'Secrets Millénaires des Potiers de Guellala à Djerba'). RÈGLE STRICTE: Ne JAMAIS mettre de préfixe comme 'Djerba :', 'Djerba ce jour :', 'Évasion à Djerba :' ni aucune heure ou horodatage.\n"
+            . "- title_en: Direct engaging English title with keyword 'Djerba'. NEVER include prefixes or timestamps.\n"
+            . "- content_fr: HTML complet et soigné avec <h2>, <h3>, <p>, <blockquote> (pour des citations ou anecdotes de vieux sages/marins), <ul>, <li> et des recommandations de voyage authentiques vers nos services\n"
+            . "- content_en: Version anglaise condensée du récit d'aventure\n"
+            . "- seo_description: Description Meta évocatrice de 150 caractères résumant l'aventure et l'histoire\n"
             . "- meta_keywords: Mots clés séparés par des virgules\n"
-            . "- summary_ai: Résumé en 3 puces clé pour les moteurs IA (Perplexity, ChatGPT)\n"
-            . "- image_prompt: Prompt en anglais TRÈS DÉTAILLÉ (30 à 50 mots) pour générer une photographie réaliste 8k qui illustre PRÉCISÉMENT le sujet de cet article (ex: si quad/désert -> quad in Sahara dunes near Djerba at sunset ; si gastronomie -> traditional seafood feast ; si poterie -> pottery workshop in Guellala ; etc.). Ne pas faire de prompt de plage si le sujet est différent. Aucun texte sur l'image.\n"
+            . "- summary_ai: Résumé en 3 points clés pour moteurs IA (Perplexity, ChatGPT)\n"
+            . "- image_prompt: Prompt en anglais TRÈS DÉTAILLÉ (35 à 50 mots) pour générer une photographie réaliste 8k qui illustre PRÉCISÉMENT la scène historique, traditionnelle ou d'aventure racontée (ex: mains de potier façonnant l'argile à Guellala, barques de pêcheurs d'éponges au port d'Ajim, quad au crépuscule sur les dunes, etc.). Aucun texte sur l'image.\n"
             . "- cta_services: Tableau des slugs de services suggérés : " . json_encode($angle['suggested_services']);
 
         $models = ['gemini-3.6-flash', 'gemini-2.5-flash', 'gemini-1.5-flash'];
@@ -129,55 +132,7 @@ class AiArticleGeneratorService {
             }
         }
 
-        return $this->generateFallbackArticle($context);
-    }
-
-    private function generateFallbackArticle(array $context): array {
-        $weather = $context['weather'];
-        $angle = $context['angle'];
-        $theme = $angle['theme'];
-        if (!preg_match('/djerba|djerbien/iu', $theme)) {
-            $theme .= ' à Djerba';
-        }
-        $templatesFr = [
-            "{$theme} sous {$weather['temp_c']}°C",
-            "Guide {$theme} : Tout savoir",
-            "{$theme} sous le soleil ({$weather['temp_c']}°C)",
-            "{$theme} et météo {$weather['condition']}"
-        ];
-        $themeEn = preg_match('/djerba/iu', $angle['theme']) ? $angle['theme'] : $angle['theme'] . ' in Djerba';
-        $templatesEn = [
-            "{$themeEn} under {$weather['temp_c']}°C",
-            "Guide to {$themeEn}: Everything to know",
-            "{$themeEn} under the sun ({$weather['temp_c']}°C)",
-            "{$themeEn} and {$weather['condition']} weather"
-        ];
-
-        $idx = abs(crc32($angle['theme'] . date('YmdH'))) % count($templatesFr);
-        $titleFr = $templatesFr[$idx];
-        $titleEn = $templatesEn[$idx];
-
-        $contentFr = "<p class='lead'>En ce moment à Djerba, le thermomètre affiche <strong>{$weather['temp_c']}°C</strong> avec un temps <em>{$weather['condition']}</em>. C'est le moment parfait pour explorer l'île aux sables d'or !</p>";
-        $contentFr .= "<h2>Pourquoi visiter Djerba aujourd'hui ?</h2>";
-        $contentFr .= "<p>L'île de Djerba offre une expérience unique mêlant détente balnéaire, aventures sahariennes et patrimoine millénaire. Que vous souhaitiez piloter un quad dans les pistes oasiennes, rider en kitesurf sur la lagune turquoise ou vous détendre sur le sable fin de Sidi Mahres, l'île réserve des moments magiques aux voyageurs.</p>";
-        $contentFr .= "<div class='c-article-tip'><h3>💡 Conseil d'expert Djerba Voyage</h3><p>Pensez à planifier vos excursions et vos transferts aéroport à l'avance.</p></div>";
-        $contentFr .= "<h2>Les temps forts & suggestions d'itinéraires</h2><ul>";
-        foreach ($angle['keywords'] as $kw) {
-            $contentFr .= "<li><strong>" . ucfirst($kw) . "</strong> : Une étape incontournable pour vivre pleinement l'expérience djerbienne.</li>";
-        }
-        $contentFr .= "</ul>";
-
-        return [
-            'title_fr' => $titleFr,
-            'title_en' => $titleEn,
-            'content_fr' => $contentFr,
-            'content_en' => "<p>Discover {$angle['theme']} in Djerba today. Current temperature is {$weather['temp_c']}°C.</p>",
-            'seo_description' => "Découvrez notre guide actualisé sur {$angle['theme']} à Djerba. Météo : {$weather['temp_c']}°C. Conseils et réservation d'activités.",
-            'meta_keywords' => implode(', ', $angle['keywords']),
-            'summary_ai' => "• Météo en direct : {$weather['temp_c']}°C à Djerba.\n• Thème vedette : {$angle['theme']}.\n• Réservation directe d'activités et transferts VIP sur Djerba Voyage.",
-            'image_prompt' => $angle['image_prompt'] ?? "scenic photography of {$angle['theme']} in Djerba Tunisia, Mediterranean lighting",
-            'cta_services' => $angle['suggested_services']
-        ];
+        return (new DjerbaStoryFallbackService())->generate($context);
     }
 
     public function cleanTitle(string $title, bool $isEn = false): string {

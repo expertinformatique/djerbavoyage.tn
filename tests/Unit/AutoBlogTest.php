@@ -139,4 +139,46 @@ class AutoBlogTest extends TestCase {
         $clean4 = $generator->cleanTitle($input4);
         $this->assertEquals("Kitesurf, Jet Ski & Sports Nautiques sous 28°C à Djerba", $clean4);
     }
+
+    public function testStoryFallbackGeneratesRichNarrativeWithHistoryAndTraditions(): void {
+        $fallbackService = new \App\Services\DjerbaStoryFallbackService();
+        $context = [
+            'weather' => ['temp_c' => 28, 'condition' => 'Ensoleillé', 'wind_speed' => 15],
+            'angle' => [
+                'theme' => 'Secrets Millénaires des Potiers de Guellala à Djerba',
+                'keywords' => ['potiers guellala', 'argile souterraine', 'amphores', 'artisanat djerba'],
+                'suggested_services' => ['visite-guidee-djerba'],
+                'image_prompt' => 'Artisan potter shaping clay in cave workshop Guellala Djerba',
+                'fallback_local_image' => 'images/guellala.png'
+            ]
+        ];
+
+        $article = $fallbackService->generate($context);
+
+        $this->assertNotEmpty($article['title_fr']);
+        $this->assertTrue((bool) preg_match('/guellala/i', $article['title_fr']));
+        $this->assertTrue(str_contains($article['content_fr'], 'Guellala'));
+        $this->assertTrue(str_contains($article['content_fr'], '<blockquote>'));
+        $this->assertTrue(str_contains($article['content_fr'], 'argile'));
+        $this->assertTrue(str_contains($article['content_fr'], 'c-article-tip'));
+    }
+
+    public function testAiImageServiceMatchesAllNarrativeThemesAccurately(): void {
+        $imageService = new \App\Services\AiImageService();
+
+        $cases = [
+            ['prompt' => 'pottery workshop with artisan hands shaping clay', 'expected' => 'images/guellala.png'],
+            ['prompt' => 'fishing boats with sponges on stone quay in port', 'expected' => 'images/ajim.png'],
+            ['prompt' => 'street art mural on whitewashed wall in Erriadh', 'expected' => 'images/djerbahood.png'],
+            ['prompt' => 'fish auction market with fresh seafood platter', 'expected' => 'images/houmt_souk.png'],
+            ['prompt' => 'quad expedition riding desert dunes at sunset', 'expected' => 'images/service_quad.jpg'],
+            ['prompt' => 'kitesurfing over turquoise shallow waters', 'expected' => 'images/service_kitesurf.jpg'],
+            ['prompt' => 'traditional menzel courtyard with white domes', 'expected' => 'images/concierge.png'],
+        ];
+
+        foreach ($cases as $c) {
+            $matched = $imageService->resolveThemeImage($c['prompt'], ['angle' => ['fallback_local_image' => 'images/sidi_mahres.png']]);
+            $this->assertEquals($c['expected'], $matched, "Failed for prompt: {$c['prompt']}");
+        }
+    }
 }
