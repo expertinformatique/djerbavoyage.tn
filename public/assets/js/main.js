@@ -1,10 +1,12 @@
 import { ModalManager } from './modules/ModalManager.js';
 import { TabsManager } from './modules/TabsManager.js';
 import { ScrollAnimate } from './modules/ScrollAnimate.js';
+import { initCardActions } from './modules/card-actions.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   TabsManager.init();
   ScrollAnimate.init();
+  initCardActions();
 
   // Mobile Menu Toggle & Auto-close on link click
   const toggleBtn = document.getElementById('mobileMenuToggle');

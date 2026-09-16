@@ -45,3 +45,120 @@
   margin-bottom: 0.5rem;
 }
 
+/* Card Action Bar & Icon Buttons */
+.c-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  border-top: 1px solid var(--clr-sand-300);
+  padding-top: 0.85rem;
+  margin-top: 0.85rem;
+  width: 100%;
+}
+
+.c-card__icon-group {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.c-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--clr-sand-300);
+  background: #ffffff;
+  color: var(--clr-dark-800);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+  line-height: 1;
+}
+
+.c-icon-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.c-icon-btn--booking {
+  color: #003580;
+  background: #f0f6ff;
+  border-color: #cce0ff;
+}
+
+.c-icon-btn--booking:hover {
+  background: #003580;
+  color: #ffffff;
+  border-color: #003580;
+}
+
+.c-icon-btn--whatsapp {
+  color: #16a34a;
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+}
+
+.c-icon-btn--whatsapp:hover {
+  background: #16a34a;
+  color: #ffffff;
+  border-color: #16a34a;
+}
+
+.c-icon-btn--copy {
+  color: #475569;
+  background: #f8fafc;
+  border-color: #e2e8f0;
+}
+
+.c-icon-btn--copy:hover {
+  background: #475569;
+  color: #ffffff;
+  border-color: #475569;
+}
+
+.c-icon-btn--pdf {
+  color: #dc2626;
+  background: #fef2f2;
+  border-color: #fecaca;
+}
+
+.c-icon-btn--pdf:hover {
+  background: #dc2626;
+  color: #ffffff;
+  border-color: #dc2626;
+}
+
+/* Floating Toast Notification */
+.c-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 99999;
+  background: #0F172A;
+  color: #ffffff;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+}
+
+.c-toast.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+

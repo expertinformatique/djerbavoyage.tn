@@ -51,14 +51,30 @@
           Profitez de l'un des spots d'eau plate et tiède les plus réputés de Méditerranée avec des instructeurs certifiés IKO. Matériel pro fourni.
         </p>
       </div>
-      <div style="border-top: 1px solid var(--clr-sand-300); padding-top: 1rem; display: flex; justify-content: space-between; align-items: center;">
-        <div>
-          <span style="font-size: 0.75rem; color: var(--clr-gray-500); text-transform: uppercase;">À partir de</span>
-          <div style="font-weight: 800; font-size: 1.25rem; color: var(--clr-sea-900);">45 € <span style="font-size: 0.85rem; font-weight: normal; color: var(--clr-gray-500);">/ pers</span></div>
+      <div style="border-top: 1px solid var(--clr-sand-300); padding-top: 1rem; display: flex; flex-direction: column; gap: 0.75rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <span style="font-size: 0.75rem; color: var(--clr-gray-500); text-transform: uppercase;">À partir de</span>
+            <div style="font-weight: 800; font-size: 1.25rem; color: var(--clr-sea-900);">45 € <span style="font-size: 0.85rem; font-weight: normal; color: var(--clr-gray-500);">/ pers</span></div>
+          </div>
+          <a href="<?= url('/concierge') ?>" class="c-button c-button--primary" style="padding: 0.6rem 1.15rem; font-size: 0.88rem;">
+            Réserver VIP <i class="fi fi-rr-arrow-right"></i>
+          </a>
         </div>
-        <a href="<?= url('/concierge') ?>" class="c-button c-button--primary" style="padding: 0.6rem 1.15rem; font-size: 0.88rem;">
-          Réserver VIP <i class="fi fi-rr-arrow-right"></i>
-        </a>
+        <div class="c-card__icon-group" style="justify-content: flex-end;">
+          <button type="button" class="c-icon-btn c-icon-btn--booking" title="Hôtels & Hébergements Proches sur Booking.com" onclick="openBookingHotelsModal('Lagune Sidi Mahres', 'https://www.booking.com/city/tn/houmt-souk.html?aid=8073836')">
+            <i class="fi fi-rr-hotel"></i>
+          </button>
+          <button type="button" class="c-icon-btn c-icon-btn--whatsapp" title="Partager l'activité sur WhatsApp" onclick="shareOnWhatsApp('Session Kitesurf dans la Lagune Djerba')">
+            <i class="fi fi-rr-paper-plane"></i>
+          </button>
+          <button type="button" class="c-icon-btn c-icon-btn--copy" title="Copier le lien de l'activité" onclick="copyCardLink('Session Kitesurf Lagune', '', this)">
+            <i class="fi fi-rr-copy"></i>
+          </button>
+          <button type="button" class="c-icon-btn c-icon-btn--pdf" title="Exporter Fiche Activité PDF" onclick="openPdfModalForCard('Session Kitesurf Lagune')">
+            <i class="fi fi-rr-file-pdf"></i>
+          </button>
+        </div>
       </div>
     </article>
 
@@ -76,14 +92,30 @@
           Déambulez dans les ruelles blanchies à la chaux et percez tous les secrets des 250 fresques de street art mondial créées par 150 artistes.
         </p>
       </div>
-      <div style="border-top: 1px solid var(--clr-sand-300); padding-top: 1rem; display: flex; justify-content: space-between; align-items: center;">
-        <div>
-          <span style="font-size: 0.75rem; color: var(--clr-gray-500); text-transform: uppercase;">À partir de</span>
-          <div style="font-weight: 800; font-size: 1.25rem; color: var(--clr-sea-900);">30 € <span style="font-size: 0.85rem; font-weight: normal; color: var(--clr-gray-500);">/ groupe</span></div>
+      <div style="border-top: 1px solid var(--clr-sand-300); padding-top: 1rem; display: flex; flex-direction: column; gap: 0.75rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <span style="font-size: 0.75rem; color: var(--clr-gray-500); text-transform: uppercase;">À partir de</span>
+            <div style="font-weight: 800; font-size: 1.25rem; color: var(--clr-sea-900);">30 € <span style="font-size: 0.85rem; font-weight: normal; color: var(--clr-gray-500);">/ groupe</span></div>
+          </div>
+          <a href="<?= url('/concierge') ?>" class="c-button c-button--primary" style="padding: 0.6rem 1.15rem; font-size: 0.88rem;">
+            Réserver VIP <i class="fi fi-rr-arrow-right"></i>
+          </a>
         </div>
-        <a href="<?= url('/concierge') ?>" class="c-button c-button--primary" style="padding: 0.6rem 1.15rem; font-size: 0.88rem;">
-          Réserver VIP <i class="fi fi-rr-arrow-right"></i>
-        </a>
+        <div class="c-card__icon-group" style="justify-content: flex-end;">
+          <button type="button" class="c-icon-btn c-icon-btn--booking" title="Hôtels & Ryads Erriadh sur Booking.com" onclick="openBookingHotelsModal('Hôtels Erriadh Djerbahood', 'https://www.booking.com/city/tn/houmt-souk.html?aid=8073836')">
+            <i class="fi fi-rr-hotel"></i>
+          </button>
+          <button type="button" class="c-icon-btn c-icon-btn--whatsapp" title="Partager l'activité sur WhatsApp" onclick="shareOnWhatsApp('Visite Guidée Privée Djerbahood')">
+            <i class="fi fi-rr-paper-plane"></i>
+          </button>
+          <button type="button" class="c-icon-btn c-icon-btn--copy" title="Copier le lien de l'activité" onclick="copyCardLink('Visite Privée Djerbahood', '', this)">
+            <i class="fi fi-rr-copy"></i>
+          </button>
+          <button type="button" class="c-icon-btn c-icon-btn--pdf" title="Exporter Fiche Activité PDF" onclick="openPdfModalForCard('Visite Privée Djerbahood')">
+            <i class="fi fi-rr-file-pdf"></i>
+          </button>
+        </div>
       </div>
     </article>
 
@@ -101,14 +133,30 @@
           Journée complète sur la presqu'île de Ras Rmel : eaux cristallines, baignade, déjeuner poissons grillés et animation musicale djerbienne.
         </p>
       </div>
-      <div style="border-top: 1px solid var(--clr-sand-300); padding-top: 1rem; display: flex; justify-content: space-between; align-items: center;">
-        <div>
-          <span style="font-size: 0.75rem; color: var(--clr-gray-500); text-transform: uppercase;">À partir de</span>
-          <div style="font-weight: 800; font-size: 1.25rem; color: var(--clr-sea-900);">35 € <span style="font-size: 0.85rem; font-weight: normal; color: var(--clr-gray-500);">/ pers</span></div>
+      <div style="border-top: 1px solid var(--clr-sand-300); padding-top: 1rem; display: flex; flex-direction: column; gap: 0.75rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <span style="font-size: 0.75rem; color: var(--clr-gray-500); text-transform: uppercase;">À partir de</span>
+            <div style="font-weight: 800; font-size: 1.25rem; color: var(--clr-sea-900);">35 € <span style="font-size: 0.85rem; font-weight: normal; color: var(--clr-gray-500);">/ pers</span></div>
+          </div>
+          <a href="<?= url('/concierge') ?>" class="c-button c-button--primary" style="padding: 0.6rem 1.15rem; font-size: 0.88rem;">
+            Réserver VIP <i class="fi fi-rr-arrow-right"></i>
+          </a>
         </div>
-        <a href="<?= url('/concierge') ?>" class="c-button c-button--primary" style="padding: 0.6rem 1.15rem; font-size: 0.88rem;">
-          Réserver VIP <i class="fi fi-rr-arrow-right"></i>
-        </a>
+        <div class="c-card__icon-group" style="justify-content: flex-end;">
+          <button type="button" class="c-icon-btn c-icon-btn--booking" title="Hôtels Houmt Souk Port sur Booking.com" onclick="openBookingHotelsModal('Hôtels Houmt Souk Port', 'https://www.booking.com/city/tn/houmt-souk.html?aid=8073836')">
+            <i class="fi fi-rr-hotel"></i>
+          </button>
+          <button type="button" class="c-icon-btn c-icon-btn--whatsapp" title="Partager l'activité sur WhatsApp" onclick="shareOnWhatsApp('Bateau Pirate Île aux Flamants Roses')">
+            <i class="fi fi-rr-paper-plane"></i>
+          </button>
+          <button type="button" class="c-icon-btn c-icon-btn--copy" title="Copier le lien de l'activité" onclick="copyCardLink('Bateau Pirate Île Flamants Roses', '', this)">
+            <i class="fi fi-rr-copy"></i>
+          </button>
+          <button type="button" class="c-icon-btn c-icon-btn--pdf" title="Exporter Fiche Activité PDF" onclick="openPdfModalForCard('Bateau Pirate Île Flamants Roses')">
+            <i class="fi fi-rr-file-pdf"></i>
+          </button>
+        </div>
       </div>
     </article>
 
@@ -126,14 +174,30 @@
           Parcourez les sentiers côtiers entre palmeraies et plages sauvages. Pause thé à la menthe traditionnel face au soleil couchant sur la lagune.
         </p>
       </div>
-      <div style="border-top: 1px solid var(--clr-sand-300); padding-top: 1rem; display: flex; justify-content: space-between; align-items: center;">
-        <div>
-          <span style="font-size: 0.75rem; color: var(--clr-gray-500); text-transform: uppercase;">À partir de</span>
-          <div style="font-weight: 800; font-size: 1.25rem; color: var(--clr-sea-900);">40 € <span style="font-size: 0.85rem; font-weight: normal; color: var(--clr-gray-500);">/ quad</span></div>
+      <div style="border-top: 1px solid var(--clr-sand-300); padding-top: 1rem; display: flex; flex-direction: column; gap: 0.75rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <span style="font-size: 0.75rem; color: var(--clr-gray-500); text-transform: uppercase;">À partir de</span>
+            <div style="font-weight: 800; font-size: 1.25rem; color: var(--clr-sea-900);">40 € <span style="font-size: 0.85rem; font-weight: normal; color: var(--clr-gray-500);">/ quad</span></div>
+          </div>
+          <a href="<?= url('/concierge') ?>" class="c-button c-button--primary" style="padding: 0.6rem 1.15rem; font-size: 0.88rem;">
+            Réserver VIP <i class="fi fi-rr-arrow-right"></i>
+          </a>
         </div>
-        <a href="<?= url('/concierge') ?>" class="c-button c-button--primary" style="padding: 0.6rem 1.15rem; font-size: 0.88rem;">
-          Réserver VIP <i class="fi fi-rr-arrow-right"></i>
-        </a>
+        <div class="c-card__icon-group" style="justify-content: flex-end;">
+          <button type="button" class="c-icon-btn c-icon-btn--booking" title="Hôtels Zone Touristique sur Booking.com" onclick="openBookingHotelsModal('Hôtels Zone Touristique Djerba', 'https://www.booking.com/city/tn/houmt-souk.html?aid=8073836')">
+            <i class="fi fi-rr-hotel"></i>
+          </button>
+          <button type="button" class="c-icon-btn c-icon-btn--whatsapp" title="Partager l'activité sur WhatsApp" onclick="shareOnWhatsApp('Randonnée Quad au Coucher du Soleil Djerba')">
+            <i class="fi fi-rr-paper-plane"></i>
+          </button>
+          <button type="button" class="c-icon-btn c-icon-btn--copy" title="Copier le lien de l'activité" onclick="copyCardLink('Quad Coucher du Soleil Djerba', '', this)">
+            <i class="fi fi-rr-copy"></i>
+          </button>
+          <button type="button" class="c-icon-btn c-icon-btn--pdf" title="Exporter Fiche Activité PDF" onclick="openPdfModalForCard('Randonnée Quad Coucher du Soleil')">
+            <i class="fi fi-rr-file-pdf"></i>
+          </button>
+        </div>
       </div>
     </article>
 
@@ -151,14 +215,30 @@
           Visitez les ateliers troglodytes des maîtres potiers, façonnez votre propre souvenir en argile et admirez le panorama depuis le musée perché.
         </p>
       </div>
-      <div style="border-top: 1px solid var(--clr-sand-300); padding-top: 1rem; display: flex; justify-content: space-between; align-items: center;">
-        <div>
-          <span style="font-size: 0.75rem; color: var(--clr-gray-500); text-transform: uppercase;">À partir de</span>
-          <div style="font-weight: 800; font-size: 1.25rem; color: var(--clr-sea-900);">25 € <span style="font-size: 0.85rem; font-weight: normal; color: var(--clr-gray-500);">/ pers</span></div>
+      <div style="border-top: 1px solid var(--clr-sand-300); padding-top: 1rem; display: flex; flex-direction: column; gap: 0.75rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <span style="font-size: 0.75rem; color: var(--clr-gray-500); text-transform: uppercase;">À partir de</span>
+            <div style="font-weight: 800; font-size: 1.25rem; color: var(--clr-sea-900);">25 € <span style="font-size: 0.85rem; font-weight: normal; color: var(--clr-gray-500);">/ pers</span></div>
+          </div>
+          <a href="<?= url('/concierge') ?>" class="c-button c-button--primary" style="padding: 0.6rem 1.15rem; font-size: 0.88rem;">
+            Réserver VIP <i class="fi fi-rr-arrow-right"></i>
+          </a>
         </div>
-        <a href="<?= url('/concierge') ?>" class="c-button c-button--primary" style="padding: 0.6rem 1.15rem; font-size: 0.88rem;">
-          Réserver VIP <i class="fi fi-rr-arrow-right"></i>
-        </a>
+        <div class="c-card__icon-group" style="justify-content: flex-end;">
+          <button type="button" class="c-icon-btn c-icon-btn--booking" title="Menzels & Hébergements Guellala sur Booking.com" onclick="openBookingHotelsModal('Hôtels Guellala Sunset', 'https://www.booking.com/city/tn/houmt-souk.html?aid=8073836')">
+            <i class="fi fi-rr-hotel"></i>
+          </button>
+          <button type="button" class="c-icon-btn c-icon-btn--whatsapp" title="Partager l'activité sur WhatsApp" onclick="shareOnWhatsApp('Atelier Poterie & Musée des Traditions Guellala')">
+            <i class="fi fi-rr-paper-plane"></i>
+          </button>
+          <button type="button" class="c-icon-btn c-icon-btn--copy" title="Copier le lien de l'activité" onclick="copyCardLink('Atelier Poterie Guellala', '', this)">
+            <i class="fi fi-rr-copy"></i>
+          </button>
+          <button type="button" class="c-icon-btn c-icon-btn--pdf" title="Exporter Fiche Activité PDF" onclick="openPdfModalForCard('Atelier Poterie Guellala')">
+            <i class="fi fi-rr-file-pdf"></i>
+          </button>
+        </div>
       </div>
     </article>
 
@@ -176,14 +256,30 @@
           Rencontrez les derniers pêcheurs d'éponges naturelles, montez à bord d'une embarcation traditionnelle et découvrez le site culte de tournage Star Wars.
         </p>
       </div>
-      <div style="border-top: 1px solid var(--clr-sand-300); padding-top: 1rem; display: flex; justify-content: space-between; align-items: center;">
-        <div>
-          <span style="font-size: 0.75rem; color: var(--clr-gray-500); text-transform: uppercase;">À partir de</span>
-          <div style="font-weight: 800; font-size: 1.25rem; color: var(--clr-sea-900);">45 € <span style="font-size: 0.85rem; font-weight: normal; color: var(--clr-gray-500);">/ pers</span></div>
+      <div style="border-top: 1px solid var(--clr-sand-300); padding-top: 1rem; display: flex; flex-direction: column; gap: 0.75rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <span style="font-size: 0.75rem; color: var(--clr-gray-500); text-transform: uppercase;">À partir de</span>
+            <div style="font-weight: 800; font-size: 1.25rem; color: var(--clr-sea-900);">45 € <span style="font-size: 0.85rem; font-weight: normal; color: var(--clr-gray-500);">/ pers</span></div>
+          </div>
+          <a href="<?= url('/concierge') ?>" class="c-button c-button--primary" style="padding: 0.6rem 1.15rem; font-size: 0.88rem;">
+            Réserver VIP <i class="fi fi-rr-arrow-right"></i>
+          </a>
         </div>
-        <a href="<?= url('/concierge') ?>" class="c-button c-button--primary" style="padding: 0.6rem 1.15rem; font-size: 0.88rem;">
-          Réserver VIP <i class="fi fi-rr-arrow-right"></i>
-        </a>
+        <div class="c-card__icon-group" style="justify-content: flex-end;">
+          <button type="button" class="c-icon-btn c-icon-btn--booking" title="Hôtels Ajim & Port sur Booking.com" onclick="openBookingHotelsModal('Hôtels Port d Ajim', 'https://www.booking.com/city/tn/houmt-souk.html?aid=8073836')">
+            <i class="fi fi-rr-hotel"></i>
+          </button>
+          <button type="button" class="c-icon-btn c-icon-btn--whatsapp" title="Partager l'activité sur WhatsApp" onclick="shareOnWhatsApp('Pêche aux Éponges & Décor Star Wars Ajim')">
+            <i class="fi fi-rr-paper-plane"></i>
+          </button>
+          <button type="button" class="c-icon-btn c-icon-btn--copy" title="Copier le lien de l'activité" onclick="copyCardLink('Pêche Éponges Ajim', '', this)">
+            <i class="fi fi-rr-copy"></i>
+          </button>
+          <button type="button" class="c-icon-btn c-icon-btn--pdf" title="Exporter Fiche Activité PDF" onclick="openPdfModalForCard('Pêche Éponges Ajim Star Wars')">
+            <i class="fi fi-rr-file-pdf"></i>
+          </button>
+        </div>
       </div>
     </article>
   </div>

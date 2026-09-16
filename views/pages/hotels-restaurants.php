@@ -30,9 +30,25 @@
                 <p class="text-muted" style="font-size: 0.9rem; line-height: 1.5; margin-bottom: 1.25rem;">
                     Véritable bijou d'architecture djerbienne niché au cœur d'Erriadh. Cours intérieures avec palmiers, deux piscines d'eau tiède et suites décorées d'objets d'artisanat.
                 </p>
-                <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--clr-sand-200); padding-top: 1rem;">
-                    <span style="font-weight: 800; font-size: 1.2rem; color: var(--clr-sea-900);">À partir de 110 € <span style="font-size: 0.8rem; font-weight: normal;">/ nuit</span></span>
-                    <a href="<?= url('/concierge') ?>" class="btn btn--gold" style="padding: 6px 14px; font-size: 0.85rem;">Réserver via VIP</a>
+                <div style="display: flex; flex-direction: column; gap: 0.75rem; border-top: 1px solid var(--clr-sand-200); padding-top: 1rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-weight: 800; font-size: 1.15rem; color: var(--clr-sea-900);">À partir de 110 € <span style="font-size: 0.8rem; font-weight: normal;">/ nuit</span></span>
+                        <a href="<?= url('/concierge') ?>" class="btn btn--gold" style="padding: 6px 14px; font-size: 0.85rem;">Réserver via VIP</a>
+                    </div>
+                    <div class="c-card__icon-group" style="justify-content: flex-end;">
+                        <button type="button" class="c-icon-btn c-icon-btn--booking" title="Voir sur Booking.com (Partenaire Officiel)" onclick="openBookingHotelsModal('Dar Dhiafa Erriadh', 'https://www.booking.com/city/tn/houmt-souk.html?aid=8073836')">
+                            <i class="fi fi-rr-hotel"></i>
+                        </button>
+                        <button type="button" class="c-icon-btn c-icon-btn--whatsapp" title="Partager sur WhatsApp" onclick="shareOnWhatsApp('Dar Dhiafa Erriadh')">
+                            <i class="fi fi-rr-paper-plane"></i>
+                        </button>
+                        <button type="button" class="c-icon-btn c-icon-btn--copy" title="Copier le lien" onclick="copyCardLink('Dar Dhiafa Erriadh', '', this)">
+                            <i class="fi fi-rr-copy"></i>
+                        </button>
+                        <button type="button" class="c-icon-btn c-icon-btn--pdf" title="Fiche PDF Souvenir" onclick="openPdfModalForCard('Dar Dhiafa Erriadh')">
+                            <i class="fi fi-rr-file-pdf"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </article>
@@ -50,9 +66,25 @@
                 <p class="text-muted" style="font-size: 0.9rem; line-height: 1.5; margin-bottom: 1.25rem;">
                     Espaces somptueux situés directement sur la plage de sable blanc. Centre de thalassothérapie Athénée Thalasso de renommée internationale.
                 </p>
-                <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--clr-sand-200); padding-top: 1rem;">
-                    <span style="font-weight: 800; font-size: 1.2rem; color: var(--clr-sea-900);">À partir de 145 € <span style="font-size: 0.8rem; font-weight: normal;">/ nuit</span></span>
-                    <a href="<?= url('/concierge') ?>" class="btn btn--gold" style="padding: 6px 14px; font-size: 0.85rem;">Réserver via VIP</a>
+                <div style="display: flex; flex-direction: column; gap: 0.75rem; border-top: 1px solid var(--clr-sand-200); padding-top: 1rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-weight: 800; font-size: 1.15rem; color: var(--clr-sea-900);">À partir de 145 € <span style="font-size: 0.8rem; font-weight: normal;">/ nuit</span></span>
+                        <a href="<?= url('/concierge') ?>" class="btn btn--gold" style="padding: 6px 14px; font-size: 0.85rem;">Réserver via VIP</a>
+                    </div>
+                    <div class="c-card__icon-group" style="justify-content: flex-end;">
+                        <button type="button" class="c-icon-btn c-icon-btn--booking" title="Voir sur Booking.com (Partenaire Officiel)" onclick="openBookingHotelsModal('Radisson Blu Palace', 'https://www.booking.com/city/tn/houmt-souk.html?aid=8073836')">
+                            <i class="fi fi-rr-hotel"></i>
+                        </button>
+                        <button type="button" class="c-icon-btn c-icon-btn--whatsapp" title="Partager sur WhatsApp" onclick="shareOnWhatsApp('Radisson Blu Palace Thalasso')">
+                            <i class="fi fi-rr-paper-plane"></i>
+                        </button>
+                        <button type="button" class="c-icon-btn c-icon-btn--copy" title="Copier le lien" onclick="copyCardLink('Radisson Blu Palace', '', this)">
+                            <i class="fi fi-rr-copy"></i>
+                        </button>
+                        <button type="button" class="c-icon-btn c-icon-btn--pdf" title="Fiche PDF Souvenir" onclick="openPdfModalForCard('Radisson Blu Palace Thalasso')">
+                            <i class="fi fi-rr-file-pdf"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </article>
@@ -70,9 +102,25 @@
                 <p class="text-muted" style="font-size: 0.9rem; line-height: 1.5; margin-bottom: 1.25rem;">
                     Niché dans un caravanserail du XVIIIe siècle magnifiquement restauré. Dégustez le fameux couscous au mérou et les briques djerbiennes sous les arcades.
                 </p>
-                <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--clr-sand-200); padding-top: 1rem;">
-                    <span style="font-weight: 800; font-size: 1.1rem; color: var(--clr-sea-900);">Budget : 25 € - 45 €</span>
-                    <a href="<?= url('/concierge') ?>" class="btn btn--gold" style="padding: 6px 14px; font-size: 0.85rem;">Réserver une Table</a>
+                <div style="display: flex; flex-direction: column; gap: 0.75rem; border-top: 1px solid var(--clr-sand-200); padding-top: 1rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-weight: 800; font-size: 1.1rem; color: var(--clr-sea-900);">Budget : 25 € - 45 €</span>
+                        <a href="<?= url('/concierge') ?>" class="btn btn--gold" style="padding: 6px 14px; font-size: 0.85rem;">Réserver une Table</a>
+                    </div>
+                    <div class="c-card__icon-group" style="justify-content: flex-end;">
+                        <button type="button" class="c-icon-btn c-icon-btn--booking" title="Voir sur Booking.com (Partenaire Officiel)" onclick="openBookingHotelsModal('Restaurant El Fondouk', 'https://www.booking.com/city/tn/houmt-souk.html?aid=8073836')">
+                            <i class="fi fi-rr-hotel"></i>
+                        </button>
+                        <button type="button" class="c-icon-btn c-icon-btn--whatsapp" title="Partager sur WhatsApp" onclick="shareOnWhatsApp('Restaurant El Fondouk')">
+                            <i class="fi fi-rr-paper-plane"></i>
+                        </button>
+                        <button type="button" class="c-icon-btn c-icon-btn--copy" title="Copier le lien" onclick="copyCardLink('Restaurant El Fondouk', '', this)">
+                            <i class="fi fi-rr-copy"></i>
+                        </button>
+                        <button type="button" class="c-icon-btn c-icon-btn--pdf" title="Fiche PDF Souvenir" onclick="openPdfModalForCard('Restaurant El Fondouk')">
+                            <i class="fi fi-rr-file-pdf"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </article>
@@ -90,9 +138,25 @@
                 <p class="text-muted" style="font-size: 0.9rem; line-height: 1.5; margin-bottom: 1.25rem;">
                     Installé directement au bord des bateaux de pêche. Spécialités de crevettes royales grillées, calamars farcis et poissons sauvages fraîchement pechés.
                 </p>
-                <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--clr-sand-200); padding-top: 1rem;">
-                    <span style="font-weight: 800; font-size: 1.1rem; color: var(--clr-sea-900);">Budget : 30 € - 55 €</span>
-                    <a href="<?= url('/concierge') ?>" class="btn btn--gold" style="padding: 6px 14px; font-size: 0.85rem;">Réserver une Table</a>
+                <div style="display: flex; flex-direction: column; gap: 0.75rem; border-top: 1px solid var(--clr-sand-200); padding-top: 1rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-weight: 800; font-size: 1.1rem; color: var(--clr-sea-900);">Budget : 30 € - 55 €</span>
+                        <a href="<?= url('/concierge') ?>" class="btn btn--gold" style="padding: 6px 14px; font-size: 0.85rem;">Réserver une Table</a>
+                    </div>
+                    <div class="c-card__icon-group" style="justify-content: flex-end;">
+                        <button type="button" class="c-icon-btn c-icon-btn--booking" title="Voir sur Booking.com (Partenaire Officiel)" onclick="openBookingHotelsModal('Le Haroun Table du Port', 'https://www.booking.com/city/tn/houmt-souk.html?aid=8073836')">
+                            <i class="fi fi-rr-hotel"></i>
+                        </button>
+                        <button type="button" class="c-icon-btn c-icon-btn--whatsapp" title="Partager sur WhatsApp" onclick="shareOnWhatsApp('Le Haroun - Table du Port')">
+                            <i class="fi fi-rr-paper-plane"></i>
+                        </button>
+                        <button type="button" class="c-icon-btn c-icon-btn--copy" title="Copier le lien" onclick="copyCardLink('Le Haroun', '', this)">
+                            <i class="fi fi-rr-copy"></i>
+                        </button>
+                        <button type="button" class="c-icon-btn c-icon-btn--pdf" title="Fiche PDF Souvenir" onclick="openPdfModalForCard('Le Haroun Table du Port')">
+                            <i class="fi fi-rr-file-pdf"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </article>
@@ -110,9 +174,25 @@
                 <p class="text-muted" style="font-size: 0.9rem; line-height: 1.5; margin-bottom: 1.25rem;">
                     Menzel éco-responsable dominant les collines de potiers avec vue imprenable sur les couchers de soleil du Golfe de Boughrara.
                 </p>
-                <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--clr-sand-200); padding-top: 1rem;">
-                    <span style="font-weight: 800; font-size: 1.2rem; color: var(--clr-sea-900);">À partir de 85 € <span style="font-size: 0.8rem; font-weight: normal;">/ nuit</span></span>
-                    <a href="<?= url('/concierge') ?>" class="btn btn--gold" style="padding: 6px 14px; font-size: 0.85rem;">Réserver via VIP</a>
+                <div style="display: flex; flex-direction: column; gap: 0.75rem; border-top: 1px solid var(--clr-sand-200); padding-top: 1rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-weight: 800; font-size: 1.15rem; color: var(--clr-sea-900);">À partir de 85 € <span style="font-size: 0.8rem; font-weight: normal;">/ nuit</span></span>
+                        <a href="<?= url('/concierge') ?>" class="btn btn--gold" style="padding: 6px 14px; font-size: 0.85rem;">Réserver via VIP</a>
+                    </div>
+                    <div class="c-card__icon-group" style="justify-content: flex-end;">
+                        <button type="button" class="c-icon-btn c-icon-btn--booking" title="Voir sur Booking.com (Partenaire Officiel)" onclick="openBookingHotelsModal('Menzel Guellala', 'https://www.booking.com/city/tn/houmt-souk.html?aid=8073836')">
+                            <i class="fi fi-rr-hotel"></i>
+                        </button>
+                        <button type="button" class="c-icon-btn c-icon-btn--whatsapp" title="Partager sur WhatsApp" onclick="shareOnWhatsApp('Menzel Guellala & Terres Rouges')">
+                            <i class="fi fi-rr-paper-plane"></i>
+                        </button>
+                        <button type="button" class="c-icon-btn c-icon-btn--copy" title="Copier le lien" onclick="copyCardLink('Menzel Guellala', '', this)">
+                            <i class="fi fi-rr-copy"></i>
+                        </button>
+                        <button type="button" class="c-icon-btn c-icon-btn--pdf" title="Fiche PDF Souvenir" onclick="openPdfModalForCard('Menzel Guellala')">
+                            <i class="fi fi-rr-file-pdf"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </article>
@@ -130,9 +210,25 @@
                 <p class="text-muted" style="font-size: 0.9rem; line-height: 1.5; margin-bottom: 1.25rem;">
                     Petite table authentique tenue par une famille de pêcheurs d'éponges. Poulpes grillés, soupe de poisson au cumin djerbien et terrasse sur le port.
                 </p>
-                <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--clr-sand-200); padding-top: 1rem;">
-                    <span style="font-weight: 800; font-size: 1.1rem; color: var(--clr-sea-900);">Budget : 18 € - 30 €</span>
-                    <a href="<?= url('/concierge') ?>" class="btn btn--gold" style="padding: 6px 14px; font-size: 0.85rem;">Réserver une Table</a>
+                <div style="display: flex; flex-direction: column; gap: 0.75rem; border-top: 1px solid var(--clr-sand-200); padding-top: 1rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-weight: 800; font-size: 1.1rem; color: var(--clr-sea-900);">Budget : 18 € - 30 €</span>
+                        <a href="<?= url('/concierge') ?>" class="btn btn--gold" style="padding: 6px 14px; font-size: 0.85rem;">Réserver une Table</a>
+                    </div>
+                    <div class="c-card__icon-group" style="justify-content: flex-end;">
+                        <button type="button" class="c-icon-btn c-icon-btn--booking" title="Voir sur Booking.com (Partenaire Officiel)" onclick="openBookingHotelsModal('Bistrot de la Marine Ajim', 'https://www.booking.com/city/tn/houmt-souk.html?aid=8073836')">
+                            <i class="fi fi-rr-hotel"></i>
+                        </button>
+                        <button type="button" class="c-icon-btn c-icon-btn--whatsapp" title="Partager sur WhatsApp" onclick="shareOnWhatsApp('Bistrot de la Marine Ajim')">
+                            <i class="fi fi-rr-paper-plane"></i>
+                        </button>
+                        <button type="button" class="c-icon-btn c-icon-btn--copy" title="Copier le lien" onclick="copyCardLink('Bistrot de la Marine Ajim', '', this)">
+                            <i class="fi fi-rr-copy"></i>
+                        </button>
+                        <button type="button" class="c-icon-btn c-icon-btn--pdf" title="Fiche PDF Souvenir" onclick="openPdfModalForCard('Bistrot de la Marine Ajim')">
+                            <i class="fi fi-rr-file-pdf"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </article>
