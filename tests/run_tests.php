@@ -10,6 +10,7 @@ require_once __DIR__ . '/TestCase.php';
 if (!defined('ROOT_PATH')) {
     define('ROOT_PATH', dirname(__DIR__));
 }
+require_once ROOT_PATH . '/core/helpers.php';
 
 spl_autoload_register(function ($class) {
     $prefixes = [
@@ -155,6 +156,11 @@ $sqlitePdo->exec("
         ip_address TEXT,
         status TEXT DEFAULT 'new',
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
+    CREATE TABLE IF NOT EXISTS settings (
+        setting_key TEXT PRIMARY KEY,
+        setting_value TEXT,
+        setting_group TEXT DEFAULT 'general'
     );
     CREATE TABLE IF NOT EXISTS spam_rate_limits (
         id INTEGER PRIMARY KEY AUTOINCREMENT,

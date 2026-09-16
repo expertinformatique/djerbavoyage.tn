@@ -44,6 +44,14 @@ if (!function_exists('url')) {
     }
 }
 
+if (!function_exists('absolute_url')) {
+    function absolute_url(string $path = ''): string {
+        $scheme = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https://' : 'http://';
+        $host   = $_SERVER['HTTP_HOST'] ?? 'djerbavoyage.tn';
+        return $scheme . $host . url($path);
+    }
+}
+
 if (!function_exists('e')) {
     function e(?string $value): string {
         return htmlspecialchars($value ?? '', ENT_QUOTES, 'UTF-8');

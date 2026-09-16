@@ -32,7 +32,7 @@ class LocalServicesController extends Controller {
             $byCategory[$s->category][] = $s;
         }
 
-        $domain = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost');
+        $domain = rtrim(absolute_url(''), '/');
 
         $itemListElement = [];
         foreach ($services as $index => $s) {
@@ -118,7 +118,7 @@ class LocalServicesController extends Controller {
 
         $estimate = $this->pricingService->calculateEstimate($enrichedItems, $includeAirport, $paymentMode);
         $orderNumber = 'DJE-PASS-' . strtoupper(bin2hex(random_bytes(3)));
-        $domain = (isset($_SERVER['HTTPS']) ? 'https://' : 'http://') . ($_SERVER['HTTP_HOST'] ?? 'localhost');
+        $domain = rtrim(absolute_url(''), '/');
 
         $session = $this->stripeService->createCheckoutSession([
             'title'     => 'Pass Séjour Djerba (' . $estimate['pack_label'] . ')',

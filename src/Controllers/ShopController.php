@@ -17,7 +17,7 @@ class ShopController extends Controller {
         $this->analytics->trackPageView('/shop');
         $products = $this->productRepo->getAllActive();
 
-        $domain = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost');
+        $domain = rtrim(absolute_url(''), '/');
 
         // Génération Schema.org JSON-LD Structuré pour Google Search
         $itemListElement = [];

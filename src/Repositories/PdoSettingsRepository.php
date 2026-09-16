@@ -20,16 +20,30 @@ class PdoSettingsRepository implements SettingsRepositoryInterface {
 
     public function set(string $key, mixed $value, string $group = 'general'): bool {
         try {
-            $stmt = $this->pdo->prepare("
-                INSERT INTO settings (setting_key, setting_value, setting_group) 
-                VALUES (:key, :val, :group)
-                ON DUPLICATE KEY UPDATE setting_value = :val, setting_group = :group
+            $update = $this->pdo->prepare("
+                UPDATE settings 
+                SET setting_value = :val, setting_group = :group 
+                WHERE setting_key = :key
             ");
-            return $stmt->execute([
+            $update->execute([
                 'key'   => $key,
                 'val'   => (string)$value,
                 'group' => $group
             ]);
+
+            if ($update->rowCount() === 0) {
+                $insert = $this->pdo->prepare("
+                    INSERT INTO settings (setting_key, setting_value, setting_group) 
+                    VALUES (:key, :val, :group)
+                ");
+                return $insert->execute([
+                    'key'   => $key,
+                    'val'   => (string)$value,
+                    'group' => $group
+                ]);
+            }
+
+            return true;
         } catch (\Throwable $e) {
             $rootPath = defined('ROOT_PATH') ? ROOT_PATH : dirname(__DIR__, 2);
             @error_log("[" . date('Y-m-d H:i:s') . "] ERROR " . $e->getCode() . ": " . $e->getMessage() . " in " . $e->getFile() . ":" . $e->getLine() . PHP_EOL, 3, $rootPath . '/error.log');

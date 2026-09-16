@@ -16,7 +16,7 @@ class SitemapController extends Controller {
     public function sitemap(): void {
         header('Content-Type: application/xml; charset=utf-8');
 
-        $baseUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost');
+        $baseUrl = rtrim(absolute_url(''), '/');
         $currentDate = date('Y-m-d');
 
         $staticPages = [
@@ -79,7 +79,7 @@ class SitemapController extends Controller {
 
     public function robots(): void {
         header('Content-Type: text/plain; charset=utf-8');
-        $baseUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost');
+        $baseUrl = rtrim(absolute_url(''), '/');
 
         echo "User-agent: *\n";
         echo "Allow: /\n";

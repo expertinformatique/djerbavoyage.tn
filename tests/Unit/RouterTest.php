@@ -77,4 +77,22 @@ class RouterTest extends TestCase {
 
         $this->assertEquals('article_visiter-djerba', $result);
     }
+
+    public function testAbsoluteUrlHelperSubfolderAndDomain() {
+        $_SERVER['HTTP_HOST'] = 'localhost';
+        $_SERVER['SCRIPT_NAME'] = '/djerbavoyage/index.php';
+        $_SERVER['REQUEST_URI'] = '/djerbavoyage/services';
+        unset($_SERVER['HTTPS']);
+
+        $url = absolute_url('/checkout/success?order_number=CON-VIP-1234');
+        $this->assertEquals('http://localhost/djerbavoyage/checkout/success?order_number=CON-VIP-1234', $url);
+
+        $_SERVER['HTTP_HOST'] = 'djerbavoyage.tn';
+        $_SERVER['SCRIPT_NAME'] = '/index.php';
+        $_SERVER['REQUEST_URI'] = '/services';
+        $_SERVER['HTTPS'] = 'on';
+
+        $urlProd = absolute_url('/checkout/success?order_number=CON-VIP-1234');
+        $this->assertEquals('https://djerbavoyage.tn/checkout/success?order_number=CON-VIP-1234', $urlProd);
+    }
 }

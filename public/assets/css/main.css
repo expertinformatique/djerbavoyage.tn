@@ -729,3 +729,130 @@ h3, .heading-3 {
   from { opacity: 0; transform: translateY(-10px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* ==========================================================================
+   FOOTER STYLES & PHONE CONTACT BADGES
+   ========================================================================== */
+.c-footer {
+  background: var(--clr-dark-900, #0f172a);
+  color: #ffffff;
+  padding: 4rem 0 2rem 0;
+  margin-top: 5rem;
+}
+
+.c-footer__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2.5rem;
+  margin-bottom: 3rem;
+}
+
+.c-footer__brand-title {
+  font-family: var(--font-heading, "Plus Jakarta Sans", sans-serif);
+  margin-bottom: 1rem;
+  color: var(--clr-sand-100, #fdfbf7);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.c-footer__brand-icon {
+  color: var(--clr-terracotta-500, #e07a5f);
+}
+
+.c-footer__brand-desc {
+  color: var(--clr-sand-500, #d8c3a5);
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+.c-footer__title {
+  font-family: var(--font-heading, "Plus Jakarta Sans", sans-serif);
+  color: #ffffff;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.c-footer__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  font-size: 0.9rem;
+  padding: 0;
+  margin: 0;
+}
+
+.c-footer__link {
+  color: var(--clr-sand-500, #d8c3a5);
+  text-decoration: none;
+  transition: color 0.18s ease;
+}
+
+.c-footer__link:hover {
+  color: var(--clr-terracotta-500, #e07a5f);
+}
+
+/* Phone Contact Pills */
+.c-footer__phone-item {
+  margin-top: 0.2rem;
+}
+
+.c-footer__phone-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.45rem 0.75rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  color: #ffffff !important;
+  font-size: 0.86rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  width: 100%;
+  max-width: 240px;
+}
+
+.c-footer__phone-link:hover {
+  background: rgba(224, 122, 95, 0.18);
+  border-color: var(--clr-terracotta-500, #e07a5f);
+  color: #ffffff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(224, 122, 95, 0.2);
+}
+
+.c-footer__phone-icon {
+  color: var(--clr-terracotta-500, #e07a5f);
+  font-size: 0.95rem;
+}
+
+.c-footer__phone-flag {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.c-footer__phone-num {
+  letter-spacing: 0.02em;
+}
+
+.c-footer__bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  color: var(--clr-sand-500, #d8c3a5);
+  font-size: 0.85rem;
+}
+
+.c-footer__lock-icon {
+  color: var(--clr-terracotta-500, #e07a5f);
+}
+

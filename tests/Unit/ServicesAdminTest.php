@@ -46,4 +46,20 @@ class ServicesAdminTest extends TestCase {
         $this->assertEquals('driver_assigned', $transfer->status);
         $this->assertEquals('Chauffeur Mohamed assigné (Mercedes Vito)', $transfer->driverNotes);
     }
+
+    public function testSettingsRepositorySetAndGet() {
+        $settingsRepo = new \App\Repositories\PdoSettingsRepository($this->pdo);
+        $ok = $settingsRepo->set('booking_partner_id', '8073836');
+        $this->assertTrue($ok);
+
+        $all = $settingsRepo->getAllAsKeyValue();
+        $this->assertEquals('8073836', $all['booking_partner_id'] ?? null);
+
+        // Test update existing setting
+        $okUpdate = $settingsRepo->set('booking_partner_id', '9999999');
+        $this->assertTrue($okUpdate);
+
+        $allUpdated = $settingsRepo->getAllAsKeyValue();
+        $this->assertEquals('9999999', $allUpdated['booking_partner_id'] ?? null);
+    }
 }

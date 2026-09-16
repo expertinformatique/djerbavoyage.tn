@@ -33,7 +33,7 @@ $_currentCurrency = \Core\Currency::getCurrency();
         <div class="c-navbar__dropdown-menu c-navbar__dropdown-menu--wide">
           <a href="<?= url('/activites') ?>" class="c-navbar__dropdown-item">
             <span class="c-navbar__dropdown-icon c-navbar__dropdown-icon--amber">
-              <i class="fi fi-rr-compass"></i>
+              <i class="fi fi-rr-map-marker"></i>
             </span>
             <span class="c-navbar__dropdown-info">
               <span class="c-navbar__dropdown-title"><?= __('nav.activities') ?></span>

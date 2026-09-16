@@ -21,7 +21,8 @@ class StripeService {
      */
     public function createCheckoutSession(array $params): array {
         $secretKey = $this->getSecretKey();
-        $domain = rtrim($params['domain'] ?? 'https://djerbavoyage.tn', '/');
+        $defaultDomain = function_exists('absolute_url') ? rtrim(absolute_url(''), '/') : 'https://djerbavoyage.tn';
+        $domain = rtrim($params['domain'] ?? $defaultDomain, '/');
         $currency = strtolower($params['currency'] ?? 'eur');
         $priceEur = (float)($params['price_eur'] ?? 10.00);
         $amountCents = (int)round($priceEur * 100);

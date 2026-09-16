@@ -280,8 +280,10 @@
 
 /* ── Badge locale actuelle (visible dans le trigger) ─────────── */
 .c-locale-switcher__flag {
-    font-size: 1rem;
+    font-size: 1.15rem;
     line-height: 1;
+    display: inline-flex;
+    align-items: center;
 }
 
 .c-locale-switcher__code {
@@ -307,28 +309,38 @@
     }
 
     .c-locale-switcher__trigger {
-        background: rgba(255, 255, 255, 0.1);
-        border-color: rgba(255, 255, 255, 0.2);
-        color: #fff;
+        background: rgba(15, 23, 42, 0.08);
+        border-color: rgba(15, 23, 42, 0.18);
+        color: var(--clr-dark-900, #0f172a);
         padding: 0.35rem 0.6rem;
     }
 
     .c-locale-switcher__trigger:hover {
-        background: rgba(255, 255, 255, 0.18);
-        color: #fff;
+        background: rgba(224, 122, 95, 0.12);
+        color: var(--clr-terracotta-500, #e07a5f);
     }
 
     .c-locale-switcher__sep {
-        color: rgba(255, 255, 255, 0.3);
+        color: rgba(15, 23, 42, 0.3);
     }
 
     .c-locale-switcher__trigger .arrow {
-        color: rgba(255, 255, 255, 0.5);
+        color: rgba(15, 23, 42, 0.5);
     }
 
     .c-locale-switcher__dropdown {
-        right: auto;
-        left: 0;
+        right: 0;
+        left: auto;
         width: 280px;
+        max-width: calc(100vw - 1.5rem);
+    }
+
+    .c-locale-switcher__option--lang {
+        padding: 0.65rem 0.85rem;
+        font-size: 0.88rem;
+    }
+
+    .c-locale-switcher__option--lang .lang-flag {
+        font-size: 1.25rem;
     }
 }

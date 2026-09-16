@@ -83,54 +83,66 @@
 
   <?= $content ?>
 
-  <footer style="background:var(--clr-dark-900); color:#fff; padding:4rem 0 2rem 0; margin-top:5rem;">
-    <div class="l-container" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:2.5rem; margin-bottom:3rem;">
-      <div>
-        <h3 style="font-family:var(--font-heading); margin-bottom:1rem; color:var(--clr-sand-100); display:flex; align-items:center; gap:0.5rem;">
-          <i class="fi fi-rr-compass" style="color:var(--clr-terracotta-500);"></i> <?= e($settings->get('site_name', 'Djerba Voyage')) ?>
+  <footer class="c-footer">
+    <div class="l-container c-footer__grid">
+      <div class="c-footer__col">
+        <h3 class="c-footer__brand-title">
+          <i class="fi fi-rr-map-marker c-footer__brand-icon"></i> <?= e($settings->get('site_name', 'Djerba Voyage')) ?>
         </h3>
-        <p style="color:var(--clr-sand-500); font-size:0.9rem; line-height:1.7;">
+        <p class="c-footer__brand-desc">
           <?= __('footer.description') ?>
         </p>
       </div>
 
-      <div>
-        <h4 style="font-family:var(--font-heading); color:#fff; margin-bottom:1rem; font-size:1.1rem;"><?= __('footer.exploration') ?></h4>
-        <ul style="list-style:none; display:flex; flex-direction:column; gap:0.6rem; font-size:0.9rem;">
-          <li><a href="<?= url('/') ?>" style="color:var(--clr-sand-500);"><?= __('footer.home') ?></a></li>
-          <li><a href="<?= url('/activites') ?>" style="color:var(--clr-sand-500);"><?= __('footer.activities') ?></a></li>
-          <li><a href="<?= url('/itineraires') ?>" style="color:var(--clr-sand-500);"><?= __('footer.itineraries') ?></a></li>
-          <li><a href="<?= url('/guide') ?>" style="color:var(--clr-sand-500);"><?= __('footer.guides') ?></a></li>
-          <li><a href="<?= url('/shop') ?>" style="color:var(--clr-sand-500);"><?= __('footer.shop') ?></a></li>
-          <li><a href="<?= url('/concierge') ?>" style="color:var(--clr-sand-500);"><?= __('footer.concierge') ?></a></li>
+      <div class="c-footer__col">
+        <h4 class="c-footer__title"><?= __('footer.exploration') ?></h4>
+        <ul class="c-footer__list">
+          <li><a href="<?= url('/') ?>" class="c-footer__link"><?= __('footer.home') ?></a></li>
+          <li><a href="<?= url('/activites') ?>" class="c-footer__link"><?= __('footer.activities') ?></a></li>
+          <li><a href="<?= url('/itineraires') ?>" class="c-footer__link"><?= __('footer.itineraries') ?></a></li>
+          <li><a href="<?= url('/guide') ?>" class="c-footer__link"><?= __('footer.guides') ?></a></li>
+          <li><a href="<?= url('/shop') ?>" class="c-footer__link"><?= __('footer.shop') ?></a></li>
+          <li><a href="<?= url('/concierge') ?>" class="c-footer__link"><?= __('footer.concierge') ?></a></li>
         </ul>
       </div>
 
-      <div>
-        <h4 style="font-family:var(--font-heading); color:#fff; margin-bottom:1rem; font-size:1.1rem;"><?= __('footer.information') ?></h4>
-        <ul style="list-style:none; display:flex; flex-direction:column; gap:0.6rem; font-size:0.9rem;">
-          <li><a href="<?= url('/a-propos') ?>" style="color:var(--clr-sand-500);"><?= __('footer.about') ?></a></li>
-          <li><a href="<?= url('/contact') ?>" style="color:var(--clr-sand-500);"><?= __('footer.contact') ?></a></li>
-          <li><a href="<?= url('/avis') ?>" style="color:var(--clr-sand-500);"><?= __('footer.reviews') ?></a></li>
-          <li><a href="<?= url('/faq') ?>" style="color:var(--clr-sand-500);"><?= __('footer.faq') ?></a></li>
-          <li><a href="<?= url('/newsletter') ?>" style="color:var(--clr-sand-500);"><?= __('footer.newsletter') ?></a></li>
-          <li><a href="tel:+353896110430" style="color:var(--clr-sand-500);">📞 🇮🇪 +353 89 611 0430</a></li>
-          <li><a href="tel:+21622168875" style="color:var(--clr-sand-500);">📞 🇹🇳 +216 22 168 875</a></li>
+      <div class="c-footer__col">
+        <h4 class="c-footer__title"><?= __('footer.information') ?></h4>
+        <ul class="c-footer__list">
+          <li><a href="<?= url('/a-propos') ?>" class="c-footer__link"><?= __('footer.about') ?></a></li>
+          <li><a href="<?= url('/contact') ?>" class="c-footer__link"><?= __('footer.contact') ?></a></li>
+          <li><a href="<?= url('/avis') ?>" class="c-footer__link"><?= __('footer.reviews') ?></a></li>
+          <li><a href="<?= url('/faq') ?>" class="c-footer__link"><?= __('footer.faq') ?></a></li>
+          <li><a href="<?= url('/newsletter') ?>" class="c-footer__link"><?= __('footer.newsletter') ?></a></li>
+          <li class="c-footer__phone-item">
+            <a href="tel:+353896110430" class="c-footer__phone-link" aria-label="Appeler Irlande +353 89 611 0430">
+              <i class="fi fi-rr-phone-call c-footer__phone-icon"></i>
+              <span class="c-footer__phone-flag">🇮🇪</span>
+              <span class="c-footer__phone-num">+353 89 611 0430</span>
+            </a>
+          </li>
+          <li class="c-footer__phone-item">
+            <a href="tel:+21622168875" class="c-footer__phone-link" aria-label="Appeler Tunisie +216 22 168 875">
+              <i class="fi fi-rr-phone-call c-footer__phone-icon"></i>
+              <span class="c-footer__phone-flag">🇹🇳</span>
+              <span class="c-footer__phone-num">+216 22 168 875</span>
+            </a>
+          </li>
         </ul>
       </div>
 
-      <div>
-        <h4 style="font-family:var(--font-heading); color:#fff; margin-bottom:1rem; font-size:1.1rem;"><?= __('footer.legal') ?></h4>
-        <ul style="list-style:none; display:flex; flex-direction:column; gap:0.6rem; font-size:0.9rem;">
-          <li><a href="<?= url('/politique-de-confidentialite') ?>" style="color:var(--clr-sand-500);"><?= __('footer.privacy') ?></a></li>
-          <li><a href="<?= url('/divulgation-affiliation') ?>" style="color:var(--clr-sand-500);"><?= __('footer.affiliation') ?></a></li>
+      <div class="c-footer__col">
+        <h4 class="c-footer__title"><?= __('footer.legal') ?></h4>
+        <ul class="c-footer__list">
+          <li><a href="<?= url('/politique-de-confidentialite') ?>" class="c-footer__link"><?= __('footer.privacy') ?></a></li>
+          <li><a href="<?= url('/divulgation-affiliation') ?>" class="c-footer__link"><?= __('footer.affiliation') ?></a></li>
         </ul>
       </div>
     </div>
 
-    <div class="l-container" style="border-top:1px solid rgba(255,255,255,0.1); padding-top:1.5rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; color:var(--clr-sand-500); font-size:0.85rem;">
+    <div class="l-container c-footer__bottom">
       <p><?= __('footer.copyright', ['year' => date('Y'), 'name' => e($settings->get('site_name', 'Djerba Voyage'))]) ?></p>
-      <p><?= __('footer.payments') ?> <i class="fi fi-rr-lock" style="color:var(--clr-terracotta-500);"></i> <strong>Stripe</strong></p>
+      <p><?= __('footer.payments') ?> <i class="fi fi-rr-lock c-footer__lock-icon"></i> <strong>Stripe</strong></p>
     </div>
   </footer>
 

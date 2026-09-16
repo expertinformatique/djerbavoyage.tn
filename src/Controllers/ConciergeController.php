@@ -44,7 +44,7 @@ class ConciergeController extends Controller {
 
         $price = (float)$this->settings->get('concierge_price', '29.00');
         $orderNumber = 'CON-VIP-' . strtoupper(bin2hex(random_bytes(3)));
-        $domain = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://') . ($_SERVER['HTTP_HOST'] ?? 'localhost');
+        $domain = rtrim(absolute_url(''), '/');
 
         $session = $this->stripeService->createCheckoutSession([
             'title'        => 'Conciergerie VIP Djerba (Planification Sur-Mesure)',

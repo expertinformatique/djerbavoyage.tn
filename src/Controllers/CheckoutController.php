@@ -37,7 +37,7 @@ class CheckoutController extends Controller {
             $this->json(['error' => 'Erreur de validation du prix.'], 400);
         }
 
-        $domain = (isset($_SERVER['HTTPS']) ? 'https://' : 'http://') . ($_SERVER['HTTP_HOST'] ?? 'localhost');
+        $domain = rtrim(absolute_url(''), '/');
 
         $session = $this->stripeService->createCheckoutSession([
             'title'     => $product->titleFr,
