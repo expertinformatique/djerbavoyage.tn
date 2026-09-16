@@ -305,6 +305,9 @@
   </div>
 </section>
 
+<!-- Section Blog & Guides de Voyage Récents -->
+<?php require __DIR__ . '/../partials/home_blog_section.php'; ?>
+
 <!-- Section Newsletter & Cercle Privé VIP -->
 <?php require __DIR__ . '/../partials/newsletter_section.php'; ?>
 

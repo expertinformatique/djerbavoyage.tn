@@ -117,4 +117,11 @@ return [
     'locale.language'       => 'Language',
     'locale.currency'       => 'Currency',
     'locale.apply'          => 'Apply',
+
+    /* ── Blog Home Section ────────────────────────────────────── */
+    'blog.badge'            => 'Travel Guides & Journal',
+    'blog.home_title'       => 'Our Practical Guides & Latest Djerba News',
+    'blog.home_subtitle'    => 'Live weather, secret itineraries, authentic spots and insider tips for an unforgettable stay.',
+    'blog.read_guide'       => 'Read guide',
+    'blog.explore_all'      => 'Explore all our guides & articles',
 ];

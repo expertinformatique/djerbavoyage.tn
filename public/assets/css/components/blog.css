@@ -450,3 +450,56 @@
     padding: 1.5rem 1.25rem;
   }
 }
+
+/* 5. Section Blog sur la Page d'Accueil */
+.c-home-blog {
+  padding: 4.5rem 0 5rem;
+  background-color: #ffffff;
+  border-top: 1px solid var(--clr-sand-200, #F4ECE1);
+}
+
+.c-home-blog .c-blog-header {
+  margin: 0 auto 2.5rem;
+}
+
+.c-home-blog .c-blog-grid {
+  margin: 2rem 0 3rem;
+}
+
+.c-home-blog__actions {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.c-home-blog__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.9rem 2.25rem;
+  font-family: var(--font-heading, "Plus Jakarta Sans", sans-serif);
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: var(--radius-button, 12px);
+  background: var(--clr-sand-100, #FDFBF7);
+  color: var(--clr-sea-900, #03045E);
+  border: 1px solid var(--clr-sand-400, #E6D7C3);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+  transition: all 0.25s ease;
+  text-decoration: none;
+}
+
+.c-home-blog__cta:hover {
+  background: var(--clr-sea-600, #0077B6);
+  color: #ffffff;
+  border-color: var(--clr-sea-600, #0077B6);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 119, 182, 0.25);
+}
+
+.c-home-blog__cta i {
+  transition: transform 0.2s ease;
+}
+
+.c-home-blog__cta:hover i {
+  transform: translateX(4px);
+}
