@@ -19,6 +19,10 @@ class Router {
     }
 
     public function dispatch(string $method, string $uri, Container $container): mixed {
+        $method = strtoupper($method);
+        if ($method === 'HEAD') {
+            $method = 'GET';
+        }
         $path = parse_url($uri, PHP_URL_PATH) ?? '/';
         
         // Gérer les requêtes CORS preflight (OPTIONS)

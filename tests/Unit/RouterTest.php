@@ -95,4 +95,14 @@ class RouterTest extends TestCase {
         $urlProd = absolute_url('/checkout/success?order_number=CON-VIP-1234');
         $this->assertEquals('https://djerbavoyage.tn/checkout/success?order_number=CON-VIP-1234', $urlProd);
     }
+
+    public function testHeadRequestSupport() {
+        $this->router->get('/status', function() {
+            return 'status_ok';
+        });
+
+        $_SERVER['SCRIPT_NAME'] = '/index.php';
+        $result = $this->router->dispatch('HEAD', '/status', $this->container);
+        $this->assertEquals('status_ok', $result);
+    }
 }
