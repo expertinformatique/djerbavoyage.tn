@@ -164,16 +164,19 @@ class LocalServicesController extends Controller {
                 $this->scheduleRepo->saveAirportTransfer($transfer);
             }
 
+            $sessionId = !empty($session['id']) ? $session['id'] : ('cs_test_' . bin2hex(random_bytes(16)));
             $redirectUrl = !empty($session['url']) ? $session['url'] : url('/reservation/planning/' . $orderNumber);
             $this->json([
-                'session_id'   => $session['id'],
+                'session_id'   => $sessionId,
                 'order_number' => $orderNumber,
                 'redirect_url' => $redirectUrl
             ]);
         } catch (\Throwable $e) {
             $rootPath = defined('ROOT_PATH') ? ROOT_PATH : dirname(__DIR__, 2);
             @error_log("[" . date('Y-m-d H:i:s') . "] ERROR " . $e->getCode() . ": " . $e->getMessage() . " in " . $e->getFile() . ":" . $e->getLine() . PHP_EOL, 3, $rootPath . '/error.log');
-            $this->json(['error' => 'Une erreur est survenue lors de l\'initialisation du paiement. Veuillez réessayer.'], 500);
+            
+            $errDetail = (isset($_ENV['APP_ENV']) && $_ENV['APP_ENV'] === 'development') ? (' (' . $e->getMessage() . ')') : '';
+            $this->json(['error' => 'Une erreur est survenue lors de l\'initialisation du paiement.' . $errDetail], 500);
         }
     }
 

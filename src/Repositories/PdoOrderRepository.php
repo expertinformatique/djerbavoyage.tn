@@ -30,21 +30,89 @@ class PdoOrderRepository implements OrderRepositoryInterface {
     }
 
     public function create(Order $order): Order {
-        $stmt = $this->pdo->prepare("
-            INSERT INTO orders (order_number, customer_email, total_amount, currency, stripe_session_id, status, type)
-            VALUES (:number, :email, :amount, :currency, :session_id, :status, :type)
-        ");
-        $stmt->execute([
-            'number'     => $order->orderNumber,
-            'email'      => $order->customerEmail,
-            'amount'     => $order->totalAmount,
-            'currency'   => $order->currency,
-            'session_id' => $order->stripeSessionId,
-            'status'     => $order->status,
-            'type'       => $order->type,
-        ]);
-        $order->id = (int)$this->pdo->lastInsertId();
-        return $order;
+        try {
+            $stmt = $this->pdo->prepare("
+                INSERT INTO orders (order_number, customer_email, total_amount, currency, stripe_session_id, status, type)
+                VALUES (:number, :email, :amount, :currency, :session_id, :status, :type)
+            ");
+            $stmt->execute([
+                'number'     => $order->orderNumber,
+                'email'      => $order->customerEmail,
+                'amount'     => $order->totalAmount,
+                'currency'   => $order->currency,
+                'session_id' => $order->stripeSessionId,
+                'status'     => $order->status,
+                'type'       => $order->type,
+            ]);
+            $order->id = (int)$this->pdo->lastInsertId();
+            return $order;
+        } catch (\Throwable $e) {
+            if (strpos($e->getMessage(), "doesn't exist") !== false || strpos($e->getMessage(), "no such table") !== false) {
+                $driver = $this->pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
+                if ($driver === 'sqlite') {
+                    $this->pdo->exec("CREATE TABLE IF NOT EXISTS orders (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        order_number VARCHAR(50) NOT NULL UNIQUE,
+                        customer_email VARCHAR(150) NOT NULL,
+                        total_amount DECIMAL(10,2) NOT NULL,
+                        currency VARCHAR(10) DEFAULT 'EUR',
+                        stripe_session_id VARCHAR(255) NOT NULL UNIQUE,
+                        status VARCHAR(20) NOT NULL DEFAULT 'pending',
+                        type VARCHAR(30) NOT NULL DEFAULT 'digital_product',
+                        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                    )");
+                } else {
+                    $this->pdo->exec("CREATE TABLE IF NOT EXISTS orders (
+                        id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                        order_number VARCHAR(50) NOT NULL UNIQUE,
+                        customer_email VARCHAR(150) NOT NULL,
+                        total_amount DECIMAL(10,2) NOT NULL,
+                        currency VARCHAR(10) DEFAULT 'EUR',
+                        stripe_session_id VARCHAR(255) NOT NULL UNIQUE,
+                        status VARCHAR(20) NOT NULL DEFAULT 'pending',
+                        type VARCHAR(30) NOT NULL DEFAULT 'digital_product',
+                        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+                }
+            } elseif (strpos($e->getMessage(), 'Unknown column') !== false || strpos($e->getMessage(), 'no column') !== false) {
+                try {
+                    $this->pdo->exec("ALTER TABLE orders ADD COLUMN type VARCHAR(30) NOT NULL DEFAULT 'digital_product'");
+                } catch (\Throwable $t) {}
+            }
+
+            try {
+                $stmt = $this->pdo->prepare("
+                    INSERT INTO orders (order_number, customer_email, total_amount, currency, stripe_session_id, status, type)
+                    VALUES (:number, :email, :amount, :currency, :session_id, :status, :type)
+                ");
+                $stmt->execute([
+                    'number'     => $order->orderNumber,
+                    'email'      => $order->customerEmail,
+                    'amount'     => $order->totalAmount,
+                    'currency'   => $order->currency,
+                    'session_id' => $order->stripeSessionId,
+                    'status'     => $order->status,
+                    'type'       => $order->type,
+                ]);
+                $order->id = (int)$this->pdo->lastInsertId();
+                return $order;
+            } catch (\Throwable $e2) {
+                $stmt = $this->pdo->prepare("
+                    INSERT INTO orders (order_number, customer_email, total_amount, currency, stripe_session_id, status)
+                    VALUES (:number, :email, :amount, :currency, :session_id, :status)
+                ");
+                $stmt->execute([
+                    'number'     => $order->orderNumber,
+                    'email'      => $order->customerEmail,
+                    'amount'     => $order->totalAmount,
+                    'currency'   => $order->currency,
+                    'session_id' => $order->stripeSessionId,
+                    'status'     => $order->status,
+                ]);
+                $order->id = (int)$this->pdo->lastInsertId();
+                return $order;
+            }
+        }
     }
 
     public function updateStatus(int $orderId, string $status): bool {
