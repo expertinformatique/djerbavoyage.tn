@@ -27,12 +27,16 @@ class DashboardController extends Controller {
         $stmtConcierge = $pdo->query("SELECT COUNT(*) FROM concierge_tickets WHERE status = 'new'");
         $pendingConcierge = (int)$stmtConcierge->fetchColumn();
 
+        $stmtAiLeads = $pdo->query("SELECT COUNT(*) FROM ai_leads WHERE status = 'new'");
+        $pendingAiLeads = (int)$stmtAiLeads->fetchColumn();
+
         $orders = $this->orderRepo->getPaginated(1, 5)['items'];
 
         $this->render('admin/dashboard', [
             'paidCount'        => $paidCount,
             'totalRevenue'     => $totalRevenue,
             'pendingConcierge' => $pendingConcierge,
+            'pendingAiLeads'   => $pendingAiLeads,
             'recentOrders'     => $orders,
             'settings'         => $this->settings
         ], 'layouts/admin');

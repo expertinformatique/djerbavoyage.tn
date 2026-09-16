@@ -1,22 +1,95 @@
-<div class="l-container" style="max-width:700px; margin:4rem auto; text-align:center;">
-  <div style="background:#fff; padding:3.5rem 2.5rem; border-radius:var(--radius-card); box-shadow:var(--shadow-soft);">
-    <i class="fi fi-rr-envelope-open" style="font-size:3.5rem; color:var(--clr-terracotta-500);"></i>
-    <h1 style="font-family:var(--font-heading); font-size:2.2rem; margin:1rem 0 0.5rem 0; color:var(--clr-dark-900);">Rejoignez le Club Djerba Voyage</h1>
-    <p style="color:var(--clr-gray-500); margin-bottom:2rem;">Recevez nos offres privées, nos réductions secrètes d'hôtels et nos nouveaux guides PDF directement par e-mail.</p>
+<?php
+/**
+ * Page Inscription Newsletter & Club Privé Djerba Voyage
+ * Règle 1, 3, 4, 6 : MVC, 0 inline style, Responsive dense, < 200 lignes
+ */
+?>
+<div class="l-container c-newsletter-page">
+  <div class="c-newsletter-card">
+    
+    <div class="c-newsletter-icon-wrap">
+      <i class="fi fi-rr-crown"></i>
+    </div>
 
-    <?php if (!empty($success)): ?>
-      <div style="background:#e6fffa; color:#234e52; padding:1.25rem; border-radius:12px; margin-bottom:2rem; border:1px solid #b2f5ea; font-weight:600;">
-        <i class="fi fi-rr-check-circle"></i> <?= e($success) ?>
+    <div>
+      <span class="c-newsletter-badge">
+        ✨ Cercle Privé Djerba Voyage
+      </span>
+    </div>
+
+    <h1 class="c-newsletter-title">
+      Recevez Nos Pépites, Réductions & Spots Secrets
+    </h1>
+
+    <p class="c-newsletter-subtitle">
+      Rejoignez notre cercle de plus de 1 450 voyageurs privilégiés. Recevez en avant-première nos réductions exclusives, nos coordonnées GPS confidentielles et nos conseils d'initiés.
+    </p>
+
+    <!-- Pass Privilège Immédiat -->
+    <div class="c-newsletter-voucher-box">
+      <div class="c-newsletter-voucher-info">
+        <div class="c-newsletter-voucher-label">🎁 Votre Privilège de Bienvenue Immédiat</div>
+        <div class="c-newsletter-voucher-code">CLUB-DJERBA-10</div>
+        <div class="c-newsletter-voucher-sub">Code promo envoyé instantanément par e-mail dès validation</div>
+      </div>
+      <div class="c-newsletter-voucher-tag">
+        <i class="fi fi-rr-badge-percent"></i> -10% Immédiat
+      </div>
+    </div>
+
+    <!-- Message Flash Succès / Erreur -->
+    <?php if (!empty($result)): ?>
+      <div class="c-newsletter-alert <?= $result['success'] ? 'c-newsletter-alert--success' : 'c-newsletter-alert--error' ?>">
+        <i class="fi fi-rr-<?= $result['success'] ? 'check-circle' : 'cross-circle' ?>"></i> <?= e($result['message']) ?>
       </div>
     <?php endif; ?>
 
-    <form method="POST" action="/newsletter" style="max-width:500px; margin:0 auto;">
-      <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-        <input type="email" name="email" placeholder="Votre adresse e-mail..." required style="flex:1; padding:0.9rem; border:1px solid var(--clr-sand-200); border-radius:var(--radius-pill); font-family:var(--font-body); min-width:240px;">
-        <button type="submit" class="c-button c-button--primary">S'inscrire <i class="fi fi-rr-paper-plane"></i></button>
+    <!-- Formulaire d'inscription VIP -->
+    <form method="POST" action="<?= url('/newsletter') ?>" class="c-newsletter-form">
+      <!-- Anti-Spam Security Tokens -->
+      <input type="text" name="_hp_security" class="c-hp-security-check" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <input type="hidden" name="_form_ts" value="<?= time() ?>">
+
+      <div class="c-newsletter-form-group">
+        <input type="email" name="email" placeholder="Votre adresse e-mail personnelle..." required class="c-newsletter-input">
+        <button type="submit" class="c-newsletter-button">
+          Rejoindre le Club <i class="fi fi-rr-paper-plane"></i>
+        </button>
       </div>
-      <p style="font-size:0.8rem; color:#888; margin-top:1rem;">Pas de spam. Désinscription possible à tout moment en 1 clic.</p>
+      <p class="c-newsletter-footer-note">
+        🔒 Inscription 100% gratuite • Données strictement protégées • Désinscription en 1 clic
+      </p>
     </form>
+
+    <!-- Grille des 4 Avantages Exclusifs -->
+    <div class="c-newsletter-perks">
+      <div class="c-newsletter-perk-item">
+        <i class="fi fi-rr-badge-percent c-newsletter-perk-icon c-newsletter-perk-icon--amber"></i>
+        <div class="c-newsletter-perk-title">Code Réduction -10%</div>
+        <div class="c-newsletter-perk-desc">Valable sur toutes nos excursions, quads et sorties en mer dès votre confirmation.</div>
+      </div>
+      <div class="c-newsletter-perk-item">
+        <i class="fi fi-rr-map-marker c-newsletter-perk-icon c-newsletter-perk-icon--emerald"></i>
+        <div class="c-newsletter-perk-title">Spots Secrets & Criques</div>
+        <div class="c-newsletter-perk-desc">Coordonnées GPS des plages sauvages et ateliers traditionnels loin des foules.</div>
+      </div>
+      <div class="c-newsletter-perk-item">
+        <i class="fi fi-rr-restaurant c-newsletter-perk-icon c-newsletter-perk-icon--terracotta"></i>
+        <div class="c-newsletter-perk-title">Tables d'Hôtes Secrètes</div>
+        <div class="c-newsletter-perk-desc">Les meilleures tables familiales, poissons du jour et dîners sous les palmiers.</div>
+      </div>
+      <div class="c-newsletter-perk-item">
+        <i class="fi fi-rr-shield-check c-newsletter-perk-icon c-newsletter-perk-icon--sky"></i>
+        <div class="c-newsletter-perk-title">Conciergerie & Zéro Spam</div>
+        <div class="c-newsletter-perk-desc">1 seul e-mail de pépites par mois. Assistance prioritaire pour vos réservations.</div>
+      </div>
+    </div>
+
+    <!-- Preuve Sociale & Avis Voyageurs -->
+    <div class="c-newsletter-proof">
+      <span class="c-newsletter-stars">★★★★★</span>
+      <span>Recommandé par <strong>1 450+</strong> voyageurs privilégiés à Djerba</span>
+    </div>
+
   </div>
 </div>
-

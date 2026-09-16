@@ -1,0 +1,203 @@
+/* ==========================================================================
+   Contact Page Component Styles
+   ========================================================================== */
+
+.c-contact-page {
+  max-width: 960px;
+  margin: 3.5rem auto;
+  padding: 0 1.25rem;
+}
+
+.c-contact-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.c-contact-badge {
+  display: inline-block;
+  color: #0284c7;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.85rem;
+  background: rgba(2, 132, 199, 0.1);
+  padding: 4px 14px;
+  border-radius: 20px;
+  margin-bottom: 0.6rem;
+}
+
+.c-contact-title {
+  font-family: var(--font-heading, "Plus Jakarta Sans", sans-serif);
+  font-size: 2.35rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 0.75rem;
+  line-height: 1.2;
+}
+
+.c-contact-subtitle {
+  color: #64748b;
+  max-width: 600px;
+  margin: 0 auto;
+  font-size: 0.98rem;
+  line-height: 1.6;
+}
+
+.c-contact-alert {
+  padding: 1.15rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.c-contact-alert--success {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.c-contact-alert--error {
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+.c-contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  align-items: start;
+}
+
+.c-contact-card {
+  background: #ffffff;
+  padding: 2.25rem;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  border: 1px solid #f1f5f9;
+}
+
+.c-contact-form-group {
+  margin-bottom: 1.2rem;
+}
+
+.c-contact-label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.88rem;
+  margin-bottom: 0.4rem;
+  color: #1e293b;
+}
+
+.c-contact-input,
+.c-contact-select,
+.c-contact-textarea {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.92rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background: #f8fafc;
+}
+
+.c-contact-input:focus,
+.c-contact-select:focus,
+.c-contact-textarea:focus {
+  border-color: #0284c7;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+}
+
+.c-contact-textarea {
+  resize: vertical;
+}
+
+.c-contact-submit {
+  width: 100%;
+  justify-content: center;
+  padding: 0.95rem;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.c-contact-info-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.c-contact-info-card {
+  background: #ffffff;
+  padding: 1.6rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  border: 1px solid #f1f5f9;
+  display: flex;
+  gap: 1.15rem;
+  align-items: flex-start;
+}
+
+.c-contact-info-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  flex-shrink: 0;
+}
+
+.c-contact-info-icon-box--terracotta {
+  background: rgba(224, 122, 95, 0.12);
+  color: #e07a5f;
+}
+
+.c-contact-info-icon-box--emerald {
+  background: rgba(16, 185, 129, 0.12);
+  color: #10b981;
+}
+
+.c-contact-info-icon-box--sky {
+  background: rgba(2, 132, 199, 0.12);
+  color: #0284c7;
+}
+
+.c-contact-info-title {
+  font-family: var(--font-heading, "Plus Jakarta Sans", sans-serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0 0 0.35rem;
+  color: #0f172a;
+}
+
+.c-contact-info-text {
+  color: #64748b;
+  font-size: 0.88rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.c-contact-info-link {
+  color: #0284c7;
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .c-contact-title {
+    font-size: 1.85rem;
+  }
+  .c-contact-card {
+    padding: 1.5rem;
+  }
+}

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="<?= \Core\Lang::getLocale() ?>" dir="<?= \Core\Lang::getDir() ?>">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,10 +44,27 @@
   
   <!-- CSS Main & Modules -->
   <link rel="stylesheet" href="<?= asset('css/main.css') ?>">
+  <link rel="stylesheet" href="<?= asset('css/components/nav.css') ?>">
   <link rel="stylesheet" href="<?= asset('css/components/services-builder.css') ?>">
+  <link rel="stylesheet" href="<?= asset('css/components/sales-funnel-quiz.css') ?>">
+  <link rel="stylesheet" href="<?= asset('css/components/newsletter.css') ?>">
+  <link rel="stylesheet" href="<?= asset('css/components/contact.css') ?>">
+  <link rel="stylesheet" href="<?= asset('css/components/personalized-pdf-editor.css') ?>">
+  <link rel="stylesheet" href="<?= asset('css/components/locale-switcher.css') ?>">
+<?php if (\Core\Lang::isRtl()): ?>
+  <link rel="stylesheet" href="<?= asset('css/rtl.css') ?>">
+<?php endif; ?>
 
   <!-- JSON-LD Structured Data Injection -->
   <?= $jsonLd ?? '' ?>
+
+  <!-- Global App Base URL & Locale Configuration -->
+  <script>
+    window.APP_BASE_URL = '<?= rtrim(url(''), '/') ?>';
+    window.LOCALE       = '<?= \Core\Lang::getLocale() ?>';
+    window.CURRENCY     = '<?= \Core\Currency::getCurrency() ?>';
+    window.CURRENCY_RATES = <?= json_encode(\Core\Currency::rates()) ?>;
+  </script>
 </head>
 <body>
 
@@ -62,47 +79,51 @@
           <i class="fi fi-rr-compass" style="color:var(--clr-terracotta-500);"></i> <?= e($settings->get('site_name', 'Djerba Voyage')) ?>
         </h3>
         <p style="color:var(--clr-sand-500); font-size:0.9rem; line-height:1.7;">
-          Guide touristique indépendant & conciergerie privée. Découvrez l'île de Djerba en Tunisie en toute sérénité.
+          <?= __('footer.description') ?>
         </p>
       </div>
 
       <div>
-        <h4 style="font-family:var(--font-heading); color:#fff; margin-bottom:1rem; font-size:1.1rem;">Exploration</h4>
+        <h4 style="font-family:var(--font-heading); color:#fff; margin-bottom:1rem; font-size:1.1rem;"><?= __('footer.exploration') ?></h4>
         <ul style="list-style:none; display:flex; flex-direction:column; gap:0.6rem; font-size:0.9rem;">
-          <li><a href="<?= url('/') ?>" style="color:var(--clr-sand-500);">Accueil</a></li>
-          <li><a href="<?= url('/activites') ?>" style="color:var(--clr-sand-500);">Excursions & Activités</a></li>
-          <li><a href="<?= url('/itineraires') ?>" style="color:var(--clr-sand-500);">Itinéraires 3, 5 & 7 Jours</a></li>
-          <li><a href="<?= url('/guide') ?>" style="color:var(--clr-sand-500);">Guides & Blog</a></li>
-          <li><a href="<?= url('/shop') ?>" style="color:var(--clr-sand-500);">Boutique Guides PDF</a></li>
-          <li><a href="<?= url('/concierge') ?>" style="color:var(--clr-sand-500);">Conciergerie VIP</a></li>
+          <li><a href="<?= url('/') ?>" style="color:var(--clr-sand-500);"><?= __('footer.home') ?></a></li>
+          <li><a href="<?= url('/activites') ?>" style="color:var(--clr-sand-500);"><?= __('footer.activities') ?></a></li>
+          <li><a href="<?= url('/itineraires') ?>" style="color:var(--clr-sand-500);"><?= __('footer.itineraries') ?></a></li>
+          <li><a href="<?= url('/guide') ?>" style="color:var(--clr-sand-500);"><?= __('footer.guides') ?></a></li>
+          <li><a href="<?= url('/shop') ?>" style="color:var(--clr-sand-500);"><?= __('footer.shop') ?></a></li>
+          <li><a href="<?= url('/concierge') ?>" style="color:var(--clr-sand-500);"><?= __('footer.concierge') ?></a></li>
         </ul>
       </div>
 
       <div>
-        <h4 style="font-family:var(--font-heading); color:#fff; margin-bottom:1rem; font-size:1.1rem;">Informations</h4>
+        <h4 style="font-family:var(--font-heading); color:#fff; margin-bottom:1rem; font-size:1.1rem;"><?= __('footer.information') ?></h4>
         <ul style="list-style:none; display:flex; flex-direction:column; gap:0.6rem; font-size:0.9rem;">
-          <li><a href="<?= url('/a-propos') ?>" style="color:var(--clr-sand-500);">À Propos de Nous</a></li>
-          <li><a href="<?= url('/contact') ?>" style="color:var(--clr-sand-500);">Nous Contactez</a></li>
-          <li><a href="<?= url('/avis') ?>" style="color:var(--clr-sand-500);">Avis Voyageurs</a></li>
-          <li><a href="<?= url('/faq') ?>" style="color:var(--clr-sand-500);">Foire Aux Questions (FAQ)</a></li>
-          <li><a href="<?= url('/newsletter') ?>" style="color:var(--clr-sand-500);">Newsletter & Offres VIP</a></li>
+          <li><a href="<?= url('/a-propos') ?>" style="color:var(--clr-sand-500);"><?= __('footer.about') ?></a></li>
+          <li><a href="<?= url('/contact') ?>" style="color:var(--clr-sand-500);"><?= __('footer.contact') ?></a></li>
+          <li><a href="<?= url('/avis') ?>" style="color:var(--clr-sand-500);"><?= __('footer.reviews') ?></a></li>
+          <li><a href="<?= url('/faq') ?>" style="color:var(--clr-sand-500);"><?= __('footer.faq') ?></a></li>
+          <li><a href="<?= url('/newsletter') ?>" style="color:var(--clr-sand-500);"><?= __('footer.newsletter') ?></a></li>
+          <li><a href="tel:+353896110430" style="color:var(--clr-sand-500);">📞 🇮🇪 +353 89 611 0430</a></li>
+          <li><a href="tel:+21622168875" style="color:var(--clr-sand-500);">📞 🇹🇳 +216 22 168 875</a></li>
         </ul>
       </div>
 
       <div>
-        <h4 style="font-family:var(--font-heading); color:#fff; margin-bottom:1rem; font-size:1.1rem;">Mentions & Legals</h4>
+        <h4 style="font-family:var(--font-heading); color:#fff; margin-bottom:1rem; font-size:1.1rem;"><?= __('footer.legal') ?></h4>
         <ul style="list-style:none; display:flex; flex-direction:column; gap:0.6rem; font-size:0.9rem;">
-          <li><a href="<?= url('/politique-de-confidentialite') ?>" style="color:var(--clr-sand-500);">Politique de Confidentialité</a></li>
-          <li><a href="<?= url('/divulgation-affiliation') ?>" style="color:var(--clr-sand-500);">Divulgation d'Affiliation</a></li>
+          <li><a href="<?= url('/politique-de-confidentialite') ?>" style="color:var(--clr-sand-500);"><?= __('footer.privacy') ?></a></li>
+          <li><a href="<?= url('/divulgation-affiliation') ?>" style="color:var(--clr-sand-500);"><?= __('footer.affiliation') ?></a></li>
         </ul>
       </div>
     </div>
 
     <div class="l-container" style="border-top:1px solid rgba(255,255,255,0.1); padding-top:1.5rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; color:var(--clr-sand-500); font-size:0.85rem;">
-      <p>&copy; <?= date('Y') ?> <?= e($settings->get('site_name', 'Djerba Voyage')) ?>. Tous droits réservés.</p>
-      <p>Paiements 100% Sécurisés par <i class="fi fi-rr-lock" style="color:var(--clr-terracotta-500);"></i> <strong>Stripe</strong></p>
+      <p><?= __('footer.copyright', ['year' => date('Y'), 'name' => e($settings->get('site_name', 'Djerba Voyage'))]) ?></p>
+      <p><?= __('footer.payments') ?> <i class="fi fi-rr-lock" style="color:var(--clr-terracotta-500);"></i> <strong>Stripe</strong></p>
     </div>
   </footer>
+
+  <?php require __DIR__ . '/../partials/personalized_pdf_modal.php'; ?>
 
   <script type="module" src="<?= asset('js/main.js') ?>"></script>
 </body>

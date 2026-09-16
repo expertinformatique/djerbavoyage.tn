@@ -10,8 +10,12 @@
     <h2 style="font-size:2rem; font-family:var(--font-heading); color:var(--clr-terracotta-500);"><?= number_format($totalRevenue, 2) ?> €</h2>
   </div>
   <div style="background:#fff; padding:1.5rem; border-radius:12px; box-shadow:var(--shadow-soft);">
-    <span style="color:#666; font-size:0.9rem;">Tickets Conciergerie Nouveaux</span>
-    <h2 style="font-size:2rem; font-family:var(--font-heading); color:var(--clr-sea-900);"><?= $pendingConcierge ?></h2>
+    <span style="color:#666; font-size:0.9rem;">Tickets Conciergerie</span>
+    <h2 style="font-size:2rem; font-family:var(--font-heading); color:var(--clr-sea-900);"><?= (int)$pendingConcierge ?></h2>
+  </div>
+  <div style="background:#fff; padding:1.5rem; border-radius:12px; box-shadow:var(--shadow-soft);">
+    <span style="color:#666; font-size:0.9rem;">Projets Séjours IA</span>
+    <h2 style="font-size:2rem; font-family:var(--font-heading); color:#F59E0B;"><?= (int)($pendingAiLeads ?? 0) ?></h2>
   </div>
 </div>
 

@@ -119,6 +119,8 @@
           </article>
         <?php endforeach; ?>
       </div>
+      <!-- Pagination pour "Toutes les Expériences" -->
+      <div id="servicesPagination" class="c-services-pagination"></div>
     </div>
 
     <!-- Right Column: Sticky Pass Estimator -->

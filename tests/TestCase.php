@@ -64,5 +64,40 @@ if (!class_exists('PHPUnit\Framework\TestCase')) {
                 throw new \Exception($message ?: "Échec : La condition n'est pas fausse");
             }
         }
+
+        protected function assertNotEquals($expected, $actual, string $message = ''): void {
+            self::$assertionsCount++;
+            if ($expected == $actual) {
+                throw new \Exception($message ?: "Échec : '$actual' est égal à '$expected'");
+            }
+        }
+
+        protected function assertGreaterThanOrEqual($expected, $actual, string $message = ''): void {
+            self::$assertionsCount++;
+            if ($actual < $expected) {
+                throw new \Exception($message ?: "Échec : '$actual' n'est pas supérieur ou égal à '$expected'");
+            }
+        }
+
+        protected function assertLessThan($expected, $actual, string $message = ''): void {
+            self::$assertionsCount++;
+            if ($actual >= $expected) {
+                throw new \Exception($message ?: "Échec : '$actual' n'est pas inférieur à '$expected'");
+            }
+        }
+
+        protected function assertLessThanOrEqual($expected, $actual, string $message = ''): void {
+            self::$assertionsCount++;
+            if ($actual > $expected) {
+                throw new \Exception($message ?: "Échec : '$actual' n'est pas inférieur ou égal à '$expected'");
+            }
+        }
+
+        protected function assertContains($needle, $haystack, string $message = ''): void {
+            self::$assertionsCount++;
+            if (!in_array($needle, $haystack, true)) {
+                throw new \Exception($message ?: "Échec : '$needle' n'est pas dans le tableau");
+            }
+        }
     }
 }

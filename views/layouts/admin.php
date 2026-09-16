@@ -18,6 +18,7 @@
           <li><a href="/admin/services-bookings" style="color:#fff;"><i class="fi fi-rr-plane-arrival"></i> Pass & Activités</a></li>
           <li><a href="/admin/analytics" style="color:#fff;"><i class="fi fi-rr-chart-histogram"></i> Analytics GA-Like</a></li>
           <li><a href="/admin/settings" style="color:#fff;"><i class="fi fi-rr-settings-sliders"></i> Configuration Site</a></li>
+          <li><a href="/admin/newsletter" style="color:#fff;"><i class="fi fi-rr-envelope"></i> Newsletter</a></li>
           <li><a href="/admin/audit" style="color:#fff;"><i class="fi fi-rr-shield-check"></i> Audit & Anti-Fraude</a></li>
           <li style="margin-top:2rem;"><a href="/admin/logout" style="color:var(--clr-terracotta-500);"><i class="fi fi-rr-sign-out-alt"></i> Déconnexion</a></li>
         </ul>

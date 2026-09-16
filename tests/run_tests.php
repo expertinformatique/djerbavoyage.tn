@@ -6,6 +6,11 @@
 
 require_once __DIR__ . '/TestCase.php';
 
+// ROOT_PATH requis par Lang pour charger les fichiers de traduction
+if (!defined('ROOT_PATH')) {
+    define('ROOT_PATH', dirname(__DIR__));
+}
+
 spl_autoload_register(function ($class) {
     $prefixes = [
         'App\\' => __DIR__ . '/../src/',
@@ -117,6 +122,44 @@ $sqlitePdo->exec("
         rating INTEGER DEFAULT 5,
         comment TEXT,
         is_verified INTEGER DEFAULT 1,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
+    CREATE TABLE IF NOT EXISTS newsletter_subscribers (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        email TEXT UNIQUE,
+        status TEXT DEFAULT 'active',
+        token TEXT UNIQUE,
+        ip_address TEXT,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        unsubscribed_at DATETIME DEFAULT NULL
+    );
+    CREATE TABLE IF NOT EXISTS ai_leads (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        email TEXT NOT NULL,
+        phone TEXT,
+        travel_date TEXT,
+        notes TEXT,
+        preferences_json TEXT,
+        ip_address TEXT,
+        status TEXT DEFAULT 'new',
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
+    CREATE TABLE IF NOT EXISTS contact_messages (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        email TEXT NOT NULL,
+        phone TEXT,
+        subject TEXT,
+        message TEXT NOT NULL,
+        ip_address TEXT,
+        status TEXT DEFAULT 'new',
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
+    CREATE TABLE IF NOT EXISTS spam_rate_limits (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        ip TEXT NOT NULL,
+        action TEXT NOT NULL,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
 ");

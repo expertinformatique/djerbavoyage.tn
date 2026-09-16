@@ -1,0 +1,334 @@
+/**
+ * Locale Switcher CSS — Sélecteur Langue + Devise
+ * Djerba Voyage — composant c-locale-switcher
+ * Adapté pour fond clair (navbar blanche) + fond sombre (mobile)
+ */
+
+/* ── Conteneur principal ────────────────────────────────────── */
+.c-locale-switcher {
+    position: relative;
+    display: flex;
+    align-items: center;
+    z-index: 1100;
+}
+
+/* ── Bouton trigger — adapté navbar claire ───────────────────── */
+.c-locale-switcher__trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.38rem 0.7rem;
+    background: rgba(15, 23, 42, 0.06);
+    border: 1.5px solid rgba(15, 23, 42, 0.14);
+    border-radius: 8px;
+    color: var(--clr-dark-800, #1e293b);
+    font-size: 0.8rem;
+    font-weight: 700;
+    font-family: var(--font-heading, "Plus Jakarta Sans", sans-serif);
+    cursor: pointer;
+    transition: background 0.18s, border-color 0.18s, box-shadow 0.18s;
+    white-space: nowrap;
+    line-height: 1;
+    user-select: none;
+}
+
+.c-locale-switcher__trigger:hover {
+    background: rgba(224, 122, 95, 0.1);
+    border-color: var(--clr-terracotta-500, #e07a5f);
+    color: var(--clr-terracotta-500, #e07a5f);
+}
+
+.c-locale-switcher--open .c-locale-switcher__trigger {
+    background: rgba(224, 122, 95, 0.12);
+    border-color: var(--clr-terracotta-500, #e07a5f);
+    color: var(--clr-terracotta-500, #e07a5f);
+    box-shadow: 0 0 0 3px rgba(224, 122, 95, 0.15);
+}
+
+/* Séparateur | */
+.c-locale-switcher__sep {
+    color: rgba(15, 23, 42, 0.25);
+    font-weight: 400;
+    font-size: 0.75rem;
+}
+
+/* Flèche */
+.c-locale-switcher__trigger .arrow {
+    font-size: 0.6rem;
+    color: #94a3b8;
+    transition: transform 0.2s ease, color 0.18s;
+    margin-left: 1px;
+}
+
+.c-locale-switcher--open .c-locale-switcher__trigger .arrow {
+    transform: rotate(180deg);
+    color: var(--clr-terracotta-500, #e07a5f);
+}
+
+/* ── Dropdown panel ─────────────────────────────────────────── */
+.c-locale-switcher__dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    width: 300px;
+    background: #1a2744;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    padding: 1.1rem;
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.45),
+        0 0 0 1px rgba(255, 255, 255, 0.05);
+    z-index: 9999;
+}
+
+.c-locale-switcher--open .c-locale-switcher__dropdown {
+    display: block;
+    animation: localeDropIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes localeDropIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ── Titres de section ──────────────────────────────────────── */
+.c-locale-switcher__section-title {
+    font-size: 0.63rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.35);
+    margin: 0 0 0.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.c-locale-switcher__section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* ── Options groupe LANGUES — vertical, 1 par ligne ─────────── */
+.c-locale-switcher__options--lang {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin-bottom: 0.9rem;
+}
+
+/* ── Options groupe DEVISES — horizontal, 3 colonnes égales ─── */
+.c-locale-switcher__options--currency {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.35rem;
+    margin-bottom: 0.9rem;
+}
+
+/* ── Option langue : rangée complète avec drapeau + nom ─────── */
+.c-locale-switcher__option--lang {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    width: 100%;
+    padding: 0.55rem 0.8rem;
+    border-radius: 9px;
+    border: 1.5px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font-family: var(--font-heading, "Plus Jakarta Sans", sans-serif);
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.c-locale-switcher__option--lang .lang-flag {
+    font-size: 1.1rem;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.c-locale-switcher__option--lang .lang-name {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.c-locale-switcher__option--lang:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateX(2px);
+}
+
+.c-locale-switcher__option--lang.is-active {
+    background: linear-gradient(135deg, rgba(224, 122, 95, 0.25), rgba(245, 158, 11, 0.2));
+    border-color: rgba(224, 122, 95, 0.6);
+    color: #fff;
+    font-weight: 700;
+}
+
+.c-locale-switcher__option--lang.is-active::after {
+    content: '✓';
+    margin-left: auto;
+    color: #f59e0b;
+    font-size: 0.75rem;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+
+/* ── Option devise : colonne compacte ───────────────────────── */
+.c-locale-switcher__option--currency {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+    padding: 0.55rem 0.3rem;
+    border-radius: 9px;
+    border: 1.5px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(255, 255, 255, 0.65);
+    font-family: var(--font-heading, "Plus Jakarta Sans", sans-serif);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    text-align: center;
+    min-width: 0;
+}
+
+.c-locale-switcher__option--currency .cur-symbol {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+}
+
+.c-locale-switcher__option--currency .cur-code {
+    font-size: 0.62rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.45);
+    letter-spacing: 0.05em;
+    line-height: 1;
+}
+
+.c-locale-switcher__option--currency:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.c-locale-switcher__option--currency.is-active {
+    background: linear-gradient(135deg, #e07a5f, #f59e0b);
+    border-color: transparent;
+    box-shadow: 0 4px 14px rgba(224, 122, 95, 0.45);
+    transform: translateY(-2px);
+}
+
+.c-locale-switcher__option--currency.is-active .cur-symbol,
+.c-locale-switcher__option--currency.is-active .cur-code {
+    color: #fff;
+}
+
+/* ── Divider ─────────────────────────────────────────────────── */
+.c-locale-switcher__divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.07);
+    margin: 0.15rem 0 0.85rem 0;
+}
+
+/* ── Bouton Appliquer ────────────────────────────────────────── */
+.c-locale-switcher__apply {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    width: 100%;
+    padding: 0.65rem;
+    background: linear-gradient(135deg, #e07a5f 0%, #f59e0b 100%);
+    color: #fff;
+    border: none;
+    border-radius: 9px;
+    font-size: 0.84rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+    font-family: var(--font-heading, "Plus Jakarta Sans", sans-serif);
+    margin-top: 0.2rem;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+}
+
+.c-locale-switcher__apply:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(224, 122, 95, 0.45);
+}
+
+/* ── Badge locale actuelle (visible dans le trigger) ─────────── */
+.c-locale-switcher__flag {
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.c-locale-switcher__code {
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+}
+
+.c-locale-switcher__currency-sym {
+    font-size: 0.85rem;
+    font-weight: 700;
+    background: rgba(224, 122, 95, 0.15);
+    color: var(--clr-terracotta-500, #e07a5f);
+    border-radius: 5px;
+    padding: 0.1rem 0.35rem;
+    line-height: 1.4;
+}
+
+/* ── Mobile ───────────────────────────────────────────────────── */
+@media (max-width: 992px) {
+    .c-locale-switcher {
+        order: -1;
+    }
+
+    .c-locale-switcher__trigger {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.2);
+        color: #fff;
+        padding: 0.35rem 0.6rem;
+    }
+
+    .c-locale-switcher__trigger:hover {
+        background: rgba(255, 255, 255, 0.18);
+        color: #fff;
+    }
+
+    .c-locale-switcher__sep {
+        color: rgba(255, 255, 255, 0.3);
+    }
+
+    .c-locale-switcher__trigger .arrow {
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    .c-locale-switcher__dropdown {
+        right: auto;
+        left: 0;
+        width: 280px;
+    }
+}

@@ -16,10 +16,34 @@ document.addEventListener('DOMContentLoaded', () => {
       menu.classList.toggle('is-active');
     });
 
-    // Close menu when tapping links inside menu
-    menu.querySelectorAll('.c-navbar__link').forEach(link => {
+    // Dropdown Toggles on Mobile / Touch
+    const dropdownItems = menu.querySelectorAll('.c-navbar__item--has-dropdown');
+    dropdownItems.forEach(item => {
+      const trigger = item.querySelector('.c-navbar__link');
+      if (trigger) {
+        trigger.addEventListener('click', (e) => {
+          if (window.innerWidth <= 992 || trigger.tagName === 'BUTTON') {
+            e.preventDefault();
+            e.stopPropagation();
+            const isOpen = item.classList.contains('is-open');
+            dropdownItems.forEach(other => {
+              if (other !== item) {
+                other.classList.remove('is-open');
+                other.querySelector('.c-navbar__link')?.setAttribute('aria-expanded', 'false');
+              }
+            });
+            item.classList.toggle('is-open', !isOpen);
+            trigger.setAttribute('aria-expanded', !isOpen ? 'true' : 'false');
+          }
+        });
+      }
+    });
+
+    // Close menu when tapping direct links or dropdown items
+    menu.querySelectorAll('a.c-navbar__link, .c-navbar__dropdown-item').forEach(link => {
       link.addEventListener('click', () => {
         menu.classList.remove('is-active');
+        dropdownItems.forEach(item => item.classList.remove('is-open'));
       });
     });
 
@@ -27,6 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', (e) => {
       if (!toggleBtn.contains(e.target) && !menu.contains(e.target)) {
         menu.classList.remove('is-active');
+        dropdownItems.forEach(item => item.classList.remove('is-open'));
       }
     });
   }

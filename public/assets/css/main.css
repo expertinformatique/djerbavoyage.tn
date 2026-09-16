@@ -194,6 +194,10 @@ h3, .heading-3 {
   align-items: center;
 }
 
+.c-navbar__brand-accent {
+  color: var(--clr-terracotta-500);
+}
+
 .c-navbar__link {
   font-family: var(--font-heading);
   font-weight: 600;
@@ -203,8 +207,23 @@ h3, .heading-3 {
   padding: 0.4rem 0;
 }
 
+.c-navbar__link--highlight {
+  color: var(--clr-terracotta-500) !important;
+  font-weight: 700 !important;
+}
+
 .c-navbar__link:hover {
   color: var(--clr-sea-600);
+}
+
+/* Honeypot Invisible Anti-Spam Field */
+.c-hp-security-check {
+  display: none !important;
+  position: absolute !important;
+  left: -9999px !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
 .c-navbar__actions {

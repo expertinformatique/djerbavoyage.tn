@@ -2,20 +2,20 @@
 <section class="c-hero" style="background: linear-gradient(180deg, rgba(15, 23, 42, 0.75) 0%, rgba(15, 23, 42, 0.95) 100%), url('<?= asset('images/hero.png') ?>') center/cover no-repeat;">
   <div class="l-container" data-animate style="text-align: center; max-width: 850px;">
     <div class="c-hero__badge" style="background: rgba(212, 175, 55, 0.15); border: 1px solid var(--clr-terracotta-500); color: #F59E0B; display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; border-radius: 50px; font-weight: 600; margin-bottom: 1.5rem;">
-      <i class="fi fi-rr-star" style="color:#F59E0B;"></i> Guide Officiel & Conciergerie VIP Djerba 2026
+      <i class="fi fi-rr-star" style="color:#F59E0B;"></i> <?= __('hero.badge') ?>
     </div>
     <h1 class="c-hero__title" style="color: #FFFFFF; margin-bottom: 1.25rem;">
-      Découvrez l'Île de Djerba en Toute Sérénité
+      <?= __('hero.title') ?>
     </h1>
     <p class="c-hero__subtitle" style="color: var(--clr-sand-100); margin-bottom: 2.5rem;">
-      Guides de voyage d'exception, itinéraires 3, 5 et 7 jours, bons plans secrets et conciergerie privée 7j/7 confectionnés par nos experts locaux.
+      <?= __('hero.subtitle') ?>
     </p>
     <div style="display:flex; justify-content:center; gap:1.25rem; flex-wrap:wrap;">
       <button data-open-modal="personalizedPdfModal" class="c-button c-button--primary">
-        <i class="fi fi-rr-document-signed"></i> Mon PDF Personnalisé avec Nom & Photo (9,90 €)
+        <i class="fi fi-rr-document-signed"></i> <?= __('hero.cta_pdf') ?> (<?= money(9.90) ?>)
       </button>
       <a href="<?= url('/concierge') ?>" class="c-button c-button--secondary" style="background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.3);">
-        <i class="fi fi-rr-compass"></i> Conciergerie VIP (29€)
+        <i class="fi fi-rr-compass"></i> <?= __('hero.cta_concierge') ?> (<?= money(29) ?>)
       </a>
     </div>
   </div>
@@ -26,19 +26,19 @@
   <div class="l-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; text-align: center;">
     <div>
       <div style="font-size: 2rem; font-weight: 800; color: var(--clr-terracotta-500);">300+</div>
-      <div style="font-size: 0.85rem; color: var(--clr-sand-500);">Jours de Soleil / An</div>
+      <div style="font-size: 0.85rem; color: var(--clr-sand-500);"><?= __('stats.sun_days') ?></div>
     </div>
     <div>
       <div style="font-size: 2rem; font-weight: 800; color: var(--clr-terracotta-500);">6</div>
-      <div style="font-size: 0.85rem; color: var(--clr-sand-500);">Destinations Incontournables</div>
+      <div style="font-size: 0.85rem; color: var(--clr-sand-500);"><?= __('stats.destinations') ?></div>
     </div>
     <div>
       <div style="font-size: 2rem; font-weight: 800; color: var(--clr-terracotta-500);">80+</div>
-      <div style="font-size: 0.85rem; color: var(--clr-sand-500);">Guides & Cartes Numériques</div>
+      <div style="font-size: 0.85rem; color: var(--clr-sand-500);"><?= __('stats.guides') ?></div>
     </div>
     <div>
       <div style="font-size: 2rem; font-weight: 800; color: var(--clr-terracotta-500);">4.9 ★</div>
-      <div style="font-size: 0.85rem; color: var(--clr-sand-500);">Satisfaction Voyageurs</div>
+      <div style="font-size: 0.85rem; color: var(--clr-sand-500);"><?= __('stats.satisfaction') ?></div>
     </div>
   </div>
 </section>
@@ -48,18 +48,18 @@
   <div class="l-container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">
     <div style="max-width: 680px;">
       <span style="background: rgba(245, 158, 11, 0.25); border: 1px solid #F59E0B; color: #F59E0B; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase;">
-        <i class="fi fi-rr-sparkles"></i> Djerba Experience Pass 2026
+        <i class="fi fi-rr-sparkles"></i> <?= __('pass.badge') ?>
       </span>
       <h2 style="font-size: 1.85rem; margin: 10px 0; font-weight: 800; line-height: 1.25; color: #fff;">
-        Composez Votre Séjour & Activités : Jusqu'à -15% + Navette Aéroport OFFERTE !
+        <?= __('pass.title') ?>
       </h2>
       <p style="font-size: 0.95rem; opacity: 0.9; line-height: 1.6;">
-        Base nautique, quads lagune, balade à dos de chameau, excursion Sahara 4x4 et dîner spectacle. Bloquez vos tarifs remisés dès maintenant et choisissez vos dates et heures en toute liberté après paiement !
+        <?= __('pass.subtitle') ?>
       </p>
     </div>
     <div>
       <a href="<?= url('/services') ?>" class="c-button c-button--primary" style="background: #F59E0B; border-color: #F59E0B; color: #0F172A; padding: 1rem 1.8rem; font-weight: 800; font-size: 1.05rem; box-shadow: 0 10px 25px rgba(245, 158, 11, 0.4); display: inline-flex; align-items: center; gap: 8px;">
-        <i class="fi fi-rr-sparkles"></i> Configurer Mon Pass Séjour <i class="fi fi-rr-arrow-right"></i>
+        <i class="fi fi-rr-sparkles"></i> <?= __('pass.cta') ?> <i class="fi fi-rr-arrow-right"></i>
       </a>
     </div>
   </div>
@@ -304,6 +304,9 @@
     </div>
   </div>
 </section>
+
+<!-- Section Newsletter & Cercle Privé VIP -->
+<?php require __DIR__ . '/../partials/newsletter_section.php'; ?>
 
 <script>
 function buyProduct(id, title) {

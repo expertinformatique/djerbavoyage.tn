@@ -1,3 +1,5 @@
+import { ServicesPagination } from './services-pagination.js';
+
 /**
  * Module Djerba Services Builder & Estimator
  * Version 2.0 - Multi-environment URL support & Client-Side Fallback
@@ -8,6 +10,11 @@ export class ServicesBuilder {
     this.includeAirport = true;
     this.paymentMode = 'full'; // 'full' or 'deposit'
     this.baseUrl = options.baseUrl || (window.APP_BASE_URL || '');
+    this.currentCategory = 'all';
+    this.pagination = new ServicesPagination({
+      itemsPerPage: 6,
+      onPageChange: () => this.applyFilter()
+    });
     this.init();
   }
 
@@ -18,26 +25,25 @@ export class ServicesBuilder {
     this.bindPaymentModeSelector();
     this.bindCheckoutForm();
     this.bindCheckoutModalTrigger();
+    this.applyFilter();
     this.recalculate();
+  }
+
+  applyFilter() {
+    const cards = Array.from(document.querySelectorAll('.c-service-card'));
+    this.pagination.paginate(cards, this.currentCategory);
   }
 
   bindCategoryFilters() {
     const chips = document.querySelectorAll('.c-filter-chip');
-    const cards = document.querySelectorAll('.c-service-card');
 
     chips.forEach(chip => {
       chip.addEventListener('click', () => {
         chips.forEach(c => c.classList.remove('active'));
         chip.classList.add('active');
-        const cat = chip.dataset.category;
-
-        cards.forEach(card => {
-          if (cat === 'all' || card.dataset.category === cat) {
-            card.style.display = 'flex';
-          } else {
-            card.style.display = 'none';
-          }
-        });
+        this.currentCategory = chip.dataset.category;
+        this.pagination.reset();
+        this.applyFilter();
       });
     });
   }

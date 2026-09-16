@@ -1,131 +1,100 @@
-<!-- Modal Guide PDF Personnalisé avec Nom & Photo -->
+<?php
+/**
+ * Modal Éditeur Exclusivité Voyageur — Guide PDF Personnalisé
+ * Règle 3 & 6 : Pas de style inline, fichier compact
+ */
+?>
 <div class="c-modal" id="personalizedPdfModal">
-  <div class="c-modal__card" style="max-width: 680px; padding: 2rem;">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
-      <span class="badge badge--gold" style="background: rgba(212,175,55,0.15); color: #F59E0B; padding: 4px 12px; border-radius: 20px; font-weight: 700; font-size: 0.8rem;">
-        ✨ Édition Unique & Souvenir
+  <div class="c-modal__card c-pdf-modal-card">
+    <div class="c-pdf-modal-header">
+      <span class="c-pdf-badge-gold">
+        ✨ EXCLUSIVITÉ VOYAGEUR • ÉDITION SOUVENIR
       </span>
-      <button type="button" data-close-modal="personalizedPdfModal" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--clr-gray-500);">&times;</button>
+      <button type="button" data-close-modal="personalizedPdfModal" class="c-pdf-modal-close">&times;</button>
     </div>
 
-    <h2 class="heading-2" style="margin-bottom: 0.5rem; font-size: 1.5rem;">Créez votre Guide PDF avec Nom & Photo</h2>
-    <p class="text-muted" style="font-size: 0.9rem; margin-bottom: 1.5rem;">Recevez un guide de voyage complet personnalisé avec le nom de votre famille/couple, vos dates et la photo de votre choix sur la première page !</p>
-
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; align-items: center;">
-      
-      <!-- Live Preview 3D Book Cover -->
-      <div style="background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); border-radius: 16px; padding: 1.5rem; color: #fff; text-align: center; position: relative; border: 2px solid var(--clr-terracotta-500); box-shadow: 0 15px 30px rgba(0,0,0,0.3);">
-        <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--clr-terracotta-500); font-weight: 700; margin-bottom: 0.5rem;">Aperçu de la Couverture</div>
-        
-        <div id="previewCoverImgBox" style="height: 140px; border-radius: 8px; overflow: hidden; margin-bottom: 1rem; position: relative;">
-          <img id="previewCoverImg" src="<?= asset('images/pdf_custom.png') ?>" alt="Photo de couverture" style="width: 100%; height: 100%; object-fit: cover;">
+    <div class="c-pdf-editor-grid">
+      <!-- Live 3D Book Cover Preview -->
+      <div class="c-pdf-book-cover">
+        <div>
+          <div class="c-pdf-cover-badge">✨ Aperçu Couverture HD</div>
+          <div class="c-pdf-cover-img-box">
+            <img id="previewCoverImg" src="<?= asset('images/pdf_custom.png') ?>" alt="Couverture personnalisée" class="c-pdf-cover-img">
+          </div>
+          <h3 id="previewTitle" class="c-pdf-cover-title">Guide Djerba de Marie & Julien</h3>
+          <div id="previewDates" class="c-pdf-cover-dates">Séjour du 15 au 22 Octobre 2026</div>
+          <div id="previewMessage" class="c-pdf-cover-message-box">
+            « Pour notre merveilleux séjour à Djerba, entre plages dorées et souvenirs inoubliables ! »
+          </div>
         </div>
-
-        <h3 id="previewTitle" style="font-size: 1.1rem; font-weight: 800; color: #fff; margin-bottom: 4px; line-height: 1.2;">
-          Guide Djerba de Marie & Julien
-        </h3>
-        <p id="previewDates" style="font-size: 0.8rem; color: var(--clr-sand-500); font-style: italic;">
-          Séjour du 15 au 22 Octobre 2026
-        </p>
-
-        <div style="margin-top: 1rem; font-size: 0.65rem; color: rgba(255,255,255,0.5); text-transform: uppercase; border-top: 1px dashed rgba(255,255,255,0.2); padding-top: 0.5rem;">
-          Édition Spéciale Djerba Voyage PDF • 2026
+        <div class="c-pdf-cover-footer">
+          Djerba Voyage • Édition Personnalisée 2026
         </div>
       </div>
 
-      <!-- Form Controls -->
+      <!-- Formulaire Éditeur -->
       <div>
         <form id="formPersonalizedPdf" onsubmit="submitPersonalizedPdf(event)">
-          <div style="margin-bottom: 1rem;">
-            <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 4px; color: var(--clr-dark-900);">Vos Noms sur la couverture :</label>
-            <input type="text" id="customName" placeholder="ex: Famille Dupont ou Marie & Julien" required
-                   style="width: 100%; padding: 0.65rem 0.85rem; border-radius: 8px; border: 1px solid var(--clr-sand-300); font-size: 0.9rem;"
-                   oninput="updatePdfPreview()">
+          <div class="c-pdf-form-group">
+            <label for="customName" class="c-pdf-label">1. Nom(s) sur la couverture *</label>
+            <input type="text" id="customName" placeholder="Ex: Marie & Julien ou Famille Dupont" required class="c-pdf-input">
           </div>
 
-          <div style="margin-bottom: 1rem;">
-            <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 4px; color: var(--clr-dark-900);">Vos dates de séjour (optionnel) :</label>
-            <input type="text" id="customDates" placeholder="ex: Octobre 2026"
-                   style="width: 100%; padding: 0.65rem 0.85rem; border-radius: 8px; border: 1px solid var(--clr-sand-300); font-size: 0.9rem;"
-                   oninput="updatePdfPreview()">
+          <div class="c-pdf-form-group">
+            <label for="customMessage" class="c-pdf-label">2. Votre message personnel / Dédicace</label>
+            <textarea id="customMessage" rows="2" placeholder="Ex: Pour notre voyage de noces magique sous le soleil de Djerba..." class="c-pdf-textarea"></textarea>
           </div>
 
-          <div style="margin-bottom: 1rem;">
-            <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 4px; color: var(--clr-dark-900);">Choisissez la photo de couverture :</label>
-            <select id="customPhotoSelect" style="width: 100%; padding: 0.65rem 0.85rem; border-radius: 8px; border: 1px solid var(--clr-sand-300); font-size: 0.9rem; background: #fff;" onchange="updatePdfPreview()">
-              <option value="<?= asset('images/pdf_custom.png') ?>">Plage & Menzel VIP</option>
-              <option value="<?= asset('images/djerbahood.png') ?>">Djerbahood Street Art</option>
-              <option value="<?= asset('images/sidi_mahres.png') ?>">Plage Turquoise Sidi Mahres</option>
-              <option value="<?= asset('images/guellala.png') ?>">Poterie & Sunset Guellala</option>
-              <option value="<?= asset('images/ajim.png') ?>">Port & Bateaux de Pêche Ajim</option>
-            </select>
-          </div>
-
-          <div style="margin-bottom: 1.25rem;">
-            <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 4px; color: var(--clr-dark-900);">Votre E-mail de réception :</label>
-            <input type="email" id="customEmail" placeholder="votre.email@exemple.com" required
-                   style="width: 100%; padding: 0.65rem 0.85rem; border-radius: 8px; border: 1px solid var(--clr-sand-300); font-size: 0.9rem;">
-          </div>
-
-          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--clr-sand-200); padding-top: 1rem;">
-            <div>
-              <span style="font-size: 0.75rem; color: var(--clr-gray-500);">Prix Spécial</span>
-              <div style="font-weight: 800; font-size: 1.4rem; color: var(--clr-terracotta-500);">9,90 €</div>
+          <div class="c-pdf-form-group">
+            <label class="c-pdf-label">3. Photo de couverture</label>
+            <div class="c-pdf-upload-row">
+              <label for="customPhotoFile" class="c-pdf-upload-btn">
+                <i class="fi fi-rr-camera"></i> Importer ma propre photo
+              </label>
+              <input type="file" id="customPhotoFile" accept="image/*" class="c-pdf-file-input">
+              <span class="c-pdf-upload-hint">ou choisir un spot :</span>
             </div>
-            <button type="submit" class="c-button c-button--primary" style="padding: 0.75rem 1.25rem; font-size: 0.9rem;">
-              Commander mon PDF <i class="fi fi-rr-arrow-right"></i>
+            <div class="c-pdf-photo-picker">
+              <button type="button" class="c-pdf-photo-thumb is-selected" data-photo="<?= asset('images/pdf_custom.png') ?>" title="Plage & Menzel VIP">
+                <img src="<?= asset('images/pdf_custom.png') ?>" alt="Menzel">
+              </button>
+              <button type="button" class="c-pdf-photo-thumb" data-photo="<?= asset('images/djerbahood.png') ?>" title="Djerbahood">
+                <img src="<?= asset('images/djerbahood.png') ?>" alt="Djerbahood">
+              </button>
+              <button type="button" class="c-pdf-photo-thumb" data-photo="<?= asset('images/sidi_mahres.png') ?>" title="Plage Sidi Mahres">
+                <img src="<?= asset('images/sidi_mahres.png') ?>" alt="Sidi Mahres">
+              </button>
+              <button type="button" class="c-pdf-photo-thumb" data-photo="<?= asset('images/guellala.png') ?>" title="Sunset Guellala">
+                <img src="<?= asset('images/guellala.png') ?>" alt="Guellala">
+              </button>
+              <button type="button" class="c-pdf-photo-thumb" data-photo="<?= asset('images/ajim.png') ?>" title="Port d'Ajim">
+                <img src="<?= asset('images/ajim.png') ?>" alt="Ajim">
+              </button>
+            </div>
+          </div>
+
+          <div class="c-pdf-form-group">
+            <label for="customDates" class="c-pdf-label">4. Dates de séjour (optionnel)</label>
+            <input type="text" id="customDates" placeholder="Ex: Octobre 2026 ou 15 - 22 Octobre" class="c-pdf-input">
+          </div>
+
+          <div class="c-pdf-form-group">
+            <label for="customEmail" class="c-pdf-label">5. E-mail de réception du PDF *</label>
+            <input type="email" id="customEmail" placeholder="votre.email@exemple.com" required class="c-pdf-input">
+          </div>
+
+          <div class="c-pdf-actions">
+            <button type="button" class="c-pdf-preview-btn" onclick="previewPersonalizedPdf()">
+              <i class="fi fi-rr-eye"></i> Prévisualiser Spécimen PDF
+            </button>
+            <button type="submit" class="c-button c-button--primary c-pdf-submit-btn">
+              Commander mon Guide (9,90 €) <i class="fi fi-rr-arrow-right"></i>
             </button>
           </div>
         </form>
       </div>
-
     </div>
   </div>
 </div>
 
-<script>
-function updatePdfPreview() {
-    const nameVal = document.getElementById('customName').value.trim();
-    const datesVal = document.getElementById('customDates').value.trim();
-    const photoVal = document.getElementById('customPhotoSelect').value;
-
-    const titleElem = document.getElementById('previewTitle');
-    const datesElem = document.getElementById('previewDates');
-    const imgElem = document.getElementById('previewCoverImg');
-
-    titleElem.textContent = nameVal ? 'Guide Djerba de ' + nameVal : 'Guide Djerba de Marie & Julien';
-    datesElem.textContent = datesVal ? 'Séjour : ' + datesVal : 'Séjour du 15 au 22 Octobre 2026';
-    if (photoVal) {
-        imgElem.src = photoVal;
-    }
-}
-
-function submitPersonalizedPdf(e) {
-    e.preventDefault();
-    const name = document.getElementById('customName').value;
-    const dates = document.getElementById('customDates').value;
-    const email = document.getElementById('customEmail').value;
-
-    if (!name || !email) return;
-
-    fetch('<?= url('/api/checkout/session') ?>', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-            product_id: 1, // Special personalized PDF product ID
-            email: email,
-            custom_name: name,
-            custom_dates: dates
-        })
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.redirect_url) {
-            window.location.href = data.redirect_url;
-        } else {
-            alert(data.error || 'Erreur de paiement.');
-        }
-    })
-    .catch(err => alert('Erreur réseau.'));
-}
-</script>
+<script type="module" src="<?= asset('js/modules/personalized-pdf-editor.js') ?>"></script>

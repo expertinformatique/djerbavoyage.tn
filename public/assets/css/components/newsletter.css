@@ -1,0 +1,289 @@
+/* ==========================================================================
+   Newsletter & Club Privé VIP Luxury Styles
+   ========================================================================== */
+
+.c-newsletter-page {
+  max-width: 980px;
+  margin: 3.5rem auto 6rem;
+  padding: 0 1.25rem;
+}
+
+/* Main Hero VIP Card */
+.c-newsletter-card {
+  background: radial-gradient(circle at 50% 0%, #1e293b 0%, #0b0f19 80%);
+  border-radius: 28px;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5), 0 0 50px rgba(245, 158, 11, 0.08);
+  padding: 3.5rem 2.5rem;
+  color: #ffffff;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.c-newsletter-icon-wrap {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.25) 0%, rgba(224, 122, 95, 0.15) 100%);
+  border: 1px solid #f59e0b;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: #f59e0b;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 0 30px rgba(245, 158, 11, 0.3);
+  animation: pulseGlow 3s infinite ease-in-out;
+}
+
+.c-newsletter-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(90deg, rgba(245, 158, 11, 0.18) 0%, rgba(224, 122, 95, 0.18) 100%);
+  color: #fcd34d;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  padding: 6px 18px;
+  border-radius: 30px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
+}
+
+.c-newsletter-title {
+  font-family: var(--font-heading, "Plus Jakarta Sans", sans-serif);
+  font-size: 2.6rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 1rem;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+}
+
+.c-newsletter-subtitle {
+  color: #cbd5e1;
+  font-size: 1.05rem;
+  max-width: 660px;
+  margin: 0 auto 2rem;
+  line-height: 1.6;
+}
+
+/* VIP Privilege Voucher Pass */
+.c-newsletter-voucher-box {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(224, 122, 95, 0.08) 100%);
+  border: 1px dashed #f59e0b;
+  border-radius: 18px;
+  padding: 1.25rem 1.75rem;
+  max-width: 620px;
+  margin: 0 auto 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  text-align: left;
+}
+
+.c-newsletter-voucher-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: #fcd34d;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.c-newsletter-voucher-code {
+  font-family: monospace;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 2px;
+  margin: 2px 0;
+}
+
+.c-newsletter-voucher-sub {
+  font-size: 0.82rem;
+  color: #94a3b8;
+}
+
+.c-newsletter-voucher-tag {
+  background: #f59e0b;
+  color: #0f172a;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: 800;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+/* Form Styling */
+.c-newsletter-form {
+  max-width: 600px;
+  margin: 0 auto 2.5rem;
+}
+
+.c-newsletter-form-group {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.c-newsletter-input {
+  flex: 1;
+  min-width: 260px;
+  padding: 1.05rem 1.5rem;
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.07);
+  color: #ffffff;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.25s ease;
+}
+
+.c-newsletter-input:focus {
+  border-color: #f59e0b;
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.2);
+}
+
+.c-newsletter-button {
+  padding: 1.05rem 2rem;
+  border-radius: 30px;
+  font-weight: 800;
+  font-size: 1rem;
+  white-space: nowrap;
+  background: linear-gradient(135deg, #e07a5f 0%, #c85a3c 100%);
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 25px rgba(224, 122, 95, 0.4);
+  transition: all 0.25s ease;
+}
+
+.c-newsletter-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(224, 122, 95, 0.55);
+}
+
+.c-newsletter-footer-note {
+  font-size: 0.82rem;
+  color: #64748b;
+  margin-top: 1rem;
+}
+
+/* Perks Grid */
+.c-newsletter-perks {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.25rem;
+  text-align: left;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 2.5rem;
+}
+
+.c-newsletter-perk-item {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 1.35rem;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.c-newsletter-perk-item:hover {
+  transform: translateY(-3px);
+  border-color: rgba(245, 158, 11, 0.45);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.c-newsletter-perk-icon {
+  font-size: 1.5rem;
+  display: inline-block;
+}
+
+.c-newsletter-perk-icon--amber { color: #f59e0b; }
+.c-newsletter-perk-icon--emerald { color: #10b981; }
+.c-newsletter-perk-icon--sky { color: #38bdf8; }
+.c-newsletter-perk-icon--terracotta { color: #e07a5f; }
+
+.c-newsletter-perk-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin: 10px 0 4px;
+  color: #ffffff;
+}
+
+.c-newsletter-perk-desc {
+  font-size: 0.82rem;
+  color: #94a3b8;
+  line-height: 1.5;
+}
+
+/* Social Proof & Member Quotes */
+.c-newsletter-proof {
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  font-size: 0.88rem;
+  color: #cbd5e1;
+}
+
+.c-newsletter-stars {
+  color: #f59e0b;
+  letter-spacing: 2px;
+}
+
+.c-newsletter-section {
+  padding: 4.5rem 0 2rem;
+}
+
+.c-newsletter-feedback-box {
+  display: none;
+}
+
+/* Alert States */
+.c-newsletter-alert {
+  padding: 1.15rem;
+  border-radius: 14px;
+  margin-bottom: 2rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.c-newsletter-alert--success {
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid #10b981;
+  color: #34d399;
+}
+
+.c-newsletter-alert--error {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid #ef4444;
+  color: #f87171;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 25px rgba(245, 158, 11, 0.25); }
+  50% { box-shadow: 0 0 45px rgba(245, 158, 11, 0.5); }
+}
+
+@media (max-width: 640px) {
+  .c-newsletter-card { padding: 2.5rem 1.25rem; }
+  .c-newsletter-title { font-size: 1.85rem; }
+  .c-newsletter-button { width: 100%; justify-content: center; }
+  .c-newsletter-voucher-box { flex-direction: column; text-align: center; }
+}

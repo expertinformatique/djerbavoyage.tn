@@ -15,9 +15,9 @@ require_once __DIR__ . '/../core/helpers.php';
 
 // Autoloading simple pour App\ et Core\
 spl_autoload_register(function ($class) {
-    $prefixApp = 'App\\';
+    $prefixApp  = 'App\\';
     $prefixCore = 'Core\\';
-    $baseDir = __DIR__ . '/../';
+    $baseDir    = __DIR__ . '/../';
 
     if (strpos($class, $prefixApp) === 0) {
         $relativeClass = substr($class, strlen($prefixApp));
@@ -29,6 +29,14 @@ spl_autoload_register(function ($class) {
         if (file_exists($file)) require_once $file;
     }
 });
+
+// Initialisation Localisation (Langue + Devise) — après autoloader
+use Core\Lang;
+use Core\Currency;
+Lang::boot();
+Currency::boot();
+
+
 
 use Core\Container;
 use Core\Database;
@@ -42,6 +50,9 @@ use App\Interfaces\CacheInterface;
 use App\Interfaces\LocalServiceRepositoryInterface;
 use App\Interfaces\BookingScheduleRepositoryInterface;
 use App\Interfaces\ReviewRepositoryInterface;
+use App\Interfaces\NewsletterRepositoryInterface;
+use App\Interfaces\AiLeadRepositoryInterface;
+use App\Interfaces\ContactRepositoryInterface;
 use App\Repositories\PdoArticleRepository;
 use App\Repositories\PdoOrderRepository;
 use App\Repositories\PdoProductRepository;
@@ -49,6 +60,9 @@ use App\Repositories\PdoSettingsRepository;
 use App\Repositories\PdoLocalServiceRepository;
 use App\Repositories\PdoBookingScheduleRepository;
 use App\Repositories\PdoReviewRepository;
+use App\Repositories\PdoNewsletterRepository;
+use App\Repositories\PdoAiLeadRepository;
+use App\Repositories\PdoContactRepository;
 use App\Services\CacheService;
 use App\Services\SettingsService;
 use App\Services\LoggerService;
@@ -59,6 +73,12 @@ use App\Services\StripeService;
 use App\Services\PricingEstimationService;
 use App\Services\ReviewService;
 use App\Services\PassVoucherService;
+use App\Services\AiRecommendationService;
+use App\Services\SmtpMailerService;
+use App\Services\NewsletterService;
+use App\Services\AiLeadService;
+use App\Services\ContactService;
+use App\Controllers\LocaleController;
 
 // 1. Initialisation Container & Services Core
 $container = new Container();
@@ -80,6 +100,15 @@ $bookingScheduleRepo = new PdoBookingScheduleRepository($pdo);
 $reviewRepo = new PdoReviewRepository($pdo);
 $reviewService = new ReviewService($reviewRepo);
 $voucherService = new PassVoucherService();
+$aiRecommendationService = new AiRecommendationService();
+$newsletterRepo = new PdoNewsletterRepository($pdo);
+$smtpMailerService = new SmtpMailerService();
+$spamService = new \App\Services\SpamProtectionService($pdo);
+$newsletterService = new NewsletterService($newsletterRepo, $smtpMailerService, $spamService);
+$aiLeadRepo = new PdoAiLeadRepository($pdo);
+$aiLeadService = new AiLeadService($aiLeadRepo, $smtpMailerService, $spamService);
+$contactRepo = new PdoContactRepository($pdo);
+$contactService = new ContactService($contactRepo, $smtpMailerService, $spamService);
 
 // 2. Liaisons Repositories (DI Container)
 $container->bind(ArticleRepositoryInterface::class, fn() => new PdoArticleRepository($pdo));
@@ -88,6 +117,9 @@ $container->bind(ProductRepositoryInterface::class, fn() => new PdoProductReposi
 $container->bind(LocalServiceRepositoryInterface::class, fn() => $localServiceRepo);
 $container->bind(BookingScheduleRepositoryInterface::class, fn() => $bookingScheduleRepo);
 $container->bind(ReviewRepositoryInterface::class, fn() => $reviewRepo);
+$container->bind(NewsletterRepositoryInterface::class, fn() => $newsletterRepo);
+$container->bind(AiLeadRepositoryInterface::class, fn() => $aiLeadRepo);
+$container->bind(ContactRepositoryInterface::class, fn() => $contactRepo);
 $container->bind(SettingsRepositoryInterface::class, fn() => $settingsRepo);
 $container->bind(CacheInterface::class, fn() => $cache);
 $container->bind(SettingsService::class, fn() => $settingsService);
@@ -98,6 +130,14 @@ $container->bind(StripeService::class, fn() => $stripeService);
 $container->bind(PricingEstimationService::class, fn() => $pricingService);
 $container->bind(ReviewService::class, fn() => $reviewService);
 $container->bind(PassVoucherService::class, fn() => $voucherService);
+$container->bind(AiRecommendationService::class, fn() => $aiRecommendationService);
+$container->bind(SmtpMailerService::class, fn() => $smtpMailerService);
+$container->bind(NewsletterService::class, fn() => $newsletterService);
+$container->bind(AiLeadService::class, fn() => $aiLeadService);
+$container->bind(ContactService::class, fn() => $contactService);
+$personalizedPdfService = new \App\Services\PersonalizedPdfService();
+$container->bind(\App\Services\PersonalizedPdfService::class, fn() => $personalizedPdfService);
+$container->bind(\App\Services\SpamProtectionService::class, fn() => $spamService);
 
 // 3. Configuration des Routes
 $router = new Router();
@@ -111,6 +151,9 @@ $router->get('/reservation/planning/{orderNumber}', [App\Controllers\LocalServic
 $router->get('/pass/voucher/{orderNumber}', [App\Controllers\LocalServicesController::class, 'voucher']);
 $router->post('/api/services/update-schedule', [App\Controllers\LocalServicesController::class, 'updateSchedule']);
 $router->post('/api/services/update-airport', [App\Controllers\LocalServicesController::class, 'updateAirport']);
+$router->post('/api/ai-lead/submit', [App\Controllers\AiLeadController::class, 'submit']);
+$router->get('/pdf/preview', [App\Controllers\PersonalizedPdfController::class, 'preview']);
+$router->post('/api/pdf/personalized-order', [App\Controllers\PersonalizedPdfController::class, 'submitOrder']);
 
 // SEO & Indexation Routes
 $router->get('/sitemap.xml', [App\Controllers\SitemapController::class, 'sitemap']);
@@ -127,12 +170,15 @@ $router->get('/download', [App\Controllers\DownloadController::class, 'getFile']
 
 // Nouvelles Pages d'Information & Formulaires
 $router->get('/a-propos', [App\Controllers\PageController::class, 'about']);
-$router->get('/contact', [App\Controllers\PageController::class, 'contact']);
-$router->post('/contact', [App\Controllers\PageController::class, 'contact']);
+$router->get('/contact', [App\Controllers\ContactController::class, 'index']);
+$router->post('/contact', [App\Controllers\ContactController::class, 'submit']);
+$router->post('/api/contact', [App\Controllers\ContactController::class, 'submit']);
 $router->get('/politique-de-confidentialite', [App\Controllers\PageController::class, 'privacy']);
 $router->get('/divulgation-affiliation', [App\Controllers\PageController::class, 'affiliateDisclosure']);
-$router->get('/newsletter', [App\Controllers\PageController::class, 'newsletter']);
-$router->post('/newsletter', [App\Controllers\PageController::class, 'newsletter']);
+$router->get('/newsletter', [App\Controllers\NewsletterController::class, 'index']);
+$router->post('/newsletter', [App\Controllers\NewsletterController::class, 'subscribe']);
+$router->post('/api/newsletter/subscribe', [App\Controllers\NewsletterController::class, 'subscribe']);
+$router->get('/newsletter/unsubscribe/{token}', [App\Controllers\NewsletterController::class, 'unsubscribe']);
 $router->get('/faq', [App\Controllers\PageController::class, 'faq']);
 $router->get('/activites', [App\Controllers\PageController::class, 'activities']);
 $router->get('/itineraires', [App\Controllers\PageController::class, 'itineraries']);
@@ -152,7 +198,11 @@ $router->post('/api/admin/services/transfer-status', [App\Controllers\Admin\Serv
 $router->get('/admin/settings', [App\Controllers\Admin\SettingsAdminController::class, 'index']);
 $router->post('/admin/settings', [App\Controllers\Admin\SettingsAdminController::class, 'index']);
 $router->get('/admin/analytics', [App\Controllers\Admin\AnalyticsAdminController::class, 'index']);
+$router->get('/admin/newsletter', [App\Controllers\Admin\NewsletterAdminController::class, 'index']);
 $router->get('/admin/audit', [App\Controllers\Admin\AuditAdminController::class, 'index']);
+
+// Route de changement de locale (langue + devise)
+$router->post('/api/locale', [LocaleController::class, 'switch']);
 
 // Dispatch de la requête HTTP
 $router->dispatch($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI'], $container);

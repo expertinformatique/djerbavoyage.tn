@@ -49,3 +49,26 @@ if (!function_exists('e')) {
         return htmlspecialchars($value ?? '', ENT_QUOTES, 'UTF-8');
     }
 }
+
+/**
+ * Helper de traduction — alias de Core\Lang::t()
+ * Usage : __('nav.home') ou __('hello.name', ['name' => 'Ahmed'])
+ */
+if (!function_exists('__')) {
+    function __(string $key, array $replace = []): string {
+        return \Core\Lang::t($key, $replace);
+    }
+}
+
+/**
+ * Helper de formatage monétaire — alias de Core\Currency::format()
+ * Usage : money(9.90) → "9.90 €" ou "33.17 DT" selon la devise active
+ *
+ * @param float $amountEur Montant en EUR (tel que stocké en base)
+ */
+if (!function_exists('money')) {
+    function money(float $amountEur): string {
+        return \Core\Currency::format($amountEur);
+    }
+}
+

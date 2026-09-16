@@ -1,0 +1,123 @@
+/**
+ * RTL Override CSS — Support Arabe (dir="rtl")
+ * Djerba Voyage — Fichier chargé uniquement quand lang=ar
+ * Ne contient que les overrides nécessaires pour l'arabe.
+ */
+
+/* ── Direction globale ───────────────────────────────────────── */
+[dir="rtl"] body {
+    font-family: 'Segoe UI', Tahoma, 'Arabic Typesetting', sans-serif;
+}
+
+/* ── Navbar RTL ──────────────────────────────────────────────── */
+[dir="rtl"] .c-navbar__inner {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .c-navbar__menu {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .c-navbar__actions {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .c-navbar__dropdown-item {
+    flex-direction: row-reverse;
+    text-align: right;
+}
+
+[dir="rtl"] .c-navbar__dropdown-info {
+    align-items: flex-end;
+}
+
+[dir="rtl"] .c-navbar__dropdown-menu {
+    left: auto;
+    right: 0;
+}
+
+[dir="rtl"] .c-navbar__dropdown-menu--right {
+    left: 0;
+    right: auto;
+}
+
+/* ── Sélecteur de locale RTL ─────────────────────────────────── */
+[dir="rtl"] .c-locale-switcher {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .c-locale-switcher__dropdown {
+    left: 0;
+    right: auto;
+}
+
+/* ── Container principal ─────────────────────────────────────── */
+[dir="rtl"] .l-container {
+    direction: rtl;
+    text-align: right;
+}
+
+/* ── Cartes et grilles ───────────────────────────────────────── */
+[dir="rtl"] .c-contact-grid {
+    direction: rtl;
+}
+
+[dir="rtl"] .c-contact-info-card {
+    flex-direction: row-reverse;
+    text-align: right;
+}
+
+[dir="rtl"] .c-contact-form-group label {
+    text-align: right;
+    display: block;
+}
+
+[dir="rtl"] .c-contact-input,
+[dir="rtl"] .c-contact-select,
+[dir="rtl"] .c-contact-textarea {
+    text-align: right;
+    direction: rtl;
+}
+
+/* ── Footer RTL ──────────────────────────────────────────────── */
+[dir="rtl"] footer .l-container > div {
+    text-align: right;
+}
+
+[dir="rtl"] footer ul {
+    text-align: right;
+}
+
+/* ── Flex utilitaires ────────────────────────────────────────── */
+[dir="rtl"] .c-hero {
+    direction: rtl;
+}
+
+[dir="rtl"] .c-hero__badge {
+    flex-direction: row-reverse;
+}
+
+/* ── Icônes décalées ─────────────────────────────────────────── */
+[dir="rtl"] .fi {
+    transform: scaleX(1); /* reset, certaines icônes directionnelles peuvent être retournées */
+}
+
+/* ── Boutons ─────────────────────────────────────────────────── */
+[dir="rtl"] .c-button {
+    flex-direction: row-reverse;
+}
+
+/* ── Formulaires ─────────────────────────────────────────────── */
+[dir="rtl"] input,
+[dir="rtl"] select,
+[dir="rtl"] textarea {
+    direction: rtl;
+    text-align: right;
+}
+
+/* ── Listes ──────────────────────────────────────────────────── */
+[dir="rtl"] ul,
+[dir="rtl"] ol {
+    padding-right: 1.5rem;
+    padding-left: 0;
+}

@@ -235,3 +235,64 @@
   opacity: 1 !important;
 }
 
+/* Catalog Pagination for Toutes les Expériences */
+.c-services-pagination {
+  margin-top: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.c-pagination__info {
+  font-size: 0.88rem;
+  color: #64748B;
+}
+
+.c-pagination__buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.c-pagination__btn {
+  background: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  color: #1E293B;
+  padding: 0.55rem 0.95rem;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.c-pagination__btn:hover:not(:disabled) {
+  border-color: #0077B6;
+  color: #0077B6;
+  background: #F0F9FF;
+}
+
+.c-pagination__num {
+  min-width: 38px;
+  justify-content: center;
+}
+
+.c-pagination__num.is-active {
+  background: #0077B6;
+  color: #FFFFFF;
+  border-color: #0077B6;
+  box-shadow: 0 4px 12px rgba(0, 119, 182, 0.25);
+}
+
+.c-pagination__btn.is-disabled,
+.c-pagination__btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
