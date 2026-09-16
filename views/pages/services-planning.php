@@ -16,7 +16,7 @@
       <a href="<?= url('/pass/voucher/' . $order->orderNumber) ?>" target="_blank" class="c-button c-button--outline" style="background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.3); padding: 0.6rem 1.2rem; font-size: 0.88rem;">
         <i class="fi fi-rr-document-signed"></i> Bon d'Échange & QR Code
       </a>
-      <a href="https://wa.me/21698000000?text=Bonjour,%20je%20suis%20le%20titulaire%20du%20Pass%20<?= urlencode($order->orderNumber) ?>" target="_blank" class="c-button c-button--primary" style="background: #25D366; border-color: #25D366; padding: 0.6rem 1.2rem; font-size: 0.88rem;">
+      <a href="https://wa.me/21622168875?text=Bonjour,%20je%20suis%20le%20titulaire%20du%20Pass%20<?= urlencode($order->orderNumber) ?>" target="_blank" class="c-button c-button--primary" style="background: #25D366; border-color: #25D366; padding: 0.6rem 1.2rem; font-size: 0.88rem;">
         <i class="fi fi-rr-comment-alt"></i> Concierge WhatsApp 24/7
       </a>
     </div>
