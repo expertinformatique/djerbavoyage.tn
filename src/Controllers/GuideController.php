@@ -19,12 +19,29 @@ class GuideController extends Controller {
 
     public function index(): void {
         $this->analytics->trackPageView('/guide');
-        $articles = $this->articleRepo->getAllPublished(20);
+        
+        $page  = max(1, (int)($_GET['page'] ?? 1));
+        $limit = 9;
+
+        $data       = $this->articleRepo->getPaginated($page, $limit, '', 'published');
+        $articles   = $data['items'] ?? [];
+        $total      = (int)($data['total'] ?? 0);
+        $totalPages = max(1, (int)ceil($total / $limit));
+
+        if ($page > $totalPages && $total > 0) {
+            $page = $totalPages;
+            $data = $this->articleRepo->getPaginated($page, $limit, '', 'published');
+            $articles = $data['items'] ?? [];
+        }
 
         $this->render('pages/guide-list', [
             'seoTitle'       => 'Guides de Voyage Djerba | Tous nos Articles',
             'seoDescription' => 'Consultez nos articles et conseils pratiques pour bien préparer votre séjour à Djerba.',
             'articles'       => $articles,
+            'page'           => $page,
+            'totalPages'     => $totalPages,
+            'total'          => $total,
+            'limit'          => $limit,
             'settings'       => $this->settings
         ]);
     }

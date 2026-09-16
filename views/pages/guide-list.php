@@ -202,6 +202,66 @@ $getCategory = function(string $title, string $desc = ''): array {
     <?php endif; ?>
   </div>
 
+  <!-- Pagination des Guides -->
+  <?php if (!empty($totalPages) && $totalPages > 1): ?>
+    <nav class="c-blog-pagination" id="blogPagination" aria-label="Pagination des guides">
+      <div class="c-blog-pagination__info">
+        Page <strong><?= (int)$page ?></strong> sur <strong><?= (int)$totalPages ?></strong> (<strong><?= number_format((int)$total) ?></strong> guides au total)
+      </div>
+      <div class="c-blog-pagination__list">
+        <?php if ($page > 1): ?>
+          <a href="<?= url('/guide?page=' . ($page - 1)) ?>" class="c-blog-pagination__btn" title="Page précédente">
+            <i class="fi fi-rr-angle-left"></i>
+            <span>Précédent</span>
+          </a>
+        <?php else: ?>
+          <span class="c-blog-pagination__btn is-disabled">
+            <i class="fi fi-rr-angle-left"></i>
+            <span>Précédent</span>
+          </span>
+        <?php endif; ?>
+
+        <?php
+        $startPage = max(1, $page - 2);
+        $endPage   = min($totalPages, $page + 2);
+        
+        if ($startPage > 1): ?>
+          <a href="<?= url('/guide?page=1') ?>" class="c-blog-pagination__num">1</a>
+          <?php if ($startPage > 2): ?>
+            <span class="c-blog-pagination__dots">&hellip;</span>
+          <?php endif; ?>
+        <?php endif; ?>
+
+        <?php for ($p = $startPage; $p <= $endPage; $p++): ?>
+          <?php if ($p == $page): ?>
+            <span class="c-blog-pagination__num is-active"><?= $p ?></span>
+          <?php else: ?>
+            <a href="<?= url('/guide?page=' . $p) ?>" class="c-blog-pagination__num"><?= $p ?></a>
+          <?php endif; ?>
+        <?php endfor; ?>
+
+        <?php if ($endPage < $totalPages): ?>
+          <?php if ($endPage < $totalPages - 1): ?>
+            <span class="c-blog-pagination__dots">&hellip;</span>
+          <?php endif; ?>
+          <a href="<?= url('/guide?page=' . $totalPages) ?>" class="c-blog-pagination__num"><?= $totalPages ?></a>
+        <?php endif; ?>
+
+        <?php if ($page < $totalPages): ?>
+          <a href="<?= url('/guide?page=' . ($page + 1)) ?>" class="c-blog-pagination__btn" title="Page suivante">
+            <span>Suivant</span>
+            <i class="fi fi-rr-angle-right"></i>
+          </a>
+        <?php else: ?>
+          <span class="c-blog-pagination__btn is-disabled">
+            <span>Suivant</span>
+            <i class="fi fi-rr-angle-right"></i>
+          </span>
+        <?php endif; ?>
+      </div>
+    </nav>
+  <?php endif; ?>
+
   <div class="c-blog-no-results c-blog-no-results--hidden" id="blogSearchEmpty">
     <i class="fi fi-rr-search c-blog-no-results__icon"></i>
     <h3 class="c-blog-no-results__title">Aucun guide ne correspond à votre recherche</h3>
@@ -227,6 +287,7 @@ $getCategory = function(string $title, string $desc = ''): array {
   var filterGroup = document.getElementById('blogFilterGroup');
   var counterEl   = document.getElementById('blogCounter');
   var emptyMsg    = document.getElementById('blogSearchEmpty');
+  var paginationEl= document.getElementById('blogPagination');
   var cards       = document.querySelectorAll('.c-card--blog');
   var currentCategory = 'all';
 
@@ -254,6 +315,15 @@ $getCategory = function(string $title, string $desc = ''): array {
     if (counterEl) {
       counterEl.textContent = visibleCount + ' article' + (visibleCount > 1 ? 's' : '') + ' trouvé' + (visibleCount > 1 ? 's' : '');
     }
+
+    if (paginationEl) {
+      if (query.length > 0 || currentCategory !== 'all') {
+        paginationEl.style.display = 'none';
+      } else {
+        paginationEl.style.display = '';
+      }
+    }
+
     if (emptyMsg) {
       if (visibleCount === 0) {
         emptyMsg.classList.remove('c-blog-no-results--hidden');
