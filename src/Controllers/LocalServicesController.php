@@ -99,76 +99,82 @@ class LocalServicesController extends Controller {
     }
 
     public function checkout(): void {
-        $input = json_decode(file_get_contents('php://input'), true) ?? [];
-        $email = filter_var($input['email'] ?? '', FILTER_VALIDATE_EMAIL);
-        $name = trim($input['name'] ?? 'Voyageur Djerba');
-        $phone = trim($input['phone'] ?? '');
-        $items = $input['items'] ?? [];
-        $includeAirport = !empty($input['include_airport']);
-        $paymentMode = in_array($input['payment_mode'] ?? '', ['full', 'deposit']) ? $input['payment_mode'] : 'full';
+        try {
+            $input = json_decode(file_get_contents('php://input'), true) ?? [];
+            $email = filter_var($input['email'] ?? '', FILTER_VALIDATE_EMAIL);
+            $name = trim($input['name'] ?? 'Voyageur Djerba');
+            $phone = trim($input['phone'] ?? '');
+            $items = $input['items'] ?? [];
+            $includeAirport = !empty($input['include_airport']);
+            $paymentMode = in_array($input['payment_mode'] ?? '', ['full', 'deposit']) ? $input['payment_mode'] : 'full';
 
-        if (!$email || empty($items)) {
-            $this->json(['error' => 'Veuillez renseigner un email valide et sélectionner au moins un service.'], 400);
-        }
+            if (!$email || empty($items)) {
+                $this->json(['error' => 'Veuillez renseigner un email valide et sélectionner au moins un service.'], 400);
+            }
 
-        $enrichedItems = $this->enrichItemsFromDb($items);
-        if (empty($enrichedItems)) {
-            $this->json(['error' => 'Services sélectionnés invalides.'], 400);
-        }
+            $enrichedItems = $this->enrichItemsFromDb($items);
+            if (empty($enrichedItems)) {
+                $this->json(['error' => 'Services sélectionnés invalides.'], 400);
+            }
 
-        $estimate = $this->pricingService->calculateEstimate($enrichedItems, $includeAirport, $paymentMode);
-        $orderNumber = 'DJE-PASS-' . strtoupper(bin2hex(random_bytes(3)));
-        $domain = rtrim(absolute_url(''), '/');
+            $estimate = $this->pricingService->calculateEstimate($enrichedItems, $includeAirport, $paymentMode);
+            $orderNumber = 'DJE-PASS-' . strtoupper(bin2hex(random_bytes(3)));
+            $domain = rtrim(absolute_url(''), '/');
 
-        $session = $this->stripeService->createCheckoutSession([
-            'title'     => 'Pass Séjour Djerba (' . $estimate['pack_label'] . ')',
-            'price_eur' => $estimate['amount_to_pay_now'],
-            'email'     => $email,
-            'type'      => 'service_pass',
-            'item_id'   => 0,
-            'domain'    => $domain
-        ]);
+            $session = $this->stripeService->createCheckoutSession([
+                'title'        => 'Pass Séjour Djerba (' . $estimate['pack_label'] . ')',
+                'price_eur'    => $estimate['amount_to_pay_now'],
+                'email'        => $email,
+                'type'         => 'service_pass',
+                'order_number' => $orderNumber,
+                'domain'       => $domain
+            ]);
 
-        $order = new Order(
-            orderNumber: $orderNumber,
-            customerEmail: $email,
-            totalAmount: $estimate['amount_to_pay_now'],
-            currency: 'EUR',
-            stripeSessionId: $session['id'],
-            status: 'paid', // Simulé en dev
-            type: 'service_pass'
-        );
-        $createdOrder = $this->orderRepo->create($order);
-
-        // Sauvegarder les réservations d'activités
-        foreach ($enrichedItems as $item) {
-            $booking = new ServiceBooking(
-                orderId: $createdOrder->id,
-                serviceId: $item['service_id'],
-                guestsCount: $item['quantity'],
-                unitPrice: $item['unit_price'],
-                totalPrice: round($item['unit_price'] * $item['quantity'], 2),
-                status: 'confirmed'
+            $order = new Order(
+                orderNumber: $orderNumber,
+                customerEmail: $email,
+                totalAmount: $estimate['amount_to_pay_now'],
+                currency: 'EUR',
+                stripeSessionId: $session['id'],
+                status: 'paid', // Simulé en dev
+                type: 'service_pass'
             );
-            $this->scheduleRepo->createBooking($booking);
-        }
+            $createdOrder = $this->orderRepo->create($order);
 
-        // Sauvegarder l'entrée d'accueil aéroport si cochée ou offerte
-        if ($includeAirport || $estimate['airport_transfer_free']) {
-            $transfer = new AirportTransfer(
-                orderId: $createdOrder->id,
-                phoneWhatsapp: $phone,
-                status: 'pending'
-            );
-            $this->scheduleRepo->saveAirportTransfer($transfer);
-        }
+            // Sauvegarder les réservations d'activités
+            foreach ($enrichedItems as $item) {
+                $booking = new ServiceBooking(
+                    orderId: $createdOrder->id,
+                    serviceId: $item['service_id'],
+                    guestsCount: $item['quantity'],
+                    unitPrice: $item['unit_price'],
+                    totalPrice: round($item['unit_price'] * $item['quantity'], 2),
+                    status: 'confirmed'
+                );
+                $this->scheduleRepo->createBooking($booking);
+            }
 
-        $redirectUrl = url('/reservation/planning/' . $orderNumber);
-        $this->json([
-            'session_id'   => $session['id'],
-            'order_number' => $orderNumber,
-            'redirect_url' => $redirectUrl
-        ]);
+            // Sauvegarder l'entrée d'accueil aéroport si cochée ou offerte
+            if ($includeAirport || $estimate['airport_transfer_free']) {
+                $transfer = new AirportTransfer(
+                    orderId: $createdOrder->id,
+                    phoneWhatsapp: $phone,
+                    status: 'pending'
+                );
+                $this->scheduleRepo->saveAirportTransfer($transfer);
+            }
+
+            $redirectUrl = !empty($session['url']) ? $session['url'] : url('/reservation/planning/' . $orderNumber);
+            $this->json([
+                'session_id'   => $session['id'],
+                'order_number' => $orderNumber,
+                'redirect_url' => $redirectUrl
+            ]);
+        } catch (\Throwable $e) {
+            $rootPath = defined('ROOT_PATH') ? ROOT_PATH : dirname(__DIR__, 2);
+            @error_log("[" . date('Y-m-d H:i:s') . "] ERROR " . $e->getCode() . ": " . $e->getMessage() . " in " . $e->getFile() . ":" . $e->getLine() . PHP_EOL, 3, $rootPath . '/error.log');
+            $this->json(['error' => 'Une erreur est survenue lors de l\'initialisation du paiement. Veuillez réessayer.'], 500);
+        }
     }
 
     public function planning(string $orderNumber): void {

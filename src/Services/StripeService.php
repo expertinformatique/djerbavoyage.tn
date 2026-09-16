@@ -4,16 +4,24 @@ namespace App\Services;
 class StripeService {
     private array $config;
 
-    public function __construct() {
+    public function __construct(private ?SettingsService $settings = null) {
         $this->config = require __DIR__ . '/../../config/stripe.php';
     }
 
     public function getPublishableKey(): string {
-        return $_ENV['STRIPE_PUB_KEY'] ?? $this->config['publishable_key'] ?? '';
+        $dbKey = $this->settings?->get('stripe_pub_key');
+        if (!empty($dbKey)) {
+            return $dbKey;
+        }
+        return $_ENV['STRIPE_PUB_KEY'] ?? getenv('STRIPE_PUB_KEY') ?: ($this->config['publishable_key'] ?? '');
     }
 
     public function getSecretKey(): string {
-        return $_ENV['STRIPE_SECRET_KEY'] ?? $this->config['secret_key'] ?? '';
+        $dbKey = $this->settings?->get('stripe_secret_key');
+        if (!empty($dbKey)) {
+            return $dbKey;
+        }
+        return $_ENV['STRIPE_SECRET_KEY'] ?? getenv('STRIPE_SECRET_KEY') ?: ($this->config['secret_key'] ?? '');
     }
 
     /**

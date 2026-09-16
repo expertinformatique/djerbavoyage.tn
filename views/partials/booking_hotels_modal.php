@@ -4,6 +4,53 @@
  */
 $partnerId = $settings->get('booking_partner_id', 'booking_djerba_123');
 ?>
+<script>
+const DEFAULT_BOOKING_URL = "https://www.booking.com/city/tn/houmt-souk.html?aid=<?= e($partnerId) ?>";
+
+function onBookingIframeLoaded() {
+  const loader = document.getElementById('bookingIframeLoader');
+  if (loader) {
+    loader.style.opacity = '0';
+    setTimeout(() => {
+      loader.style.display = 'none';
+    }, 300);
+  }
+}
+
+function openBookingHotelsModal(destinationName, customUrl) {
+  const modal = document.getElementById('bookingHotelsModal');
+  const titleElem = document.getElementById('bookingModalTitle');
+  const iframe = document.getElementById('bookingIframe');
+  const loader = document.getElementById('bookingIframeLoader');
+
+  if (destinationName && titleElem) {
+    titleElem.textContent = 'Hôtels & Ryads de Charme à ' + destinationName;
+  }
+
+  const targetUrl = customUrl || DEFAULT_BOOKING_URL;
+
+  if (loader) {
+    loader.style.opacity = '1';
+    loader.style.display = 'flex';
+  }
+
+  if (iframe && iframe.src !== targetUrl) {
+    iframe.src = targetUrl;
+  }
+
+  if (modal) {
+    modal.classList.add('is-open');
+  }
+}
+
+function closeBookingHotelsModal() {
+  const modal = document.getElementById('bookingHotelsModal');
+  if (modal) {
+    modal.classList.remove('is-open');
+  }
+}
+</script>
+
 <div class="c-modal" id="bookingHotelsModal" role="dialog" aria-hidden="true">
   <div class="c-modal__card" style="width: 98vw; height: 96vh; max-width: 98vw; max-height: 96vh; display: flex; flex-direction: column; padding: 1rem 1.25rem; border-radius: 16px;">
     
@@ -67,50 +114,3 @@ $partnerId = $settings->get('booking_partner_id', 'booking_djerba_123');
   100% { transform: rotate(360deg); }
 }
 </style>
-
-<script>
-const DEFAULT_BOOKING_URL = "https://www.booking.com/city/tn/houmt-souk.html?aid=<?= e($partnerId) ?>";
-
-function openBookingHotelsModal(destinationName, customUrl) {
-  const modal = document.getElementById('bookingHotelsModal');
-  const titleElem = document.getElementById('bookingModalTitle');
-  const iframe = document.getElementById('bookingIframe');
-  const loader = document.getElementById('bookingIframeLoader');
-
-  if (destinationName && titleElem) {
-    titleElem.textContent = 'Hôtels & Ryads de Charme à ' + destinationName;
-  }
-
-  const targetUrl = customUrl || DEFAULT_BOOKING_URL;
-
-  if (loader) {
-    loader.style.opacity = '1';
-    loader.style.display = 'flex';
-  }
-
-  if (iframe && iframe.src !== targetUrl) {
-    iframe.src = targetUrl;
-  }
-
-  if (modal) {
-    modal.classList.add('is-open');
-  }
-}
-
-function onBookingIframeLoaded() {
-  const loader = document.getElementById('bookingIframeLoader');
-  if (loader) {
-    loader.style.opacity = '0';
-    setTimeout(() => {
-      loader.style.display = 'none';
-    }, 300);
-  }
-}
-
-function closeBookingHotelsModal() {
-  const modal = document.getElementById('bookingHotelsModal');
-  if (modal) {
-    modal.classList.remove('is-open');
-  }
-}
-</script>

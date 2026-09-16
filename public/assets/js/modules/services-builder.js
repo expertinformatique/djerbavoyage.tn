@@ -2,7 +2,7 @@ import { ServicesPagination } from './services-pagination.js';
 
 /**
  * Module Djerba Services Builder & Estimator
- * Version 2.0 - Multi-environment URL support & Client-Side Fallback
+ * Version 3.0 - Panier Permanent avec Persistence LocalStorage
  */
 export class ServicesBuilder {
   constructor(options = {}) {
@@ -15,7 +15,88 @@ export class ServicesBuilder {
       itemsPerPage: 6,
       onPageChange: () => this.applyFilter()
     });
+    this.loadStateFromStorage();
     this.init();
+  }
+
+  loadStateFromStorage() {
+    try {
+      const saved = localStorage.getItem('dv_pass_cart');
+      if (saved) {
+        const data = JSON.parse(saved);
+        if (data && typeof data === 'object') {
+          this.selected = data.selected || {};
+          if (typeof data.includeAirport === 'boolean') {
+            this.includeAirport = data.includeAirport;
+          }
+          if (data.paymentMode === 'full' || data.paymentMode === 'deposit') {
+            this.paymentMode = data.paymentMode;
+          }
+        }
+      }
+    } catch (e) {
+      console.warn('[PassCart] Erreur chargement storage', e);
+    }
+  }
+
+  saveStateToStorage() {
+    try {
+      localStorage.setItem('dv_pass_cart', JSON.stringify({
+        selected: this.selected,
+        includeAirport: this.includeAirport,
+        paymentMode: this.paymentMode
+      }));
+    } catch (e) {
+      console.warn('[PassCart] Erreur sauvegarde storage', e);
+    }
+  }
+
+  clearStorage() {
+    try {
+      localStorage.removeItem('dv_pass_cart');
+    } catch (e) {}
+  }
+
+  syncDOMWithState() {
+    // Synchroniser les cartes de services
+    document.querySelectorAll('.c-service-card').forEach(card => {
+      const id = card.dataset.id;
+      const addBtn = card.querySelector('.js-add-service-btn');
+      const qtyVal = card.querySelector('.js-qty-val');
+
+      if (this.selected[id]) {
+        card.classList.add('is-selected');
+        if (addBtn) {
+          addBtn.innerHTML = '<i class="fi fi-rr-check"></i> Dans mon Pass';
+          addBtn.className = 'c-button c-button--primary js-add-service-btn';
+        }
+        if (qtyVal) {
+          qtyVal.textContent = this.selected[id].quantity || 1;
+        }
+      } else {
+        card.classList.remove('is-selected');
+        if (addBtn) {
+          addBtn.innerHTML = '<i class="fi fi-rr-plus"></i> Ajouter au Pass';
+          addBtn.className = 'c-button c-button--outline js-add-service-btn';
+        }
+      }
+    });
+
+    // Synchroniser le toggle navette aéroport
+    const toggle = document.getElementById('airportTransferToggle');
+    if (toggle) {
+      toggle.checked = this.includeAirport;
+    }
+
+    // Synchroniser les cartes de mode de paiement
+    const modeCards = document.querySelectorAll('.c-payment-mode-card');
+    modeCards.forEach(card => {
+      if (card.dataset.mode === this.paymentMode) {
+        card.classList.add('active');
+      } else {
+        card.classList.remove('active');
+      }
+    });
   }
 
   init() {
@@ -25,6 +106,7 @@ export class ServicesBuilder {
     this.bindPaymentModeSelector();
     this.bindCheckoutForm();
     this.bindCheckoutModalTrigger();
+    this.syncDOMWithState();
     this.applyFilter();
     this.recalculate();
   }
@@ -32,6 +114,7 @@ export class ServicesBuilder {
   applyFilter() {
     const cards = Array.from(document.querySelectorAll('.c-service-card'));
     this.pagination.paginate(cards, this.currentCategory);
+    this.syncDOMWithState();
   }
 
   bindCategoryFilters() {
@@ -136,6 +219,7 @@ export class ServicesBuilder {
   }
 
   async recalculate() {
+    this.saveStateToStorage();
     const items = Object.values(this.selected);
 
     try {
@@ -155,7 +239,6 @@ export class ServicesBuilder {
       this.updateUI(data);
     } catch (err) {
       console.warn('[Estimator API fallback to local calculation]', err);
-      // Fallback local instantané
       const localData = this.calculateLocalEstimate(items);
       this.updateUI(localData);
     }
@@ -282,12 +365,29 @@ export class ServicesBuilder {
           </div>
         `;
       } else {
-        itemsListEl.innerHTML = items.map(item => `
+        itemsListEl.innerHTML = `
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 0.5rem; padding-bottom: 0.35rem; border-bottom: 1px solid #E2E8F0;">
+            <span style="font-size:0.75rem; text-transform:uppercase; font-weight:700; color:#64748B;">Activités dans mon pass</span>
+            <button type="button" class="js-clear-cart-btn" style="background:none; border:none; color:#EF4444; font-size:0.75rem; font-weight:600; cursor:pointer; padding:0; display:inline-flex; align-items:center; gap:3px;">
+              <i class="fi fi-rr-trash"></i> Vider
+            </button>
+          </div>
+        ` + items.map(item => `
           <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.88rem; padding:0.5rem 0; border-bottom:1px dashed #E2E8F0;">
             <span><strong style="color:var(--clr-sea-900);">${item.quantity}x</strong> ${item.name}</span>
             <span style="font-weight:700; color:var(--clr-sea-900);">${(item.unit_price * item.quantity).toFixed(2)} €</span>
           </div>
         `).join('');
+
+        const clearBtn = itemsListEl.querySelector('.js-clear-cart-btn');
+        if (clearBtn) {
+          clearBtn.addEventListener('click', () => {
+            this.selected = {};
+            this.clearStorage();
+            this.syncDOMWithState();
+            this.recalculate();
+          });
+        }
       }
     }
 
@@ -341,6 +441,7 @@ export class ServicesBuilder {
             throw new Error(data.error || 'Erreur lors de la réservation.');
           }
 
+          this.clearStorage();
           window.location.href = data.redirect_url;
         } catch (err) {
           if (errorEl) errorEl.textContent = err.message;
