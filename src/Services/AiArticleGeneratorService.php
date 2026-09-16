@@ -20,10 +20,11 @@ class AiArticleGeneratorService {
             $articleData = $this->generateFallbackArticle($context);
         }
 
-        // Image HD via Pollinations.ai
-        $rawPrompt = substr($articleData['image_prompt'] ?? 'djerba island beach palm trees sunny paradise', 0, 100);
-        $imagePrompt = rawurlencode($rawPrompt);
-        $featuredImage = "https://image.pollinations.ai/prompt/{$imagePrompt}?width=1200&height=630&nologo=true&seed=" . rand(100, 9999);
+        // Image HD photo réaliste de voyage
+        $realisticImages = $context['angle']['realistic_images'] ?? [
+            'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80'
+        ];
+        $featuredImage = $realisticImages[array_rand($realisticImages)];
 
         // Generation de Slug unique
         $baseSlug = $this->slugify($articleData['title_fr']);
