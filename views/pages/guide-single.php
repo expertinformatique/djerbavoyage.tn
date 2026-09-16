@@ -1,6 +1,6 @@
 <?php
 /** 
- * Vue Article Unique — Djerba Voyage (Magazine Luxe Style)
+ * Vue Article Unique — Djerba Voyage (Magazine Luxe Méditerranéen)
  * Architecture MVC, Zéro style inline, Responsive fluide
  * 
  * @var App\Models\Article $article 
@@ -54,7 +54,7 @@ $currentUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' 
         <div class="c-article-meta-items">
           <span><i class="fi fi-rr-calendar"></i> <?= date('d/m/Y', strtotime($article->publishedAt ?? 'now')) ?></span>
           <span class="c-article-author">
-            <i class="fi fi-rr-user"></i> <?= htmlspecialchars($article->authorName ?? 'IA Voyageur Djerba', ENT_QUOTES, 'UTF-8') ?>
+            <i class="fi fi-rr-user"></i> <?= htmlspecialchars($article->authorName ?? 'Rédaction Djerba Voyage', ENT_QUOTES, 'UTF-8') ?>
           </span>
           <span><i class="fi fi-rr-eye"></i> <?= (int)$article->viewsCount ?> lectures</span>
         </div>
@@ -133,38 +133,7 @@ $currentUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' 
     </div>
 
     <!-- Activités Recommandées (Cross-selling) -->
-    <?php if (!empty($ctaServices)): ?>
-      <div class="c-article-services-section">
-        <h3 class="c-article-services-title">
-          <i class="fi fi-rr-compass"></i> Activités & Excursions recommandées pour cet itinéraire
-        </h3>
-        <div class="c-article-services-grid">
-          <?php foreach ($ctaServices as $service): ?>
-            <div class="c-article-service-card">
-              <?php if (!empty($service->imageUrl)): ?>
-                <div class="c-article-service-card__media">
-                  <img src="<?= e(asset($service->imageUrl)) ?>" 
-                       alt="<?= htmlspecialchars($service->name, ENT_QUOTES, 'UTF-8') ?>" 
-                       class="c-article-service-card__img" 
-                       loading="lazy">
-                </div>
-              <?php endif; ?>
-              <div class="c-article-service-card__info">
-                <h4 class="c-article-service-card__name">
-                  <?= htmlspecialchars($service->name, ENT_QUOTES, 'UTF-8') ?>
-                </h4>
-                <p class="c-article-service-card__price">
-                  À partir de <?= number_format($service->priceEur, 2) ?> €
-                </p>
-              </div>
-              <a href="<?= url('/services#' . urlencode($service->slug)) ?>" class="c-button c-button--secondary">
-                Réserver
-              </a>
-            </div>
-          <?php endforeach; ?>
-        </div>
-      </div>
-    <?php endif; ?>
+    <?php include ROOT_PATH . '/views/partials/blog/article_cta_services.php'; ?>
 
     <!-- Bannière Conciergerie VIP -->
     <div class="c-article-concierge">
@@ -189,45 +158,7 @@ $currentUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' 
     </div>
 
     <!-- Poursuivre votre lecture (Articles Similaires) -->
-    <?php if (!empty($relatedArticles)): ?>
-      <section class="c-article-related">
-        <h3 class="c-article-related__title">
-          <i class="fi fi-rr-bookmark"></i> Poursuivre votre lecture
-        </h3>
-        <div class="c-article-related__grid">
-          <?php foreach ($relatedArticles as $rel): ?>
-            <article class="c-blog-card">
-              <?php if (!empty($rel->featuredImage)): ?>
-                <div class="c-blog-card__media">
-                  <img src="<?= e(asset($rel->featuredImage)) ?>" 
-                       alt="<?= htmlspecialchars($rel->titleFr, ENT_QUOTES, 'UTF-8') ?>" 
-                       class="c-blog-card__img" 
-                       loading="lazy">
-                </div>
-              <?php endif; ?>
-              <div class="c-blog-card__body">
-                <div>
-                  <div class="c-blog-card__meta">
-                    <span><i class="fi fi-rr-calendar"></i> <?= date('d/m/Y', strtotime($rel->publishedAt ?? 'now')) ?></span>
-                  </div>
-                  <h4 class="c-blog-card__title">
-                    <a href="<?= url('/guide/' . e($rel->slug)) ?>">
-                      <?= htmlspecialchars($rel->titleFr, ENT_QUOTES, 'UTF-8') ?>
-                    </a>
-                  </h4>
-                </div>
-                <div class="c-blog-card__footer">
-                  <a href="<?= url('/guide/' . e($rel->slug)) ?>" class="c-blog-card__read-link">
-                    <span>Lire le guide</span>
-                    <i class="fi fi-rr-arrow-right"></i>
-                  </a>
-                </div>
-              </div>
-            </article>
-          <?php endforeach; ?>
-        </div>
-      </section>
-    <?php endif; ?>
+    <?php include ROOT_PATH . '/views/partials/blog/article_related.php'; ?>
 
   </article>
 </div>

@@ -1,18 +1,23 @@
 <?php
-/** @var array $articles */
+/** 
+ * Vue Liste des Guides — Djerba Voyage
+ * Style Classique Méditerranéen & Cartes Riches
+ * 
+ * @var array $articles 
+ */
 
 $getCategory = function(string $title, string $desc = ''): array {
     $text = mb_strtolower($title . ' ' . $desc, 'UTF-8');
     if (str_contains($text, 'météo') || str_contains($text, 'meteo') || str_contains($text, 'baignade') || str_contains($text, 'climat') || str_contains($text, 'soleil')) {
         return ['tag' => 'meteo', 'label' => 'Météo & Plages', 'pill' => '☀️ Météo'];
     }
-    if (str_contains($text, 'quad') || str_contains($text, 'désert') || str_contains($text, 'desert') || str_contains($text, 'buggy') || str_contains($text, 'dunes')) {
+    if (str_contains($text, 'quad') || str_contains($text, 'désert') || str_contains($text, 'desert') || str_contains($text, 'buggy') || str_contains($text, 'dunes') || str_contains($text, 'caravane')) {
         return ['tag' => 'aventure', 'label' => 'Quads & Aventure', 'pill' => '🏎️ Aventure'];
     }
-    if (str_contains($text, 'art') || str_contains($text, 'guellala') || str_contains($text, 'djerbahood') || str_contains($text, 'culture') || str_contains($text, 'histoire') || str_contains($text, 'cantina')) {
+    if (str_contains($text, 'art') || str_contains($text, 'guellala') || str_contains($text, 'djerbahood') || str_contains($text, 'culture') || str_contains($text, 'histoire') || str_contains($text, 'menzel')) {
         return ['tag' => 'culture', 'label' => 'Culture & Histoire', 'pill' => '🎨 Culture'];
     }
-    if (str_contains($text, 'gastronomie') || str_contains($text, 'poisson') || str_contains($text, 'restaurant') || str_contains($text, 'souk') || str_contains($text, 'thé')) {
+    if (str_contains($text, 'gastronomie') || str_contains($text, 'poisson') || str_contains($text, 'restaurant') || str_contains($text, 'souk') || str_contains($text, 'cuisine')) {
         return ['tag' => 'gastronomie', 'label' => 'Gastronomie', 'pill' => '🍤 Saveurs'];
     }
     if (str_contains($text, 'kitesurf') || str_contains($text, 'jet') || str_contains($text, 'mer') || str_contains($text, 'nautique') || str_contains($text, 'lagune')) {
@@ -20,29 +25,24 @@ $getCategory = function(string $title, string $desc = ''): array {
     }
     return ['tag' => 'guide', 'label' => 'Guide Pratique', 'pill' => '🏝️ Guide'];
 };
-
-$featured = !empty($articles) ? $articles[0] : null;
-$listArticles = !empty($articles) ? array_slice($articles, 1) : [];
 ?>
 
-<!-- Hero Section Guide & Blog -->
-<section class="c-hero c-hero--blog">
-  <div class="l-container">
-    <div class="c-hero__badge">
-      <i class="fi fi-rr-compass"></i> Guide Officiel & Carnet de Voyage 2026
-    </div>
-    <h1 class="c-hero__title">
-      Tous nos Guides & Actualités de Djerba
+<div class="l-container">
+  
+  <!-- En-tête Classique Méditerranéen (Ancien Style Conservé) -->
+  <div class="c-guide-header text-center">
+    <span class="badge badge--gold">
+      <i class="fi fi-rr-compass"></i> Guides & Carnet de Voyage 2026
+    </span>
+    <h1 class="heading-1">
+      Tous nos Guides & Conseils de Voyage
     </h1>
-    <p class="c-hero__subtitle">
-      Météo en direct, bons plans locaux, itinéraires secrets et conseils pratiques pour vivre un séjour inoubliable sur l'île aux sables d'or.
+    <p class="text-muted">
+      Conseils pratiques, météo en direct, excursions incontournables et bons plans vérifiés pour préparer et vivre un séjour inoubliable à Djerba.
     </p>
   </div>
-</section>
 
-<div class="l-container">
-
-  <!-- Contrôles de Recherche et Filtres par Catégorie -->
+  <!-- Barre de Recherche et Filtres par Thématiques -->
   <div class="c-blog-controls">
     <div class="c-blog-search-wrap">
       <i class="fi fi-rr-search c-blog-search-icon"></i>
@@ -82,172 +82,132 @@ $listArticles = !empty($articles) ? array_slice($articles, 1) : [];
     </div>
   </div>
 
-  <!-- Article Vedette (À la Une) -->
-  <?php if ($featured): 
-    $featCat = $getCategory($featured->titleFr, $featured->seoDescription ?? '');
-    $featReadTime = max(2, (int)ceil(str_word_count(strip_tags($featured->contentFr)) / 180));
-    $featExcerpt = $featured->seoDescription ?: substr(strip_tags($featured->contentFr), 0, 190);
-  ?>
-    <article class="c-blog-featured" 
-             data-category="<?= $featCat['tag'] ?>" 
-             data-title="<?= htmlspecialchars(mb_strtolower($featured->titleFr, 'UTF-8'), ENT_QUOTES, 'UTF-8') ?>" 
-             data-excerpt="<?= htmlspecialchars(mb_strtolower($featExcerpt, 'UTF-8'), ENT_QUOTES, 'UTF-8') ?>">
-      <?php if (!empty($featured->featuredImage)): ?>
-        <div class="c-blog-featured__media">
-          <img src="<?= e(asset($featured->featuredImage)) ?>" 
-               alt="<?= htmlspecialchars($featured->titleFr, ENT_QUOTES, 'UTF-8') ?>" 
-               class="c-blog-featured__img" 
-               loading="eager">
-          <div class="c-blog-featured__badges">
-            <span class="c-blog-badge c-blog-badge--gold"><i class="fi fi-rr-star"></i> À la Une</span>
-            <span class="c-blog-badge c-blog-badge--dark"><?= $featCat['pill'] ?></span>
-          </div>
-        </div>
-      <?php endif; ?>
-
-      <div class="c-blog-featured__body">
-        <div class="c-blog-card__meta">
-          <span><i class="fi fi-rr-calendar"></i> <?= date('d/m/Y', strtotime($featured->publishedAt ?? 'now')) ?></span>
-          <span><i class="fi fi-rr-clock"></i> <?= $featReadTime ?> min de lecture</span>
-          <span class="c-blog-card__author"><i class="fi fi-rr-user"></i> <?= htmlspecialchars($featured->authorName ?? 'Djerba Voyage', ENT_QUOTES, 'UTF-8') ?></span>
-        </div>
-
-        <h2 class="c-blog-featured__title">
-          <a href="<?= url('/guide/' . e($featured->slug)) ?>">
-            <?= htmlspecialchars($featured->titleFr, ENT_QUOTES, 'UTF-8') ?>
-          </a>
-        </h2>
-
-        <p class="c-blog-featured__excerpt">
-          <?= htmlspecialchars($featExcerpt, ENT_QUOTES, 'UTF-8') ?>...
-        </p>
-
-        <div class="c-blog-featured__footer">
-          <a href="<?= url('/guide/' . e($featured->slug)) ?>" class="c-button c-button--primary">
-            <span>Lire le guide complet</span>
-            <i class="fi fi-rr-arrow-right"></i>
-          </a>
-          <a href="<?= url('/guide/' . e($featured->slug) . '/pdf') ?>" target="_blank" class="c-blog-card__pdf-btn" title="Télécharger la fiche PDF">
-            <i class="fi fi-rr-file-pdf"></i>
-            <span>Fiche PDF</span>
-          </a>
-        </div>
+  <!-- Grille Homogène des Guides (Structure c-card dans l-grid-cards) -->
+  <div class="l-grid-cards c-blog-grid--classic" id="blogGrid">
+    <?php if (empty($articles)): ?>
+      <div class="c-blog-no-results">
+        <i class="fi fi-rr-document c-blog-no-results__icon"></i>
+        <h3 class="c-blog-no-results__title">Aucun guide disponible pour le moment</h3>
+        <p class="c-blog-no-results__text">Nos reporters et concierges préparent de nouveaux carnets de voyage.</p>
       </div>
-    </article>
-  <?php endif; ?>
-
-  <!-- Grille des Guides Réguliers -->
-  <div class="c-blog-grid" id="blogGrid">
-    <?php foreach ($listArticles as $art): 
-      $cat = $getCategory($art->titleFr, $art->seoDescription ?? '');
-      $readTime = max(2, (int)ceil(str_word_count(strip_tags($art->contentFr)) / 180));
-      $excerpt = $art->seoDescription ?: substr(strip_tags($art->contentFr), 0, 130);
-    ?>
-      <article class="c-blog-card" 
-               data-category="<?= $cat['tag'] ?>" 
-               data-title="<?= htmlspecialchars(mb_strtolower($art->titleFr, 'UTF-8'), ENT_QUOTES, 'UTF-8') ?>" 
-               data-excerpt="<?= htmlspecialchars(mb_strtolower($excerpt, 'UTF-8'), ENT_QUOTES, 'UTF-8') ?>">
-        <?php if (!empty($art->featuredImage)): ?>
-          <div class="c-blog-card__media">
-            <img src="<?= e(asset($art->featuredImage)) ?>" 
-                 alt="<?= htmlspecialchars($art->titleFr, ENT_QUOTES, 'UTF-8') ?>" 
-                 class="c-blog-card__img" 
-                 loading="lazy">
-            <div class="c-blog-card__badge-overlay">
-              <span class="c-blog-card__pill"><?= $cat['pill'] ?></span>
-              <span class="c-blog-card__pill">
-                <i class="fi fi-rr-eye"></i> <?= (int)$art->viewsCount ?>
-              </span>
+    <?php else: ?>
+      <?php foreach ($articles as $art): 
+        $cat = $getCategory($art->titleFr, $art->seoDescription ?? '');
+        $readTime = max(2, (int)ceil(str_word_count(strip_tags($art->contentFr)) / 180));
+        $excerpt = $art->seoDescription ?: substr(strip_tags($art->contentFr), 0, 140);
+      ?>
+        <article class="c-card c-card--blog" 
+                 data-category="<?= $cat['tag'] ?>" 
+                 data-title="<?= htmlspecialchars(mb_strtolower($art->titleFr, 'UTF-8'), ENT_QUOTES, 'UTF-8') ?>" 
+                 data-excerpt="<?= htmlspecialchars(mb_strtolower($excerpt, 'UTF-8'), ENT_QUOTES, 'UTF-8') ?>">
+          
+          <?php if (!empty($art->featuredImage)): ?>
+            <div class="c-card__media">
+              <img src="<?= e(asset($art->featuredImage)) ?>" 
+                   alt="<?= htmlspecialchars($art->titleFr, ENT_QUOTES, 'UTF-8') ?>" 
+                   class="c-card__image" 
+                   loading="lazy">
+              <div class="c-card__badge-overlay">
+                <span class="c-card__pill"><?= $cat['pill'] ?></span>
+                <span class="c-card__pill">
+                  <i class="fi fi-rr-eye"></i> <?= (int)$art->viewsCount ?>
+                </span>
+              </div>
             </div>
-          </div>
-        <?php endif; ?>
+          <?php endif; ?>
 
-        <div class="c-blog-card__body">
-          <div>
-            <div class="c-blog-card__meta">
-              <span><i class="fi fi-rr-calendar"></i> <?= date('d/m/Y', strtotime($art->publishedAt ?? 'now')) ?></span>
-              <span><i class="fi fi-rr-clock"></i> <?= $readTime ?> min</span>
+          <div class="c-card__content">
+            <div>
+              <div class="c-card__meta">
+                <span><i class="fi fi-rr-calendar"></i> <?= date('d/m/Y', strtotime($art->publishedAt ?? 'now')) ?></span>
+                <span><i class="fi fi-rr-clock"></i> <?= $readTime ?> min</span>
+              </div>
+
+              <h3 class="c-card__title">
+                <a href="<?= url('/guide/' . e($art->slug)) ?>">
+                  <?= htmlspecialchars($art->titleFr, ENT_QUOTES, 'UTF-8') ?>
+                </a>
+              </h3>
+
+              <p class="c-card__excerpt">
+                <?= htmlspecialchars($excerpt, ENT_QUOTES, 'UTF-8') ?>...
+              </p>
             </div>
 
-            <h3 class="c-blog-card__title">
-              <a href="<?= url('/guide/' . e($art->slug)) ?>">
-                <?= htmlspecialchars($art->titleFr, ENT_QUOTES, 'UTF-8') ?>
+            <div class="c-card__footer">
+              <a href="<?= url('/guide/' . e($art->slug)) ?>" class="c-button c-button--secondary">
+                <span>Lire le guide complet</span>
+                <i class="fi fi-rr-arrow-right"></i>
               </a>
-            </h3>
-
-            <p class="c-blog-card__excerpt">
-              <?= htmlspecialchars($excerpt, ENT_QUOTES, 'UTF-8') ?>...
-            </p>
+              <a href="<?= url('/guide/' . e($art->slug) . '/pdf') ?>" target="_blank" class="c-card__pdf-btn" title="Télécharger la fiche pratique PDF">
+                <i class="fi fi-rr-file-pdf"></i>
+                <span>PDF</span>
+              </a>
+            </div>
           </div>
+        </article>
+      <?php endforeach; ?>
+    <?php endif; ?>
+  </div>
 
-          <div class="c-blog-card__footer">
-            <a href="<?= url('/guide/' . e($art->slug)) ?>" class="c-blog-card__read-link">
-              <span>Lire le guide</span>
-              <i class="fi fi-rr-arrow-right"></i>
-            </a>
-            <a href="<?= url('/guide/' . e($art->slug) . '/pdf') ?>" target="_blank" class="c-blog-card__pdf-btn" title="Télécharger la fiche PDF">
-              <i class="fi fi-rr-file-pdf"></i>
-              <span>PDF</span>
-            </a>
-          </div>
-        </div>
-      </article>
-    <?php endforeach; ?>
-
-    <!-- Message Aucun Résultat -->
-    <div class="c-blog-no-results" id="blogNoResults" style="display: none;">
-      <div class="c-blog-no-results__icon">
-        <i class="fi fi-rr-search-alt"></i>
-      </div>
-      <h3 class="c-blog-no-results__title">Aucun guide ne correspond à votre recherche</h3>
-      <p class="c-blog-no-results__text">Essayez un autre mot-clé ou réinitialisez les filtres.</p>
-      <button type="button" class="c-button c-button--secondary" onclick="resetBlogFilters()">
-        Voir tous les guides
-      </button>
-    </div>
+  <div class="c-blog-no-results c-blog-no-results--hidden" id="blogSearchEmpty">
+    <i class="fi fi-rr-search c-blog-no-results__icon"></i>
+    <h3 class="c-blog-no-results__title">Aucun guide ne correspond à votre recherche</h3>
+    <p class="c-blog-no-results__text">Essayez un autre mot-clé ou sélectionnez une autre thématique ci-dessus.</p>
   </div>
 
 </div>
 
 <script>
-/* Filtrage dynamique & Recherche instantanée du blog */
+/* Recherche en direct et filtre par catégorie */
 (function() {
   var searchInput = document.getElementById('blogSearchInput');
-  var clearBtn = document.getElementById('blogSearchClear');
+  var clearBtn    = document.getElementById('blogSearchClear');
   var filterGroup = document.getElementById('blogFilterGroup');
-  var counter = document.getElementById('blogCounter');
-  var noResults = document.getElementById('blogNoResults');
-  var articles = document.querySelectorAll('.c-blog-card, .c-blog-featured');
-  var activeCategory = 'all';
+  var counterEl   = document.getElementById('blogCounter');
+  var emptyMsg    = document.getElementById('blogSearchEmpty');
+  var cards       = document.querySelectorAll('.c-card--blog');
+  var currentCategory = 'all';
 
   function applyFilters() {
-    var query = (searchInput ? searchInput.value : '').trim().toLowerCase();
+    var query = (searchInput ? searchInput.value.toLowerCase().trim() : '');
     if (clearBtn) clearBtn.style.display = query.length > 0 ? 'block' : 'none';
+
     var visibleCount = 0;
+    cards.forEach(function(card) {
+      var cat = card.getAttribute('data-category');
+      var title = card.getAttribute('data-title') || '';
+      var excerpt = card.getAttribute('data-excerpt') || '';
 
-    articles.forEach(function(el) {
-      var cat = el.getAttribute('data-category') || '';
-      var title = el.getAttribute('data-title') || '';
-      var excerpt = el.getAttribute('data-excerpt') || '';
+      var matchesCat = (currentCategory === 'all' || cat === currentCategory);
+      var matchesSearch = (!query || title.indexOf(query) !== -1 || excerpt.indexOf(query) !== -1);
 
-      var matchesCat = (activeCategory === 'all' || cat === activeCategory);
-      var matchesQuery = !query || title.indexOf(query) !== -1 || excerpt.indexOf(query) !== -1;
-
-      if (matchesCat && matchesQuery) {
-        el.style.display = '';
+      if (matchesCat && matchesSearch) {
+        card.style.display = '';
         visibleCount++;
       } else {
-        el.style.display = 'none';
+        card.style.display = 'none';
       }
     });
 
-    if (counter) {
-      counter.textContent = visibleCount + (visibleCount > 1 ? ' guides trouvés' : ' guide trouvé');
+    if (counterEl) {
+      counterEl.textContent = visibleCount + ' article' + (visibleCount > 1 ? 's' : '') + ' trouvé' + (visibleCount > 1 ? 's' : '');
     }
-    if (noResults) {
-      noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+    if (emptyMsg) {
+      if (visibleCount === 0) {
+        emptyMsg.classList.remove('c-blog-no-results--hidden');
+      } else {
+        emptyMsg.classList.add('c-blog-no-results--hidden');
+      }
     }
   }
+
+  if (searchInput) searchInput.addEventListener('input', applyFilters);
+  if (clearBtn) clearBtn.addEventListener('click', function() {
+    searchInput.value = '';
+    applyFilters();
+    searchInput.focus();
+  });
 
   if (filterGroup) {
     filterGroup.addEventListener('click', function(e) {
@@ -255,31 +215,9 @@ $listArticles = !empty($articles) ? array_slice($articles, 1) : [];
       if (!btn) return;
       filterGroup.querySelectorAll('.c-blog-filter-btn').forEach(function(b) { b.classList.remove('is-active'); });
       btn.classList.add('is-active');
-      activeCategory = btn.getAttribute('data-filter') || 'all';
+      currentCategory = btn.getAttribute('data-filter') || 'all';
       applyFilters();
     });
   }
-
-  if (searchInput) {
-    searchInput.addEventListener('input', applyFilters);
-  }
-  if (clearBtn) {
-    clearBtn.addEventListener('click', function() {
-      searchInput.value = '';
-      applyFilters();
-      searchInput.focus();
-    });
-  }
-
-  window.resetBlogFilters = function() {
-    if (searchInput) searchInput.value = '';
-    activeCategory = 'all';
-    if (filterGroup) {
-      filterGroup.querySelectorAll('.c-blog-filter-btn').forEach(function(b) { b.classList.remove('is-active'); });
-      var allBtn = filterGroup.querySelector('[data-filter="all"]');
-      if (allBtn) allBtn.classList.add('is-active');
-    }
-    applyFilters();
-  };
 })();
 </script>
