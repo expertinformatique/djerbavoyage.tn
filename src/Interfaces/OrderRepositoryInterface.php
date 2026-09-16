@@ -10,5 +10,7 @@ interface OrderRepositoryInterface {
     public function findByOrderNumber(string $orderNumber): ?Order;
     public function updateStatus(int $orderId, string $status): bool;
     public function getPaidOrdersCount(): int;
-    public function getPaginated(int $page = 1, int $limit = 10, string $search = ''): array;
+    public function getPaginated(int $page = 1, int $limit = 10, string $search = '', string $status = ''): array;
+    public function getOrderDetails(int $orderId): ?array;
+    public function getStats(): array;
 }

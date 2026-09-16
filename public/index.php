@@ -243,6 +243,8 @@ $router->post('/admin/products/edit', [App\Controllers\Admin\ProductsAdminContro
 $router->post('/admin/products/delete', [App\Controllers\Admin\ProductsAdminController::class, 'delete']);
 
 $router->get('/admin/orders', [App\Controllers\Admin\OrdersAdminController::class, 'index']);
+$router->post('/admin/orders/update-status', [App\Controllers\Admin\OrdersAdminController::class, 'updateStatus']);
+$router->get('/api/admin/orders/details', [App\Controllers\Admin\OrdersAdminController::class, 'details']);
 
 // Routes Gestion des Utilisateurs Admin
 $router->get('/admin/users', [App\Controllers\Admin\UsersAdminController::class, 'index']);

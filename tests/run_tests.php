@@ -116,6 +116,15 @@ $sqlitePdo->exec("
         driver_notes TEXT,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
+    CREATE TABLE IF NOT EXISTS concierge_tickets (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        order_id INTEGER,
+        client_name TEXT,
+        client_email TEXT,
+        travel_dates TEXT,
+        status TEXT DEFAULT 'new',
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
     CREATE TABLE IF NOT EXISTS service_reviews (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         service_id INTEGER,
