@@ -3,6 +3,43 @@
    Architecture BEM, Zéro style inline, Responsive fluide, Dark-mode ready
    ========================================================================== */
 
+/* 0. EN-TÊTE CLASSIQUE MÉDITERRANÉEN (PAGE GUIDES) */
+.c-guide-header {
+  padding: 3.5rem 0 2rem;
+  text-align: center;
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.c-guide-header .badge--gold {
+  background: rgba(245, 158, 11, 0.15);
+  color: #F59E0B;
+  padding: 6px 18px;
+  border-radius: var(--radius-pill, 999px);
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
+}
+
+.c-guide-header .heading-1 {
+  font-family: var(--font-heading, sans-serif);
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
+  font-weight: 800;
+  color: var(--clr-dark-900, #0F172A);
+  margin-bottom: 0.85rem;
+  line-height: 1.25;
+}
+
+.c-guide-header .text-muted {
+  color: var(--clr-gray-500, #64748B);
+  font-size: 1.08rem;
+  line-height: 1.65;
+  margin: 0 auto;
+}
+
 /* 1. HERO SECTION DU BLOG */
 .c-hero--blog {
   background: linear-gradient(180deg, rgba(15, 23, 42, 0.78) 0%, rgba(15, 23, 42, 0.94) 100%), url('../images/djerbahood.png') center/cover no-repeat;
@@ -304,7 +341,8 @@
   margin: 1.5rem 0 4rem;
 }
 
-.c-blog-card {
+.c-blog-card,
+.c-card--blog {
   background: #ffffff;
   border-radius: var(--radius-card, 20px);
   overflow: hidden;
@@ -315,31 +353,36 @@
   transition: transform var(--transition-smooth, 0.3s ease), box-shadow var(--transition-smooth, 0.3s ease);
 }
 
-.c-blog-card:hover {
+.c-blog-card:hover,
+.c-card--blog:hover {
   transform: translateY(-6px);
   box-shadow: 0 20px 40px rgba(0, 119, 182, 0.12);
   border-color: var(--clr-sand-500, #D8C3A5);
 }
 
-.c-blog-card__media {
+.c-blog-card__media,
+.c-card--blog .c-card__media {
   position: relative;
   height: 220px;
   overflow: hidden;
   background-color: var(--clr-sand-200, #F4ECE1);
 }
 
-.c-blog-card__img {
+.c-blog-card__img,
+.c-card--blog .c-card__image {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.c-blog-card:hover .c-blog-card__img {
+.c-blog-card:hover .c-blog-card__img,
+.c-card--blog:hover .c-card__image {
   transform: scale(1.06);
 }
 
-.c-blog-card__badge-overlay {
+.c-blog-card__badge-overlay,
+.c-card--blog .c-card__badge-overlay {
   position: absolute;
   top: 1rem;
   left: 1rem;
@@ -350,7 +393,8 @@
   pointer-events: none;
 }
 
-.c-blog-card__pill {
+.c-blog-card__pill,
+.c-card--blog .c-card__pill {
   padding: 0.25rem 0.7rem;
   background: rgba(15, 23, 42, 0.7);
   backdrop-filter: blur(8px);
@@ -363,7 +407,8 @@
   gap: 0.3rem;
 }
 
-.c-blog-card__body {
+.c-blog-card__body,
+.c-card--blog .c-card__content {
   padding: 1.5rem;
   flex: 1;
   display: flex;
@@ -371,7 +416,8 @@
   justify-content: space-between;
 }
 
-.c-blog-card__meta {
+.c-blog-card__meta,
+.c-card--blog .c-card__meta {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -387,7 +433,8 @@
   font-weight: 600;
 }
 
-.c-blog-card__title {
+.c-blog-card__title,
+.c-card--blog .c-card__title {
   font-family: var(--font-heading, sans-serif);
   font-size: 1.15rem;
   font-weight: 700;
@@ -400,17 +447,20 @@
   overflow: hidden;
 }
 
-.c-blog-card__title a {
+.c-blog-card__title a,
+.c-card--blog .c-card__title a {
   color: inherit;
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
-.c-blog-card__title a:hover {
+.c-blog-card__title a:hover,
+.c-card--blog .c-card__title a:hover {
   color: var(--clr-sea-600, #0077B6);
 }
 
-.c-blog-card__excerpt {
+.c-blog-card__excerpt,
+.c-card--blog .c-card__excerpt {
   color: var(--clr-dark-800, #1E293B);
   font-size: 0.9rem;
   line-height: 1.55;
@@ -421,7 +471,8 @@
   overflow: hidden;
 }
 
-.c-blog-card__footer {
+.c-blog-card__footer,
+.c-card--blog .c-card__footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -446,7 +497,8 @@
   color: var(--clr-sea-900, #03045E);
 }
 
-.c-blog-card__pdf-btn {
+.c-blog-card__pdf-btn,
+.c-card--blog .c-card__pdf-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
@@ -461,7 +513,8 @@
   transition: all 0.2s ease;
 }
 
-.c-blog-card__pdf-btn:hover {
+.c-blog-card__pdf-btn:hover,
+.c-card--blog .c-card__pdf-btn:hover {
   background: var(--clr-terracotta-500, #E07A5F);
   color: #ffffff;
 }
@@ -470,6 +523,10 @@
   text-align: center;
   padding: 4rem 1rem;
   grid-column: 1 / -1;
+}
+
+.c-blog-no-results--hidden {
+  display: none !important;
 }
 
 .c-blog-no-results__icon {
@@ -773,6 +830,81 @@
 .c-article-body strong {
   color: var(--clr-dark-900, #0F172A);
   font-weight: 700;
+}
+
+.c-article-body blockquote {
+  margin: 2.25rem 0;
+  padding: 1.5rem 1.75rem 1.5rem 2rem;
+  background: linear-gradient(135deg, var(--clr-sand-100, #FDFBF7) 0%, var(--clr-sand-200, #F4ECE1) 100%);
+  border-left: 4px solid var(--clr-terracotta-500, #E07A5F);
+  border-radius: 0 16px 16px 0;
+  font-style: italic;
+  font-size: 1.12rem;
+  line-height: 1.75;
+  color: var(--clr-dark-800, #1E293B);
+  position: relative;
+  box-shadow: 0 4px 16px rgba(224, 122, 95, 0.05);
+}
+
+.c-article-body blockquote p {
+  margin-bottom: 0;
+}
+
+.c-article-body a {
+  color: var(--clr-sea-600, #0077B6);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s ease;
+}
+
+.c-article-body a:hover {
+  color: var(--clr-sea-900, #03045E);
+}
+
+.c-article-body img {
+  width: 100%;
+  border-radius: 16px;
+  margin: 2rem 0 1rem;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+
+.c-article-body figure {
+  margin: 2rem 0;
+}
+
+.c-article-body figcaption {
+  font-size: 0.85rem;
+  color: var(--clr-gray-500, #64748B);
+  text-align: center;
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
+.c-article-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+}
+
+.c-article-body th {
+  background: var(--clr-sand-200, #F4ECE1);
+  color: var(--clr-dark-900, #0F172A);
+  font-family: var(--font-heading, sans-serif);
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.75rem 1rem;
+  text-align: left;
+}
+
+.c-article-body td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--clr-sand-200, #F4ECE1);
+  font-size: 0.9rem;
 }
 
 /* Encadré Astuce / Conseil d'expert */
