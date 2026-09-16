@@ -12,4 +12,7 @@ interface ArticleRepositoryInterface {
     public function save(Article $article): Article;
     public function delete(int $id): bool;
     public function countPublished(): int;
+    public function countAll(): int;
+    public function getPaginated(int $page = 1, int $limit = 10, string $search = '', string $status = ''): array;
+    public function getStats(): array;
 }

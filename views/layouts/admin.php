@@ -145,6 +145,9 @@
               <a href="<?= url('/admin/products') ?>" class="stripe-nav-link <?= $isActive('/admin/products') ?>">
                 <i class="fi fi-rr-box-alt text-sm"></i> <span>Catalogue Produits</span>
               </a>
+              <a href="<?= url('/admin/articles') ?>" class="stripe-nav-link <?= $isActive('/admin/articles') ?>">
+                <i class="fi fi-rr-document-signed text-sm"></i> <span>Articles & Blog</span>
+              </a>
               <a href="<?= url('/admin/services-bookings') ?>" class="stripe-nav-link <?= $isActive('/admin/services-bookings') ?>">
                 <i class="fi fi-rr-plane-departure text-sm"></i> <span>Pass & Activités</span>
               </a>

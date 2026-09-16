@@ -252,6 +252,15 @@ $router->post('/admin/users/create', [App\Controllers\Admin\UsersAdminController
 $router->post('/admin/users/update', [App\Controllers\Admin\UsersAdminController::class, 'update']);
 $router->post('/admin/users/delete', [App\Controllers\Admin\UsersAdminController::class, 'delete']);
 
+// Routes Gestion des Articles & Blog
+$router->get('/admin/articles', [App\Controllers\Admin\ArticlesAdminController::class, 'index']);
+$router->get('/admin/articles/create', [App\Controllers\Admin\ArticlesAdminController::class, 'create']);
+$router->post('/admin/articles/create', [App\Controllers\Admin\ArticlesAdminController::class, 'create']);
+$router->get('/admin/articles/edit', [App\Controllers\Admin\ArticlesAdminController::class, 'edit']);
+$router->post('/admin/articles/edit', [App\Controllers\Admin\ArticlesAdminController::class, 'edit']);
+$router->post('/admin/articles/delete', [App\Controllers\Admin\ArticlesAdminController::class, 'delete']);
+$router->post('/admin/articles/generate-ai', [App\Controllers\Admin\ArticlesAdminController::class, 'generateAi']);
+
 // Route de changement de locale (langue + devise)
 $router->post('/api/locale', [LocaleController::class, 'switch']);
 

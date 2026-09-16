@@ -151,10 +151,95 @@ class PdoArticleRepository implements ArticleRepositoryInterface {
     public function countPublished(): int {
         try {
             $stmt = $this->pdo->query("SELECT COUNT(*) FROM articles WHERE status = 'published'");
-            return (int)$stmt->fetchColumn();
+            $count = (int)$stmt->fetchColumn();
+            if ($stmt) $stmt->closeCursor();
+            return $count;
         } catch (\Throwable $e) {
             $this->logError($e);
             return 0;
+        }
+    }
+
+    public function countAll(): int {
+        try {
+            $stmt = $this->pdo->query("SELECT COUNT(*) FROM articles");
+            $count = (int)$stmt->fetchColumn();
+            if ($stmt) $stmt->closeCursor();
+            return $count;
+        } catch (\Throwable $e) {
+            $this->logError($e);
+            return 0;
+        }
+    }
+
+    public function getStats(): array {
+        try {
+            $stmt = $this->pdo->query("
+                SELECT 
+                    COUNT(*) as total_count,
+                    SUM(CASE WHEN status = 'published' THEN 1 ELSE 0 END) as published_count,
+                    SUM(CASE WHEN status != 'published' THEN 1 ELSE 0 END) as draft_count,
+                    COALESCE(SUM(views_count), 0) as total_views
+                FROM articles
+            ");
+            $data = $stmt ? $stmt->fetch(PDO::FETCH_ASSOC) : [];
+            if ($stmt) $stmt->closeCursor();
+            return [
+                'total_count'     => (int)($data['total_count'] ?? 0),
+                'published_count' => (int)($data['published_count'] ?? 0),
+                'draft_count'     => (int)($data['draft_count'] ?? 0),
+                'total_views'     => (int)($data['total_views'] ?? 0)
+            ];
+        } catch (\Throwable $e) {
+            $this->logError($e);
+            return ['total_count' => 0, 'published_count' => 0, 'draft_count' => 0, 'total_views' => 0];
+        }
+    }
+
+    public function getPaginated(int $page = 1, int $limit = 10, string $search = '', string $status = ''): array {
+        $offset = ($page - 1) * $limit;
+        $where = [];
+        $params = [];
+
+        if ($search !== '') {
+            $where[] = "(title_fr LIKE :search OR slug LIKE :search)";
+            $params[':search'] = "%{$search}%";
+        }
+
+        if ($status !== '' && $status !== 'all') {
+            $where[] = "status = :status";
+            $params[':status'] = $status;
+        }
+
+        $whereClause = !empty($where) ? "WHERE " . implode(" AND ", $where) : "";
+
+        try {
+            $countStmt = $this->pdo->prepare("SELECT COUNT(*) FROM articles {$whereClause}");
+            $countStmt->execute($params);
+            $total = (int)$countStmt->fetchColumn();
+            if ($countStmt) $countStmt->closeCursor();
+
+            $stmt = $this->pdo->prepare("
+                SELECT * FROM articles {$whereClause}
+                ORDER BY published_at DESC, id DESC
+                LIMIT :limit OFFSET :offset
+            ");
+            foreach ($params as $k => $v) {
+                $stmt->bindValue($k, $v);
+            }
+            $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+            $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+            $stmt->execute();
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if ($stmt) $stmt->closeCursor();
+
+            return [
+                'total' => $total,
+                'items' => array_map(fn($row) => Article::fromArray($row), $rows)
+            ];
+        } catch (\Throwable $e) {
+            $this->logError($e);
+            return ['total' => 0, 'items' => []];
         }
     }
 }
