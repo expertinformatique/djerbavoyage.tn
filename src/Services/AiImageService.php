@@ -78,10 +78,9 @@ class AiImageService {
             if (@file_put_contents($localFilePath, $imageData) !== false) {
                 return 'images/blog/' . $localFilename;
             }
-            return $aiUrl;
         }
 
-        // Si le téléchargement échoue, utiliser l'URL directe ou le fallback local adapté au thème
-        return !empty($aiUrl) ? $aiUrl : $fallback;
+        // Si le téléchargement échoue ou expire, utiliser impérativement une photo réelle locale de Djerba
+        return $fallback;
     }
 }
