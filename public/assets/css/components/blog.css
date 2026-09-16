@@ -1,0 +1,452 @@
+/* ==========================================================================
+   DJERBA VOYAGE — MODULE BLOG & GUIDES (LUXURY MEDITERRANEAN STYLE)
+   ========================================================================== */
+
+/* 1. Header du Blog */
+.c-blog-header {
+  text-align: center;
+  margin: 3.5rem auto 2.5rem;
+  max-width: 760px;
+  padding: 0 1rem;
+}
+
+.c-blog-header__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.9rem;
+  background: rgba(0, 119, 182, 0.08);
+  color: var(--clr-sea-600, #0077B6);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-radius: var(--radius-pill, 999px);
+  margin-bottom: 1rem;
+  border: 1px solid rgba(0, 119, 182, 0.15);
+}
+
+.c-blog-header__title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
+  font-weight: 800;
+  color: var(--clr-dark-900, #0F172A);
+  margin-bottom: 0.85rem;
+  line-height: 1.2;
+}
+
+.c-blog-header__desc {
+  color: var(--clr-gray-500, #64748B);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+/* 2. Grille d'articles */
+.c-blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+  margin: 2.5rem 0 4rem;
+}
+
+/* 3. Carte Article */
+.c-blog-card {
+  background: #ffffff;
+  border-radius: var(--radius-card, 20px);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft, 0 10px 30px rgba(15, 23, 42, 0.06));
+  border: 1px solid var(--clr-sand-200, #F4ECE1);
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--transition-smooth, 0.3s ease), box-shadow var(--transition-smooth, 0.3s ease);
+}
+
+.c-blog-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0, 119, 182, 0.12);
+  border-color: var(--clr-sand-500, #D8C3A5);
+}
+
+.c-blog-card__media {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+  background-color: var(--clr-sand-200, #F4ECE1);
+}
+
+.c-blog-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.c-blog-card:hover .c-blog-card__img {
+  transform: scale(1.06);
+}
+
+.c-blog-card__badge-overlay {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.c-blog-card__pill {
+  padding: 0.25rem 0.65rem;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(8px);
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.c-blog-card__body {
+  padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.c-blog-card__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--clr-gray-500, #64748B);
+  margin-bottom: 0.65rem;
+}
+
+.c-blog-card__author {
+  color: var(--clr-terracotta-500, #E07A5F);
+  font-weight: 600;
+}
+
+.c-blog-card__title {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.35;
+  margin-bottom: 0.65rem;
+  color: var(--clr-dark-900, #0F172A);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.c-blog-card__title a {
+  color: inherit;
+}
+
+.c-blog-card__title a:hover {
+  color: var(--clr-sea-600, #0077B6);
+}
+
+.c-blog-card__excerpt {
+  color: var(--clr-dark-800, #1E293B);
+  font-size: 0.9rem;
+  line-height: 1.55;
+  margin-bottom: 1.25rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.c-blog-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--clr-sand-200, #F4ECE1);
+  padding-top: 1rem;
+  margin-top: auto;
+}
+
+.c-blog-card__read-link {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--clr-sea-600, #0077B6);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: gap 0.2s ease;
+}
+
+.c-blog-card__read-link:hover {
+  gap: 0.6rem;
+  color: var(--clr-sea-900, #03045E);
+}
+
+.c-blog-card__pdf-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--clr-terracotta-500, #E07A5F);
+  padding: 0.35rem 0.75rem;
+  background: rgba(224, 122, 95, 0.08);
+  border-radius: 8px;
+  border: 1px solid rgba(224, 122, 95, 0.2);
+  transition: all 0.2s ease;
+}
+
+.c-blog-card__pdf-btn:hover {
+  background: var(--clr-terracotta-500, #E07A5F);
+  color: #ffffff;
+}
+
+/* 4. Page Article Individuel */
+.c-article-wrapper {
+  max-width: 880px;
+  margin: 3.5rem auto 4.5rem;
+  padding: 0 1rem;
+}
+
+.c-article-card {
+  background: #ffffff;
+  padding: clamp(1.75rem, 4vw, 3rem);
+  border-radius: var(--radius-card, 24px);
+  box-shadow: var(--shadow-soft, 0 10px 30px rgba(15, 23, 42, 0.06));
+  border: 1px solid var(--clr-sand-200, #F4ECE1);
+}
+
+.c-article-header {
+  margin-bottom: 2rem;
+}
+
+.c-article-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+  color: var(--clr-gray-500, #64748B);
+  margin-bottom: 1rem;
+}
+
+.c-article-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.75rem;
+  background: var(--clr-sand-200, #F4ECE1);
+  color: var(--clr-dark-900, #0F172A);
+  font-weight: 700;
+  font-size: 0.75rem;
+  border-radius: 999px;
+}
+
+.c-article-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 3.5vw, 2.7rem);
+  font-weight: 800;
+  color: var(--clr-dark-900, #0F172A);
+  line-height: 1.25;
+  margin-bottom: 1.5rem;
+}
+
+.c-article-hero-media {
+  margin: 1.5rem 0 2.5rem;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.c-article-hero-img {
+  width: 100%;
+  max-height: 480px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Encadré Résumé IA */
+.c-article-ai-summary {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: rgba(0, 180, 216, 0.07);
+  border-left: 4px solid var(--clr-sea-600, #0077B6);
+  border-radius: 0 16px 16px 0;
+}
+
+.c-article-ai-summary__title {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--clr-sea-900, #03045E);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.c-article-ai-summary__content {
+  font-size: 0.95rem;
+  color: var(--clr-dark-800, #1E293B);
+  white-space: pre-line;
+  line-height: 1.65;
+}
+
+/* Corps de texte de l'article */
+.c-article-body {
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: var(--clr-dark-800, #1E293B);
+  margin-bottom: 3rem;
+}
+
+.c-article-body h2 {
+  font-family: var(--font-heading);
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: var(--clr-dark-900, #0F172A);
+  margin: 2.25rem 0 1rem;
+  line-height: 1.3;
+}
+
+.c-article-body h3 {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--clr-sea-900, #03045E);
+  margin: 1.75rem 0 0.75rem;
+}
+
+.c-article-body p {
+  margin-bottom: 1.25rem;
+}
+
+.c-article-body ul, .c-article-body ol {
+  margin: 1rem 0 1.5rem 1.5rem;
+}
+
+.c-article-body li {
+  margin-bottom: 0.5rem;
+}
+
+/* Bannière Téléchargement PDF */
+.c-article-pdf-banner {
+  margin: 2.5rem 0;
+  padding: 1.75rem;
+  background: var(--clr-sand-100, #FDFBF7);
+  border-radius: 16px;
+  border: 1px solid var(--clr-sand-500, #D8C3A5);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+}
+
+.c-article-pdf-banner__title {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--clr-dark-900, #0F172A);
+  margin-bottom: 0.25rem;
+}
+
+.c-article-pdf-banner__text {
+  font-size: 0.9rem;
+  color: var(--clr-gray-500, #64748B);
+}
+
+/* Grille CTAs Vente Croisée */
+.c-article-services-section {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--clr-sand-200, #F4ECE1);
+}
+
+.c-article-services-title {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--clr-dark-900, #0F172A);
+  margin-bottom: 1.25rem;
+}
+
+.c-article-services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+
+.c-article-service-card {
+  padding: 1.25rem;
+  background: var(--clr-sand-100, #FDFBF7);
+  border-radius: 14px;
+  border: 1px solid var(--clr-sand-200, #F4ECE1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.c-article-service-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--clr-sea-400, #00B4D8);
+}
+
+.c-article-service-card__name {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--clr-dark-900, #0F172A);
+  margin-bottom: 0.25rem;
+}
+
+.c-article-service-card__price {
+  font-size: 0.85rem;
+  color: var(--clr-sea-600, #0077B6);
+  font-weight: 700;
+}
+
+/* Bannière Conciergerie */
+.c-article-concierge {
+  margin-top: 3rem;
+  padding: 2rem;
+  background: var(--clr-dark-900, #0F172A);
+  color: #ffffff;
+  border-radius: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.c-article-concierge__title {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 0.35rem;
+}
+
+.c-article-concierge__desc {
+  font-size: 0.9rem;
+  color: #94A3B8;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .c-blog-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .c-article-card {
+    padding: 1.5rem 1.25rem;
+  }
+}
