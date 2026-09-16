@@ -18,14 +18,22 @@ class UsersAdminController extends Controller {
 
     public function index(): void {
         $this->requireAuth();
-        $users = $this->userRepo->getAll();
+        $page  = max(1, (int)($_GET['page'] ?? 1));
+        $limit = 10;
+
+        $data  = $this->userRepo->getPaginated($page, $limit);
+        $total = $data['total'] ?? 0;
 
         $flashSuccess = $_SESSION['admin_flash_success'] ?? null;
         $flashError   = $_SESSION['admin_flash_error'] ?? null;
         unset($_SESSION['admin_flash_success'], $_SESSION['admin_flash_error']);
 
         $this->render('admin/users', [
-            'users'        => $users,
+            'users'        => $data['items'] ?? [],
+            'total'        => $total,
+            'page'         => $page,
+            'limit'        => $limit,
+            'totalPages'   => $total > 0 ? (int)ceil($total / $limit) : 1,
             'currentAdmin' => $_SESSION['admin_user'] ?? '',
             'flashSuccess' => $flashSuccess,
             'flashError'   => $flashError

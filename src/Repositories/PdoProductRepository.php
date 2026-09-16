@@ -58,6 +58,41 @@ class PdoProductRepository implements ProductRepositoryInterface {
         }
     }
 
+    public function countAll(): int {
+        try {
+            $stmt = $this->pdo->query("SELECT COUNT(*) FROM products");
+            return (int)$stmt->fetchColumn();
+        } catch (\Throwable $e) {
+            $rootPath = defined('ROOT_PATH') ? ROOT_PATH : dirname(__DIR__, 2);
+            @error_log("[" . date('Y-m-d H:i:s') . "] ERROR " . $e->getCode() . ": " . $e->getMessage() . " in " . $e->getFile() . ":" . $e->getLine() . PHP_EOL, 3, $rootPath . '/error.log');
+            return 0;
+        }
+    }
+
+    public function getPaginated(int $page = 1, int $limit = 10): array {
+        try {
+            $page   = max(1, $page);
+            $limit  = max(1, $limit);
+            $offset = ($page - 1) * $limit;
+            $total  = $this->countAll();
+
+            $stmt = $this->pdo->prepare("SELECT * FROM products ORDER BY id DESC LIMIT :limit OFFSET :offset");
+            $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+            $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+            $stmt->execute();
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return [
+                'items' => array_map(fn($row) => Product::fromArray($row), $rows),
+                'total' => $total
+            ];
+        } catch (\Throwable $e) {
+            $rootPath = defined('ROOT_PATH') ? ROOT_PATH : dirname(__DIR__, 2);
+            @error_log("[" . date('Y-m-d H:i:s') . "] ERROR " . $e->getCode() . ": " . $e->getMessage() . " in " . $e->getFile() . ":" . $e->getLine() . PHP_EOL, 3, $rootPath . '/error.log');
+            return ['items' => [], 'total' => 0];
+        }
+    }
+
     public function create(Product $product): bool {
         try {
             $stmt = $this->pdo->prepare("

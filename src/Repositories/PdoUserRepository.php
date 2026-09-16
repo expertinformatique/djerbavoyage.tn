@@ -36,6 +36,25 @@ class PdoUserRepository implements UserRepositoryInterface {
         return array_map(fn($r) => User::fromArray($r), $rows);
     }
 
+    public function getPaginated(int $page = 1, int $limit = 10): array {
+        $page   = max(1, $page);
+        $limit  = max(1, $limit);
+        $offset = ($page - 1) * $limit;
+        $total  = $this->count();
+
+        $stmt = $this->pdo->prepare("SELECT * FROM users ORDER BY id ASC LIMIT :limit OFFSET :offset");
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+        $stmt->execute();
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+        $stmt->closeCursor();
+
+        return [
+            'items' => array_map(fn($r) => User::fromArray($r), $rows),
+            'total' => $total
+        ];
+    }
+
     public function create(User $user): bool {
         $stmt = $this->pdo->prepare("
             INSERT INTO users (username, email, password, role, created_at)

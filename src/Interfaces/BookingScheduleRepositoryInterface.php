@@ -12,5 +12,7 @@ interface BookingScheduleRepositoryInterface {
     public function saveAirportTransfer(AirportTransfer $transfer): AirportTransfer;
     public function getAirportTransferByOrderId(int $orderId): ?AirportTransfer;
     public function getAllPassOrders(int $limit = 30): array;
+    public function countPassOrders(): int;
+    public function getPaginatedPassOrders(int $page = 1, int $limit = 15): array;
     public function updateAirportStatus(int $transferId, string $status, ?string $notes = null): bool;
 }

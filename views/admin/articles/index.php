@@ -187,19 +187,8 @@
         </tbody>
       </table>
     </div>
+
+    <!-- Pagination -->
+    <?php require __DIR__ . '/../partials/pagination.php'; ?>
   </div>
-
-  <!-- Pagination -->
-  <?php if ($totalPages > 1): ?>
-    <div class="flex justify-center pt-2">
-      <nav class="inline-flex rounded-md shadow-xs -space-x-px text-xs">
-        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-          <a href="<?= url('/admin/articles?page=' . $i . ($status ? '&status=' . $status : '') . ($search ? '&search=' . urlencode($search) : '')) ?>" class="px-3 py-1.5 border <?= $i === $page ? 'bg-[#635bff] border-[#635bff] text-white font-bold z-10' : 'bg-white border-slate-200 text-slate-600 dark:bg-slate-900 dark:border-slate-800 dark:text-slate-300' ?>">
-            <?= $i ?>
-          </a>
-        <?php endfor; ?>
-      </nav>
-    </div>
-  <?php endif; ?>
-
 </div>

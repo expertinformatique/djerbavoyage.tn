@@ -64,7 +64,7 @@
   <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg shadow-sm overflow-hidden">
     <div class="px-4 py-3 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-slate-900/50">
       <span class="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
-        Comptes enregistrés (<?= count($users) ?>)
+        Comptes enregistrés (<?= number_format($total ?? count($users)) ?>)
       </span>
       <span class="text-[11px] text-slate-400">Authentification chiffrée bcrypt</span>
     </div>
@@ -138,6 +138,9 @@
         </tbody>
       </table>
     </div>
+
+    <!-- Pagination -->
+    <?php require __DIR__ . '/partials/pagination.php'; ?>
   </div>
 </div>
 

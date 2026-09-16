@@ -194,6 +194,46 @@ class PdoBookingScheduleRepository implements BookingScheduleRepositoryInterface
         }
     }
 
+    public function countPassOrders(): int {
+        try {
+            $stmt = $this->pdo->query("SELECT COUNT(*) FROM orders WHERE type = 'service_pass'");
+            return (int)$stmt->fetchColumn();
+        } catch (Throwable $e) {
+            $this->logError($e);
+            return 0;
+        }
+    }
+
+    public function getPaginatedPassOrders(int $page = 1, int $limit = 15): array {
+        try {
+            $page   = max(1, $page);
+            $limit  = max(1, $limit);
+            $offset = ($page - 1) * $limit;
+            $total  = $this->countPassOrders();
+
+            $stmt = $this->pdo->prepare("
+                SELECT o.*, t.flight_number, t.arrival_date, t.arrival_time, t.status as transfer_status 
+                FROM orders o 
+                LEFT JOIN airport_transfers t ON t.order_id = o.id 
+                WHERE o.type = 'service_pass' 
+                ORDER BY o.id DESC 
+                LIMIT :limit OFFSET :offset
+            ");
+            $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+            $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+            $stmt->execute();
+            $items = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+
+            return [
+                'items' => $items,
+                'total' => $total
+            ];
+        } catch (Throwable $e) {
+            $this->logError($e);
+            return ['items' => [], 'total' => 0];
+        }
+    }
+
     public function updateAirportStatus(int $transferId, string $status, ?string $notes = null): bool {
         try {
             $stmt = $this->pdo->prepare("

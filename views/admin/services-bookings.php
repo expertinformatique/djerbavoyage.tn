@@ -74,4 +74,7 @@
       </tbody>
     </table>
   </div>
+
+  <!-- Pagination -->
+  <?php require __DIR__ . '/partials/pagination.php'; ?>
 </div>

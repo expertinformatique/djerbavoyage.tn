@@ -80,6 +80,16 @@ class PdoNewsletterRepository implements NewsletterRepositoryInterface {
         }
     }
 
+    public function countAll(): int {
+        try {
+            $stmt = $this->pdo->query("SELECT COUNT(*) FROM newsletter_subscribers");
+            return (int)$stmt->fetchColumn();
+        } catch (Throwable $e) {
+            $this->logError($e);
+            return 0;
+        }
+    }
+
     public function getAll(int $limit = 100, int $offset = 0): array {
         try {
             $stmt = $this->pdo->prepare("SELECT * FROM newsletter_subscribers ORDER BY id DESC LIMIT :limit OFFSET :offset");

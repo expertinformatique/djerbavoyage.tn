@@ -17,11 +17,19 @@ class ServicesAdminController extends Controller {
             $this->redirect('/admin/login');
         }
 
-        $passes = $this->scheduleRepo->getAllPassOrders(50);
+        $page  = max(1, (int)($_GET['page'] ?? 1));
+        $limit = 15;
+
+        $data  = $this->scheduleRepo->getPaginatedPassOrders($page, $limit);
+        $total = $data['total'] ?? 0;
 
         $this->render('admin/services-bookings', [
-            'passes'   => $passes,
-            'settings' => $this->settings
+            'passes'     => $data['items'] ?? [],
+            'total'      => $total,
+            'page'       => $page,
+            'limit'      => $limit,
+            'totalPages' => $total > 0 ? (int)ceil($total / $limit) : 1,
+            'settings'   => $this->settings
         ], 'layouts/admin');
     }
 

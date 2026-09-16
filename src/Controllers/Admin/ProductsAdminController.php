@@ -18,10 +18,18 @@ class ProductsAdminController extends Controller {
 
     public function index(): void {
         $this->requireAuth();
-        $products = $this->productRepo->getAll();
+        $page  = max(1, (int)($_GET['page'] ?? 1));
+        $limit = 10;
+        
+        $data  = $this->productRepo->getPaginated($page, $limit);
+        $total = $data['total'] ?? 0;
         
         $this->render('admin/products/index', [
-            'products' => $products
+            'products'   => $data['items'] ?? [],
+            'total'      => $total,
+            'page'       => $page,
+            'limit'      => $limit,
+            'totalPages' => $total > 0 ? (int)ceil($total / $limit) : 1
         ], 'layouts/admin');
     }
 
