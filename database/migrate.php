@@ -11,6 +11,9 @@ use Core\Database;
 try {
     $pdo = Database::getInstance();
     $driver = $pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
+    if ($driver === 'mysql') {
+        @$pdo->setAttribute(\PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
+    }
     echo "===========================================\n";
     echo "🚀 Démarrage des migrations ({$driver})\n";
     echo "===========================================\n\n";
@@ -33,6 +36,7 @@ try {
     // Récupérer les migrations déjà exécutées
     $stmt = $pdo->query("SELECT migration FROM migrations");
     $applied = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    $stmt->closeCursor();
 
     // 2. Exécution des fichiers SQL séquentiels
     $files = glob(__DIR__ . '/migrations/*.sql');
@@ -96,6 +100,22 @@ try {
 
     if ($driver === 'mysql') {
         @$pdo->exec("ALTER TABLE articles MODIFY COLUMN featured_image TEXT NULL");
+    }
+
+    // Nettoyer les heures résiduelles dans les titres existants des articles
+    $stmt = $pdo->query("SELECT id, title_fr FROM articles WHERE title_fr LIKE '%:%' OR title_fr LIKE '%(%'");
+    $articles = $stmt ? $stmt->fetchAll(PDO::FETCH_ASSOC) : [];
+    if ($stmt) $stmt->closeCursor();
+    $upd = $pdo->prepare("UPDATE articles SET title_fr = ? WHERE id = ?");
+    foreach ($articles as $art) {
+        $cleaned = preg_replace('/\s*ce jour\s*\(\d{1,2}[:h]\d{2}\)\s*:\s*/i', ' : ', $art['title_fr']);
+        $cleaned = preg_replace('/\s*\(\d{1,2}[:h]\d{2}\)\s*/i', ' ', $cleaned);
+        $cleaned = preg_replace('/\s*ce jour\s*:\s*/i', ' : ', $cleaned);
+        $cleaned = preg_replace('/\s+/', ' ', trim($cleaned));
+        $cleaned = ltrim($cleaned, ' :');
+        if (!empty($cleaned) && $cleaned !== $art['title_fr']) {
+            $upd->execute([$cleaned, $art['id']]);
+        }
     }
 
     echo "\n-------------------------------------------\n";

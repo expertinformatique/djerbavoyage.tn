@@ -76,6 +76,21 @@ try {
         echo "✅ OK\n";
     }
 
+    // Nettoyer les heures résiduelles dans les titres existants des articles
+    $stmt = $pdo->query("SELECT id, title_fr FROM articles WHERE title_fr LIKE '%:%' OR title_fr LIKE '%(%'");
+    $articles = $stmt ? $stmt->fetchAll(PDO::FETCH_ASSOC) : [];
+    $upd = $pdo->prepare("UPDATE articles SET title_fr = ? WHERE id = ?");
+    foreach ($articles as $art) {
+        $cleaned = preg_replace('/\s*ce jour\s*\(\d{1,2}[:h]\d{2}\)\s*:\s*/i', ' : ', $art['title_fr']);
+        $cleaned = preg_replace('/\s*\(\d{1,2}[:h]\d{2}\)\s*/i', ' ', $cleaned);
+        $cleaned = preg_replace('/\s*ce jour\s*:\s*/i', ' : ', $cleaned);
+        $cleaned = preg_replace('/\s+/', ' ', trim($cleaned));
+        $cleaned = ltrim($cleaned, ' :');
+        if (!empty($cleaned) && $cleaned !== $art['title_fr']) {
+            $upd->execute([$cleaned, $art['id']]);
+        }
+    }
+
     echo "\n-------------------------------------------\n";
     echo "✅ Toutes les migrations sont à jour !\n\n";
     echo "⚠️  PENSEZ À SUPPRIMER CE FICHIER : public/run_migrations.php\n";

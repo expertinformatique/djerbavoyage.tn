@@ -26,6 +26,21 @@ class AiArticleGeneratorService {
         ];
         $featuredImage = $realisticImages[array_rand($realisticImages)];
 
+        // Nettoyage strict : interdiction formelle de l'heure dans le titre
+        $titleFr = preg_replace('/\s*ce jour\s*\(\d{1,2}[:h]\d{2}\)\s*:\s*/i', ' : ', $articleData['title_fr']);
+        $titleFr = preg_replace('/\s*\(\d{1,2}[:h]\d{2}\)\s*/i', ' ', $titleFr);
+        $titleFr = preg_replace('/\s*ce jour\s*:\s*/i', ' : ', $titleFr);
+        $titleFr = preg_replace('/\s+/', ' ', trim($titleFr));
+        $titleFr = ltrim($titleFr, ' :');
+        $articleData['title_fr'] = $titleFr;
+
+        if (!empty($articleData['title_en'])) {
+            $titleEn = preg_replace('/\s*today\s*\(\d{1,2}[:h]\d{2}\)\s*:\s*/i', ': ', $articleData['title_en']);
+            $titleEn = preg_replace('/\s*\(\d{1,2}[:h]\d{2}\)\s*/i', ' ', $titleEn);
+            $titleEn = preg_replace('/\s*today\s*:\s*/i', ': ', $titleEn);
+            $articleData['title_en'] = preg_replace('/\s+/', ' ', trim($titleEn));
+        }
+
         // Generation de Slug unique
         $baseSlug = $this->slugify($articleData['title_fr']);
         $uniqueSlug = $baseSlug . '-' . date('Ymd-His') . '-' . rand(10, 99);
@@ -82,8 +97,8 @@ class AiArticleGeneratorService {
             . "Thème: {$angle['theme']}\n"
             . "Météo actuelle à Djerba: {$weather['temp_c']}°C, {$weather['condition']}, vent {$weather['wind_speed']} km/h.\n"
             . "Format de réponse JSON strict avec les clés suivantes :\n"
-            . "- title_fr: Titre accrocheur et incitatif\n"
-            . "- title_en: Titre traduit en anglais\n"
+            . "- title_fr: Titre accrocheur et incitatif (IMPORTANT: ne JAMAIS mentionner d'heure comme '14:30', '(21:55)' ou 'ce jour' dans le titre)\n"
+            . "- title_en: Titre traduit en anglais (NEVER include timestamps or hours in title)\n"
             . "- content_fr: HTML complet de l'article avec <h2>, <h3>, <p>, <ul>, <li> et des appels à l'action vers la réservation d'excursions à Djerba\n"
             . "- content_en: Version anglaise condensée du contenu\n"
             . "- seo_description: Description Meta de 150 caractères\n"
@@ -92,7 +107,7 @@ class AiArticleGeneratorService {
             . "- image_prompt: Prompt en anglais pour générer une photo réaliste d'illustration (djerba beach, palm trees, sunny landscape)\n"
             . "- cta_services: Tableau des slugs de services suggérés : " . json_encode($angle['suggested_services']);
 
-        $models = ['gemini-3.6-flash', 'gemini-3.5-flash-lite'];
+        $models = ['gemini-3.6-flash', 'gemini-2.5-flash', 'gemini-1.5-flash'];
         foreach ($models as $model) {
             $url = "https://generativelanguage.googleapis.com/v1beta/models/{$model}:generateContent?key=" . $apiKey;
             $payload = json_encode([
@@ -132,24 +147,45 @@ class AiArticleGeneratorService {
     private function generateFallbackArticle(array $context): array {
         $weather = $context['weather'];
         $angle = $context['angle'];
-        $timeStr = date('H:i');
 
-        $titleFr = "Djerba ce jour ({$timeStr}) : {$angle['theme']} sous {$weather['temp_c']}°C";
-        $titleEn = "Djerba Today ({$timeStr}): {$angle['theme']} with {$weather['temp_c']}°C";
+        $templatesFr = [
+            "Djerba : {$angle['theme']} sous {$weather['temp_c']}°C",
+            "Guide Djerba : Tout savoir sur {$angle['theme']}",
+            "Évasion à Djerba : {$angle['theme']} sous le soleil ({$weather['temp_c']}°C)",
+            "Voyager à Djerba : {$angle['theme']} et météo {$weather['condition']}"
+        ];
+        $templatesEn = [
+            "Djerba: {$angle['theme']} under {$weather['temp_c']}°C",
+            "Djerba Guide: Explore {$angle['theme']}",
+            "Djerba Getaway: {$angle['theme']} with {$weather['temp_c']}°C weather",
+            "Djerba Travel: Best tips for {$angle['theme']}"
+        ];
 
-        $contentFr = "<p class='lead text-lg font-medium text-gray-700 dark:text-gray-300 mb-6'>En ce moment à Djerba, le thermomètre affiche <strong>{$weather['temp_c']}°C</strong> avec un temps <em>{$weather['condition']}</em>. C'est le moment parfait pour explorer l'île aux sables d'or !</p>";
-        $contentFr .= "<h2 class='text-2xl font-bold text-gray-900 dark:text-white mt-8 mb-4'>Pourquoi visiter Djerba aujourd'hui ?</h2>";
-        $contentFr .= "<p class='mb-4'>L'île de Djerba offre une expérience unique mêlant détente, sports nautiques et découvertes culturelles. Que vous soyez amateur de balade en quad dans les dunes, de kitesurf sur la lagune turquoise ou de détente sur la plage de Lella Hadria, Djerba saura vous charmer.</p>";
+        $idx = abs(crc32($angle['theme'] . date('YmdH'))) % count($templatesFr);
+        $titleFr = $templatesFr[$idx];
+        $titleEn = $templatesEn[$idx];
 
-        $contentFr .= "<div class='my-8 p-6 bg-amber-50 dark:bg-amber-950/40 border-l-4 border-amber-500 rounded-r-xl shadow-sm'>";
-        $contentFr .= "<h3 class='text-xl font-bold text-amber-900 dark:text-amber-200 mb-2'>💡 Conseil d'expert Djerba Voyage</h3>";
-        $contentFr .= "<p class='text-amber-800 dark:text-amber-300'>Pensez à réserver vos excursions et transferts à l'avance pour bénéficier des meilleurs tarifs et éviter les files d'attente à l'aéroport !</p>";
+        $contentFr = "<p class='lead'>En ce moment à Djerba, le thermomètre affiche <strong>{$weather['temp_c']}°C</strong> avec un temps <em>{$weather['condition']}</em>. C'est le moment parfait pour explorer l'île aux sables d'or !</p>";
+        $contentFr .= "<h2>Pourquoi visiter Djerba aujourd'hui ?</h2>";
+        $contentFr .= "<p>L'île de Djerba offre une expérience unique mêlant détente balnéaire, aventures sahariennes et patrimoine millénaire. Que vous souhaitiez piloter un quad dans les pistes oasiennes, rider en kitesurf sur la lagune turquoise ou vous détendre sur le sable fin de Sidi Mahres, l'île réserve des moments magiques aux voyageurs.</p>";
+
+        $contentFr .= "<div class='c-article-tip'>";
+        $contentFr .= "<h3>💡 Conseil d'expert Djerba Voyage</h3>";
+        $contentFr .= "<p>Pensez à planifier vos excursions et vos transferts aéroport à l'avance. Cela vous garantit les meilleurs guides certifiés et une prise en charge VIP dès votre atterrissage.</p>";
         $contentFr .= "</div>";
 
-        $contentFr .= "<h2 class='text-2xl font-bold text-gray-900 dark:text-white mt-8 mb-4'>Les temps forts recommandés</h2>";
-        $contentFr .= "<ul class='list-disc pl-6 space-y-2 mb-6'>";
-        foreach ($angle['keywords'] as $kw) {
-            $contentFr .= "<li><strong>" . ucfirst($kw) . "</strong> : Une étape incontournable de votre séjour.</li>";
+        $contentFr .= "<h2>Les temps forts & suggestions d'itinéraires</h2>";
+        $contentFr .= "<ul>";
+        $tips = [
+            "Une étape incontournable pour s'imprégner de l'artisanat et des saveurs locales.",
+            "Idéal pour faire le plein de sensations fortes et contempler des panoramas sauvages.",
+            "Une parenthèse dépaysante alliant traditions ancestrales et accueil chaleureux djerbien.",
+            "L'endroit parfait pour immortaliser votre voyage avec des lumières exceptionnelles en fin d'après-midi.",
+            "Une expérience immersive à vivre en couple, en famille ou entre passionnés d'aventure."
+        ];
+        foreach ($angle['keywords'] as $i => $kw) {
+            $tipText = $tips[$i % count($tips)];
+            $contentFr .= "<li><strong>" . ucfirst($kw) . "</strong> : {$tipText}</li>";
         }
         $contentFr .= "</ul>";
 

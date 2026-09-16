@@ -172,9 +172,12 @@
           <!-- Section 3 -->
           <div>
             <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 px-2.5 mb-1.5">
-              Sécurité & Logs
+              Sécurité & Comptes
             </div>
             <div class="space-y-0.5">
+              <a href="<?= url('/admin/users') ?>" class="stripe-nav-link <?= $isActive('/admin/users') ?>">
+                <i class="fi fi-rr-users text-sm"></i> <span>Utilisateurs</span>
+              </a>
               <a href="<?= url('/admin/audit') ?>" class="stripe-nav-link <?= $isActive('/admin/audit') ?>">
                 <i class="fi fi-rr-shield-check text-sm"></i> <span>Audit & Anti-Fraude</span>
               </a>

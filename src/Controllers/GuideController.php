@@ -55,12 +55,21 @@ class GuideController extends Controller {
             $ctaServices = array_slice($this->localServiceRepo->getAllActive(), 0, 2);
         }
 
+        $allPublished = $this->articleRepo->getAllPublished(6);
+        $relatedArticles = [];
+        foreach ($allPublished as $item) {
+            if ($item->id !== $article->id && count($relatedArticles) < 3) {
+                $relatedArticles[] = $item;
+            }
+        }
+
         $this->render('pages/guide-single', [
-            'seoTitle'       => $article->titleFr . ' | Djerba Voyage',
-            'seoDescription' => $article->seoDescription ?: substr(strip_tags($article->contentFr), 0, 160),
-            'article'        => $article,
-            'ctaServices'    => $ctaServices,
-            'settings'       => $this->settings
+            'seoTitle'        => $article->titleFr . ' | Djerba Voyage',
+            'seoDescription'  => $article->seoDescription ?: substr(strip_tags($article->contentFr), 0, 160),
+            'article'         => $article,
+            'ctaServices'     => $ctaServices,
+            'relatedArticles' => $relatedArticles,
+            'settings'        => $this->settings
         ]);
     }
 

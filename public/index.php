@@ -69,6 +69,7 @@ use App\Interfaces\ReviewRepositoryInterface;
 use App\Interfaces\NewsletterRepositoryInterface;
 use App\Interfaces\AiLeadRepositoryInterface;
 use App\Interfaces\ContactRepositoryInterface;
+use App\Interfaces\UserRepositoryInterface;
 use App\Repositories\PdoArticleRepository;
 use App\Repositories\PdoOrderRepository;
 use App\Repositories\PdoProductRepository;
@@ -79,6 +80,7 @@ use App\Repositories\PdoReviewRepository;
 use App\Repositories\PdoNewsletterRepository;
 use App\Repositories\PdoAiLeadRepository;
 use App\Repositories\PdoContactRepository;
+use App\Repositories\PdoUserRepository;
 use App\Services\CacheService;
 use App\Services\SettingsService;
 use App\Services\LoggerService;
@@ -136,6 +138,7 @@ $container->bind(ReviewRepositoryInterface::class, fn() => $reviewRepo);
 $container->bind(NewsletterRepositoryInterface::class, fn() => $newsletterRepo);
 $container->bind(AiLeadRepositoryInterface::class, fn() => $aiLeadRepo);
 $container->bind(ContactRepositoryInterface::class, fn() => $contactRepo);
+$container->bind(UserRepositoryInterface::class, fn() => new PdoUserRepository($pdo));
 $container->bind(SettingsRepositoryInterface::class, fn() => $settingsRepo);
 $container->bind(CacheInterface::class, fn() => $cache);
 $container->bind(SettingsService::class, fn() => $settingsService);
@@ -240,6 +243,12 @@ $router->post('/admin/products/edit', [App\Controllers\Admin\ProductsAdminContro
 $router->post('/admin/products/delete', [App\Controllers\Admin\ProductsAdminController::class, 'delete']);
 
 $router->get('/admin/orders', [App\Controllers\Admin\OrdersAdminController::class, 'index']);
+
+// Routes Gestion des Utilisateurs Admin
+$router->get('/admin/users', [App\Controllers\Admin\UsersAdminController::class, 'index']);
+$router->post('/admin/users/create', [App\Controllers\Admin\UsersAdminController::class, 'create']);
+$router->post('/admin/users/update', [App\Controllers\Admin\UsersAdminController::class, 'update']);
+$router->post('/admin/users/delete', [App\Controllers\Admin\UsersAdminController::class, 'delete']);
 
 // Route de changement de locale (langue + devise)
 $router->post('/api/locale', [LocaleController::class, 'switch']);

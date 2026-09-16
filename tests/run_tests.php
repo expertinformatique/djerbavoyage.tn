@@ -189,11 +189,20 @@ $sqlitePdo->exec("
         cta_services_json TEXT NULL,
         author_name TEXT DEFAULT 'IA Voyageur Djerba'
     );
+    CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT UNIQUE,
+        email TEXT UNIQUE,
+        password TEXT,
+        role TEXT DEFAULT 'admin',
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
 ");
 
 // Données initiales pour les tests
 $sqlitePdo->exec("INSERT INTO products (id, slug, title_fr, price_eur, file_path) VALUES (1, 'guide-test', 'Guide Test', 9.90, 'storage/downloads/test.pdf')");
 $sqlitePdo->exec("INSERT INTO orders (id, order_number, customer_email, total_amount, stripe_session_id, status, type) VALUES (1, 'CMD-TEST', 'client@test.tn', 9.90, 'sess_test', 'paid', 'digital_product')");
+$sqlitePdo->exec("INSERT INTO users (id, username, email, password, role) VALUES (1, 'admin', 'admin@djerbavoyage.tn', '\$2y\$10\$abcdefghijklmnopqrstuv', 'admin')");
 
 Database::setInstance($sqlitePdo);
 

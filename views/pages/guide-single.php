@@ -1,6 +1,15 @@
 <?php
-/** @var App\Models\Article $article */
-/** @var array $ctaServices */
+/** 
+ * Vue Article Unique — Djerba Voyage (Magazine Luxe Style)
+ * Architecture MVC, Zéro style inline, Responsive fluide
+ * 
+ * @var App\Models\Article $article 
+ * @var array $ctaServices 
+ * @var array $relatedArticles 
+ */
+
+$readingMinutes = max(2, (int)ceil(str_word_count(strip_tags($article->contentFr)) / 180));
+$currentUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . strtok($_SERVER['REQUEST_URI'] ?? '/', '?');
 ?>
 
 <?php if (!empty($article->schemaJson)): ?>
@@ -9,39 +18,92 @@
 </script>
 <?php endif; ?>
 
+<!-- Barre de Progression de Lecture Flottante -->
+<div class="c-article-progress" id="readingProgress"></div>
+
+<!-- Fil d'Ariane -->
+<div class="l-container">
+  <nav class="c-blog-breadcrumb" aria-label="Fil d'Ariane">
+    <a href="<?= url('/') ?>">Accueil</a>
+    <i class="fi fi-rr-angle-small-right"></i>
+    <a href="<?= url('/guide') ?>">Guides & Carnet de Voyage</a>
+    <i class="fi fi-rr-angle-small-right"></i>
+    <span class="c-blog-breadcrumb__current"><?= htmlspecialchars($article->titleFr, ENT_QUOTES, 'UTF-8') ?></span>
+  </nav>
+</div>
+
 <div class="c-article-wrapper">
   <article class="c-article-card">
     
     <!-- En-tête de l'article -->
-    <div class="c-article-header">
-      <div class="c-article-meta">
-        <span class="c-article-badge">
-          ✨ Guide Djerba Voyage
+    <header class="c-article-header">
+      <div class="c-article-badges-row">
+        <span class="c-article-badge c-article-badge--sea">
+          ✨ Guide Officiel Djerba Voyage
         </span>
-        <span><i class="fi fi-rr-calendar"></i> <?= date('d/m/Y', strtotime($article->publishedAt ?? 'now')) ?></span>
-        <span><i class="fi fi-rr-eye"></i> <?= $article->viewsCount ?> vues</span>
+        <span class="c-article-badge">
+          <i class="fi fi-rr-clock"></i> <?= $readingMinutes ?> min de lecture
+        </span>
       </div>
 
       <h1 class="c-article-title">
         <?= htmlspecialchars($article->titleFr, ENT_QUOTES, 'UTF-8') ?>
       </h1>
-    </div>
 
-    <!-- Image Hero -->
+      <div class="c-article-meta-bar">
+        <div class="c-article-meta-items">
+          <span><i class="fi fi-rr-calendar"></i> <?= date('d/m/Y', strtotime($article->publishedAt ?? 'now')) ?></span>
+          <span class="c-article-author">
+            <i class="fi fi-rr-user"></i> <?= htmlspecialchars($article->authorName ?? 'IA Voyageur Djerba', ENT_QUOTES, 'UTF-8') ?>
+          </span>
+          <span><i class="fi fi-rr-eye"></i> <?= (int)$article->viewsCount ?> lectures</span>
+        </div>
+
+        <div class="c-article-toolbar">
+          <a href="https://api.whatsapp.com/send?text=<?= urlencode($article->titleFr . ' - ' . $currentUrl) ?>" 
+             target="_blank" 
+             rel="noopener noreferrer" 
+             class="c-article-share-btn c-article-share-btn--whatsapp" 
+             title="Partager sur WhatsApp">
+            <i class="fi fi-rr-share"></i>
+            <span>WhatsApp</span>
+          </a>
+          <button type="button" 
+                  class="c-article-share-btn" 
+                  onclick="copyArticleLink(this)" 
+                  title="Copier le lien du guide">
+            <i class="fi fi-rr-copy"></i>
+            <span class="btn-text">Copier</span>
+          </button>
+          <a href="<?= url('/guide/' . urlencode($article->slug) . '/pdf') ?>" 
+             target="_blank" 
+             class="c-article-share-btn c-article-share-btn--pdf" 
+             title="Télécharger la fiche pratique PDF">
+            <i class="fi fi-rr-file-pdf"></i>
+            <span>PDF</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Image Hero Principale -->
     <?php if (!empty($article->featuredImage)): ?>
       <div class="c-article-hero-media">
         <img src="<?= e(asset($article->featuredImage)) ?>" 
              alt="<?= htmlspecialchars($article->titleFr, ENT_QUOTES, 'UTF-8') ?>" 
              class="c-article-hero-img" 
-             loading="lazy" />
+             loading="eager" />
+        <div class="c-article-hero-caption">
+          <i class="fi fi-rr-camera"></i> Djerba, Tunisie
+        </div>
       </div>
     <?php endif; ?>
 
-    <!-- Encadré Résumé IA (GEO & Synthèse) -->
+    <!-- Encadré Résumé IA (GEO & Synthèse Voyageur) -->
     <?php if (!empty($article->summaryAi)): ?>
       <div class="c-article-ai-summary">
         <h3 class="c-article-ai-summary__title">
-          <i class="fi fi-rr-sparkles"></i> En résumé (Points Clés & Synthèse Voyageur)
+          <i class="fi fi-rr-sparkles"></i> L'Essentiel en Bref (Synthèse & Points Clés)
         </h3>
         <div class="c-article-ai-summary__content">
           <?= htmlspecialchars($article->summaryAi, ENT_QUOTES, 'UTF-8') ?>
@@ -49,7 +111,7 @@
       </div>
     <?php endif; ?>
 
-    <!-- Corps de l'article -->
+    <!-- Corps Rédactionnel de l'article -->
     <div class="c-article-body">
       <?= $article->contentFr ?>
     </div>
@@ -61,7 +123,7 @@
           <i class="fi fi-rr-file-pdf"></i> Emportez ce guide en version PDF
         </h3>
         <p class="c-article-pdf-banner__text">
-          Téléchargez ou imprimez la fiche pratique officielle pour votre séjour à Djerba.
+          Téléchargez la fiche pratique officielle prête à imprimer ou à consulter hors-ligne pour votre séjour à Djerba.
         </p>
       </div>
       <a href="<?= url('/guide/' . urlencode($article->slug) . '/pdf') ?>" target="_blank" class="c-button c-button--primary">
@@ -70,18 +132,26 @@
       </a>
     </div>
 
-    <!-- Activités recommandées (Cross-selling) -->
+    <!-- Activités Recommandées (Cross-selling) -->
     <?php if (!empty($ctaServices)): ?>
       <div class="c-article-services-section">
         <h3 class="c-article-services-title">
-          🎯 Activités & Excursions recommandées pour cet itinéraire
+          <i class="fi fi-rr-compass"></i> Activités & Excursions recommandées pour cet itinéraire
         </h3>
         <div class="c-article-services-grid">
           <?php foreach ($ctaServices as $service): ?>
             <div class="c-article-service-card">
-              <div>
+              <?php if (!empty($service->imageUrl)): ?>
+                <div class="c-article-service-card__media">
+                  <img src="<?= e(asset($service->imageUrl)) ?>" 
+                       alt="<?= htmlspecialchars($service->name, ENT_QUOTES, 'UTF-8') ?>" 
+                       class="c-article-service-card__img" 
+                       loading="lazy">
+                </div>
+              <?php endif; ?>
+              <div class="c-article-service-card__info">
                 <h4 class="c-article-service-card__name">
-                  <?= htmlspecialchars($service->titleFr, ENT_QUOTES, 'UTF-8') ?>
+                  <?= htmlspecialchars($service->name, ENT_QUOTES, 'UTF-8') ?>
                 </h4>
                 <p class="c-article-service-card__price">
                   À partir de <?= number_format($service->priceEur, 2) ?> €
@@ -100,12 +170,87 @@
     <div class="c-article-concierge">
       <div>
         <h4 class="c-article-concierge__title">Besoin d'un itinéraire 100% sur-mesure ?</h4>
-        <p class="c-article-concierge__desc">Laissez notre conciergerie locale planifier votre séjour idéal à Djerba.</p>
+        <p class="c-article-concierge__desc">Laissez notre conciergerie locale planifier vos journées idéales à Djerba (hôtels, quads, restos secrets).</p>
       </div>
       <a href="<?= url('/concierge') ?>" class="c-button c-button--primary">
         Demander mon itinéraire (29€)
       </a>
     </div>
 
+    <!-- Signature Éditoriale -->
+    <div class="c-article-editorial">
+      <div class="c-article-editorial__avatar">
+        <i class="fi fi-rr-compass"></i>
+      </div>
+      <div>
+        <h4 class="c-article-editorial__name">Rédaction & Concierges Djerba Voyage</h4>
+        <p class="c-article-editorial__desc">Nos experts locaux et guides passionnés sillonnent quotidiennement l'île pour vous offrir des conseils vérifiés, la météo en temps réel et des adresses authentiques.</p>
+      </div>
+    </div>
+
+    <!-- Poursuivre votre lecture (Articles Similaires) -->
+    <?php if (!empty($relatedArticles)): ?>
+      <section class="c-article-related">
+        <h3 class="c-article-related__title">
+          <i class="fi fi-rr-bookmark"></i> Poursuivre votre lecture
+        </h3>
+        <div class="c-article-related__grid">
+          <?php foreach ($relatedArticles as $rel): ?>
+            <article class="c-blog-card">
+              <?php if (!empty($rel->featuredImage)): ?>
+                <div class="c-blog-card__media">
+                  <img src="<?= e(asset($rel->featuredImage)) ?>" 
+                       alt="<?= htmlspecialchars($rel->titleFr, ENT_QUOTES, 'UTF-8') ?>" 
+                       class="c-blog-card__img" 
+                       loading="lazy">
+                </div>
+              <?php endif; ?>
+              <div class="c-blog-card__body">
+                <div>
+                  <div class="c-blog-card__meta">
+                    <span><i class="fi fi-rr-calendar"></i> <?= date('d/m/Y', strtotime($rel->publishedAt ?? 'now')) ?></span>
+                  </div>
+                  <h4 class="c-blog-card__title">
+                    <a href="<?= url('/guide/' . e($rel->slug)) ?>">
+                      <?= htmlspecialchars($rel->titleFr, ENT_QUOTES, 'UTF-8') ?>
+                    </a>
+                  </h4>
+                </div>
+                <div class="c-blog-card__footer">
+                  <a href="<?= url('/guide/' . e($rel->slug)) ?>" class="c-blog-card__read-link">
+                    <span>Lire le guide</span>
+                    <i class="fi fi-rr-arrow-right"></i>
+                  </a>
+                </div>
+              </div>
+            </article>
+          <?php endforeach; ?>
+        </div>
+      </section>
+    <?php endif; ?>
+
   </article>
 </div>
+
+<script>
+/* Indicateur de progression de lecture & Copie de lien */
+(function() {
+  var progressBar = document.getElementById('readingProgress');
+  window.addEventListener('scroll', function() {
+    var winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+    var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    var scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+    if (progressBar) progressBar.style.width = Math.min(100, Math.max(0, scrolled)) + '%';
+  }, { passive: true });
+
+  window.copyArticleLink = function(btn) {
+    var textEl = btn.querySelector('.btn-text');
+    navigator.clipboard.writeText(window.location.href).then(function() {
+      if (textEl) textEl.textContent = 'Copié !';
+      setTimeout(function() {
+        if (textEl) textEl.textContent = 'Copier';
+      }, 2000);
+    });
+  };
+})();
+</script>
