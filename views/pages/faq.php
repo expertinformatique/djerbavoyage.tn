@@ -74,7 +74,7 @@
         <div class="card text-center" style="margin-top: 40px; background: linear-gradient(135deg, rgba(212,175,55,0.1) 0%, rgba(212,175,55,0.02) 100%); border: 1px solid rgba(212,175,55,0.3);">
             <h3 class="heading-3">Vous ne trouvez pas réponse à votre question ?</h3>
             <p class="text-muted" style="margin: 10px 0 20px;">Notre équipe d'assistance est joignable 7j/7 pour vous aider.</p>
-            <a href="<?= asset('contact') ?>" class="btn btn--gold">Écrire au Support</a>
+            <a href="<?= url('/contact') ?>" class="btn btn--gold">Écrire au Support</a>
         </div>
     </div>
 </div>
