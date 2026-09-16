@@ -10,6 +10,9 @@ require_once __DIR__ . '/TestCase.php';
 if (!defined('ROOT_PATH')) {
     define('ROOT_PATH', dirname(__DIR__));
 }
+if (!defined('PHPUNIT_RUNNING')) {
+    define('PHPUNIT_RUNNING', true);
+}
 require_once ROOT_PATH . '/core/helpers.php';
 
 spl_autoload_register(function ($class) {

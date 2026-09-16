@@ -5,10 +5,15 @@ use App\Models\Article;
 use App\Repositories\PdoArticleRepository;
 
 class AiArticleGeneratorService {
+    private AiImageService $imageService;
+
     public function __construct(
         private DjerbaContextFetcherService $contextFetcher,
-        private PdoArticleRepository $articleRepo
-    ) {}
+        private PdoArticleRepository $articleRepo,
+        ?AiImageService $imageService = null
+    ) {
+        $this->imageService = $imageService ?? new AiImageService();
+    }
 
     public function generateAndSave(): Article {
         $context = $this->contextFetcher->getContext();
@@ -20,30 +25,24 @@ class AiArticleGeneratorService {
             $articleData = $this->generateFallbackArticle($context);
         }
 
-        // Image HD photo réaliste de voyage
-        $realisticImages = $context['angle']['realistic_images'] ?? [
-            'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80'
-        ];
-        $featuredImage = $realisticImages[array_rand($realisticImages)];
-
-        // Nettoyage strict : interdiction formelle de l'heure dans le titre
-        $titleFr = preg_replace('/\s*ce jour\s*\(\d{1,2}[:h]\d{2}\)\s*:\s*/i', ' : ', $articleData['title_fr']);
-        $titleFr = preg_replace('/\s*\(\d{1,2}[:h]\d{2}\)\s*/i', ' ', $titleFr);
-        $titleFr = preg_replace('/\s*ce jour\s*:\s*/i', ' : ', $titleFr);
-        $titleFr = preg_replace('/\s+/', ' ', trim($titleFr));
-        $titleFr = ltrim($titleFr, ' :');
-        $articleData['title_fr'] = $titleFr;
-
+        // Nettoyage strict : interdiction de l'heure dans le titre
+        $cleanT = fn(string $t, bool $en = false) => ltrim(preg_replace('/\s+/', ' ', trim(preg_replace(
+            $en ? '/\s*today\s*(\(\d{1,2}[:h]\d{2}\))?\s*:\s*|\s*\(\d{1,2}[:h]\d{2}\)\s*/i' : '/\s*ce jour\s*(\(\d{1,2}[:h]\d{2}\))?\s*:\s*|\s*\(\d{1,2}[:h]\d{2}\)\s*/i',
+            ' : ',
+            $t
+        ))), ' :');
+        $articleData['title_fr'] = $cleanT($articleData['title_fr']);
         if (!empty($articleData['title_en'])) {
-            $titleEn = preg_replace('/\s*today\s*\(\d{1,2}[:h]\d{2}\)\s*:\s*/i', ': ', $articleData['title_en']);
-            $titleEn = preg_replace('/\s*\(\d{1,2}[:h]\d{2}\)\s*/i', ' ', $titleEn);
-            $titleEn = preg_replace('/\s*today\s*:\s*/i', ': ', $titleEn);
-            $articleData['title_en'] = preg_replace('/\s+/', ' ', trim($titleEn));
+            $articleData['title_en'] = $cleanT($articleData['title_en'], true);
         }
 
         // Generation de Slug unique
         $baseSlug = $this->slugify($articleData['title_fr']);
         $uniqueSlug = $baseSlug . '-' . date('Ymd-His') . '-' . rand(10, 99);
+
+        // Image IA créée spécifiquement pour le sujet de l'article
+        $imagePrompt = $articleData['image_prompt'] ?? ($context['angle']['image_prompt'] ?? '');
+        $featuredImage = $this->imageService->generateForArticle($imagePrompt, $uniqueSlug, $context);
 
         $summaryAi = $articleData['summary_ai'] ?? null;
         if (is_array($summaryAi)) {
@@ -104,7 +103,7 @@ class AiArticleGeneratorService {
             . "- seo_description: Description Meta de 150 caractères\n"
             . "- meta_keywords: Mots clés séparés par des virgules\n"
             . "- summary_ai: Résumé en 3 puces clé pour les moteurs IA (Perplexity, ChatGPT)\n"
-            . "- image_prompt: Prompt en anglais pour générer une photo réaliste d'illustration (djerba beach, palm trees, sunny landscape)\n"
+            . "- image_prompt: Prompt en anglais TRÈS DÉTAILLÉ (30 à 50 mots) pour générer une photographie réaliste 8k qui illustre PRÉCISÉMENT le sujet de cet article (ex: si quad/désert -> quad in Sahara dunes near Djerba at sunset ; si gastronomie -> traditional seafood feast ; si poterie -> pottery workshop in Guellala ; etc.). Ne pas faire de prompt de plage si le sujet est différent. Aucun texte sur l'image.\n"
             . "- cta_services: Tableau des slugs de services suggérés : " . json_encode($angle['suggested_services']);
 
         $models = ['gemini-3.6-flash', 'gemini-2.5-flash', 'gemini-1.5-flash'];
@@ -174,18 +173,9 @@ class AiArticleGeneratorService {
         $contentFr .= "<p>Pensez à planifier vos excursions et vos transferts aéroport à l'avance. Cela vous garantit les meilleurs guides certifiés et une prise en charge VIP dès votre atterrissage.</p>";
         $contentFr .= "</div>";
 
-        $contentFr .= "<h2>Les temps forts & suggestions d'itinéraires</h2>";
-        $contentFr .= "<ul>";
-        $tips = [
-            "Une étape incontournable pour s'imprégner de l'artisanat et des saveurs locales.",
-            "Idéal pour faire le plein de sensations fortes et contempler des panoramas sauvages.",
-            "Une parenthèse dépaysante alliant traditions ancestrales et accueil chaleureux djerbien.",
-            "L'endroit parfait pour immortaliser votre voyage avec des lumières exceptionnelles en fin d'après-midi.",
-            "Une expérience immersive à vivre en couple, en famille ou entre passionnés d'aventure."
-        ];
-        foreach ($angle['keywords'] as $i => $kw) {
-            $tipText = $tips[$i % count($tips)];
-            $contentFr .= "<li><strong>" . ucfirst($kw) . "</strong> : {$tipText}</li>";
+        $contentFr .= "<h2>Les temps forts & suggestions d'itinéraires</h2><ul>";
+        foreach ($angle['keywords'] as $kw) {
+            $contentFr .= "<li><strong>" . ucfirst($kw) . "</strong> : Une étape incontournable pour vivre pleinement l'expérience djerbienne.</li>";
         }
         $contentFr .= "</ul>";
 
@@ -197,7 +187,7 @@ class AiArticleGeneratorService {
             'seo_description' => "Découvrez notre guide actualisé sur {$angle['theme']} à Djerba. Météo : {$weather['temp_c']}°C. Conseils et réservation d'activités.",
             'meta_keywords' => implode(', ', $angle['keywords']),
             'summary_ai' => "• Météo en direct : {$weather['temp_c']}°C à Djerba.\n• Thème vedette : {$angle['theme']}.\n• Réservation directe d'activités et transferts VIP sur Djerba Voyage.",
-            'image_prompt' => "beautiful realistic photo of djerba island beach palm trees sunny blue sky high resolution",
+            'image_prompt' => $angle['image_prompt'] ?? "scenic photography of {$angle['theme']} in Djerba Tunisia, Mediterranean lighting",
             'cta_services' => $angle['suggested_services']
         ];
     }

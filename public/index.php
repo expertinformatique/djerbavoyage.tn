@@ -161,7 +161,9 @@ $articlePdfService = new \App\Services\ArticlePdfService();
 $container->bind(\App\Services\ArticlePdfService::class, fn() => $articlePdfService);
 $djerbaContextFetcher = new \App\Services\DjerbaContextFetcherService();
 $container->bind(\App\Services\DjerbaContextFetcherService::class, fn() => $djerbaContextFetcher);
-$aiArticleGenerator = new \App\Services\AiArticleGeneratorService($djerbaContextFetcher, new PdoArticleRepository($pdo));
+$aiImageService = new \App\Services\AiImageService();
+$container->bind(\App\Services\AiImageService::class, fn() => $aiImageService);
+$aiArticleGenerator = new \App\Services\AiArticleGeneratorService($djerbaContextFetcher, new PdoArticleRepository($pdo), $aiImageService);
 $container->bind(\App\Services\AiArticleGeneratorService::class, fn() => $aiArticleGenerator);
 
 // 3. Configuration des Routes

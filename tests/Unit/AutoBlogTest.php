@@ -88,4 +88,30 @@ class AutoBlogTest extends TestCase {
         $this->assertTrue(str_contains($html, 'Excursion désert Ksar Ghilane.'));
         $this->assertTrue(str_contains($html, 'Imprimer / Sauvegarder en PDF'));
     }
+
+    public function testAiImageServiceMatchesArticleTheme(): void {
+        $imageService = new \App\Services\AiImageService();
+        $desertContext = [
+            'angle' => [
+                'theme' => 'Excursion Désert, Buggy & Quad depuis Djerba',
+                'image_prompt' => 'Exciting desert quad bike adventure in golden sand dunes',
+                'fallback_local_image' => 'images/service_quad.jpg'
+            ]
+        ];
+
+        $kitesurfContext = [
+            'angle' => [
+                'theme' => 'Kitesurf, Jet Ski & Sports Nautiques',
+                'image_prompt' => 'Action photography of kitesurfers on shallow turquoise lagoon',
+                'fallback_local_image' => 'images/service_kitesurf.jpg'
+            ]
+        ];
+
+        $imgDesert = $imageService->generateForArticle('quad in desert dunes', 'slug-desert-1', $desertContext);
+        $imgKitesurf = $imageService->generateForArticle('kitesurf on turquoise lagoon', 'slug-kitesurf-1', $kitesurfContext);
+
+        $this->assertEquals('images/service_quad.jpg', $imgDesert);
+        $this->assertEquals('images/service_kitesurf.jpg', $imgKitesurf);
+        $this->assertNotEquals($imgDesert, $imgKitesurf);
+    }
 }
