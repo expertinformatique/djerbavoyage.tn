@@ -180,6 +180,7 @@ $router->get('/guide/{slug}', [App\Controllers\GuideController::class, 'show']);
 $router->get('/destinations/{slug}', [App\Controllers\DestinationController::class, 'show']);
 $router->get('/shop', [App\Controllers\ShopController::class, 'index']);
 $router->get('/concierge', [App\Controllers\ConciergeController::class, 'index']);
+$router->post('/api/concierge/checkout', [App\Controllers\ConciergeController::class, 'checkout']);
 $router->post('/api/checkout/session', [App\Controllers\CheckoutController::class, 'createSession']);
 $router->get('/checkout/success', [App\Controllers\CheckoutController::class, 'success']);
 $router->get('/download', [App\Controllers\DownloadController::class, 'getFile']);

@@ -5,6 +5,8 @@
   </div>
 
   <div style="background:#fff; padding:2.5rem; border-radius:16px; box-shadow:var(--shadow-soft);">
+    <div id="concierge-error" style="display:none; background:#fee2e2; color:#b91c1c; padding:0.8rem 1rem; border-radius:8px; margin-bottom:1.5rem; font-size:0.9rem; font-weight:600;"></div>
+
     <form id="concierge-form" onsubmit="handleConciergeSubmit(event)">
       <div style="margin-bottom:1.5rem;">
         <label style="display:block; font-weight:600; margin-bottom:0.5rem;">Votre Nom complet</label>
@@ -26,7 +28,7 @@
         <p style="font-size:0.9rem; color:#666;">Ce montant garantit la prise en charge personnalisée de votre dossier par un expert local.</p>
       </div>
 
-      <button type="submit" class="c-button c-button--primary" style="width:100%; justify-content:center; padding:1rem;">
+      <button type="submit" id="concierge-submit-btn" class="c-button c-button--primary" style="width:100%; justify-content:center; padding:1rem; font-weight:700;">
         Valider et Régler <?= e($conciergePrice) ?> € via Stripe <i class="fi fi-rr-lock"></i>
       </button>
     </form>
@@ -36,7 +38,43 @@
 <script>
 function handleConciergeSubmit(e) {
   e.preventDefault();
-  alert("Demande enregistrée ! Redirection vers la page de paiement sécurisée Stripe...");
-  window.location.href = "/checkout/success?session_id=cs_concierge_dev_sample";
+  const name = document.getElementById('c_name').value.trim();
+  const email = document.getElementById('c_email').value.trim();
+  const dates = document.getElementById('c_dates').value.trim();
+  const errorEl = document.getElementById('concierge-error');
+  const btn = document.getElementById('concierge-submit-btn');
+
+  errorEl.style.display = 'none';
+
+  if (!name || !email || !dates) {
+    errorEl.textContent = 'Veuillez remplir tous les champs.';
+    errorEl.style.display = 'block';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fi fi-rr-spinner fi-spin"></i> Redirection vers Stripe...';
+
+  const endpoint = '<?= url('/api/concierge/checkout') ?>';
+
+  fetch(endpoint, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: name, email: email, dates: dates })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.redirect_url) {
+      window.location.href = data.redirect_url;
+    } else {
+      throw new Error(data.error || 'Erreur lors de l\'initialisation du paiement Stripe.');
+    }
+  })
+  .catch(err => {
+    errorEl.textContent = err.message;
+    errorEl.style.display = 'block';
+    btn.disabled = false;
+    btn.innerHTML = 'Valider et Régler <?= e($conciergePrice) ?> € via Stripe <i class="fi fi-rr-lock"></i>';
+  });
 }
 </script>
