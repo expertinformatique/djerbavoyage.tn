@@ -296,3 +296,117 @@
   cursor: not-allowed;
 }
 
+/* ==========================================================================
+   Planning Page & Form Inputs Styling
+   ========================================================================== */
+
+.input,
+.c-input,
+.c-select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: #0F172A;
+  background-color: #F8FAFC;
+  border: 1.5px solid #CBD5E1;
+  border-radius: 12px;
+  outline: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.input:hover,
+.c-input:hover,
+.c-select:hover {
+  border-color: #94A3B8;
+  background-color: #FFFFFF;
+}
+
+.input:focus,
+.c-input:focus,
+.c-select:focus {
+  border-color: #0077B6;
+  background-color: #FFFFFF;
+  box-shadow: 0 0 0 4px rgba(0, 119, 182, 0.15), 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.input::placeholder,
+.c-input::placeholder {
+  color: #94A3B8;
+  font-weight: 400;
+}
+
+select.input,
+select.c-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%3C%2364748B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.9rem center;
+  background-size: 1.1rem;
+  padding-right: 2.5rem;
+  cursor: pointer;
+}
+
+.c-input--sm,
+.c-select--sm {
+  padding: 0.55rem 0.85rem;
+  font-size: 0.86rem;
+  border-radius: 10px;
+}
+
+.c-form-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #334155;
+  margin-bottom: 6px;
+  letter-spacing: 0.01em;
+}
+
+.c-form-label i {
+  color: #0077B6;
+  font-size: 0.9rem;
+}
+
+.c-planning-card {
+  background: #FFFFFF;
+  border-radius: 20px;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05), 0 8px 10px -6px rgba(15, 23, 42, 0.01);
+  padding: 1.75rem;
+  margin-bottom: 2.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.c-schedule-card {
+  background: #FFFFFF;
+  border-radius: 16px;
+  border: 1px solid #E2E8F0;
+  padding: 1.35rem 1.5rem;
+  margin-bottom: 1.25rem;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
+}
+
+.c-schedule-card:hover {
+  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.06);
+}
+
+.c-schedule-card.is-confirmed {
+  border-left: 5px solid #10B981;
+  background: linear-gradient(90deg, rgba(16, 185, 129, 0.04) 0%, #FFFFFF 200px);
+}
+
+.c-schedule-card.is-waiting {
+  border-left: 5px solid #F59E0B;
+  background: linear-gradient(90deg, rgba(245, 158, 11, 0.04) 0%, #FFFFFF 200px);
+}
+
+

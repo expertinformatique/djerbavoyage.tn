@@ -29,62 +29,62 @@
   <div id="planningNotification" style="display: none; padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem; font-weight: 600; text-align: center;"></div>
 
   <!-- Section 1 : Accueil Aéroport Djerba-Zarzis -->
-  <div class="c-card" style="margin-bottom: 3rem; border: 2px solid var(--clr-sea-400); background: #FFFFFF;">
-    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem;">
-      <div style="display: flex; align-items: center; gap: 12px;">
-        <div style="width: 46px; height: 46px; border-radius: 12px; background: rgba(0, 119, 182, 0.1); display: flex; align-items: center; justify-content: center; color: var(--clr-sea-600); font-size: 1.4rem;">
+  <div class="c-planning-card" style="border-top: 4px solid var(--clr-sea-600);">
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid #F1F5F9;">
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <div style="width: 48px; height: 48px; border-radius: 14px; background: linear-gradient(135deg, rgba(0, 119, 182, 0.12) 0%, rgba(0, 180, 216, 0.06) 100%); display: flex; align-items: center; justify-content: center; color: var(--clr-sea-600); font-size: 1.4rem;">
           <i class="fi fi-rr-plane-arrival"></i>
         </div>
         <div>
-          <h2 style="font-size: 1.25rem; font-family: var(--font-heading); color: var(--clr-dark-900); margin-bottom: 2px;">
+          <h2 style="font-size: 1.25rem; font-family: var(--font-heading); color: var(--clr-dark-900); margin-bottom: 2px; font-weight: 800;">
             Accueil VIP & Chauffeur Privé Aéroport (DJE)
           </h2>
-          <p class="text-muted" style="font-size: 0.85rem;">
+          <p class="text-muted" style="font-size: 0.85rem; margin: 0;">
             Votre chauffeur privé vous attendra à la sortie du terminal avec une pancarte à votre nom.
           </p>
         </div>
       </div>
-      <span class="badge badge--gold" id="airportStatusBadge">
+      <span class="badge badge--gold" id="airportStatusBadge" style="padding: 6px 14px; font-size: 0.85rem; border-radius: 20px;">
         <?= ($transfer && $transfer->flightNumber) ? '✓ Vol Enregistré' : 'À Compléter' ?>
       </span>
     </div>
 
-    <form id="airportTransferForm" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+    <form id="airportTransferForm" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem;">
       <input type="hidden" name="order_id" value="<?= $order->id ?>">
       
       <div>
-        <label style="display: block; font-size: 0.8rem; font-weight: 700; margin-bottom: 4px; color: var(--clr-dark-800);">N° de Vol</label>
-        <input type="text" name="flight_number" value="<?= e($transfer->flightNumber ?? '') ?>" placeholder="Ex: TU 720 / BJ 515" class="input" style="width: 100%;">
+        <label class="c-form-label"><i class="fi fi-rr-plane-alt"></i> N° de Vol</label>
+        <input type="text" name="flight_number" value="<?= e($transfer->flightNumber ?? '') ?>" placeholder="Ex: TU 720 / BJ 515" class="c-input">
       </div>
 
       <div>
-        <label style="display: block; font-size: 0.8rem; font-weight: 700; margin-bottom: 4px; color: var(--clr-dark-800);">Compagnie Aérienne</label>
-        <input type="text" name="airline" value="<?= e($transfer->airline ?? '') ?>" placeholder="Ex: Nouvelair / Tunisair" class="input" style="width: 100%;">
+        <label class="c-form-label"><i class="fi fi-rr-paper-plane"></i> Compagnie Aérienne</label>
+        <input type="text" name="airline" value="<?= e($transfer->airline ?? '') ?>" placeholder="Ex: Nouvelair / Tunisair" class="c-input">
       </div>
 
       <div>
-        <label style="display: block; font-size: 0.8rem; font-weight: 700; margin-bottom: 4px; color: var(--clr-dark-800);">Date d'Atterrissage</label>
-        <input type="date" name="arrival_date" value="<?= e($transfer->arrivalDate ?? '') ?>" class="input" style="width: 100%;">
+        <label class="c-form-label"><i class="fi fi-rr-calendar"></i> Date d'Atterrissage</label>
+        <input type="date" name="arrival_date" value="<?= e($transfer->arrivalDate ?? '') ?>" class="c-input">
       </div>
 
       <div>
-        <label style="display: block; font-size: 0.8rem; font-weight: 700; margin-bottom: 4px; color: var(--clr-dark-800);">Heure d'Atterrissage</label>
-        <input type="time" name="arrival_time" value="<?= e($transfer->arrivalTime ?? '') ?>" class="input" style="width: 100%;">
+        <label class="c-form-label"><i class="fi fi-rr-clock"></i> Heure d'Atterrissage</label>
+        <input type="time" name="arrival_time" value="<?= e($transfer->arrivalTime ?? '') ?>" class="c-input">
       </div>
 
       <div>
-        <label style="display: block; font-size: 0.8rem; font-weight: 700; margin-bottom: 4px; color: var(--clr-dark-800);">Lieu de Dépose (Hôtel ou Villa)</label>
-        <input type="text" name="dropoff_location" value="<?= e($transfer->dropoffLocation ?? '') ?>" placeholder="Ex: Hôtel Hasdrubal / Dar Erriadh" class="input" style="width: 100%;">
+        <label class="c-form-label"><i class="fi fi-rr-marker"></i> Lieu de Dépose (Hôtel / Villa)</label>
+        <input type="text" name="dropoff_location" value="<?= e($transfer->dropoffLocation ?? '') ?>" placeholder="Ex: Hôtel Hasdrubal / Dar Erriadh" class="c-input">
       </div>
 
       <div>
-        <label style="display: block; font-size: 0.8rem; font-weight: 700; margin-bottom: 4px; color: var(--clr-dark-800);">Téléphone / WhatsApp</label>
-        <input type="tel" name="phone_whatsapp" value="<?= e($transfer->phoneWhatsapp ?? '') ?>" placeholder="+33 6 ..." class="input" style="width: 100%;">
+        <label class="c-form-label"><i class="fi fi-rr-phone-call"></i> Téléphone / WhatsApp</label>
+        <input type="tel" name="phone_whatsapp" value="<?= e($transfer->phoneWhatsapp ?? '') ?>" placeholder="+33 6 12 34 56 78" class="c-input">
       </div>
 
-      <div style="grid-column: 1 / -1; display: flex; justify-content: flex-end; margin-top: 0.5rem;">
-        <button type="submit" class="c-button c-button--primary" style="padding: 0.65rem 1.4rem; font-size: 0.9rem;">
-          <i class="fi fi-rr-check"></i> Enregistrer mes Détails d'Arrivée
+      <div style="grid-column: 1 / -1; display: flex; justify-content: flex-end; margin-top: 0.5rem; padding-top: 1rem; border-top: 1px dashed #E2E8F0;">
+        <button type="submit" class="c-button c-button--primary" style="padding: 0.75rem 1.6rem; font-size: 0.92rem; border-radius: 12px; font-weight: 700;">
+          <i class="fi fi-rr-check-circle"></i> Enregistrer mes Détails d'Arrivée
         </button>
       </div>
     </form>
@@ -101,13 +101,13 @@
           Choisissez le jour et le créneau idéal pour chaque expérience. Modifiable gratuitement jusqu'à 24h avant.
         </p>
       </div>
-      <span class="badge badge--sea">
+      <span class="badge badge--sea" style="padding: 6px 14px; font-size: 0.85rem; border-radius: 20px;">
         <?= count($bookings) ?> Activité(s) dans votre Pass
       </span>
     </div>
 
     <?php if (empty($bookings)): ?>
-      <div class="c-card" style="text-align: center; padding: 3rem;">
+      <div class="c-planning-card" style="text-align: center; padding: 3rem;">
         <p class="text-muted">Aucune activité enregistrée sur ce pass.</p>
         <a href="<?= url('/services') ?>" class="c-button c-button--primary" style="margin-top: 1rem;">
           Découvrir les Activités
@@ -120,30 +120,30 @@
           <div style="display: flex; gap: 1.25rem; flex-wrap: wrap; align-items: center; justify-content: space-between;">
             
             <div style="display: flex; gap: 1rem; align-items: center;">
-              <img src="<?= asset('images/' . ($srv && $srv->imageUrl ? $srv->imageUrl : 'sidi_mahres.png')) ?>" alt="<?= e($srv ? $srv->name : 'Activité') ?>" style="width: 75px; height: 75px; object-fit: cover; border-radius: 12px;">
+              <img src="<?= asset('images/' . ($srv && $srv->imageUrl ? $srv->imageUrl : 'sidi_mahres.png')) ?>" alt="<?= e($srv ? $srv->name : 'Activité') ?>" style="width: 75px; height: 75px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.08);">
               <div>
-                <div style="font-size: 0.78rem; font-weight: 700; color: var(--clr-sea-600); text-transform: uppercase;">
+                <div style="font-size: 0.78rem; font-weight: 700; color: var(--clr-sea-600); text-transform: uppercase; letter-spacing: 0.02em;">
                   <?= e($srv ? $srv->locationLabel : 'Djerba') ?> • <?= e($srv ? $srv->durationLabel : '') ?>
                 </div>
-                <h3 style="font-size: 1.1rem; color: var(--clr-dark-900); margin: 2px 0;">
+                <h3 style="font-size: 1.1rem; color: var(--clr-dark-900); margin: 3px 0; font-weight: 700;">
                   <?= e($srv ? $srv->name : 'Activité Locale') ?>
                 </h3>
-                <div style="font-size: 0.82rem; color: var(--clr-gray-500);">
-                  <?= $booking->guestsCount ?> personne(s) • Total réglé : <strong><?= number_format($booking->totalPrice, 2) ?> €</strong>
+                <div style="font-size: 0.84rem; color: var(--clr-gray-500);">
+                  <?= $booking->guestsCount ?> personne(s) • Total réglé : <strong style="color: #0F172A;"><?= number_format($booking->totalPrice, 2) ?> €</strong>
                 </div>
               </div>
             </div>
 
             <!-- Schedule Form per activity -->
-            <form class="js-booking-schedule-form" data-id="<?= $booking->id ?>" style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+            <form class="js-booking-schedule-form" data-id="<?= $booking->id ?>" style="display: flex; gap: 0.85rem; align-items: flex-end; flex-wrap: wrap;">
               <div>
-                <label style="display: block; font-size: 0.75rem; font-weight: 700; margin-bottom: 2px; color: var(--clr-dark-800);">Date choisie</label>
-                <input type="date" name="date" required value="<?= e($booking->scheduledDate ?? '') ?>" class="input" style="padding: 0.4rem 0.6rem; font-size: 0.85rem;">
+                <label class="c-form-label"><i class="fi fi-rr-calendar"></i> Date choisie</label>
+                <input type="date" name="date" required value="<?= e($booking->scheduledDate ?? '') ?>" class="c-input c-input--sm" style="min-width: 145px;">
               </div>
 
               <div>
-                <label style="display: block; font-size: 0.75rem; font-weight: 700; margin-bottom: 2px; color: var(--clr-dark-800);">Créneau horaire</label>
-                <select name="time" required class="input" style="padding: 0.4rem 0.6rem; font-size: 0.85rem;">
+                <label class="c-form-label"><i class="fi fi-rr-clock"></i> Créneau horaire</label>
+                <select name="time" required class="c-select c-select--sm" style="min-width: 185px;">
                   <option value="">Sélectionnez un créneau</option>
                   <option value="09:00" <?= ($booking->scheduledTime === '09:00') ? 'selected' : '' ?>>09h00 (Matinée calme)</option>
                   <option value="11:30" <?= ($booking->scheduledTime === '11:30') ? 'selected' : '' ?>>11h30 (Midi)</option>
@@ -153,8 +153,8 @@
                 </select>
               </div>
 
-              <div style="align-self: flex-end;">
-                <button type="submit" class="c-button c-button--primary" style="padding: 0.5rem 1rem; font-size: 0.85rem;">
+              <div>
+                <button type="submit" class="c-button c-button--primary" style="padding: 0.58rem 1.25rem; font-size: 0.88rem; border-radius: 10px; font-weight: 700;">
                   <i class="fi fi-rr-check"></i> Valider
                 </button>
               </div>
