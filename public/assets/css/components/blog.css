@@ -481,6 +481,15 @@
   margin-top: auto;
 }
 
+.c-blog-card__footer .c-button,
+.c-card--blog .c-card__footer .c-button {
+  padding: 0.45rem 0.95rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  gap: 0.35rem;
+}
+
+
 .c-blog-card__read-link {
   font-size: 0.85rem;
   font-weight: 700;

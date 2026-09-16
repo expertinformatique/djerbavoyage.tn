@@ -35,7 +35,7 @@ if (empty($relatedArticles)) {
             </h4>
           </div>
           <div class="c-card__footer">
-            <a href="<?= url('/guide/' . e($rel->slug)) ?>" class="c-button c-button--secondary">
+            <a href="<?= url('/guide/' . e($rel->slug)) ?>" class="c-button c-button--secondary c-button--sm">
               <span>Lire le guide</span>
               <i class="fi fi-rr-arrow-right"></i>
             </a>

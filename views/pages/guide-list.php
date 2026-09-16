@@ -135,7 +135,7 @@ $getCategory = function(string $title, string $desc = ''): array {
             </div>
 
             <div class="c-card__footer">
-              <a href="<?= url('/guide/' . e($art->slug)) ?>" class="c-button c-button--secondary">
+              <a href="<?= url('/guide/' . e($art->slug)) ?>" class="c-button c-button--secondary c-button--sm">
                 <span>Lire le guide complet</span>
                 <i class="fi fi-rr-arrow-right"></i>
               </a>
