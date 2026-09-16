@@ -135,6 +135,7 @@
   </footer>
 
   <?php require __DIR__ . '/../partials/personalized_pdf_modal.php'; ?>
+  <?php require __DIR__ . '/../partials/booking_hotels_modal.php'; ?>
 
   <script type="module" src="<?= asset('js/main.js') ?>"></script>
 </body>

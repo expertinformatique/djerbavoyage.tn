@@ -12,20 +12,20 @@
     </div>
 
     <div class="c-tabs__content is-active" id="tab-hotels">
-      <div style="background:#fff; padding:2rem; border-radius:12px; border:1px solid var(--clr-sand-200);">
-        <h3>Sélection d'Hôtels à <?= e($destination['name_fr']) ?></h3>
-        <p style="margin-bottom:1rem; color:#666;">Réservez votre hébergement vérifié au meilleur prix garanti via Booking.com :</p>
-        <a href="https://www.booking.com/city/tn/houmt-souk.html?aid=<?= e($settings->get('booking_partner_id')) ?>" target="_blank" rel="sponsored noopener" class="c-button c-button--secondary">
-          Voir les Hôtels sur Booking.com <i class="fi fi-rr-arrow-up-right"></i>
-        </a>
+      <div style="background:#fff; padding:2rem; border-radius:16px; border:1px solid var(--clr-sand-300); box-shadow:var(--shadow-soft);">
+        <h3 style="font-family:var(--font-heading); font-size:1.4rem; color:var(--clr-dark-900); margin-bottom:0.5rem;">Sélection d'Hôtels & Ryads de Charme à <?= e($destination['name_fr']) ?></h3>
+        <p style="margin-bottom:1.5rem; color:#666; font-size:1rem;">Consultez nos hébergements vérifiés avec annulation gratuite et meilleur tarif garanti :</p>
+        <button type="button" onclick="openBookingHotelsModal('<?= e(addslashes($destination['name_fr'])) ?>')" class="c-button c-button--secondary" style="font-weight:700; font-size:0.95rem; padding:0.85rem 1.6rem;">
+          <i class="fi fi-rr-hotel"></i> Voir les Hôtels sur Booking.com <i class="fi fi-rr-arrow-up-right"></i>
+        </button>
       </div>
     </div>
 
     <div class="c-tabs__content" id="tab-excursions">
-      <div style="background:#fff; padding:2rem; border-radius:12px; border:1px solid var(--clr-sand-200);">
-        <h3>Excursions Populaires à <?= e($destination['name_fr']) ?></h3>
-        <p style="margin-bottom:1rem; color:#666;">Réservez vos visites guidées et activités nautiques via GetYourGuide :</p>
-        <a href="https://www.getyourguide.com/djerba-l32386/?partner_id=<?= e($settings->get('getyourguide_partner_id')) ?>" target="_blank" rel="sponsored noopener" class="c-button c-button--primary">
+      <div style="background:#fff; padding:2rem; border-radius:16px; border:1px solid var(--clr-sand-300); box-shadow:var(--shadow-soft);">
+        <h3 style="font-family:var(--font-heading); font-size:1.4rem; color:var(--clr-dark-900); margin-bottom:0.5rem;">Excursions Populaires à <?= e($destination['name_fr']) ?></h3>
+        <p style="margin-bottom:1.5rem; color:#666; font-size:1rem;">Réservez vos visites guidées et activités nautiques via notre partenaire GetYourGuide :</p>
+        <a href="https://www.getyourguide.com/djerba-l32386/?partner_id=<?= e($settings->get('getyourguide_partner_id')) ?>" target="_blank" rel="sponsored noopener" class="c-button c-button--primary" style="font-weight:700; font-size:0.95rem; padding:0.85rem 1.6rem;">
           Réserver une Excursion GetYourGuide <i class="fi fi-rr-arrow-up-right"></i>
         </a>
       </div>
@@ -34,10 +34,10 @@
     <div class="c-tabs__content" id="tab-articles">
       <div class="l-grid-cards">
         <?php foreach ($articles as $art): ?>
-          <article class="c-card">
+          <article class="c-card" style="background:#fff; border-radius:16px; border:1px solid var(--clr-sand-300);">
             <div class="c-card__content">
-              <h3 class="c-card__title"><?= e($art->titleFr) ?></h3>
-              <a href="<?= url('/guide/' . e($art->slug)) ?>" class="c-button c-button--secondary" style="margin-top:1rem;">Lire l'article</a>
+              <h3 class="c-card__title" style="font-size:1.15rem; font-family:var(--font-heading);"><?= e($art->titleFr) ?></h3>
+              <a href="<?= url('/guide/' . e($art->slug)) ?>" class="c-button c-button--secondary" style="margin-top:1rem; font-size:0.85rem;">Lire l'article</a>
             </div>
           </article>
         <?php endforeach; ?>
