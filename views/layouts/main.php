@@ -55,6 +55,7 @@
   <!-- CSS Main & Modules -->
   <link rel="stylesheet" href="<?= asset('css/main.css') ?>">
   <link rel="stylesheet" href="<?= asset('css/components/nav.css') ?>">
+  <link rel="stylesheet" href="<?= asset('css/components/tabs.css') ?>">
   <link rel="stylesheet" href="<?= asset('css/components/services-builder.css') ?>">
   <link rel="stylesheet" href="<?= asset('css/components/sales-funnel-quiz.css') ?>">
   <link rel="stylesheet" href="<?= asset('css/components/newsletter.css') ?>">
