@@ -168,6 +168,27 @@ $sqlitePdo->exec("
         action TEXT NOT NULL,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
+    CREATE TABLE IF NOT EXISTS articles (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        destination_id INTEGER NULL,
+        slug TEXT UNIQUE,
+        title_fr TEXT NOT NULL,
+        title_en TEXT NULL,
+        content_fr TEXT NOT NULL,
+        content_en TEXT NULL,
+        featured_image TEXT NULL,
+        status TEXT DEFAULT 'published',
+        views_count INTEGER DEFAULT 0,
+        published_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        seo_description TEXT NULL,
+        meta_keywords TEXT NULL,
+        summary_ai TEXT NULL,
+        schema_json TEXT NULL,
+        pdf_enabled INTEGER DEFAULT 1,
+        pdf_price_eur REAL DEFAULT 2.99,
+        cta_services_json TEXT NULL,
+        author_name TEXT DEFAULT 'IA Voyageur Djerba'
+    );
 ");
 
 // Données initiales pour les tests

@@ -3,14 +3,18 @@ namespace App\Controllers;
 
 use Core\Controller;
 use App\Interfaces\ArticleRepositoryInterface;
+use App\Interfaces\LocalServiceRepositoryInterface;
 use App\Services\AnalyticsService;
 use App\Services\SettingsService;
+use App\Services\ArticlePdfService;
 
 class GuideController extends Controller {
     public function __construct(
         private ArticleRepositoryInterface $articleRepo,
         private SettingsService $settings,
-        private AnalyticsService $analytics
+        private AnalyticsService $analytics,
+        private ArticlePdfService $pdfService,
+        private ?LocalServiceRepositoryInterface $localServiceRepo = null
     ) {}
 
     public function index(): void {
@@ -37,11 +41,39 @@ class GuideController extends Controller {
 
         $this->articleRepo->incrementViews($article->id);
 
+        $ctaServices = [];
+        if ($this->localServiceRepo && !empty($article->ctaServicesJson)) {
+            $slugs = json_decode($article->ctaServicesJson, true);
+            if (is_array($slugs)) {
+                foreach ($slugs as $s) {
+                    $found = $this->localServiceRepo->findBySlug($s);
+                    if ($found) $ctaServices[] = $found;
+                }
+            }
+        }
+        if (empty($ctaServices) && $this->localServiceRepo) {
+            $ctaServices = array_slice($this->localServiceRepo->getAllActive(), 0, 2);
+        }
+
         $this->render('pages/guide-single', [
             'seoTitle'       => $article->titleFr . ' | Djerba Voyage',
-            'seoDescription' => substr(strip_tags($article->contentFr), 0, 160),
+            'seoDescription' => $article->seoDescription ?: substr(strip_tags($article->contentFr), 0, 160),
             'article'        => $article,
+            'ctaServices'    => $ctaServices,
             'settings'       => $this->settings
         ]);
+    }
+
+    public function pdf(string $slug): void {
+        $article = $this->articleRepo->findBySlug($slug);
+        if (!$article) {
+            http_response_code(404);
+            echo "Article non trouvé";
+            return;
+        }
+
+        $html = $this->pdfService->generateHtmlForPdf($article);
+        header('Content-Type: text/html; charset=utf-8');
+        echo $html;
     }
 }

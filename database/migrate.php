@@ -62,9 +62,40 @@ try {
     }
 
     // 3. Tableau $alters pour vérification idempotente des colonnes (Règle 7.3)
-    $alters = [];
+    $alters = [
+        ['table' => 'articles', 'column' => 'title_en', 'sql' => "ALTER TABLE articles ADD COLUMN title_en VARCHAR(255) NULL"],
+        ['table' => 'articles', 'column' => 'content_en', 'sql' => "ALTER TABLE articles ADD COLUMN content_en TEXT NULL"],
+        ['table' => 'articles', 'column' => 'seo_description', 'sql' => "ALTER TABLE articles ADD COLUMN seo_description TEXT NULL"],
+        ['table' => 'articles', 'column' => 'meta_keywords', 'sql' => "ALTER TABLE articles ADD COLUMN meta_keywords VARCHAR(255) NULL"],
+        ['table' => 'articles', 'column' => 'summary_ai', 'sql' => "ALTER TABLE articles ADD COLUMN summary_ai TEXT NULL"],
+        ['table' => 'articles', 'column' => 'schema_json', 'sql' => "ALTER TABLE articles ADD COLUMN schema_json TEXT NULL"],
+        ['table' => 'articles', 'column' => 'pdf_enabled', 'sql' => "ALTER TABLE articles ADD COLUMN pdf_enabled TINYINT(1) DEFAULT 1"],
+        ['table' => 'articles', 'column' => 'pdf_price_eur', 'sql' => "ALTER TABLE articles ADD COLUMN pdf_price_eur DECIMAL(10,2) DEFAULT 2.99"],
+        ['table' => 'articles', 'column' => 'cta_services_json', 'sql' => "ALTER TABLE articles ADD COLUMN cta_services_json TEXT NULL"],
+        ['table' => 'articles', 'column' => 'author_name', 'sql' => "ALTER TABLE articles ADD COLUMN author_name VARCHAR(100) DEFAULT 'IA Voyageur Djerba'"],
+    ];
+
     foreach ($alters as $alter) {
-        // Logique de vérification préalable d'existence de colonne
+        $table = $alter['table'];
+        $column = $alter['column'];
+        $sql = $alter['sql'];
+
+        if ($driver === 'sqlite') {
+            $colsStmt = $pdo->query("PRAGMA table_info({$table})");
+            $cols = $colsStmt->fetchAll(PDO::FETCH_COLUMN, 1);
+            if (!in_array($column, $cols)) {
+                $pdo->exec($sql);
+            }
+        } else {
+            $colsStmt = $pdo->query("SHOW COLUMNS FROM `{$table}` LIKE '{$column}'");
+            if ($colsStmt->rowCount() === 0) {
+                $pdo->exec($sql);
+            }
+        }
+    }
+
+    if ($driver === 'mysql') {
+        @$pdo->exec("ALTER TABLE articles MODIFY COLUMN featured_image TEXT NULL");
     }
 
     echo "\n-------------------------------------------\n";

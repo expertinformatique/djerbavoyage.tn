@@ -192,16 +192,27 @@
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <?php $isLiveMode = ($settings->get('stripe_mode', $_ENV['STRIPE_MODE'] ?? 'test') === 'live'); ?>
     <div class="p-3.5 bg-slate-50 dark:bg-slate-800/40 rounded-lg border border-slate-200/70 dark:border-slate-800 flex items-center justify-between">
       <div>
         <span class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">Mode Traitement</span>
         <span class="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1.5 mt-0.5">
-          <span class="w-2 h-2 rounded-full bg-amber-400"></span> Mode Test (Sandbox)
+          <?php if ($isLiveMode): ?>
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Production (Live)
+          <?php else: ?>
+            <span class="w-2 h-2 rounded-full bg-amber-400"></span> Mode Test (Sandbox)
+          <?php endif; ?>
         </span>
       </div>
-      <span class="px-2 py-0.5 text-[10px] font-bold bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300 rounded">
-        Stripe Test
-      </span>
+      <?php if ($isLiveMode): ?>
+        <span class="px-2 py-0.5 text-[10px] font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300 rounded">
+          Stripe Live
+        </span>
+      <?php else: ?>
+        <span class="px-2 py-0.5 text-[10px] font-bold bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300 rounded">
+          Stripe Test
+        </span>
+      <?php endif; ?>
     </div>
 
     <div class="p-3.5 bg-slate-50 dark:bg-slate-800/40 rounded-lg border border-slate-200/70 dark:border-slate-800 flex items-center justify-between">

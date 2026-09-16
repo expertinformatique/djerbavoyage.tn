@@ -154,6 +154,12 @@ $container->bind(ContactService::class, fn() => $contactService);
 $personalizedPdfService = new \App\Services\PersonalizedPdfService();
 $container->bind(\App\Services\PersonalizedPdfService::class, fn() => $personalizedPdfService);
 $container->bind(\App\Services\SpamProtectionService::class, fn() => $spamService);
+$articlePdfService = new \App\Services\ArticlePdfService();
+$container->bind(\App\Services\ArticlePdfService::class, fn() => $articlePdfService);
+$djerbaContextFetcher = new \App\Services\DjerbaContextFetcherService();
+$container->bind(\App\Services\DjerbaContextFetcherService::class, fn() => $djerbaContextFetcher);
+$aiArticleGenerator = new \App\Services\AiArticleGeneratorService($djerbaContextFetcher, new PdoArticleRepository($pdo));
+$container->bind(\App\Services\AiArticleGeneratorService::class, fn() => $aiArticleGenerator);
 
 // 3. Configuration des Routes
 $router = new Router();
@@ -170,12 +176,15 @@ $router->post('/api/services/update-airport', [App\Controllers\LocalServicesCont
 $router->post('/api/ai-lead/submit', [App\Controllers\AiLeadController::class, 'submit']);
 $router->get('/pdf/preview', [App\Controllers\PersonalizedPdfController::class, 'preview']);
 $router->post('/api/pdf/personalized-order', [App\Controllers\PersonalizedPdfController::class, 'submitOrder']);
+$router->get('/api/auto-blog/generate', [App\Controllers\AutoBlogController::class, 'generate']);
+$router->post('/api/auto-blog/generate', [App\Controllers\AutoBlogController::class, 'generate']);
 
 // SEO & Indexation Routes
 $router->get('/sitemap.xml', [App\Controllers\SitemapController::class, 'sitemap']);
 $router->get('/robots.txt', [App\Controllers\SitemapController::class, 'robots']);
 
 $router->get('/guide', [App\Controllers\GuideController::class, 'index']);
+$router->get('/guide/{slug}/pdf', [App\Controllers\GuideController::class, 'pdf']);
 $router->get('/guide/{slug}', [App\Controllers\GuideController::class, 'show']);
 $router->get('/destinations/{slug}', [App\Controllers\DestinationController::class, 'show']);
 $router->get('/shop', [App\Controllers\ShopController::class, 'index']);
