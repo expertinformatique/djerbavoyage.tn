@@ -56,7 +56,15 @@ try {
         $queries = array_filter(array_map('trim', explode(';', $sql)));
         foreach ($queries as $query) {
             if (!empty($query)) {
-                $pdo->exec($query);
+                try {
+                    $pdo->exec($query);
+                } catch (\PDOException $qe) {
+                    if (str_contains($qe->getMessage(), 'Duplicate column') || str_contains($qe->getMessage(), 'already exists')) {
+                        // Idempotent: colonne déjà présente
+                    } else {
+                        throw $qe;
+                    }
+                }
             }
         }
 
