@@ -114,4 +114,29 @@ class AutoBlogTest extends TestCase {
         $this->assertEquals('images/service_kitesurf.jpg', $imgKitesurf);
         $this->assertNotEquals($imgDesert, $imgKitesurf);
     }
+
+    public function testCleanTitleRemovesHourAndPrefixesAndKeepsDjerbaKeyword(): void {
+        $fetcher = new DjerbaContextFetcherService();
+        $generator = new AiArticleGeneratorService($fetcher, $this->repo);
+
+        $input1 = "Djerba ce jour (22:00) : Excursion Désert, Buggy & Quad depuis Djerba sous 31°C";
+        $clean1 = $generator->cleanTitle($input1);
+        $this->assertEquals("Excursion Désert, Buggy & Quad depuis Djerba sous 31°C", $clean1);
+        $this->assertFalse(str_contains($clean1, '22:00'));
+        $this->assertFalse(str_contains($clean1, 'ce jour'));
+        $this->assertTrue((bool) preg_match('/djerba/i', $clean1));
+
+        $input2 = "Djerba : Météo, Plages & Baignade à Djerba sous 27°C";
+        $clean2 = $generator->cleanTitle($input2);
+        $this->assertEquals("Météo, Plages & Baignade à Djerba sous 27°C", $clean2);
+
+        $input3 = "Évasion à Djerba : Kitesurf et Jet Ski sous 28°C";
+        $clean3 = $generator->cleanTitle($input3);
+        $this->assertTrue((bool) preg_match('/djerba/i', $clean3));
+        $this->assertFalse(str_starts_with($clean3, 'Évasion à Djerba :'));
+
+        $input4 = "Kitesurf, Jet Ski & Sports Nautiques sous 28°C";
+        $clean4 = $generator->cleanTitle($input4);
+        $this->assertEquals("Kitesurf, Jet Ski & Sports Nautiques sous 28°C à Djerba", $clean4);
+    }
 }

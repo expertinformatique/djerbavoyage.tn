@@ -84,18 +84,27 @@ try {
         echo "✅ OK\n";
     }
 
-    // Nettoyer les heures résiduelles dans les titres existants des articles
-    $stmt = $pdo->query("SELECT id, title_fr FROM articles WHERE title_fr LIKE '%:%' OR title_fr LIKE '%(%'");
+    // Nettoyer les heures résiduelles et préfixes dans les titres existants des articles
+    $stmt = $pdo->query("SELECT id, title_fr, title_en FROM articles WHERE title_fr LIKE '%ce jour%' OR title_fr LIKE 'Djerba :%' OR title_fr LIKE 'Évasion à Djerba :%' OR title_fr LIKE 'Voyager à Djerba :%' OR title_fr LIKE 'Guide Djerba :%' OR title_fr LIKE '%(%'");
     $articles = $stmt ? $stmt->fetchAll(PDO::FETCH_ASSOC) : [];
-    $upd = $pdo->prepare("UPDATE articles SET title_fr = ? WHERE id = ?");
+    if ($stmt) $stmt->closeCursor();
+    $cleanFn = function(string $title, bool $isEn = false): string {
+        $title = preg_replace('/\s*\(\s*\d{1,2}[:h]\d{2}\s*\)\s*/iu', ' ', $title);
+        $title = preg_replace('/\b\d{1,2}[:h]\d{2}\b/iu', '', $title);
+        $title = preg_replace('/^(\s*djerba\s+)?(ce\s+jour|aujourd\'hui|today)\s*:\s*/iu', '', $title);
+        $title = preg_replace('/^(djerba|évasion\s+à\s+djerba|voyager\s+à\s+djerba|guide\s+djerba|djerba\s+guide|djerba\s+getaway|djerba\s+travel)\s*:\s*/iu', '', $title);
+        $title = trim(preg_replace('/^[\s:\-]+|[\s:\-]+$/u', '', $title));
+        if (!empty($title) && !preg_match('/djerba|djerbien/iu', $title)) {
+            $title .= $isEn ? ' in Djerba' : ' à Djerba';
+        }
+        return preg_replace('/\s{2,}/', ' ', $title);
+    };
+    $upd = $pdo->prepare("UPDATE articles SET title_fr = ?, title_en = ? WHERE id = ?");
     foreach ($articles as $art) {
-        $cleaned = preg_replace('/\s*ce jour\s*\(\d{1,2}[:h]\d{2}\)\s*:\s*/i', ' : ', $art['title_fr']);
-        $cleaned = preg_replace('/\s*\(\d{1,2}[:h]\d{2}\)\s*/i', ' ', $cleaned);
-        $cleaned = preg_replace('/\s*ce jour\s*:\s*/i', ' : ', $cleaned);
-        $cleaned = preg_replace('/\s+/', ' ', trim($cleaned));
-        $cleaned = ltrim($cleaned, ' :');
-        if (!empty($cleaned) && $cleaned !== $art['title_fr']) {
-            $upd->execute([$cleaned, $art['id']]);
+        $cleanedFr = $cleanFn($art['title_fr'] ?? '');
+        $cleanedEn = !empty($art['title_en']) ? $cleanFn($art['title_en'], true) : $art['title_en'];
+        if ($cleanedFr !== $art['title_fr'] || $cleanedEn !== $art['title_en']) {
+            $upd->execute([$cleanedFr, $cleanedEn, $art['id']]);
         }
     }
 

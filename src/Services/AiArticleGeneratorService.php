@@ -25,15 +25,10 @@ class AiArticleGeneratorService {
             $articleData = $this->generateFallbackArticle($context);
         }
 
-        // Nettoyage strict : interdiction de l'heure dans le titre
-        $cleanT = fn(string $t, bool $en = false) => ltrim(preg_replace('/\s+/', ' ', trim(preg_replace(
-            $en ? '/\s*today\s*(\(\d{1,2}[:h]\d{2}\))?\s*:\s*|\s*\(\d{1,2}[:h]\d{2}\)\s*/i' : '/\s*ce jour\s*(\(\d{1,2}[:h]\d{2}\))?\s*:\s*|\s*\(\d{1,2}[:h]\d{2}\)\s*/i',
-            ' : ',
-            $t
-        ))), ' :');
-        $articleData['title_fr'] = $cleanT($articleData['title_fr']);
+        // Nettoyage strict : titre épuré avec mot-clé Djerba, sans préfixe "ce jour" ni heure
+        $articleData['title_fr'] = $this->cleanTitle($articleData['title_fr']);
         if (!empty($articleData['title_en'])) {
-            $articleData['title_en'] = $cleanT($articleData['title_en'], true);
+            $articleData['title_en'] = $this->cleanTitle($articleData['title_en'], true);
         }
 
         // Generation de Slug unique
@@ -44,15 +39,9 @@ class AiArticleGeneratorService {
         $imagePrompt = $articleData['image_prompt'] ?? ($context['angle']['image_prompt'] ?? '');
         $featuredImage = $this->imageService->generateForArticle($imagePrompt, $uniqueSlug, $context);
 
-        $summaryAi = $articleData['summary_ai'] ?? null;
-        if (is_array($summaryAi)) {
-            $summaryAi = "• " . implode("\n• ", $summaryAi);
-        }
-
-        $metaKeywords = $articleData['meta_keywords'] ?? null;
-        if (is_array($metaKeywords)) {
-            $metaKeywords = implode(', ', $metaKeywords);
-        }
+        $summaryAi = is_array($articleData['summary_ai'] ?? null) ? "• " . implode("\n• ", $articleData['summary_ai']) : ($articleData['summary_ai'] ?? null);
+        $metaKeywords = is_array($articleData['meta_keywords'] ?? null) ? implode(', ', $articleData['meta_keywords']) : ($articleData['meta_keywords'] ?? null);
+        $seoDesc = is_array($articleData['seo_description'] ?? null) ? implode(' ', $articleData['seo_description']) : ($articleData['seo_description'] ?? null);
 
         $article = new Article(
             id: null,
@@ -66,14 +55,14 @@ class AiArticleGeneratorService {
             status: 'published',
             viewsCount: rand(15, 85),
             publishedAt: date('Y-m-d H:i:s'),
-            seoDescription: is_array($articleData['seo_description'] ?? null) ? implode(' ', $articleData['seo_description']) : ($articleData['seo_description'] ?? null),
+            seoDescription: $seoDesc,
             metaKeywords: $metaKeywords,
             summaryAi: $summaryAi,
             schemaJson: json_encode([
                 '@context' => 'https://schema.org',
                 '@type' => 'BlogPosting',
                 'headline' => $articleData['title_fr'],
-                'description' => is_array($articleData['seo_description'] ?? null) ? implode(' ', $articleData['seo_description']) : ($articleData['seo_description'] ?? ''),
+                'description' => $seoDesc ?? '',
                 'image' => $featuredImage,
                 'author' => ['@type' => 'Person', 'name' => 'IA Voyageur Djerba'],
                 'publisher' => ['@type' => 'Organization', 'name' => 'Djerba Voyage'],
@@ -96,8 +85,8 @@ class AiArticleGeneratorService {
             . "Thème: {$angle['theme']}\n"
             . "Météo actuelle à Djerba: {$weather['temp_c']}°C, {$weather['condition']}, vent {$weather['wind_speed']} km/h.\n"
             . "Format de réponse JSON strict avec les clés suivantes :\n"
-            . "- title_fr: Titre accrocheur et incitatif (IMPORTANT: ne JAMAIS mentionner d'heure comme '14:30', '(21:55)' ou 'ce jour' dans le titre)\n"
-            . "- title_en: Titre traduit en anglais (NEVER include timestamps or hours in title)\n"
+            . "- title_fr: Titre direct avec le mot-clé 'Djerba' (Ex: 'Excursion Désert, Buggy & Quad depuis Djerba sous {$weather['temp_c']}°C'). RÈGLE STRICTE: Ne JAMAIS mettre de préfixe comme 'Djerba :', 'Djerba ce jour :', 'Évasion à Djerba :' ni aucune heure ou horodatage.\n"
+            . "- title_en: Direct English title with keyword 'Djerba'. NEVER include prefixes or timestamps.\n"
             . "- content_fr: HTML complet de l'article avec <h2>, <h3>, <p>, <ul>, <li> et des appels à l'action vers la réservation d'excursions à Djerba\n"
             . "- content_en: Version anglaise condensée du contenu\n"
             . "- seo_description: Description Meta de 150 caractères\n"
@@ -146,18 +135,22 @@ class AiArticleGeneratorService {
     private function generateFallbackArticle(array $context): array {
         $weather = $context['weather'];
         $angle = $context['angle'];
-
+        $theme = $angle['theme'];
+        if (!preg_match('/djerba|djerbien/iu', $theme)) {
+            $theme .= ' à Djerba';
+        }
         $templatesFr = [
-            "Djerba : {$angle['theme']} sous {$weather['temp_c']}°C",
-            "Guide Djerba : Tout savoir sur {$angle['theme']}",
-            "Évasion à Djerba : {$angle['theme']} sous le soleil ({$weather['temp_c']}°C)",
-            "Voyager à Djerba : {$angle['theme']} et météo {$weather['condition']}"
+            "{$theme} sous {$weather['temp_c']}°C",
+            "Guide {$theme} : Tout savoir",
+            "{$theme} sous le soleil ({$weather['temp_c']}°C)",
+            "{$theme} et météo {$weather['condition']}"
         ];
+        $themeEn = preg_match('/djerba/iu', $angle['theme']) ? $angle['theme'] : $angle['theme'] . ' in Djerba';
         $templatesEn = [
-            "Djerba: {$angle['theme']} under {$weather['temp_c']}°C",
-            "Djerba Guide: Explore {$angle['theme']}",
-            "Djerba Getaway: {$angle['theme']} with {$weather['temp_c']}°C weather",
-            "Djerba Travel: Best tips for {$angle['theme']}"
+            "{$themeEn} under {$weather['temp_c']}°C",
+            "Guide to {$themeEn}: Everything to know",
+            "{$themeEn} under the sun ({$weather['temp_c']}°C)",
+            "{$themeEn} and {$weather['condition']} weather"
         ];
 
         $idx = abs(crc32($angle['theme'] . date('YmdH'))) % count($templatesFr);
@@ -167,12 +160,7 @@ class AiArticleGeneratorService {
         $contentFr = "<p class='lead'>En ce moment à Djerba, le thermomètre affiche <strong>{$weather['temp_c']}°C</strong> avec un temps <em>{$weather['condition']}</em>. C'est le moment parfait pour explorer l'île aux sables d'or !</p>";
         $contentFr .= "<h2>Pourquoi visiter Djerba aujourd'hui ?</h2>";
         $contentFr .= "<p>L'île de Djerba offre une expérience unique mêlant détente balnéaire, aventures sahariennes et patrimoine millénaire. Que vous souhaitiez piloter un quad dans les pistes oasiennes, rider en kitesurf sur la lagune turquoise ou vous détendre sur le sable fin de Sidi Mahres, l'île réserve des moments magiques aux voyageurs.</p>";
-
-        $contentFr .= "<div class='c-article-tip'>";
-        $contentFr .= "<h3>💡 Conseil d'expert Djerba Voyage</h3>";
-        $contentFr .= "<p>Pensez à planifier vos excursions et vos transferts aéroport à l'avance. Cela vous garantit les meilleurs guides certifiés et une prise en charge VIP dès votre atterrissage.</p>";
-        $contentFr .= "</div>";
-
+        $contentFr .= "<div class='c-article-tip'><h3>💡 Conseil d'expert Djerba Voyage</h3><p>Pensez à planifier vos excursions et vos transferts aéroport à l'avance.</p></div>";
         $contentFr .= "<h2>Les temps forts & suggestions d'itinéraires</h2><ul>";
         foreach ($angle['keywords'] as $kw) {
             $contentFr .= "<li><strong>" . ucfirst($kw) . "</strong> : Une étape incontournable pour vivre pleinement l'expérience djerbienne.</li>";
@@ -190,6 +178,18 @@ class AiArticleGeneratorService {
             'image_prompt' => $angle['image_prompt'] ?? "scenic photography of {$angle['theme']} in Djerba Tunisia, Mediterranean lighting",
             'cta_services' => $angle['suggested_services']
         ];
+    }
+
+    public function cleanTitle(string $title, bool $isEn = false): string {
+        $title = preg_replace('/\s*\(\s*\d{1,2}[:h]\d{2}\s*\)\s*/iu', ' ', $title);
+        $title = preg_replace('/\b\d{1,2}[:h]\d{2}\b/iu', '', $title);
+        $title = preg_replace('/^(\s*djerba\s+)?(ce\s+jour|aujourd\'hui|today)\s*:\s*/iu', '', $title);
+        $title = preg_replace('/^(djerba|évasion\s+à\s+djerba|voyager\s+à\s+djerba|guide\s+djerba|djerba\s+guide|djerba\s+getaway|djerba\s+travel)\s*:\s*/iu', '', $title);
+        $title = trim(preg_replace('/^[\s:\-]+|[\s:\-]+$/u', '', $title));
+        if (!empty($title) && !preg_match('/djerba|djerbien/iu', $title)) {
+            $title .= $isEn ? ' in Djerba' : ' à Djerba';
+        }
+        return preg_replace('/\s{2,}/', ' ', $title);
     }
 
     private function slugify(string $text): string {
