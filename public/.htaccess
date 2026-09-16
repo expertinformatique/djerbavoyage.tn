@@ -1,6 +1,9 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
+    # Redirection transparente des images demandées sur /images/... vers /assets/images/...
+    RewriteRule ^images/(.*)$ assets/images/$1 [L]
+
     # Rediriger vers index.php si ce n'est pas un fichier ou dossier existant
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d

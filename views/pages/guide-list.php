@@ -20,7 +20,7 @@
       <article class="c-blog-card">
         <?php if (!empty($art->featuredImage)): ?>
           <div class="c-blog-card__media">
-            <img src="<?= htmlspecialchars($art->featuredImage, ENT_QUOTES, 'UTF-8') ?>" 
+            <img src="<?= e(asset($art->featuredImage)) ?>" 
                  alt="<?= htmlspecialchars($art->titleFr, ENT_QUOTES, 'UTF-8') ?>" 
                  class="c-blog-card__img" 
                  loading="lazy" />

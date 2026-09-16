@@ -5,10 +5,21 @@
 
 if (!function_exists('asset')) {
     function asset(string $path): string {
+        if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://') || str_starts_with($path, '//')) {
+            return $path;
+        }
+
         $cleanPath = ltrim($path, '/');
         if (strpos($cleanPath, 'assets/') === 0) {
             $cleanPath = substr($cleanPath, 7);
         }
+
+        if (!str_starts_with($cleanPath, 'images/') && !str_starts_with($cleanPath, 'css/') && !str_starts_with($cleanPath, 'js/')) {
+            if (file_exists(__DIR__ . '/../public/assets/images/' . $cleanPath)) {
+                $cleanPath = 'images/' . $cleanPath;
+            }
+        }
+
         $fullPath = __DIR__ . '/../public/assets/' . $cleanPath;
         $v = file_exists($fullPath) ? filemtime($fullPath) : '1.0.0';
 

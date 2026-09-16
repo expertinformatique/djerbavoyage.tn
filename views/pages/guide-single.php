@@ -30,7 +30,7 @@
     <!-- Image Hero -->
     <?php if (!empty($article->featuredImage)): ?>
       <div class="c-article-hero-media">
-        <img src="<?= htmlspecialchars($article->featuredImage, ENT_QUOTES, 'UTF-8') ?>" 
+        <img src="<?= e(asset($article->featuredImage)) ?>" 
              alt="<?= htmlspecialchars($article->titleFr, ENT_QUOTES, 'UTF-8') ?>" 
              class="c-article-hero-img" 
              loading="lazy" />

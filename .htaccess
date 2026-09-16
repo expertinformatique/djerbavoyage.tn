@@ -7,6 +7,9 @@
     # Si la requête cible déjà le dossier public, ne pas réécrire
     RewriteRule ^public(/.*)?$ - [L]
 
+    # Redirection transparente des images demandées sur /images/... vers public/assets/images/...
+    RewriteRule ^images/(.*)$ public/assets/images/$1 [L]
+
     # Réécriture transparente de la racine vers le dossier /public/
     RewriteRule ^(.*)$ public/$1 [L]
 </IfModule>
