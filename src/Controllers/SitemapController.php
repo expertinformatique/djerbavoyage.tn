@@ -15,8 +15,22 @@ class SitemapController extends Controller {
 
     public function sitemap(): void {
         header('Content-Type: application/xml; charset=utf-8');
+        echo $this->generateXml();
+        exit;
+    }
 
-        $baseUrl = rtrim(absolute_url(''), '/');
+    public function robots(): void {
+        header('Content-Type: text/plain; charset=utf-8');
+        echo $this->generateRobots();
+        exit;
+    }
+
+    public function generateXml(?string $domain = null): string {
+        $baseUrl = $domain ? rtrim($domain, '/') : rtrim(function_exists('absolute_url') ? absolute_url('') : 'https://djerbavoyage.tn', '/');
+        if (empty($baseUrl) || str_contains($baseUrl, 'localhost') || str_contains($baseUrl, '127.0.0.1')) {
+            $baseUrl = 'https://djerbavoyage.tn';
+        }
+
         $currentDate = date('Y-m-d');
 
         $staticPages = [
@@ -43,11 +57,11 @@ class SitemapController extends Controller {
         $destinations = ['houmt-souk', 'sidi-mahres', 'djerbahood-erriadh', 'aghir', 'guellala', 'ajim-el-melga'];
 
         $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
-        $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
+        $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">' . "\n";
 
         foreach ($staticPages as $path => $meta) {
             $xml .= "  <url>\n";
-            $xml .= "    <loc>" . htmlspecialchars($baseUrl . $path) . "</loc>\n";
+            $xml .= "    <loc>" . htmlspecialchars($baseUrl . $path, ENT_QUOTES, 'UTF-8') . "</loc>\n";
             $xml .= "    <lastmod>{$currentDate}</lastmod>\n";
             $xml .= "    <changefreq>{$meta['freq']}</changefreq>\n";
             $xml .= "    <priority>{$meta['priority']}</priority>\n";
@@ -55,17 +69,37 @@ class SitemapController extends Controller {
         }
 
         foreach ($articles as $art) {
+            $date = !empty($art->publishedAt) ? date('Y-m-d', strtotime($art->publishedAt)) : (!empty($art->createdAt) ? date('Y-m-d', strtotime($art->createdAt)) : $currentDate);
             $xml .= "  <url>\n";
-            $xml .= "    <loc>" . htmlspecialchars($baseUrl . '/guide/' . $art->slug) . "</loc>\n";
-            $xml .= "    <lastmod>" . substr($art->createdAt ?? $currentDate, 0, 10) . "</lastmod>\n";
+            $xml .= "    <loc>" . htmlspecialchars($baseUrl . '/guide/' . $art->slug, ENT_QUOTES, 'UTF-8') . "</loc>\n";
+            $xml .= "    <lastmod>{$date}</lastmod>\n";
             $xml .= "    <changefreq>weekly</changefreq>\n";
-            $xml .= "    <priority>0.7</priority>\n";
+            $xml .= "    <priority>0.8</priority>\n";
+
+            if (!empty($art->featuredImage)) {
+                $imgUrl = str_starts_with($art->featuredImage, 'http') ? $art->featuredImage : $baseUrl . '/' . ltrim($art->featuredImage, '/');
+                $title = htmlspecialchars($art->titleFr ?? 'Guide Djerba Voyage', ENT_QUOTES, 'UTF-8');
+                $xml .= "    <image:image>\n";
+                $xml .= "      <image:loc>" . htmlspecialchars($imgUrl, ENT_QUOTES, 'UTF-8') . "</image:loc>\n";
+                $xml .= "      <image:title>{$title}</image:title>\n";
+                $xml .= "    </image:image>\n";
+            }
+
             $xml .= "  </url>\n";
+
+            if (!empty($art->pdfEnabled)) {
+                $xml .= "  <url>\n";
+                $xml .= "    <loc>" . htmlspecialchars($baseUrl . '/guide/' . $art->slug . '/pdf', ENT_QUOTES, 'UTF-8') . "</loc>\n";
+                $xml .= "    <lastmod>{$date}</lastmod>\n";
+                $xml .= "    <changefreq>monthly</changefreq>\n";
+                $xml .= "    <priority>0.5</priority>\n";
+                $xml .= "  </url>\n";
+            }
         }
 
         foreach ($destinations as $dest) {
             $xml .= "  <url>\n";
-            $xml .= "    <loc>" . htmlspecialchars($baseUrl . '/destinations/' . $dest) . "</loc>\n";
+            $xml .= "    <loc>" . htmlspecialchars($baseUrl . '/destinations/' . $dest, ENT_QUOTES, 'UTF-8') . "</loc>\n";
             $xml .= "    <lastmod>{$currentDate}</lastmod>\n";
             $xml .= "    <changefreq>weekly</changefreq>\n";
             $xml .= "    <priority>0.8</priority>\n";
@@ -73,20 +107,22 @@ class SitemapController extends Controller {
         }
 
         $xml .= '</urlset>';
-        echo $xml;
-        exit;
+        return $xml;
     }
 
-    public function robots(): void {
-        header('Content-Type: text/plain; charset=utf-8');
-        $baseUrl = rtrim(absolute_url(''), '/');
+    public function generateRobots(?string $domain = null): string {
+        $baseUrl = $domain ? rtrim($domain, '/') : rtrim(function_exists('absolute_url') ? absolute_url('') : 'https://djerbavoyage.tn', '/');
+        if (empty($baseUrl) || str_contains($baseUrl, 'localhost') || str_contains($baseUrl, '127.0.0.1')) {
+            $baseUrl = 'https://djerbavoyage.tn';
+        }
 
-        echo "User-agent: *\n";
-        echo "Allow: /\n";
-        echo "Disallow: /admin/\n";
-        echo "Disallow: /api/\n";
-        echo "Disallow: /download\n";
-        echo "\nSitemap: {$baseUrl}/sitemap.xml\n";
-        exit;
+        $robots = "User-agent: *\n";
+        $robots .= "Allow: /\n";
+        $robots .= "Disallow: /admin/\n";
+        $robots .= "Disallow: /api/\n";
+        $robots .= "Disallow: /download\n";
+        $robots .= "\nSitemap: {$baseUrl}/sitemap.xml\n";
+
+        return $robots;
     }
 }

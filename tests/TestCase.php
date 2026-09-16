@@ -99,5 +99,12 @@ if (!class_exists('PHPUnit\Framework\TestCase')) {
                 throw new \Exception($message ?: "Échec : '$needle' n'est pas dans le tableau");
             }
         }
+
+        protected function assertStringContainsString(string $needle, string $haystack, string $message = ''): void {
+            self::$assertionsCount++;
+            if (!str_contains($haystack, $needle)) {
+                throw new \Exception($message ?: "Échec : Le texte ne contient pas '$needle'");
+            }
+        }
     }
 }
