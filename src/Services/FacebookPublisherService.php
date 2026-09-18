@@ -16,20 +16,23 @@ class FacebookPublisherService {
             return ['published' => false, 'reason' => 'Publication Facebook désactivée'];
         }
 
-        $pageId = $this->getConfig('fb_page_id', $_ENV['FB_PAGE_ID'] ?? 'photo.djerba');
-        $token = $this->getConfig('fb_page_access_token', $_ENV['FB_PAGE_ACCESS_TOKEN'] ?? '');
+        $pageId = $this->getConfig('fb_page_id', $_ENV['FB_PAGE_ID'] ?? '136561653049793');
+        $rawToken = $this->getConfig('fb_page_access_token', $_ENV['FB_PAGE_ACCESS_TOKEN'] ?? '');
 
-        if (empty($token)) {
+        if (empty($rawToken)) {
             $this->log("Jeton d'accès (FB_PAGE_ACCESS_TOKEN) non renseigné. Publication ignorée.");
             return ['published' => false, 'reason' => 'Jeton d\'accès Facebook manquant'];
         }
 
+        $token = $this->resolvePageAccessToken($rawToken, $pageId);
         $message = $this->buildMessage($article);
         $articleUrl = 'https://djerbavoyage.tn/guide/' . $article->slug;
         $imageUrl = $this->resolveImageUrl($article->featuredImage);
 
         try {
-            // 1. Essai de publication sous forme de photo HD avec légende (meilleur engagement visuel)
+            $lastError = null;
+
+            // 1. Essai de publication sous forme de photo HD avec légende
             if (!empty($imageUrl)) {
                 $photoRes = $this->postPhoto($pageId, $token, $imageUrl, $message);
                 if (!empty($photoRes['id'])) {
@@ -40,6 +43,7 @@ class FacebookPublisherService {
                         'page_id'   => $pageId
                     ];
                 }
+                $lastError = $photoRes['error']['message'] ?? null;
             }
 
             // 2. Fallback publication sous forme de lien sur le fil d'actualité
@@ -52,8 +56,9 @@ class FacebookPublisherService {
                     'page_id'   => $pageId
                 ];
             }
+            $lastError = $lastError ?? ($feedRes['error']['message'] ?? 'Réponse API Facebook inattendue');
 
-            return ['published' => false, 'reason' => 'Réponse API Facebook inattendue'];
+            return ['published' => false, 'error' => $lastError];
         } catch (\Throwable $e) {
             $this->log("Erreur lors de la publication Facebook : " . $e->getMessage());
             return ['published' => false, 'error' => $e->getMessage()];
@@ -150,6 +155,29 @@ class FacebookPublisherService {
             }
         }
         return $default;
+    }
+
+    public function resolvePageAccessToken(string $token, string $pageId): string {
+        $ch = curl_init(self::BASE_URL . '/me/accounts?access_token=' . urlencode($token));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 8);
+        $res = curl_exec($ch);
+        curl_close($ch);
+
+        if ($res) {
+            $data = json_decode($res, true);
+            if (!empty($data['data']) && is_array($data['data'])) {
+                foreach ($data['data'] as $page) {
+                    if (($page['id'] ?? '') === $pageId || strcasecmp($page['name'] ?? '', $pageId) === 0) {
+                        return $page['access_token'] ?? $token;
+                    }
+                }
+                if (count($data['data']) === 1 && !empty($data['data'][0]['access_token'])) {
+                    return $data['data'][0]['access_token'];
+                }
+            }
+        }
+        return $token;
     }
 
     private function log(string $msg): void {
