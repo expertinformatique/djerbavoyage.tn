@@ -163,7 +163,11 @@ $djerbaContextFetcher = new \App\Services\DjerbaContextFetcherService();
 $container->bind(\App\Services\DjerbaContextFetcherService::class, fn() => $djerbaContextFetcher);
 $aiImageService = new \App\Services\AiImageService();
 $container->bind(\App\Services\AiImageService::class, fn() => $aiImageService);
-$aiArticleGenerator = new \App\Services\AiArticleGeneratorService($djerbaContextFetcher, new PdoArticleRepository($pdo), $aiImageService);
+$sitemapService = new \App\Services\SitemapService(new PdoProductRepository($pdo), $localServiceRepo, new PdoArticleRepository($pdo));
+$container->bind(\App\Services\SitemapService::class, fn() => $sitemapService);
+$facebookPublisher = new \App\Services\FacebookPublisherService($settingsService);
+$container->bind(\App\Services\FacebookPublisherService::class, fn() => $facebookPublisher);
+$aiArticleGenerator = new \App\Services\AiArticleGeneratorService($djerbaContextFetcher, new PdoArticleRepository($pdo), $aiImageService, $sitemapService, $facebookPublisher);
 $container->bind(\App\Services\AiArticleGeneratorService::class, fn() => $aiArticleGenerator);
 
 // 3. Configuration des Routes
@@ -193,6 +197,7 @@ $router->get('/guide/{slug}/pdf', [App\Controllers\GuideController::class, 'pdf'
 $router->get('/guide/{slug}', [App\Controllers\GuideController::class, 'show']);
 $router->get('/destinations/{slug}', [App\Controllers\DestinationController::class, 'show']);
 $router->get('/shop', [App\Controllers\ShopController::class, 'index']);
+$router->get('/shop/{slug}', [App\Controllers\ShopController::class, 'show']);
 $router->get('/concierge', [App\Controllers\ConciergeController::class, 'index']);
 $router->post('/api/concierge/checkout', [App\Controllers\ConciergeController::class, 'checkout']);
 $router->post('/api/checkout/session', [App\Controllers\CheckoutController::class, 'createSession']);

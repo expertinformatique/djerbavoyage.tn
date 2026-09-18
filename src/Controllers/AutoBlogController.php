@@ -26,6 +26,7 @@ class AutoBlogController extends Controller {
 
         try {
             $article = $this->generator->generateAndSave();
+            $fbResult = $this->generator->getLastFacebookResult();
 
             echo json_encode([
                 'success' => true,
@@ -36,7 +37,8 @@ class AutoBlogController extends Controller {
                     'slug' => $article->slug,
                     'image' => $article->featuredImage,
                     'published_at' => $article->publishedAt,
-                    'pdf_url' => '/guide/' . $article->slug . '/pdf'
+                    'pdf_url' => '/guide/' . $article->slug . '/pdf',
+                    'facebook' => $fbResult ?? ['published' => false, 'reason' => 'Service non initialisé']
                 ]
             ], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
         } catch (\Throwable $e) {

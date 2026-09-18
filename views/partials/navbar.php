@@ -203,68 +203,16 @@ $_currentCurrency = \Core\Currency::getCurrency();
           <span><?= __('nav.contact') ?></span>
         </a>
       </li>
+
+      <!-- Sélecteur Langue & Devise Mobile (Intégré dans le tiroir mobile) -->
+      <?php require __DIR__ . '/locale_switcher_mobile.php'; ?>
     </ul>
 
-    <!-- Groupe Actions : Sélecteur Locale + Bouton CTA + Toggle Burger Mobile -->
+    <!-- Groupe Actions : Sélecteur Locale Desktop + Bouton CTA (Desktop) + Toggle Burger Mobile -->
     <div class="c-navbar__actions">
 
-      <!-- Sélecteur Langue + Devise -->
-      <div class="c-locale-switcher" id="localeSwitcher">
-        <button type="button" class="c-locale-switcher__trigger" id="localeTrigger" aria-expanded="false" aria-haspopup="true">
-          <span class="c-locale-switcher__flag"><?= \Core\Lang::flag($_currentLang) ?></span>
-          <span class="c-locale-switcher__code"><?= strtoupper($_currentLang) ?></span>
-          <span class="c-locale-switcher__sep">|</span>
-          <span class="c-locale-switcher__currency-sym"><?= \Core\Currency::getSymbol() ?></span>
-          <i class="fi fi-rr-angle-small-down arrow"></i>
-        </button>
-
-        <div class="c-locale-switcher__dropdown" id="localeDropdown" role="dialog" aria-label="<?= __('locale.language') ?> & <?= __('locale.currency') ?>">
-          <form method="POST" action="<?= url('/api/locale') ?>" id="localeForm">
-
-            <!-- Section Langue : 1 option par ligne -->
-            <p class="c-locale-switcher__section-title"><?= __('locale.language') ?></p>
-            <div class="c-locale-switcher__options--lang" id="langOptions">
-              <?php foreach (\Core\Lang::supported() as $_lng): ?>
-              <button type="button"
-                class="c-locale-switcher__option--lang <?= $_lng === $_currentLang ? 'is-active' : '' ?>"
-                data-field="lang"
-                data-value="<?= $_lng ?>"
-                data-flag="<?= \Core\Lang::flag($_lng) ?>"
-                data-label="<?= strtoupper($_lng) ?>">
-                <span class="lang-flag"><?= \Core\Lang::flag($_lng) ?></span>
-                <span class="lang-name"><?= \Core\Lang::nativeName($_lng) ?></span>
-              </button>
-              <?php endforeach; ?>
-            </div>
-
-            <div class="c-locale-switcher__divider"></div>
-
-            <!-- Section Devise : 3 colonnes compactes -->
-            <p class="c-locale-switcher__section-title"><?= __('locale.currency') ?></p>
-            <div class="c-locale-switcher__options--currency" id="currencyOptions">
-              <?php foreach (\Core\Currency::supported() as $_cur): ?>
-              <button type="button"
-                class="c-locale-switcher__option--currency <?= $_cur === $_currentCurrency ? 'is-active' : '' ?>"
-                data-field="currency"
-                data-value="<?= $_cur ?>"
-                data-symbol="<?= \Core\Currency::getSymbol($_cur) ?>"
-                data-label="<?= $_cur ?>">
-                <span class="cur-symbol"><?= \Core\Currency::getSymbol($_cur) ?></span>
-                <span class="cur-code"><?= $_cur ?></span>
-              </button>
-              <?php endforeach; ?>
-            </div>
-
-            <input type="hidden" name="lang"     id="localeLang"     value="<?= $_currentLang ?>">
-            <input type="hidden" name="currency" id="localeCurrency" value="<?= $_currentCurrency ?>">
-
-            <button type="submit" class="c-locale-switcher__apply" id="localeApplyBtn">
-              <i class="fi fi-rr-check"></i> <?= __('locale.apply') ?>
-            </button>
-          </form>
-        </div>
-      </div>
-
+      <!-- Sélecteur Langue + Devise Desktop -->
+      <?php require __DIR__ . '/locale_switcher.php'; ?>
 
       <button data-open-modal="personalizedPdfModal" class="c-navbar__cta">
         <i class="fi fi-rr-star"></i>
@@ -279,81 +227,3 @@ $_currentCurrency = \Core\Currency::getCurrency();
 
   </div>
 </nav>
-
-<script>
-/* Locale Switcher — Toggle + sélection + mise à jour du trigger */
-(function () {
-  'use strict';
-
-  var switcher    = document.getElementById('localeSwitcher');
-  var trigger     = document.getElementById('localeTrigger');
-  var dropdown    = document.getElementById('localeDropdown');
-  var langInput   = document.getElementById('localeLang');
-  var curInput    = document.getElementById('localeCurrency');
-  var applyBtn    = document.getElementById('localeApplyBtn');
-
-  if (!trigger || !dropdown) return;
-
-  /* Éléments du trigger à mettre à jour dynamiquement */
-  var triggerFlag    = trigger.querySelector('.c-locale-switcher__flag');
-  var triggerCode    = trigger.querySelector('.c-locale-switcher__code');
-  var triggerSymbol  = trigger.querySelector('.c-locale-switcher__currency-sym');
-
-  /* ── Ouvrir / fermer ─────────────────────────── */
-  trigger.addEventListener('click', function (e) {
-    e.stopPropagation();
-    var isOpen = switcher.classList.toggle('c-locale-switcher--open');
-    trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-  });
-
-  document.addEventListener('click', function (e) {
-    if (!switcher.contains(e.target)) {
-      switcher.classList.remove('c-locale-switcher--open');
-      trigger.setAttribute('aria-expanded', 'false');
-    }
-  });
-
-  /* Fermer sur Escape */
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') {
-      switcher.classList.remove('c-locale-switcher--open');
-      trigger.setAttribute('aria-expanded', 'false');
-      trigger.focus();
-    }
-  });
-
-  /* ── Sélection d'une option ──────────────────── */
-  dropdown.addEventListener('click', function (e) {
-    var btn = e.target.closest('[data-field]');
-    if (!btn) return;
-
-    var field = btn.dataset.field;
-    var value = btn.dataset.value;
-
-    /* Mettre à jour la classe active dans le groupe */
-    dropdown.querySelectorAll('[data-field="' + field + '"]').forEach(function (b) {
-      b.classList.remove('is-active');
-    });
-    btn.classList.add('is-active');
-
-    /* Mettre à jour le champ hidden */
-    if (field === 'lang') {
-      langInput.value = value;
-      /* Mise à jour visuelle du trigger */
-      if (triggerFlag && btn.dataset.flag) triggerFlag.textContent = btn.dataset.flag;
-      if (triggerCode && btn.dataset.label) triggerCode.textContent = btn.dataset.label;
-    }
-    if (field === 'currency') {
-      curInput.value = value;
-      /* Mise à jour visuelle du trigger */
-      if (triggerSymbol && btn.dataset.symbol) triggerSymbol.textContent = btn.dataset.symbol;
-    }
-  });
-
-  /* ── Clic hors du bouton submit dans le formulaire ── */
-  applyBtn && applyBtn.addEventListener('click', function () {
-    /* Soumission naturelle du formulaire */
-  });
-
-})();
-</script>

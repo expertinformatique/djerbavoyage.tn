@@ -27,8 +27,8 @@ class AnalyticsService {
         $ipHash = hash('sha256', $ip . date('Y-m-d'));
         $sessionId = $_COOKIE['djerba_session_id'] ?? bin2hex(random_bytes(16));
 
-        if (!isset($_COOKIE['djerba_session_id'])) {
-            setcookie('djerba_session_id', $sessionId, time() + 86400 * 30, '/');
+        if (!isset($_COOKIE['djerba_session_id']) && !headers_sent()) {
+            @setcookie('djerba_session_id', $sessionId, time() + 86400 * 30, '/');
         }
 
         try {

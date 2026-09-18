@@ -6,11 +6,14 @@ use App\Repositories\PdoArticleRepository;
 
 class AiArticleGeneratorService {
     private AiImageService $imageService;
+    private ?array $lastFacebookResult = null;
 
     public function __construct(
         private DjerbaContextFetcherService $contextFetcher,
         private PdoArticleRepository $articleRepo,
-        ?AiImageService $imageService = null
+        ?AiImageService $imageService = null,
+        private ?SitemapService $sitemapService = null,
+        private ?FacebookPublisherService $facebookPublisher = null
     ) {
         $this->imageService = $imageService ?? new AiImageService();
     }
@@ -74,7 +77,18 @@ class AiArticleGeneratorService {
             authorName: 'IA Voyageur Djerba'
         );
 
-        return $this->articleRepo->save($article);
+        $saved = $this->articleRepo->save($article);
+        $this->sitemapService?->regenerateFile();
+
+        if ($this->facebookPublisher !== null) {
+            $this->lastFacebookResult = $this->facebookPublisher->publishArticle($saved);
+        }
+
+        return $saved;
+    }
+
+    public function getLastFacebookResult(): ?array {
+        return $this->lastFacebookResult;
     }
 
     private function generateWithGemini(string $apiKey, array $context): array {

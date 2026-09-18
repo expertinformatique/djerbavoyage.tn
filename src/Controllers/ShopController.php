@@ -16,10 +16,8 @@ class ShopController extends Controller {
     public function index(): void {
         $this->analytics->trackPageView('/shop');
         $products = $this->productRepo->getAllActive();
-
         $domain = rtrim(absolute_url(''), '/');
 
-        // Génération Schema.org JSON-LD Structuré pour Google Search
         $itemListElement = [];
         foreach ($products as $index => $prod) {
             $itemListElement[] = [
@@ -38,7 +36,7 @@ class ShopController extends Controller {
                         'price' => number_format($prod->priceEur, 2, '.', ''),
                         'priceCurrency' => 'EUR',
                         'availability' => 'https://schema.org/InStock',
-                        'url' => $domain . '/shop'
+                        'url' => $domain . '/shop/' . $prod->slug
                     ],
                     'aggregateRating' => [
                         '@type' => 'AggregateRating',
@@ -62,6 +60,50 @@ class ShopController extends Controller {
             'products'       => $products,
             'settings'       => $this->settings,
             'jsonLd'         => $jsonLd
+        ]);
+    }
+
+    public function show(string $slug): void {
+        $product = $this->productRepo->findBySlug($slug);
+        if (!$product) {
+            $this->redirect('/shop');
+            return;
+        }
+
+        $this->analytics->trackPageView('/shop/' . $slug);
+        $products = $this->productRepo->getAllActive();
+        $domain = rtrim(absolute_url(''), '/');
+
+        $jsonLd = '<script type="application/ld+json">' . json_encode([
+            '@context' => 'https://schema.org',
+            '@type'    => 'Product',
+            'name'     => $product->titleFr,
+            'description' => 'Guide touristique numérique Djerba 2026 avec carte GPS, itinéraires détaillés et conseils d\'experts localisés.',
+            'brand'    => [
+                '@type' => 'Brand',
+                'name'  => 'Djerba Voyage'
+            ],
+            'offers'   => [
+                '@type' => 'Offer',
+                'price' => number_format($product->priceEur, 2, '.', ''),
+                'priceCurrency' => 'EUR',
+                'availability' => 'https://schema.org/InStock',
+                'url' => $domain . '/shop/' . $product->slug
+            ],
+            'aggregateRating' => [
+                '@type' => 'AggregateRating',
+                'ratingValue' => '4.9',
+                'reviewCount' => '128'
+            ]
+        ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) . '</script>';
+
+        $this->render('pages/shop', [
+            'seoTitle'        => htmlspecialchars($product->titleFr) . ' | Boutique Djerba Voyage',
+            'seoDescription'  => 'Commandez le ' . htmlspecialchars($product->titleFr) . ' pour ' . number_format($product->priceEur, 2) . ' €. Téléchargement immédiat sécurisé.',
+            'products'        => $products,
+            'selectedProduct' => $product,
+            'settings'        => $this->settings,
+            'jsonLd'          => $jsonLd
         ]);
     }
 }

@@ -87,14 +87,18 @@
                 $catTag = 'audio';
                 $thumbImage = 'shop_audio_guide.jpg';
             }
+
+            $isSelected = isset($selectedProduct) && $selectedProduct->id === $prod->id;
+            $cardBorder = $isSelected ? 'border: 2px solid #F59E0B; box-shadow: 0 10px 30px rgba(245, 158, 11, 0.25);' : 'border: 1px solid var(--clr-sand-300); box-shadow: 0 4px 15px rgba(0,0,0,0.04);';
         ?>
             <article class="c-card product-item" 
+                     id="product-<?= e($prod->slug) ?>"
                      data-id="<?= $prod->id ?>"
                      data-title="<?= e($titleLower) ?>" 
                      data-display-title="<?= e($prod->titleFr) ?>"
                      data-price="<?= $prod->priceEur ?>" 
                      data-category="<?= $catTag ?>"
-                     style="background: #fff; border-radius: 20px; overflow: hidden; border: 1px solid var(--clr-sand-300); display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 15px rgba(0,0,0,0.04); transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                     style="background: #fff; border-radius: 20px; overflow: hidden; <?= $cardBorder ?> display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.3s ease, box-shadow 0.3s ease;">
                 
                 <div>
                     <!-- Visual Thumb Image -->
@@ -286,4 +290,15 @@ function submitShopOrder(e) {
         submitBtn.innerHTML = '<i class="fi fi-rr-lock"></i> Régler via Stripe';
     });
 }
+
+<?php if (!empty($selectedProduct)): ?>
+document.addEventListener('DOMContentLoaded', function() {
+    const el = document.getElementById('product-<?= e($selectedProduct->slug) ?>');
+    if (el) {
+        setTimeout(function() {
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 150);
+    }
+});
+<?php endif; ?>
 </script>

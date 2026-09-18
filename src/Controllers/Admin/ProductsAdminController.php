@@ -5,12 +5,18 @@ use Core\Controller;
 use Core\Security;
 use App\Interfaces\ProductRepositoryInterface;
 use App\Models\Product;
+use App\Services\SitemapService;
 
 class ProductsAdminController extends Controller {
-    public function __construct(private ProductRepositoryInterface $productRepo) {}
+    public function __construct(
+        private ProductRepositoryInterface $productRepo,
+        private ?SitemapService $sitemapService = null
+    ) {}
 
     private function requireAuth(): void {
-        if (session_status() === PHP_SESSION_NONE) session_start();
+        if (session_status() === PHP_SESSION_NONE && !headers_sent()) {
+            @session_start();
+        }
         if (empty($_SESSION['admin_logged'])) {
             $this->redirect('/admin/login');
         }
@@ -45,7 +51,9 @@ class ProductsAdminController extends Controller {
             $product->isActive = isset($_POST['is_active']) ? true : false;
             
             if ($this->productRepo->create($product)) {
+                $this->sitemapService?->regenerateFile();
                 $this->redirect('/admin/products');
+                return;
             } else {
                 $error = "Erreur lors de la création du produit.";
             }
@@ -63,6 +71,7 @@ class ProductsAdminController extends Controller {
         $product = $this->productRepo->findById($id);
         if (!$product) {
             $this->redirect('/admin/products');
+            return;
         }
         
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -73,7 +82,9 @@ class ProductsAdminController extends Controller {
             $product->isActive = isset($_POST['is_active']) ? true : false;
             
             if ($this->productRepo->update($product)) {
+                $this->sitemapService?->regenerateFile();
                 $this->redirect('/admin/products');
+                return;
             } else {
                 $error = "Erreur lors de la modification du produit.";
             }
@@ -90,8 +101,10 @@ class ProductsAdminController extends Controller {
         
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->productRepo->delete($id);
+            $this->sitemapService?->regenerateFile();
         }
         
         $this->redirect('/admin/products');
+        return;
     }
 }

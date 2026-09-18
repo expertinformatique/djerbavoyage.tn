@@ -106,5 +106,20 @@ if (!class_exists('PHPUnit\Framework\TestCase')) {
                 throw new \Exception($message ?: "Échec : Le texte ne contient pas '$needle'");
             }
         }
+
+        protected function assertFileExists(string $filename, string $message = ''): void {
+            self::$assertionsCount++;
+            if (!file_exists($filename)) {
+                throw new \Exception($message ?: "Échec : Le fichier '$filename' n'existe pas");
+            }
+        }
+
+        protected function assertCount(int $expectedCount, $haystack, string $message = ''): void {
+            self::$assertionsCount++;
+            $actualCount = is_countable($haystack) ? count($haystack) : 0;
+            if ($actualCount !== $expectedCount) {
+                throw new \Exception($message ?: "Échec : Le nombre d'éléments ($actualCount) ne correspond pas à l'attendu ($expectedCount)");
+            }
+        }
     }
 }

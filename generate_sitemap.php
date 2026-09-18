@@ -45,7 +45,7 @@ use Core\Database;
 use App\Repositories\PdoProductRepository;
 use App\Repositories\PdoLocalServiceRepository;
 use App\Repositories\PdoArticleRepository;
-use App\Controllers\SitemapController;
+use App\Services\SitemapService;
 
 try {
     $pdo = Database::getInstance();
@@ -53,20 +53,20 @@ try {
     $serviceRepo = new PdoLocalServiceRepository($pdo);
     $articleRepo = new PdoArticleRepository($pdo);
 
-    $sitemapController = new SitemapController($productRepo, $serviceRepo, $articleRepo);
-
+    $sitemapService = new SitemapService($productRepo, $serviceRepo, $articleRepo);
     $domain = 'https://djerbavoyage.tn';
-    $xmlContent = $sitemapController->generateXml($domain);
-    $robotsContent = $sitemapController->generateRobots($domain);
 
-    $sitemapFile = ROOT_PATH . '/public/sitemap.xml';
-    $robotsFile  = ROOT_PATH . '/public/robots.txt';
+    if ($sitemapService->regenerateFile($domain)) {
+        $sitemapFile = ROOT_PATH . '/public/sitemap.xml';
+        $robotsFile  = ROOT_PATH . '/public/robots.txt';
+        $sitemapSize = file_exists($sitemapFile) ? filesize($sitemapFile) : 0;
+        $robotsSize  = file_exists($robotsFile) ? filesize($robotsFile) : 0;
 
-    file_put_contents($sitemapFile, $xmlContent);
-    file_put_contents($robotsFile, $robotsContent);
-
-    echo "✅ sitemap.xml généré avec succès dans public/sitemap.xml (" . strlen($xmlContent) . " octets)\n";
-    echo "✅ robots.txt généré avec succès dans public/robots.txt (" . strlen($robotsContent) . " octets)\n";
+        echo "✅ sitemap.xml généré avec succès dans public/sitemap.xml ({$sitemapSize} octets)\n";
+        echo "✅ robots.txt généré avec succès dans public/robots.txt ({$robotsSize} octets)\n";
+    } else {
+        throw new \Exception("Échec de l'écriture des fichiers sitemap.xml ou robots.txt");
+    }
 } catch (\Throwable $e) {
     echo "❌ Erreur lors de la génération du sitemap : " . $e->getMessage() . "\n";
     exit(1);

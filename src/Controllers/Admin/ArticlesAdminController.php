@@ -6,15 +6,19 @@ use Core\Security;
 use App\Interfaces\ArticleRepositoryInterface;
 use App\Models\Article;
 use App\Services\AiArticleGeneratorService;
+use App\Services\SitemapService;
 
 class ArticlesAdminController extends Controller {
     public function __construct(
         private ArticleRepositoryInterface $articleRepo,
-        private ?AiArticleGeneratorService $aiGenerator = null
+        private ?AiArticleGeneratorService $aiGenerator = null,
+        private ?SitemapService $sitemapService = null
     ) {}
 
     private function requireAuth(): void {
-        if (session_status() === PHP_SESSION_NONE) session_start();
+        if (session_status() === PHP_SESSION_NONE && !headers_sent()) {
+            @session_start();
+        }
         if (empty($_SESSION['admin_logged'])) {
             $this->redirect('/admin/login');
         }
@@ -87,6 +91,7 @@ class ArticlesAdminController extends Controller {
             );
 
             $saved = $this->articleRepo->save($article);
+            $this->sitemapService?->regenerateFile();
             $_SESSION['admin_flash_success'] = "Article créé avec succès : {$saved->titleFr}";
             $this->redirect('/admin/articles');
             return;
@@ -135,6 +140,7 @@ class ArticlesAdminController extends Controller {
             $article->authorName     = trim(Security::sanitize($_POST['author_name'] ?? $article->authorName));
 
             $this->articleRepo->save($article);
+            $this->sitemapService?->regenerateFile();
             $_SESSION['admin_flash_success'] = "Article mis à jour : {$article->titleFr}";
             $this->redirect('/admin/articles');
             return;
@@ -152,6 +158,7 @@ class ArticlesAdminController extends Controller {
         $article = $this->articleRepo->findById($id);
 
         if ($article && $this->articleRepo->delete($id)) {
+            $this->sitemapService?->regenerateFile();
             $_SESSION['admin_flash_success'] = "Article supprimé avec succès.";
         } else {
             $_SESSION['admin_flash_error'] = "Erreur lors de la suppression de l'article.";
@@ -171,6 +178,7 @@ class ArticlesAdminController extends Controller {
 
         try {
             $article = $this->aiGenerator->generateAndSave();
+            $this->sitemapService?->regenerateFile();
             $_SESSION['admin_flash_success'] = "Nouvel article généré par l'IA : {$article->titleFr}";
         } catch (\Throwable $e) {
             $_SESSION['admin_flash_error'] = "Erreur IA : " . $e->getMessage();

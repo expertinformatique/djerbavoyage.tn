@@ -2,299 +2,315 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://djerbavoyage.tn/</loc>
-    <lastmod>2026-09-16</lastmod>
+    <lastmod>2026-09-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/services</loc>
-    <lastmod>2026-09-16</lastmod>
+    <lastmod>2026-09-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/shop</loc>
-    <lastmod>2026-09-16</lastmod>
+    <lastmod>2026-09-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/activites</loc>
-    <lastmod>2026-09-16</lastmod>
+    <lastmod>2026-09-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/itineraires</loc>
-    <lastmod>2026-09-16</lastmod>
+    <lastmod>2026-09-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/hotels-restaurants</loc>
-    <lastmod>2026-09-16</lastmod>
+    <lastmod>2026-09-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/gastronomie</loc>
-    <lastmod>2026-09-16</lastmod>
+    <lastmod>2026-09-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/transports</loc>
-    <lastmod>2026-09-16</lastmod>
+    <lastmod>2026-09-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/meteo-climat</loc>
-    <lastmod>2026-09-16</lastmod>
+    <lastmod>2026-09-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/guide</loc>
-    <lastmod>2026-09-16</lastmod>
+    <lastmod>2026-09-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/concierge</loc>
-    <lastmod>2026-09-16</lastmod>
+    <lastmod>2026-09-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/avis</loc>
-    <lastmod>2026-09-16</lastmod>
+    <lastmod>2026-09-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/faq</loc>
-    <lastmod>2026-09-16</lastmod>
+    <lastmod>2026-09-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/a-propos</loc>
-    <lastmod>2026-09-16</lastmod>
+    <lastmod>2026-09-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/contact</loc>
-    <lastmod>2026-09-16</lastmod>
+    <lastmod>2026-09-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/politique-de-confidentialite</loc>
-    <lastmod>2026-09-16</lastmod>
+    <lastmod>2026-09-18</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/divulgation-affiliation</loc>
-    <lastmod>2026-09-16</lastmod>
+    <lastmod>2026-09-18</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://djerbavoyage.tn/guide/l-ame-secr-ete-des-menzel-houchs-blancs-de-djerba-20260916-230509-59</loc>
+    <loc>https://djerbavoyage.tn/shop/guide-djerba-pdf</loc>
+    <lastmod>2026-09-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://djerbavoyage.tn/images/shop_guide_pdf.jpg</image:loc>
+      <image:title>Guide Djerba 2026 PDF</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://djerbavoyage.tn/shop/carte-gps-djerba</loc>
+    <lastmod>2026-09-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://djerbavoyage.tn/images/shop_gps_map.jpg</image:loc>
+      <image:title>Carte GPS Djerba Interactive</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://djerbavoyage.tn/guide/guide-test-djerba-1</loc>
     <lastmod>2026-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://djerbavoyage.tn/images/concierge.png</image:loc>
-      <image:title>L&#039;Âme Secrète des Menzel &amp; Houchs Blancs de Djerba</image:title>
+      <image:loc>https://djerbavoyage.tn/images/blog/test-1.jpg</image:loc>
+      <image:title>Guide de Test Djerba #1</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://djerbavoyage.tn/guide/l-ame-secr-ete-des-menzel-houchs-blancs-de-djerba-20260916-230509-59/pdf</loc>
+    <loc>https://djerbavoyage.tn/guide/guide-test-djerba-1/pdf</loc>
     <lastmod>2026-09-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://djerbavoyage.tn/guide/l-ame-secr-ete-des-menzel-houchs-blancs-de-djerba-20260916-225545-35</loc>
-    <lastmod>2026-09-16</lastmod>
+    <loc>https://djerbavoyage.tn/guide/guide-test-djerba-2</loc>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://djerbavoyage.tn/images/concierge.png</image:loc>
-      <image:title>L&#039;Âme Secrète des Menzel &amp; Houchs Blancs de Djerba</image:title>
+      <image:loc>https://djerbavoyage.tn/images/blog/test-2.jpg</image:loc>
+      <image:title>Guide de Test Djerba #2</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://djerbavoyage.tn/guide/l-ame-secr-ete-des-menzel-houchs-blancs-de-djerba-20260916-225545-35/pdf</loc>
-    <lastmod>2026-09-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://djerbavoyage.tn/guide/l-egende-des-lotophages-rivages-sauvages-de-djerba-20260916-225538-85</loc>
-    <lastmod>2026-09-16</lastmod>
+    <loc>https://djerbavoyage.tn/guide/guide-test-djerba-3</loc>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://djerbavoyage.tn/images/blog/l-egende-des-lotophages-rivages-sauvages-de-djerba-20260916-225538-85.jpg</image:loc>
-      <image:title>Légende des Lotophages &amp; Rivages Sauvages de Djerba</image:title>
+      <image:loc>https://djerbavoyage.tn/images/blog/test-3.jpg</image:loc>
+      <image:title>Guide de Test Djerba #3</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://djerbavoyage.tn/guide/l-egende-des-lotophages-rivages-sauvages-de-djerba-20260916-225538-85/pdf</loc>
-    <lastmod>2026-09-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://djerbavoyage.tn/guide/m-et-eo-plages-baignade-a-djerba-sous-le-soleil-27-0c-20260916-225027-21</loc>
-    <lastmod>2026-09-16</lastmod>
+    <loc>https://djerbavoyage.tn/guide/guide-test-djerba-4</loc>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://djerbavoyage.tn/images/blog/m-et-eo-plages-baignade-a-djerba-sous-le-soleil-27-0c-20260916-225027-21.jpg</image:loc>
-      <image:title>Météo, Plages &amp; Baignade à Djerba sous le soleil (27°C)</image:title>
+      <image:loc>https://djerbavoyage.tn/images/blog/test-4.jpg</image:loc>
+      <image:title>Guide de Test Djerba #4</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://djerbavoyage.tn/guide/m-et-eo-plages-baignade-a-djerba-sous-le-soleil-27-0c-20260916-225027-21/pdf</loc>
-    <lastmod>2026-09-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://djerbavoyage.tn/guide/voyager-a-djerba-gastronomie-djerbienne-poissonnade-au-souk-et-m-et-eo-ensoleill-20260916-224528-47</loc>
-    <lastmod>2026-09-16</lastmod>
+    <loc>https://djerbavoyage.tn/guide/guide-test-djerba-5</loc>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://djerbavoyage.tn/images/concierge.png</image:loc>
-      <image:title>Gastronomie Djerbienne &amp; Poissonnade au Souk et météo Ensoleillé &amp; Ciel Dégagé</image:title>
+      <image:loc>https://djerbavoyage.tn/images/blog/test-5.jpg</image:loc>
+      <image:title>Guide de Test Djerba #5</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://djerbavoyage.tn/guide/voyager-a-djerba-gastronomie-djerbienne-poissonnade-au-souk-et-m-et-eo-ensoleill-20260916-224528-47/pdf</loc>
-    <lastmod>2026-09-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://djerbavoyage.tn/guide/evasion-a-djerba-m-et-eo-plages-baignade-a-djerba-sous-le-soleil-27-0c-20260916-224017-97</loc>
-    <lastmod>2026-09-16</lastmod>
+    <loc>https://djerbavoyage.tn/guide/guide-test-djerba-6</loc>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&amp;fit=crop&amp;w=1200&amp;q=80</image:loc>
-      <image:title>Météo, Plages &amp; Baignade à Djerba sous le soleil (27°C)</image:title>
+      <image:loc>https://djerbavoyage.tn/images/blog/test-6.jpg</image:loc>
+      <image:title>Guide de Test Djerba #6</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://djerbavoyage.tn/guide/evasion-a-djerba-m-et-eo-plages-baignade-a-djerba-sous-le-soleil-27-0c-20260916-224017-97/pdf</loc>
-    <lastmod>2026-09-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://djerbavoyage.tn/guide/evasion-a-djerba-m-et-eo-plages-baignade-a-djerba-sous-le-soleil-27-0c-20260916-223522-96</loc>
-    <lastmod>2026-09-16</lastmod>
+    <loc>https://djerbavoyage.tn/guide/guide-test-djerba-7</loc>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&amp;fit=crop&amp;w=1200&amp;q=80</image:loc>
-      <image:title>Météo, Plages &amp; Baignade à Djerba sous le soleil (27°C)</image:title>
+      <image:loc>https://djerbavoyage.tn/images/blog/test-7.jpg</image:loc>
+      <image:title>Guide de Test Djerba #7</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://djerbavoyage.tn/guide/evasion-a-djerba-m-et-eo-plages-baignade-a-djerba-sous-le-soleil-27-0c-20260916-223522-96/pdf</loc>
-    <lastmod>2026-09-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://djerbavoyage.tn/guide/djerba-h-otels-de-charme-thalasso-d-etente-a-djerba-sous-27-0c-20260916-223025-92</loc>
-    <lastmod>2026-09-16</lastmod>
+    <loc>https://djerbavoyage.tn/guide/guide-test-djerba-8</loc>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&amp;fit=crop&amp;w=1200&amp;q=80</image:loc>
-      <image:title>Hôtels de Charme, Thalasso &amp; Détente à Djerba sous 27°C</image:title>
+      <image:loc>https://djerbavoyage.tn/images/blog/test-8.jpg</image:loc>
+      <image:title>Guide de Test Djerba #8</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://djerbavoyage.tn/guide/djerba-h-otels-de-charme-thalasso-d-etente-a-djerba-sous-27-0c-20260916-223025-92/pdf</loc>
-    <lastmod>2026-09-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://djerbavoyage.tn/guide/evasion-a-djerba-m-et-eo-plages-baignade-a-djerba-sous-le-soleil-27-0c-20260916-222513-11</loc>
-    <lastmod>2026-09-16</lastmod>
+    <loc>https://djerbavoyage.tn/guide/guide-test-djerba-9</loc>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&amp;fit=crop&amp;w=1200&amp;q=80</image:loc>
-      <image:title>Météo, Plages &amp; Baignade à Djerba sous le soleil (27°C)</image:title>
+      <image:loc>https://djerbavoyage.tn/images/blog/test-9.jpg</image:loc>
+      <image:title>Guide de Test Djerba #9</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://djerbavoyage.tn/guide/evasion-a-djerba-m-et-eo-plages-baignade-a-djerba-sous-le-soleil-27-0c-20260916-222513-11/pdf</loc>
-    <lastmod>2026-09-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://djerbavoyage.tn/guide/voyager-a-djerba-gastronomie-djerbienne-poissonnade-au-souk-et-m-et-eo-ensoleill-20260916-221610-27</loc>
-    <lastmod>2026-09-16</lastmod>
+    <loc>https://djerbavoyage.tn/guide/guide-test-djerba-10</loc>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&amp;fit=crop&amp;w=1200&amp;q=80</image:loc>
-      <image:title>Gastronomie Djerbienne &amp; Poissonnade au Souk et météo Ensoleillé &amp; Ciel Dégagé</image:title>
+      <image:loc>https://djerbavoyage.tn/images/blog/test-10.jpg</image:loc>
+      <image:title>Guide de Test Djerba #10</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://djerbavoyage.tn/guide/voyager-a-djerba-gastronomie-djerbienne-poissonnade-au-souk-et-m-et-eo-ensoleill-20260916-221610-27/pdf</loc>
-    <lastmod>2026-09-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <loc>https://djerbavoyage.tn/guide/guide-test-djerba-11</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://djerbavoyage.tn/images/blog/test-11.jpg</image:loc>
+      <image:title>Guide de Test Djerba #11</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://djerbavoyage.tn/guide/guide-test-djerba-12</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://djerbavoyage.tn/images/blog/test-12.jpg</image:loc>
+      <image:title>Guide de Test Djerba #12</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://djerbavoyage.tn/guide/guide-test-djerba-13</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://djerbavoyage.tn/images/blog/test-13.jpg</image:loc>
+      <image:title>Guide de Test Djerba #13</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://djerbavoyage.tn/guide/guide-test-djerba-14</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://djerbavoyage.tn/images/blog/test-14.jpg</image:loc>
+      <image:title>Guide de Test Djerba #14</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://djerbavoyage.tn/guide/guide-test-djerba-15</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://djerbavoyage.tn/images/blog/test-15.jpg</image:loc>
+      <image:title>Guide de Test Djerba #15</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/destinations/houmt-souk</loc>
-    <lastmod>2026-09-16</lastmod>
+    <lastmod>2026-09-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/destinations/sidi-mahres</loc>
-    <lastmod>2026-09-16</lastmod>
+    <lastmod>2026-09-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/destinations/djerbahood-erriadh</loc>
-    <lastmod>2026-09-16</lastmod>
+    <lastmod>2026-09-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/destinations/aghir</loc>
-    <lastmod>2026-09-16</lastmod>
+    <lastmod>2026-09-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/destinations/guellala</loc>
-    <lastmod>2026-09-16</lastmod>
+    <lastmod>2026-09-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/destinations/ajim-el-melga</loc>
-    <lastmod>2026-09-16</lastmod>
+    <lastmod>2026-09-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

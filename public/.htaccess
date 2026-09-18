@@ -4,6 +4,10 @@
     # Redirection transparente des images demandées sur /images/... vers /assets/images/...
     RewriteRule ^images/(.*)$ assets/images/$1 [L]
 
+    # Routage dynamique prioritaire pour sitemap.xml et robots.txt
+    RewriteRule ^sitemap\.xml$ index.php [QSA,L]
+    RewriteRule ^robots\.txt$ index.php [QSA,L]
+
     # Rediriger vers index.php si ce n'est pas un fichier ou dossier existant
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d

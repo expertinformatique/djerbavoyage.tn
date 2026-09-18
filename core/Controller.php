@@ -31,7 +31,9 @@ abstract class Controller {
 
     protected function redirect(string $path): void {
         $finalUrl = (strpos($path, 'http') === 0) ? $path : url($path);
-        header("Location: {$finalUrl}");
-        exit;
+        if (!defined('PHPUNIT_RUNNING')) {
+            header("Location: {$finalUrl}");
+            exit;
+        }
     }
 }

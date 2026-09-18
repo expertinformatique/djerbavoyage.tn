@@ -50,8 +50,15 @@ spl_autoload_register(function ($class) {
 
 use Core\Database;
 use App\Repositories\PdoArticleRepository;
+use App\Repositories\PdoProductRepository;
+use App\Repositories\PdoLocalServiceRepository;
+use App\Repositories\PdoSettingsRepository;
 use App\Services\DjerbaContextFetcherService;
 use App\Services\AiArticleGeneratorService;
+use App\Services\SitemapService;
+use App\Services\FacebookPublisherService;
+use App\Services\SettingsService;
+use App\Services\CacheService;
 
 try {
     $timestamp = date('Y-m-d H:i:s');
@@ -59,15 +66,30 @@ try {
 
     $pdo = Database::getInstance();
     $articleRepo = new PdoArticleRepository($pdo);
+    $productRepo = new PdoProductRepository($pdo);
+    $serviceRepo = new PdoLocalServiceRepository($pdo);
+    $settingsRepo = new PdoSettingsRepository($pdo);
+    $cache = new CacheService();
+    $settingsService = new SettingsService($settingsRepo, $cache);
+    $sitemapService = new SitemapService($productRepo, $serviceRepo, $articleRepo);
     $contextFetcher = new DjerbaContextFetcherService();
-    $generator = new AiArticleGeneratorService($contextFetcher, $articleRepo);
+    $facebookPublisher = new FacebookPublisherService($settingsService);
+    $generator = new AiArticleGeneratorService($contextFetcher, $articleRepo, null, $sitemapService, $facebookPublisher);
 
     $article = $generator->generateAndSave();
+    $fbResult = $generator->getLastFacebookResult();
 
     echo "[{$timestamp}] ✅ Succès ! Article #{$article->id} généré et publié.\n";
     echo "  - Titre : {$article->titleFr}\n";
     echo "  - Slug : {$article->slug}\n";
     echo "  - Image : {$article->featuredImage}\n";
+    echo "  - Sitemap : public/sitemap.xml synchronisé avec succès\n";
+    if (!empty($fbResult['published'])) {
+        echo "  - Facebook : ✅ Publié avec succès (ID: {$fbResult['post_id']})\n";
+    } else {
+        $reason = $fbResult['reason'] ?? ($fbResult['error'] ?? 'Non publié');
+        echo "  - Facebook : ℹ️ Non partagé ({$reason})\n";
+    }
 
 } catch (\Throwable $e) {
     $timestamp = date('Y-m-d H:i:s');

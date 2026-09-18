@@ -97,6 +97,44 @@
     </div>
   </div>
 
+  <!-- Section 4 : Partage Automatique Facebook (photo.djerba) -->
+  <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200/90 dark:border-slate-800 shadow-sm overflow-hidden">
+    <div class="p-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30 flex items-center justify-between">
+      <div>
+        <h2 class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+          <i class="fi fi-rr-share text-[#1877f2]"></i> Partage Automatique Facebook
+        </h2>
+        <p class="text-xs text-slate-500 dark:text-slate-400">Diffusion instantanée de chaque article généré par le bot sur la page Facebook</p>
+      </div>
+      <span class="px-2 py-0.5 text-[10px] font-bold bg-blue-50 text-[#1877f2] dark:bg-blue-950/40 dark:text-blue-400 rounded">
+        Meta Graph API
+      </span>
+    </div>
+
+    <div class="p-5 space-y-4">
+      <div>
+        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Statut de la Publication Facebook</label>
+        <select name="fb_auto_publish" class="w-full max-w-xs rounded-md border border-slate-300 dark:border-slate-700 px-3 py-2 text-xs bg-white dark:bg-slate-950 text-slate-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-[#1877f2]">
+          <option value="true" <?= $settings->get('fb_auto_publish', $_ENV['FB_AUTO_PUBLISH'] ?? 'true') === 'true' || $settings->get('fb_auto_publish') === '1' ? 'selected' : '' ?>>Activé (Publication automatique)</option>
+          <option value="false" <?= $settings->get('fb_auto_publish', $_ENV['FB_AUTO_PUBLISH'] ?? 'true') === 'false' || $settings->get('fb_auto_publish') === '0' ? 'selected' : '' ?>>Désactivé</option>
+        </select>
+        <p class="mt-1 text-[11px] text-slate-400">Lorsque le bot appelle l'API toutes les 5 min, l'article sera aussi publié sur Facebook.</p>
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Identifiant ou Alias de la Page Facebook</label>
+        <input type="text" name="fb_page_id" value="<?= e($settings->get('fb_page_id', $_ENV['FB_PAGE_ID'] ?? 'photo.djerba')) ?>" class="w-full max-w-sm rounded-md border border-slate-300 dark:border-slate-700 px-3 py-2 text-xs bg-white dark:bg-slate-950 text-slate-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-[#1877f2]" placeholder="photo.djerba ou ID numérique">
+        <p class="mt-1 text-[11px] text-slate-400">Page ciblée : <a href="https://www.facebook.com/photo.djerba/" target="_blank" rel="noopener" class="text-blue-500 hover:underline">https://www.facebook.com/photo.djerba/</a></p>
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Jeton d'accès de Page (Page Access Token)</label>
+        <input type="password" name="fb_page_access_token" value="<?= e($settings->get('fb_page_access_token', $_ENV['FB_PAGE_ACCESS_TOKEN'] ?? '')) ?>" class="w-full rounded-md border border-slate-300 dark:border-slate-700 px-3 py-2 text-xs font-mono bg-white dark:bg-slate-950 text-slate-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-[#1877f2]" placeholder="EAA...">
+        <p class="mt-1 text-[11px] text-slate-400">Généré sur Meta for Developers avec les permissions <code class="font-mono bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">pages_manage_posts</code> et <code class="font-mono bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">pages_read_engagement</code>.</p>
+      </div>
+    </div>
+  </div>
+
   <div class="flex justify-end">
     <button type="submit" class="px-4 py-2 bg-[#635bff] hover:bg-[#5851ea] text-white rounded-md text-xs font-semibold shadow-sm flex items-center gap-1.5 transition-colors">
       <i class="fi fi-rr-disk text-[11px]"></i> Enregistrer les paramètres
