@@ -3,109 +3,162 @@ namespace App\Services;
 
 class DjerbaContextFetcherService {
     private array $angles = [
-        'desert_adventure' => [
-            'theme' => 'Aventure Saharienne & Traces des Caravanes depuis Djerba',
-            'keywords' => ['ksar ghilane', 'dunes sahara', 'bivouac sous les étoiles', 'quad grand sud', 'caravanes djerba'],
-            'suggested_services' => ['excursion-quad-djerba', 'circuit-sahara-2-jours'],
-            'image_prompt' => 'Dramatic photography of quad bike expedition through rolling golden Sahara sand dunes near Djerba at sunset, warm cinematic lighting, authentic adventure',
-            'fallback_local_image' => 'images/service_quad.jpg',
-            'realistic_images' => [
-                'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1473580044384-7ba9967e16a0?auto=format&fit=crop&w=1200&q=80'
-            ]
+        'desert_ksar_ghilane' => [
+            'theme' => 'Excursion à Ksar Ghilane : Source Chaude et Dunes du Sahara depuis Djerba',
+            'keywords' => ['ksar ghilane', 'source thermale', 'dunes grand sud', 'bivouac sahara', 'tataouine'],
+            'suggested_services' => ['circuit-sahara-2-jours', 'excursion-quad-djerba'],
+            'facts' => 'Source thermale à 34°C au milieu du désert, environ 150 km au sud de Djerba par la chaussée romaine.',
+            'image_prompt' => 'Dramatic high resolution photography of natural warm thermal spring oasis surrounded by golden Sahara sand dunes in Ksar Ghilane Tunisia, palm trees at sunset, warm cinematic lighting',
+            'fallback_local_image' => 'images/service_quad.jpg'
         ],
         'pottery_heritage' => [
             'theme' => 'Secrets Millénaires des Potiers de Guellala à Djerba',
             'keywords' => ['potiers guellala', 'argile souterraine', 'amphores traditionnelles', 'savoir-faire berbère', 'artisanat djerba'],
             'suggested_services' => ['visite-guidee-djerba', 'pass-conciergerie-premium'],
-            'image_prompt' => 'Artisan potter shaping terracotta clay on ancient wooden wheel inside subterranean cave workshop in Guellala Djerba Tunisia, warm sunlight, authentic pottery jars',
-            'fallback_local_image' => 'images/guellala.png',
-            'realistic_images' => [
-                'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?auto=format&fit=crop&w=1200&q=80'
-            ]
+            'facts' => 'Ateliers troglodytes creusés dans la colline argileuse de Guellala, fours à bois traditionnels millénaires.',
+            'image_prompt' => 'Artisan master potter shaping terracotta clay amphora on ancient wooden foot wheel inside cave workshop in Guellala Djerba Tunisia, shafts of golden morning sunlight',
+            'fallback_local_image' => 'images/guellala.png'
         ],
         'sponge_fishers' => [
             'theme' => 'Mémoire des Marins et Pêcheurs d\'Éponges d\'Ajim à Djerba',
-            'keywords' => ['pêcheurs éponges ajim', 'felouques en bois', 'histoire maritime djerba', 'port ajim', 'légendes marines'],
+            'keywords' => ['pêcheurs éponges ajim', 'felouques en bois', 'histoire maritime djerba', 'port ajim', 'détroit ajim'],
             'suggested_services' => ['visite-guidee-djerba', 'excursion-jet-ski'],
-            'image_prompt' => 'Traditional wooden fishing boats and natural sea sponges drying on stone dock at sunrise in Ajim Djerba Tunisia, turquoise Mediterranean sea, rustic maritime heritage',
-            'fallback_local_image' => 'images/ajim.png',
-            'realistic_images' => [
-                'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=1200&q=80'
-            ]
+            'facts' => 'Ajim est le port historique des pêcheurs sous-marins d\'éponges naturelles et point de passage du bac vers le continent.',
+            'image_prompt' => 'Traditional wooden fishing boats moored at rocky stone pier in Ajim Djerba Tunisia, natural sea sponges on rustic wooden crates, serene turquoise sea at dawn',
+            'fallback_local_image' => 'images/ajim.png'
         ],
-        'lotophages_beaches' => [
-            'theme' => 'Légende des Lotophages & Rivages Sauvages de Djerba',
-            'keywords' => ['odyssée homère ulysse', 'lotophages djerba', 'plage sauvage sidi mahres', 'lagune préservée', 'eaux turquoise'],
-            'suggested_services' => ['excursion-quad-djerba', 'transfert-aeroport-djerba'],
-            'image_prompt' => 'Pristine secluded Mediterranean beach in Djerba Tunisia with turquoise water, ancient olive and palm trees on white sand, soft golden morning light, serene mythical atmosphere',
-            'fallback_local_image' => 'images/sidi_mahres.png',
-            'realistic_images' => [
-                'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1200&q=80'
-            ]
-        ],
-        'djerbahood_story' => [
+        'djerbahood_erriadh' => [
             'theme' => 'Contes d\'Erriadh & Ruelles Mystiques de Djerbahood',
-            'keywords' => ['djerbahood street art', 'village antique erriadh', 'synagogue la ghriba', 'portes bleues cloutées', 'histoire multiculturelle'],
+            'keywords' => ['djerbahood street art', 'village antique erriadh', 'synagogue la ghriba', 'portes bleues cloutées', 'galerie ciel ouvert'],
             'suggested_services' => ['visite-guidee-djerba', 'pass-conciergerie-premium'],
-            'image_prompt' => 'Traditional sunlit whitewashed alley in Erriadh Djerbahood Tunisia, vibrant street art mural on historic stone wall, blooming bougainvillea, classic arched doorway',
-            'fallback_local_image' => 'images/djerbahood.png',
-            'realistic_images' => [
-                'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80'
-            ]
+            'facts' => 'Plus de 250 fresques d\'artistes internationaux peintes sur les murs de chaux blanche du village millénaire d\'Erriadh.',
+            'image_prompt' => 'Charming sunlit whitewashed alley in Erriadh Djerbahood Tunisia, colorful street art mural on historic stone facade, pink bougainvillea, classic arched studded doorway',
+            'fallback_local_image' => 'images/djerbahood.png'
         ],
-        'culinary_traditions' => [
-            'theme' => 'Tradition de la Poissonnade et Secrets Culinaires de Djerba',
-            'keywords' => ['criée houmt souk', 'poissonnade traditionnelle', 'riz djerbien épices', 'recettes ancestrales', 'marché aux épices'],
+        'flamants_roses_island' => [
+            'theme' => 'Échappée en Mer vers la Presqu\'île des Flamants Roses à Djerba',
+            'keywords' => ['île aux flamants roses', 'presqu\'île ras rmel', 'bateau pirate djerba', 'oiseaux migrateurs', 'banc de sable'],
+            'suggested_services' => ['excursion-bateau-pirate', 'excursion-jet-ski'],
+            'facts' => 'Ras Rmel est une bande de sable sauvage où se rassemblent des colonies de flamants roses entre lagune et mer.',
+            'image_prompt' => 'Flock of pink flamingos wading in shallow crystal clear turquoise lagoon waters in Djerba Ras Rmel Tunisia, white sandspit in distance, bright blue sky',
+            'fallback_local_image' => 'images/sidi_mahres.png'
+        ],
+        'quad_sunset_aghir' => [
+            'theme' => 'Aventure en Quad entre Dunes et Lagunes Sauvages d\'Aghir',
+            'keywords' => ['quad djerba', 'lagune aghir', 'phare ras taguernes', 'sensations coucher soleil', 'pistes djerba'],
+            'suggested_services' => ['excursion-quad-djerba', 'transfert-aeroport-djerba'],
+            'facts' => 'Circuits guidés longeant les pistes sableuses entre le phare du Nadhour et les rivages préservés d\'Aghir.',
+            'image_prompt' => 'Adventure quad riders traversing sandy coastal trail between palm trees and sea dunes in Aghir Djerba Tunisia at golden sunset, warm backlight, dust spray',
+            'fallback_local_image' => 'images/service_quad.jpg'
+        ],
+        'culinary_poissonnade' => [
+            'theme' => 'Tradition de la Poissonnade et Criée aux Poissons de Houmt Souk',
+            'keywords' => ['criée houmt souk', 'poissonnade traditionnelle', 'riz djerbien épices', 'marché central', 'dorade rouget djerba'],
             'suggested_services' => ['pack-produits-locaux-djerba', 'pass-conciergerie-premium'],
-            'image_prompt' => 'Authentic fresh Mediterranean fish platter seasoned with traditional spices, clay tagine dish, lemons and mint tea at outdoor souk in Houmt Souk Djerba, rustic culinary scene',
-            'fallback_local_image' => 'images/houmt_souk.png',
-            'realistic_images' => [
-                'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1200&q=80'
-            ]
+            'facts' => 'À la criée de Houmt Souk, les poissons frais sont vendus aux enchères à la ficelle puis grillés minute dans les gargotes voisines.',
+            'image_prompt' => 'Vibrant fish auction market in Houmt Souk Djerba Tunisia, fresh sea bream and red mullet on crushed ice, lively local market ambiance, warm Mediterranean light',
+            'fallback_local_image' => 'images/houmt_souk.png'
         ],
-        'menzel_architecture' => [
-            'theme' => 'L\'Âme Secrète des Menzel & Houchs Blancs de Djerba',
-            'keywords' => ['menzel fortifié', 'houch djerbien', 'architecture vernaculaire', 'patrimoine unesco', 'puits traditionnels'],
+        'menzel_unesco' => [
+            'theme' => 'L\'Âme Secrète des Menzel & Houchs Blancs Classés UNESCO à Djerba',
+            'keywords' => ['menzel fortifié', 'houch djerbien', 'architecture unesco', 'puits traditionnels', 'patrimoine djerba'],
             'suggested_services' => ['pass-conciergerie-premium', 'transfert-aeroport-djerba'],
-            'image_prompt' => 'Stunning traditional Djerbian Menzel courtyard with brilliant whitewashed domes and fortified stone walls, surrounded by peaceful palm trees, warm golden hour sunlight',
-            'fallback_local_image' => 'images/concierge.png',
-            'realistic_images' => [
-                'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80'
-            ]
+            'facts' => 'Le Menzel djerbien associe houch familial, coupoles d\'aération thermiques et impluvium de récupération des eaux de pluie.',
+            'image_prompt' => 'Traditional authentic Djerbian Menzel courtyard with whitewashed domes, internal patio, blooming jasmine, ancient olive trees, warm afternoon Mediterranean light',
+            'fallback_local_image' => 'images/concierge.png'
         ],
-        'lagoon_adventure' => [
-            'theme' => 'Aventure en Kitesurf sur la Lagune Turquoise de Djerba',
-            'keywords' => ['kitesurf lagune djerba', 'glisse vent sensations', 'spot mythique', 'eau turquoise peu profonde', 'aventure maritime'],
+        'kitesurf_lagoon' => [
+            'theme' => 'Glisse et Kitesurf sur la Lagune Turquoise de Djerba',
+            'keywords' => ['kitesurf lagune djerba', 'spot kitesurf tunisie', 'eau peu profonde', 'vent constant', 'glisse nautique'],
             'suggested_services' => ['stage-kitesurf-djerba', 'excursion-jet-ski'],
-            'image_prompt' => 'Dynamic action photography of kitesurfer gliding across crystal clear turquoise shallow lagoon in Djerba Tunisia, colorful kite against bright blue sky, water spray',
-            'fallback_local_image' => 'images/service_kitesurf.jpg',
-            'realistic_images' => [
-                'https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80'
-            ]
+            'facts' => 'La lagune offre une vaste zone d\'eau plate et peu profonde avec plus de 300 jours de vent par an, idéale pour tous niveaux.',
+            'image_prompt' => 'Dynamic kitesurfer catching air above shallow translucent turquoise lagoon in Djerba Tunisia, vibrant kite canopy against deep blue sky, sunlit spray',
+            'fallback_local_image' => 'images/service_kitesurf.jpg'
         ],
+        'tataouine_ksour' => [
+            'theme' => 'Sur les Traces des Ksour et Villages Berbères de Tataouine depuis Djerba',
+            'keywords' => ['ksour tataouine', 'chenini village berbère', 'greniers fortifiés', 'star wars décors', 'sud tunisien'],
+            'suggested_services' => ['circuit-sahara-2-jours', 'visite-guidee-djerba'],
+            'facts' => 'Chenini et Guermassa sont des villages berbères perchés sur des crêtes rocheuses avec leurs ghorfas fortifiées millénaires.',
+            'image_prompt' => 'Breathtaking panoramic view of ancient Berber mountain village Chenini near Tataouine, tiered stone dwellings built into cliffside, dramatic desert sun',
+            'fallback_local_image' => 'images/service_quad.jpg'
+        ],
+        'borj_ghazi_mustapha' => [
+            'theme' => 'La Forteresse Borj Ghazi Mustapha : Gardienne Historique de Houmt Souk',
+            'keywords' => ['borj el kebir', 'borj ghazi mustapha', 'forteresse espagnole', 'histoire djerba', 'dragut corsaire'],
+            'suggested_services' => ['visite-guidee-djerba', 'pass-conciergerie-premium'],
+            'facts' => 'Fort maritime du XIIIe siècle rénové au XVIe siècle face à la mer, témoin des batailles maritimes entre corsaires et chevaliers.',
+            'image_prompt' => 'Majestic medieval stone fortress Borj Ghazi Mustapha overlooking calm deep blue sea in Houmt Souk Djerba Tunisia, ancient ramparts, dramatic sky at dusk',
+            'fallback_local_image' => 'images/houmt_souk.png'
+        ],
+        'sidi_mahrez_beach' => [
+            'theme' => 'Plage de Sidi Mahrez : Sable Fin et Eaux Cristallines de la Côte Nord',
+            'keywords' => ['plage sidi mahrez', 'sable fin djerba', 'baignade famille', 'activités nautiques', 'eaux calmes'],
+            'suggested_services' => ['excursion-jet-ski', 'transfert-aeroport-djerba'],
+            'facts' => 'La plus célèbre plage de Djerba, bordée d\'eaux calmes en pente douce et de palmiers longeant le littoral nord-est.',
+            'image_prompt' => 'Endless pristine white sandy beach at Sidi Mahrez Djerba Tunisia, crystal clear turquoise calm water, gentle waves, scattered palms under warm summer sun',
+            'fallback_local_image' => 'images/sidi_mahres.png'
+        ]
     ];
 
     public function getAngles(): array {
         return $this->angles;
     }
 
-    public function getContext(): array {
+    public function getInternalLinksCatalog(): array {
+        return [
+            ['url' => 'https://djerbavoyage.tn/services', 'titre' => 'Catalogue des Excursions & Activités à Djerba', 'type' => 'service'],
+            ['url' => 'https://djerbavoyage.tn/services#excursion-quad-djerba', 'titre' => 'Excursion en Quad à Djerba', 'type' => 'service'],
+            ['url' => 'https://djerbavoyage.tn/services#circuit-sahara-2-jours', 'titre' => 'Circuit Sahara & Ksar Ghilane 2 Jours', 'type' => 'service'],
+            ['url' => 'https://djerbavoyage.tn/services#excursion-jet-ski', 'titre' => 'Sortie Jet-Ski & Sensations Nautiques', 'type' => 'service'],
+            ['url' => 'https://djerbavoyage.tn/services#visite-guidee-djerba', 'titre' => 'Visite Guidée Historique de Djerba', 'type' => 'service'],
+            ['url' => 'https://djerbavoyage.tn/services#transfert-aeroport-djerba', 'titre' => 'Transfert Privé Aéroport Djerba-Zarzis', 'type' => 'service'],
+            ['url' => 'https://djerbavoyage.tn/concierge', 'titre' => 'Service de Conciergerie VIP Djerba Voyage', 'type' => 'service'],
+            ['url' => 'https://djerbavoyage.tn/destinations/houmt-souk', 'titre' => 'Guide de Houmt Souk', 'type' => 'guide'],
+            ['url' => 'https://djerbavoyage.tn/destinations/midoun', 'titre' => 'Guide de Midoun & Djerbahood', 'type' => 'guide'],
+            ['url' => 'https://djerbavoyage.tn/destinations/guellala', 'titre' => 'Guide du Village des Potiers de Guellala', 'type' => 'guide'],
+            ['url' => 'https://djerbavoyage.tn/destinations/sidi-mahres', 'titre' => 'Guide de la Plage de Sidi Mahrez', 'type' => 'guide'],
+            ['url' => 'https://djerbavoyage.tn/contact', 'titre' => 'Assistance & Réservation Djerba Voyage', 'type' => 'contact']
+        ];
+    }
+
+    public function getContext(array $recentTitles = []): array {
         $weather = $this->fetchLiveWeather();
-        $angleKey = array_rand($this->angles);
-        $angle = $this->angles[$angleKey];
+        $availableAngles = $this->angles;
+
+        if (!empty($recentTitles)) {
+            $filtered = [];
+            foreach ($this->angles as $key => $angle) {
+                $alreadyUsed = false;
+                foreach ($recentTitles as $title) {
+                    if (stripos($title, $angle['theme']) !== false) {
+                        $alreadyUsed = true;
+                        break;
+                    }
+                    foreach ($angle['keywords'] as $kw) {
+                        if (stripos($title, $kw) !== false) {
+                            $alreadyUsed = true;
+                            break;
+                        }
+                    }
+                }
+                if (!$alreadyUsed) {
+                    $filtered[$key] = $angle;
+                }
+            }
+            if (!empty($filtered)) {
+                $availableAngles = $filtered;
+            }
+        }
+
+        $angleKey = array_rand($availableAngles);
+        $angle = $availableAngles[$angleKey];
 
         return [
             'timestamp' => date('Y-m-d H:i:s'),
             'weather' => $weather,
             'angle' => $angle,
+            'catalog_links' => $this->getInternalLinksCatalog(),
             'location' => 'Djerba, Tunisie',
             'currency' => 'EUR / TND',
         ];
@@ -128,11 +181,11 @@ class DjerbaContextFetcherService {
                 }
             }
         } catch (\Throwable $e) {
-            // Silence & fallback
+            // Fallback silencieux
         }
 
         return [
-            'temp_c' => rand(24, 31),
+            'temp_c' => rand(24, 30),
             'wind_speed' => 14,
             'condition' => 'Soleil radieux & Brise marine',
         ];

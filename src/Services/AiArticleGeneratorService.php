@@ -19,36 +19,51 @@ class AiArticleGeneratorService {
     }
 
     public function generateAndSave(): Article {
-        $context = $this->contextFetcher->getContext();
-        $apiKey = $_ENV['GEMINI_API_KEY'] ?? getenv('GEMINI_API_KEY');
+        $recentArticles = $this->articleRepo->getAllPublished(15);
+        $existingTitles = array_map(fn($a) => $a->titleFr, $recentArticles);
+        $context = $this->contextFetcher->getContext($existingTitles);
+        $context['existing_titles'] = $existingTitles;
+        $context['guide_links'] = array_map(fn($a) => [
+            'url'   => 'https://djerbavoyage.tn/guide/' . $a->slug,
+            'titre' => $a->titleFr
+        ], array_slice($recentArticles, 0, 4));
 
+        // Règle Facebook : 1 publication sur 3 sans lien externe pour booster le reach
+        $totalCount = $this->articleRepo->countPublished();
+        $facebookMode = (($totalCount + 1) % 3 === 0) ? 'SANS_LIEN' : 'AVEC_LIEN';
+        $context['facebook_mode'] = $facebookMode;
+
+
+        $apiKey = $_ENV['GEMINI_API_KEY'] ?? getenv('GEMINI_API_KEY');
         if (!empty($apiKey)) {
             $articleData = $this->generateWithGemini($apiKey, $context);
         } else {
             $articleData = (new DjerbaStoryFallbackService())->generate($context);
         }
 
-        // Nettoyage strict : titre épuré avec mot-clé Djerba, sans préfixe "ce jour" ni heure
         $articleData['title_fr'] = $this->cleanTitle($articleData['title_fr']);
         if (!empty($articleData['title_en'])) {
             $articleData['title_en'] = $this->cleanTitle($articleData['title_en'], true);
         }
 
-        // Generation de Slug unique
         $baseSlug = $this->slugify($articleData['title_fr']);
         $uniqueSlug = $baseSlug . '-' . date('Ymd-His') . '-' . rand(10, 99);
-
-        // Image IA créée spécifiquement pour le sujet de l'article
         $imagePrompt = $articleData['image_prompt'] ?? ($context['angle']['image_prompt'] ?? '');
         $featuredImage = $this->imageService->generateForArticle($imagePrompt, $uniqueSlug, $context);
 
-        $summaryAi = is_array($articleData['summary_ai'] ?? null) ? "• " . implode("\n• ", $articleData['summary_ai']) : ($articleData['summary_ai'] ?? null);
-        $metaKeywords = is_array($articleData['meta_keywords'] ?? null) ? implode(', ', $articleData['meta_keywords']) : ($articleData['meta_keywords'] ?? null);
-        $seoDesc = is_array($articleData['seo_description'] ?? null) ? implode(' ', $articleData['seo_description']) : ($articleData['seo_description'] ?? null);
+        $summaryAi = is_array($articleData['summary_ai'] ?? null)
+            ? "• " . implode("\n• ", $articleData['summary_ai'])
+            : ($articleData['summary_ai'] ?? null);
+        $metaKeywords = is_array($articleData['meta_keywords'] ?? null)
+            ? implode(', ', $articleData['meta_keywords'])
+            : ($articleData['meta_keywords'] ?? null);
+        $seoDesc = is_array($articleData['seo_description'] ?? null)
+            ? implode(' ', $articleData['seo_description'])
+            : ($articleData['seo_description'] ?? null);
 
         $article = new Article(
             id: null,
-            destinationId: 1, // Djerba
+            destinationId: 1,
             slug: $uniqueSlug,
             titleFr: $articleData['title_fr'],
             titleEn: $articleData['title_en'] ?? null,
@@ -56,7 +71,7 @@ class AiArticleGeneratorService {
             contentEn: $articleData['content_en'] ?? null,
             featuredImage: $featuredImage,
             status: 'published',
-            viewsCount: rand(15, 85),
+            viewsCount: rand(25, 110),
             publishedAt: date('Y-m-d H:i:s'),
             seoDescription: $seoDesc,
             metaKeywords: $metaKeywords,
@@ -67,21 +82,22 @@ class AiArticleGeneratorService {
                 'headline' => $articleData['title_fr'],
                 'description' => $seoDesc ?? '',
                 'image' => $featuredImage,
-                'author' => ['@type' => 'Person', 'name' => 'IA Voyageur Djerba'],
+                'author' => ['@type' => 'Organization', 'name' => 'Rédaction Djerba Voyage'],
                 'publisher' => ['@type' => 'Organization', 'name' => 'Djerba Voyage'],
                 'datePublished' => date('Y-m-d\TH:i:sP'),
             ], JSON_UNESCAPED_UNICODE),
             pdfEnabled: true,
             pdfPriceEur: 2.99,
             ctaServicesJson: json_encode($articleData['cta_services'] ?? []),
-            authorName: 'IA Voyageur Djerba'
+            authorName: 'Rédaction Djerba Voyage'
         );
 
         $saved = $this->articleRepo->save($article);
         $this->sitemapService?->regenerateFile();
 
         if ($this->facebookPublisher !== null) {
-            $this->lastFacebookResult = $this->facebookPublisher->publishArticle($saved);
+            $customCaption = $articleData['facebook_text'] ?? null;
+            $this->lastFacebookResult = $this->facebookPublisher->publishArticle($saved, $customCaption, $facebookMode);
         }
 
         return $saved;
@@ -92,34 +108,17 @@ class AiArticleGeneratorService {
     }
 
     private function generateWithGemini(string $apiKey, array $context): array {
-        $weather = $context['weather'];
-        $angle = $context['angle'];
+        $prompt = $this->buildPrompt($context);
+        $models = ['gemini-flash-lite-latest', 'gemini-3.5-flash-lite', 'gemini-2.5-flash', 'gemini-1.5-flash'];
 
-        $prompt = "Tu es un écrivain voyageur et conteur passionné, expert des légendes, de l'histoire et des traditions de l'île de Djerba en Tunisie.\n"
-            . "Sujet de l'article : {$angle['theme']}\n"
-            . "Ambiance & Météo actuelle : {$weather['temp_c']}°C, {$weather['condition']}.\n"
-            . "MISSION CRITIQUE :\n"
-            . "Écris un véritable RÉCIT D'AVENTURE ET D'HISTOIRE, immersif et captivant. Plonge le lecteur au cœur des traditions de Djerba, de son histoire millénaire et de ses légendes (les Lotophages d'Homère, les potiers berbères troglodytes, les marins d'Ajim, les caravanes sahariennes, les Menzel fortifiés, etc.).\n"
-            . "Le texte ne doit pas être une banale liste publicitaire, mais une histoire vivante, sensorielle et pleine d'authenticité.\n"
-            . "Format de réponse JSON strict avec les clés suivantes :\n"
-            . "- title_fr: Titre direct et percutant avec le mot-clé 'Djerba' (Exemple: 'Secrets Millénaires des Potiers de Guellala à Djerba'). RÈGLE STRICTE: Ne JAMAIS mettre de préfixe comme 'Djerba :', 'Djerba ce jour :', 'Évasion à Djerba :' ni aucune heure ou horodatage.\n"
-            . "- title_en: Direct engaging English title with keyword 'Djerba'. NEVER include prefixes or timestamps.\n"
-            . "- content_fr: HTML complet et soigné avec <h2>, <h3>, <p>, <blockquote> (pour des citations ou anecdotes de vieux sages/marins), <ul>, <li> et des recommandations de voyage authentiques vers nos services\n"
-            . "- content_en: Version anglaise condensée du récit d'aventure\n"
-            . "- seo_description: Description Meta évocatrice de 150 caractères résumant l'aventure et l'histoire\n"
-            . "- meta_keywords: Mots clés séparés par des virgules\n"
-            . "- summary_ai: Résumé en 3 points clés pour moteurs IA (Perplexity, ChatGPT)\n"
-            . "- image_prompt: Prompt en anglais TRÈS DÉTAILLÉ (35 à 50 mots) pour générer une photographie réaliste 8k qui illustre PRÉCISÉMENT la scène historique, traditionnelle ou d'aventure racontée (ex: mains de potier façonnant l'argile à Guellala, barques de pêcheurs d'éponges au port d'Ajim, quad au crépuscule sur les dunes, etc.). Aucun texte sur l'image.\n"
-            . "- cta_services: Tableau des slugs de services suggérés : " . json_encode($angle['suggested_services']);
-
-        $models = ['gemini-3.6-flash', 'gemini-2.5-flash', 'gemini-1.5-flash'];
         foreach ($models as $model) {
             $url = "https://generativelanguage.googleapis.com/v1beta/models/{$model}:generateContent?key=" . $apiKey;
             $payload = json_encode([
                 'contents' => [['parts' => [['text' => $prompt]]]],
                 'generationConfig' => [
                     'response_mime_type' => 'application/json',
-                    'temperature' => 0.7
+                    'temperature' => 0.7,
+                    'maxOutputTokens' => 4096
                 ]
             ]);
 
@@ -128,7 +127,7 @@ class AiArticleGeneratorService {
             curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
             curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-            curl_setopt($ch, CURLOPT_TIMEOUT, 12);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 20);
             $response = curl_exec($ch);
             $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
             curl_close($ch);
@@ -136,17 +135,54 @@ class AiArticleGeneratorService {
             if ($httpCode === 200 && $response) {
                 $resData = json_decode($response, true);
                 $text = $resData['candidates'][0]['content']['parts'][0]['text'] ?? '';
-                $jsonParsed = json_decode(trim($text), true);
-                if (is_array($jsonParsed) && isset($jsonParsed['title_fr'], $jsonParsed['content_fr'])) {
-                    return $jsonParsed;
+                $json = json_decode(trim($text), true);
+                if (is_array($json) && isset($json['title_fr'], $json['content_fr'])) {
+                    return $json;
                 }
-            } else if ($response) {
-                $rootPath = defined('ROOT_PATH') ? ROOT_PATH : dirname(__DIR__, 2);
-                @error_log("[" . date('Y-m-d H:i:s') . "] Gemini API ({$model}) HTTP {$httpCode}: {$response}" . PHP_EOL, 3, $rootPath . '/error.log');
             }
         }
 
         return (new DjerbaStoryFallbackService())->generate($context);
+    }
+
+    private function buildPrompt(array $context): string {
+        $weather = $context['weather'];
+        $angle = $context['angle'];
+        $fbMode = $context['facebook_mode'] ?? 'AVEC_LIEN';
+        $existing = !empty($context['existing_titles']) ? implode("\n- ", $context['existing_titles']) : 'Aucun';
+        $servicesCatalog = json_encode($context['catalog_links'] ?? [], JSON_UNESCAPED_UNICODE);
+        $guideCatalog = json_encode($context['guide_links'] ?? [], JSON_UNESCAPED_UNICODE);
+
+        return "RÔLE : Rédacteur en chef expert pour djerbavoyage.tn (guide et conciergerie à Djerba).\n"
+            . "OBJECTIF GOOGLE : Article de référence qualifié de HAUTE QUALITÉ (critères Google EEAT & Helpful Content), 1000 à 1400 mots.\n"
+            . "THÈME : {$angle['theme']}\n"
+            . "FAITS VÉRIFIÉS : {$angle['facts']}\n"
+            . "MÉTÉO ACTUELLE : {$weather['temp_c']}°C, {$weather['condition']}.\n"
+            . "MODE FACEBOOK : {$fbMode}\n"
+            . "SERVICES DU SITE (À MAILLER & RECOMMANDER) : {$servicesCatalog}\n"
+            . "AUTRES GUIDES DU SITE (À MAILLER) : {$guideCatalog}\n"
+            . "CONSIGNES ÉDITORIALES :\n"
+            . "1. Accroche directe répondant à l'intention du voyageur dès le premier paragraphe.\n"
+            . "2. 4 à 6 <h2> formulés comme des questions concrètes de voyageurs.\n"
+            . "3. Un tableau <table> comparatif avec colonnes : Activité/Spot, Durée conseillée, Prix indicatif (TND/EUR), Pour qui.\n"
+            . "4. Un encadré '<blockquote>💡 <strong>Le conseil de terrain Djerba Voyage :</strong> [astuce exclusive locale]</blockquote>'.\n"
+            . "5. Une FAQ finale de 3 questions avec réponses directes de 2-3 phrases.\n"
+            . "6. MAILLAGE & CONVERSION : Insère 2 liens vers d'autres guides et 2 liens vers nos services (/services#...) avec des CTA convaincants pour réserver sur le site.\n"
+            . "7. Zéro cliché : interdiction de 'perle de la Méditerranée', 'véritable joyau', 'plongez au cœur', 'dans cet article', 'en conclusion'.\n"
+            . "8. Facebook : texte de 350-450 car. Si SANS_LIEN, AUCUNE mention d'URL ni de lien. Si AVEC_LIEN, teaser percutant sans URL (le système l'ajoute).\n"
+            . "Format JSON strict :\n"
+            . "{\n"
+            . '  "title_fr": "Titre engageant avec \'Djerba\'",' . "\n"
+            . '  "title_en": "Direct engaging English title with \'Djerba\'",' . "\n"
+            . '  "content_fr": "HTML riche (h2, h3, p, table, blockquote, ul, li, a)",' . "\n"
+            . '  "content_en": "Summary in English (100 words)",' . "\n"
+            . '  "seo_description": "Meta description (140-155 car.)",' . "\n"
+            . '  "meta_keywords": "6-8 mots-clés séparés par des virgules",' . "\n"
+            . '  "summary_ai": ["Point clé 1", "Point clé 2", "Point clé 3"],' . "\n"
+            . '  "image_prompt": "English 40-50 words realistic photography prompt, no text, no watermark",' . "\n"
+            . '  "facebook_text": "Texte Facebook optimisé (accroche, valeur, question, hashtags)",' . "\n"
+            . '  "cta_services": ' . json_encode($angle['suggested_services'] ?? []) . "\n"
+            . "}";
     }
 
     public function cleanTitle(string $title, bool $isEn = false): string {

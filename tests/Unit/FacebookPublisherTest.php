@@ -120,4 +120,49 @@ class FacebookPublisherTest extends TestCase {
 
         unset($_ENV['FB_PAGE_ACCESS_TOKEN']);
     }
+
+    public function testCustomCaptionIsUsedWhenProvided(): void {
+        $capturedCaption = null;
+        $mockService = new class($capturedCaption) extends FacebookPublisherService {
+            public function __construct(private &$captured) {
+                parent::__construct();
+            }
+            protected function callApi(string $url, array $params): array {
+                $this->captured = $params['caption'] ?? null;
+                return ['id' => 'p1', 'post_id' => 'post_123'];
+            }
+        };
+
+        $_ENV['FB_PAGE_ACCESS_TOKEN'] = 'mock_valid_token';
+        $_ENV['FB_AUTO_PUBLISH'] = 'true';
+
+        $custom = "🌟 Découvrez nos secrets insolites à Djerba !\nUn conseil inédit de terrain.\nQue pensez-vous de ce spot ?";
+        $res = $mockService->publishArticle($this->sampleArticle, $custom);
+
+        $this->assertTrue($res['published']);
+        $this->assertNotNull($capturedCaption);
+        $this->assertStringContainsString('Découvrez nos secrets insolites', $capturedCaption);
+        $this->assertStringContainsString('djerbavoyage.tn/guide/', $capturedCaption);
+        $this->assertStringContainsString('#Djerba', $capturedCaption);
+
+        unset($_ENV['FB_PAGE_ACCESS_TOKEN']);
+    }
+
+    public function testBuildMessageWithoutLinkModeHasNoUrl(): void {
+        $service = new FacebookPublisherService();
+        $message = $service->buildMessage($this->sampleArticle, null, 'SANS_LIEN');
+
+        $this->assertFalse(str_contains($message, 'http://'));
+        $this->assertFalse(str_contains($message, 'https://'));
+        $this->assertFalse(str_contains($message, 'djerbavoyage.tn'));
+        $this->assertStringContainsString('#Djerba', $message);
+        $this->assertStringContainsString('commentaire', $message);
+
+        $custom = "Un coucher de soleil magique sur la lagune d'Aghir.";
+        $customMsg = $service->buildMessage($this->sampleArticle, $custom, 'SANS_LIEN');
+        $this->assertFalse(str_contains($customMsg, 'http'));
+        $this->assertStringContainsString('#Djerba', $customMsg);
+    }
+
 }
+

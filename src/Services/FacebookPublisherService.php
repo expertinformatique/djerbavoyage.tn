@@ -11,7 +11,7 @@ class FacebookPublisherService {
         private ?SettingsService $settings = null
     ) {}
 
-    public function publishArticle(Article $article): array {
+    public function publishArticle(Article $article, ?string $customCaption = null, string $mode = 'AVEC_LIEN'): array {
         if (!$this->isEnabled()) {
             return ['published' => false, 'reason' => 'Publication Facebook désactivée'];
         }
@@ -20,93 +20,95 @@ class FacebookPublisherService {
         $rawToken = $this->getConfig('fb_page_access_token', $_ENV['FB_PAGE_ACCESS_TOKEN'] ?? '');
 
         if (empty($rawToken)) {
-            $this->log("Jeton d'accès (FB_PAGE_ACCESS_TOKEN) non renseigné. Publication ignorée.");
+            $this->log("Jeton d'accès (FB_PAGE_ACCESS_TOKEN) manquant. Publication ignorée.");
             return ['published' => false, 'reason' => 'Jeton d\'accès Facebook manquant'];
         }
 
         $token = $this->resolvePageAccessToken($rawToken, $pageId);
-        $message = $this->buildMessage($article);
-        $articleUrl = 'https://djerbavoyage.tn/guide/' . $article->slug;
+        $message = $this->buildMessage($article, $customCaption, $mode);
         $imageUrl = $this->resolveImageUrl($article->featuredImage);
+        $feedLink = ($mode === 'AVEC_LIEN') ? ('https://djerbavoyage.tn/guide/' . $article->slug) : null;
 
         try {
-            $lastError = null;
-
-            // 1. Essai de publication sous forme de photo HD avec légende
             if (!empty($imageUrl)) {
                 $photoRes = $this->postPhoto($pageId, $token, $imageUrl, $message);
                 if (!empty($photoRes['id'])) {
                     return [
                         'published' => true,
                         'type'      => 'photo',
+                        'mode'      => $mode,
                         'post_id'   => $photoRes['post_id'] ?? $photoRes['id'],
                         'page_id'   => $pageId
                     ];
                 }
-                $lastError = $photoRes['error']['message'] ?? null;
             }
 
-            // 2. Fallback publication sous forme de lien sur le fil d'actualité
-            $feedRes = $this->postFeed($pageId, $token, $message, $articleUrl);
+            $feedRes = $this->postFeed($pageId, $token, $message, $feedLink);
             if (!empty($feedRes['id'])) {
                 return [
                     'published' => true,
                     'type'      => 'feed',
+                    'mode'      => $mode,
                     'post_id'   => $feedRes['id'],
                     'page_id'   => $pageId
                 ];
             }
-            $lastError = $lastError ?? ($feedRes['error']['message'] ?? 'Réponse API Facebook inattendue');
 
-            return ['published' => false, 'error' => $lastError];
+            return ['published' => false, 'error' => $feedRes['error']['message'] ?? 'Erreur API'];
         } catch (\Throwable $e) {
-            $this->log("Erreur lors de la publication Facebook : " . $e->getMessage());
+            $this->log("Erreur Facebook : " . $e->getMessage());
             return ['published' => false, 'error' => $e->getMessage()];
         }
     }
 
-    public function buildMessage(Article $article): string {
-        $parts = [];
-        $parts[] = "🌴 " . $article->titleFr . " 🌴";
-        $parts[] = "";
+    public function buildMessage(Article $article, ?string $customCaption = null, string $mode = 'AVEC_LIEN'): string {
+        if (!empty($customCaption)) {
+            $cleaned = trim($customCaption);
+            if ($mode === 'AVEC_LIEN') {
+                $articleUrl = 'https://djerbavoyage.tn/guide/' . $article->slug;
+                if (!str_contains($cleaned, $articleUrl)) {
+                    $cleaned .= "\n\n🔗 Lire l'article complet : " . $articleUrl;
+                }
+            }
+            if (!str_contains($cleaned, '#Djerba')) {
+                $cleaned .= "\n\n#Djerba #PhotoDjerba #Tunisie";
+            }
+            return $cleaned;
+        }
 
-        // Extrait évocateur ou résumé IA
+        $parts = ["🌴 " . $article->titleFr . " 🌴", ""];
         if (!empty($article->summaryAi)) {
             $summary = trim(strip_tags($article->summaryAi));
-            $summaryLines = array_filter(explode("\n", $summary));
-            $parts[] = implode("\n", array_slice($summaryLines, 0, 3));
-            $parts[] = "";
-        } elseif (!empty($article->seoDescription)) {
-            $parts[] = trim(strip_tags($article->seoDescription));
+            $parts[] = implode("\n", array_slice(array_filter(explode("\n", $summary)), 0, 3));
             $parts[] = "";
         }
 
-        $parts[] = "📖 Découvrez l'histoire et le guide complet :";
-        $parts[] = "👉 https://djerbavoyage.tn/guide/" . $article->slug;
-        $parts[] = "";
-        $parts[] = "#Djerba #Tunisie #DjerbaVoyage #TourismeTunisie #PhotoDjerba #VoyageDjerba #ExploreDjerba";
+        if ($mode === 'AVEC_LIEN') {
+            $parts[] = "📖 Découvrez le guide complet :";
+            $parts[] = "👉 https://djerbavoyage.tn/guide/" . $article->slug;
+        } else {
+            $parts[] = "💬 Et vous, quel est votre coin secret préféré à Djerba ? Racontez-nous en commentaire ! 👇";
+        }
 
+        $parts[] = "";
+        $parts[] = "#Djerba #Tunisie #DjerbaVoyage #TourismeTunisie #PhotoDjerba #VoyageDjerba";
         return implode("\n", $parts);
     }
 
     private function postPhoto(string $pageId, string $token, string $imageUrl, string $caption): array {
-        $endpoint = self::BASE_URL . '/' . urlencode($pageId) . '/photos';
-        $params = [
+        return $this->callApi(self::BASE_URL . '/' . urlencode($pageId) . '/photos', [
             'url'          => $imageUrl,
             'caption'      => $caption,
             'access_token' => $token
-        ];
-        return $this->callApi($endpoint, $params);
+        ]);
     }
 
-    private function postFeed(string $pageId, string $token, string $message, string $link): array {
-        $endpoint = self::BASE_URL . '/' . urlencode($pageId) . '/feed';
-        $params = [
-            'message'      => $message,
-            'link'         => $link,
-            'access_token' => $token
-        ];
-        return $this->callApi($endpoint, $params);
+    private function postFeed(string $pageId, string $token, string $message, ?string $link = null): array {
+        $params = ['message' => $message, 'access_token' => $token];
+        if (!empty($link)) {
+            $params['link'] = $link;
+        }
+        return $this->callApi(self::BASE_URL . '/' . urlencode($pageId) . '/feed', $params);
     }
 
     protected function callApi(string $url, array $params): array {
@@ -128,8 +130,7 @@ class FacebookPublisherService {
 
         $data = json_decode($response ?: '', true) ?: [];
         if ($httpCode >= 400) {
-            $errMsg = $data['error']['message'] ?? ("HTTP error " . $httpCode);
-            $this->log("Graph API HTTP {$httpCode}: " . $errMsg);
+            $this->log("Graph API HTTP {$httpCode}: " . ($data['error']['message'] ?? 'Erreur inconnue'));
         }
         return $data;
     }
@@ -150,9 +151,7 @@ class FacebookPublisherService {
     private function getConfig(string $key, mixed $default = null): mixed {
         if ($this->settings !== null) {
             $val = $this->settings->get($key);
-            if ($val !== null && $val !== '') {
-                return $val;
-            }
+            if ($val !== null && $val !== '') return $val;
         }
         return $default;
     }

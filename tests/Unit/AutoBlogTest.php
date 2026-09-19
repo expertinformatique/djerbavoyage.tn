@@ -181,4 +181,17 @@ class AutoBlogTest extends TestCase {
             $this->assertEquals($c['expected'], $matched, "Failed for prompt: {$c['prompt']}");
         }
     }
+
+    public function testAiArticleGeneratorCreatesEeatStructuredContentWithTableAndFaq(): void {
+        $fetcher = new DjerbaContextFetcherService();
+        $generator = new AiArticleGeneratorService($fetcher, $this->repo);
+        $article = $generator->generateAndSave();
+
+        $this->assertNotNull($article->id);
+        $this->assertNotEmpty($article->contentFr);
+        $this->assertTrue(str_contains($article->contentFr, '<h2>'));
+        $this->assertTrue(str_contains($article->contentFr, '<blockquote>'));
+        $this->assertFalse(str_contains($article->featuredImage, 'pollinations.ai'));
+    }
 }
+
