@@ -167,8 +167,24 @@ $sitemapService = new \App\Services\SitemapService(new PdoProductRepository($pdo
 $container->bind(\App\Services\SitemapService::class, fn() => $sitemapService);
 $facebookPublisher = new \App\Services\FacebookPublisherService($settingsService);
 $container->bind(\App\Services\FacebookPublisherService::class, fn() => $facebookPublisher);
-$aiArticleGenerator = new \App\Services\AiArticleGeneratorService($djerbaContextFetcher, new PdoArticleRepository($pdo), $aiImageService, $sitemapService, $facebookPublisher);
+$facebookReelPublisher = new \App\Services\FacebookReelPublisherService($settingsService);
+$container->bind(\App\Services\FacebookReelPublisherService::class, fn() => $facebookReelPublisher);
+$reelVideoProvider = new \App\Services\ReelVideoProviderService();
+$container->bind(\App\Services\ReelVideoProviderService::class, fn() => $reelVideoProvider);
+$tiktokPublisher = new \App\Services\TikTokPublisherService($settingsService);
+$container->bind(\App\Services\TikTokPublisherService::class, fn() => $tiktokPublisher);
+$aiArticleGenerator = new \App\Services\AiArticleGeneratorService(
+    $djerbaContextFetcher,
+    new PdoArticleRepository($pdo),
+    $aiImageService,
+    $sitemapService,
+    $facebookPublisher,
+    $facebookReelPublisher,
+    $reelVideoProvider,
+    $tiktokPublisher
+);
 $container->bind(\App\Services\AiArticleGeneratorService::class, fn() => $aiArticleGenerator);
+
 
 // 3. Configuration des Routes
 $router = new Router();
@@ -237,6 +253,8 @@ $router->get('/admin/services-bookings', [App\Controllers\Admin\ServicesAdminCon
 $router->post('/api/admin/services/transfer-status', [App\Controllers\Admin\ServicesAdminController::class, 'updateTransfer']);
 $router->get('/admin/settings', [App\Controllers\Admin\SettingsAdminController::class, 'index']);
 $router->post('/admin/settings', [App\Controllers\Admin\SettingsAdminController::class, 'index']);
+$router->get('/admin/tiktok/connect', [App\Controllers\Admin\TikTokAdminController::class, 'connect']);
+$router->get('/admin/tiktok/callback', [App\Controllers\Admin\TikTokAdminController::class, 'callback']);
 $router->get('/admin/analytics', [App\Controllers\Admin\AnalyticsAdminController::class, 'index']);
 $router->get('/admin/newsletter', [App\Controllers\Admin\NewsletterAdminController::class, 'index']);
 $router->get('/admin/audit', [App\Controllers\Admin\AuditAdminController::class, 'index']);

@@ -148,6 +148,7 @@ class SitemapTest extends TestCase {
         $robots = $controller->generateRobots('https://djerbavoyage.tn');
 
         $this->assertStringContainsString('User-agent: *', $robots);
+        $this->assertStringContainsString('Content-Signal: search=yes, ai-input=yes, ai-train=no', $robots);
         $this->assertStringContainsString('Sitemap: https://djerbavoyage.tn/sitemap.xml', $robots);
     }
 
@@ -264,6 +265,35 @@ class SitemapTest extends TestCase {
         $this->assertNotEmpty($output);
         $this->assertStringContainsString('id="product-guide-djerba-pdf"', $output);
         $this->assertStringContainsString('Guide Djerba 2026 PDF', $output);
+    }
+
+    public function testGenerateXmlIncludesGoogleVideoSitemapTags() {
+        $productRepo = new DummyProductRepository();
+        $serviceRepo = new DummyServiceRepository();
+        
+        $articleWithVideo = new Article(
+            id: 99,
+            slug: 'video-djerba-quad',
+            titleFr: 'Aventure en Quad à Djerba',
+            featuredImage: '/assets/images/blog/quad.jpg',
+            seoDescription: 'Superbe vidéo de quad à Djerba',
+            publishedAt: '2026-09-19 12:00:00',
+            videoUrl: 'assets/videos/reels/desert_quad.mp4'
+        );
+        
+        $mockArticleRepo = new class([$articleWithVideo]) extends DummyArticleRepository {
+            public function __construct(private array $articles) {}
+            public function getAllPublished(int $limit = 10): array { return $this->articles; }
+        };
+
+        $service = new SitemapService($productRepo, $serviceRepo, $mockArticleRepo);
+        $xml = $service->generateXml('https://djerbavoyage.tn');
+
+        $this->assertStringContainsString('xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"', $xml);
+        $this->assertStringContainsString('<video:video>', $xml);
+        $this->assertStringContainsString('<video:content_loc>https://djerbavoyage.tn/assets/videos/reels/desert_quad.mp4</video:content_loc>', $xml);
+        $this->assertStringContainsString('<video:title>Aventure en Quad à Djerba</video:title>', $xml);
+        $this->assertStringContainsString('<video:duration>19</video:duration>', $xml);
     }
 }
 

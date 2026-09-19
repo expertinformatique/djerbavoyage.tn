@@ -19,7 +19,7 @@ class SitemapService {
         $currentDate = date('Y-m-d');
 
         $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
-        $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">' . "\n";
+        $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">' . "\n";
 
         $xml .= $this->buildStaticPagesXml($baseUrl, $currentDate);
         $xml .= $this->buildProductsXml($baseUrl, $currentDate);
@@ -34,6 +34,7 @@ class SitemapService {
         $baseUrl = $this->resolveBaseUrl($domain);
 
         $robots = "User-agent: *\n";
+        $robots .= "Content-Signal: search=yes, ai-input=yes, ai-train=no\n";
         $robots .= "Allow: /\n";
         $robots .= "Disallow: /admin/\n";
         $robots .= "Disallow: /api/\n";
@@ -146,6 +147,24 @@ class SitemapService {
                 $xml .= "      <image:loc>" . htmlspecialchars($imgUrl, ENT_QUOTES, 'UTF-8') . "</image:loc>\n";
                 $xml .= "      <image:title>{$title}</image:title>\n";
                 $xml .= "    </image:image>\n";
+            }
+
+            if (!empty($art->videoUrl)) {
+                $vidUrl = str_starts_with($art->videoUrl, 'http') ? $art->videoUrl : $baseUrl . '/' . ltrim($art->videoUrl, '/');
+                $thumbUrl = !empty($art->featuredImage) ? (str_starts_with($art->featuredImage, 'http') ? $art->featuredImage : $baseUrl . '/' . ltrim($art->featuredImage, '/')) : $baseUrl . '/assets/images/hero.png';
+                $vidTitle = htmlspecialchars($art->titleFr ?? 'Vidéo Djerba Voyage', ENT_QUOTES, 'UTF-8');
+                $vidDesc = htmlspecialchars($art->seoDescription ?? $art->titleFr, ENT_QUOTES, 'UTF-8');
+                $pubDate = !empty($art->publishedAt) ? date('c', strtotime($art->publishedAt)) : date('c');
+
+                $xml .= "    <video:video>\n";
+                $xml .= "      <video:thumbnail_loc>" . htmlspecialchars($thumbUrl, ENT_QUOTES, 'UTF-8') . "</video:thumbnail_loc>\n";
+                $xml .= "      <video:title>{$vidTitle}</video:title>\n";
+                $xml .= "      <video:description>{$vidDesc}</video:description>\n";
+                $xml .= "      <video:content_loc>" . htmlspecialchars($vidUrl, ENT_QUOTES, 'UTF-8') . "</video:content_loc>\n";
+                $xml .= "      <video:duration>19</video:duration>\n";
+                $xml .= "      <video:publication_date>{$pubDate}</video:publication_date>\n";
+                $xml .= "      <video:family_friendly>yes</video:family_friendly>\n";
+                $xml .= "    </video:video>\n";
             }
             $xml .= "  </url>\n";
 

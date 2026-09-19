@@ -90,7 +90,8 @@ class PdoArticleRepository implements ArticleRepositoryInterface {
                     pdf_enabled = :pdf_enabled,
                     pdf_price_eur = :pdf_price_eur,
                     cta_services_json = :cta_services_json,
-                    author_name = :author_name
+                    author_name = :author_name,
+                    video_url = :video_url
                     WHERE id = :id";
                 $params = $this->extractParams($article);
                 $params['id'] = $article->id;
@@ -100,11 +101,11 @@ class PdoArticleRepository implements ArticleRepositoryInterface {
                 $sql = "INSERT INTO articles (
                     destination_id, slug, title_fr, title_en, content_fr, content_en, 
                     featured_image, status, published_at, seo_description, meta_keywords, 
-                    summary_ai, schema_json, pdf_enabled, pdf_price_eur, cta_services_json, author_name
+                    summary_ai, schema_json, pdf_enabled, pdf_price_eur, cta_services_json, author_name, video_url
                 ) VALUES (
                     :destination_id, :slug, :title_fr, :title_en, :content_fr, :content_en, 
                     :featured_image, :status, CURRENT_TIMESTAMP, :seo_description, :meta_keywords, 
-                    :summary_ai, :schema_json, :pdf_enabled, :pdf_price_eur, :cta_services_json, :author_name
+                    :summary_ai, :schema_json, :pdf_enabled, :pdf_price_eur, :cta_services_json, :author_name, :video_url
                 )";
                 $stmt = $this->pdo->prepare($sql);
                 $stmt->execute($this->extractParams($article));
@@ -134,7 +135,8 @@ class PdoArticleRepository implements ArticleRepositoryInterface {
             'pdf_enabled'      => $article->pdfEnabled ? 1 : 0,
             'pdf_price_eur'    => $article->pdfPriceEur,
             'cta_services_json'=> $article->ctaServicesJson,
-            'author_name'      => $article->authorName
+            'author_name'      => $article->authorName,
+            'video_url'        => $article->videoUrl
         ];
     }
 

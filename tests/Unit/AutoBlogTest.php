@@ -193,5 +193,40 @@ class AutoBlogTest extends TestCase {
         $this->assertTrue(str_contains($article->contentFr, '<blockquote>'));
         $this->assertFalse(str_contains($article->featuredImage, 'pollinations.ai'));
     }
+
+    public function testArticleWithVideoHasVideoObjectSchemaAndVideoUrl(): void {
+        $article = new Article(
+            id: null,
+            destinationId: 1,
+            slug: 'test-video-article-' . time(),
+            titleFr: 'Aventure Quad Test',
+            contentFr: '<p>Contenu avec vidéo</p>',
+            featuredImage: 'images/blog/test.jpg',
+            status: 'published',
+            seoDescription: 'Description vidéo test',
+            videoUrl: 'assets/videos/reels/desert_quad.mp4',
+            schemaJson: json_encode([
+                '@context' => 'https://schema.org',
+                '@type' => 'BlogPosting',
+                'video' => [
+                    '@type' => 'VideoObject',
+                    'name' => 'Aventure Quad Test - Djerba Reel',
+                    'contentUrl' => 'https://djerbavoyage.tn/assets/videos/reels/desert_quad.mp4',
+                    'duration' => 'PT19S'
+                ]
+            ])
+        );
+
+        $saved = $this->repo->save($article);
+        $this->assertNotNull($saved->id);
+
+        $fetched = $this->repo->findBySlug($saved->slug);
+        $this->assertNotNull($fetched);
+        $this->assertEquals('assets/videos/reels/desert_quad.mp4', $fetched->videoUrl);
+        $this->assertStringContainsString('VideoObject', $fetched->schemaJson);
+        $this->assertStringContainsString('PT19S', $fetched->schemaJson);
+
+        $this->repo->delete($saved->id);
+    }
 }
 

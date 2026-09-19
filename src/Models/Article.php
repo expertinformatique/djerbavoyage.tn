@@ -21,7 +21,8 @@ class Article {
         public bool $pdfEnabled = true,
         public float $pdfPriceEur = 2.99,
         public ?string $ctaServicesJson = null,
-        public string $authorName = 'IA Voyageur Djerba'
+        public string $authorName = 'IA Voyageur Djerba',
+        public ?string $videoUrl = null
     ) {}
 
     public static function fromArray(array $data): self {
@@ -44,7 +45,8 @@ class Article {
             pdfEnabled: isset($data['pdf_enabled']) ? (bool)$data['pdf_enabled'] : true,
             pdfPriceEur: isset($data['pdf_price_eur']) ? (float)$data['pdf_price_eur'] : 2.99,
             ctaServicesJson: $data['cta_services_json'] ?? null,
-            authorName: $data['author_name'] ?? 'IA Voyageur Djerba'
+            authorName: $data['author_name'] ?? 'IA Voyageur Djerba',
+            videoUrl: $data['video_url'] ?? null
         );
     }
 }

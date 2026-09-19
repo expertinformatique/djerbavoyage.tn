@@ -85,6 +85,7 @@ try {
         ['table' => 'articles', 'column' => 'pdf_price_eur', 'sql' => "ALTER TABLE articles ADD COLUMN pdf_price_eur DECIMAL(10,2) DEFAULT 2.99"],
         ['table' => 'articles', 'column' => 'cta_services_json', 'sql' => "ALTER TABLE articles ADD COLUMN cta_services_json TEXT NULL"],
         ['table' => 'articles', 'column' => 'author_name', 'sql' => "ALTER TABLE articles ADD COLUMN author_name VARCHAR(100) DEFAULT 'IA Voyageur Djerba'"],
+        ['table' => 'articles', 'column' => 'video_url', 'sql' => "ALTER TABLE articles ADD COLUMN video_url VARCHAR(255) NULL"],
     ];
 
     foreach ($alters as $alter) {

@@ -253,7 +253,7 @@
       </a>
     </div>
     <div style="border-radius: 16px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1);">
-      <img src="<?= asset('images/concierge.png') ?>" alt="Conciergerie VIP Djerba" style="width: 100%; height: 100%; display: block; object-fit: cover;">
+      <img src="<?= asset('images/conciergerie-voyage-djerba-vip.png') ?>" alt="Service de Conciergerie VIP et Réservation d'Activités à Djerba" style="width: 100%; height: 100%; display: block; object-fit: cover;">
     </div>
   </div>
 </section>

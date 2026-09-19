@@ -36,9 +36,12 @@ class HomeController extends Controller {
         $articles = $this->articleRepo->getAllPublished(6);
         $products = $this->productRepo->getAllActive();
 
+        $defaultTitle = 'Djerba Voyage 2026 : Guide Officiel, Excursions et Activités';
+        $defaultDesc  = 'Préparez votre voyage à Djerba : guides complets, réservation d\'excursions, quads, sorties en mer et conciergerie VIP.';
+
         $this->render('pages/home', [
-            'seoTitle'       => $this->settings->get('site_name', 'Djerba Voyage - Guide Officiel'),
-            'seoDescription' => $this->settings->get('meta_description_default', 'Découvrez Djerba avec nos guides complets.'),
+            'seoTitle'       => $this->settings->get('site_name', $defaultTitle),
+            'seoDescription' => $this->settings->get('meta_description_default', $defaultDesc),
             'destinations'   => $destinations,
             'articles'       => $articles,
             'products'       => $products,

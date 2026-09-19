@@ -5,11 +5,17 @@ $ftpHost = 'ftp.invoices.tn';
 $ftpBase = 'djerbavoyage.tn';
 
 $filesToUpload = [
-    'src/Services/AiImageService.php',
-    'src/Services/AiArticleGeneratorService.php',
-    'src/Services/FacebookPublisherService.php',
-    'src/Services/DjerbaStoryFallbackService.php',
-    'src/Services/DjerbaStoryDataProvider.php',
+    'database/migrations/017_update_seo_titles_and_descriptions.sql',
+    'src/Controllers/HomeController.php',
+    'src/Services/SitemapService.php',
+    'public/robots.txt',
+    'views/layouts/main.php',
+    'views/pages/home.php',
+    'views/partials/navbar.php',
+    'views/partials/personalized_pdf_modal.php',
+    'public/assets/images/logo-djerba-voyage-guide-officiel.png',
+    'public/assets/images/conciergerie-voyage-djerba-vip.png',
+    'public/assets/images/guide-djerba-pdf-personnalise-voyage.png',
 ];
 
 $root = dirname(__DIR__);

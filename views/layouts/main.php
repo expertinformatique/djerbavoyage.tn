@@ -13,31 +13,46 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?= e($seoTitle ?? 'Djerba Voyage 2026 | Guide Officiel, Activités & Conciergerie VIP') ?></title>
-  <meta name="description" content="<?= e($seoDescription ?? 'Guide touristique indépendant de l\'île de Djerba en Tunisie. Organisez votre séjour sur-mesure : excursions, quads, kitesurf, hôtels de charme et guides PDF.') ?>">
+  <title><?= e($seoTitle ?? 'Djerba Voyage 2026 : Guide Officiel, Excursions et Activités') ?></title>
+  <meta name="description" content="<?= e($seoDescription ?? 'Préparez votre voyage à Djerba : guides complets, réservation d\'excursions, quads, sorties en mer et conciergerie VIP.') ?>">
   <meta name="keywords" content="Djerba, voyage Djerba, guide Djerba 2026, excursion Djerba, jet ski Djerba, quad Djerba, hôtel Djerba, Djerbahood, Houmt Souk, Sidi Mahres">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 
-  <!-- Canonical URL -->
+  <!-- Canonical & International SEO (Hreflang) -->
   <?php 
-    $currentUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . strtok($_SERVER['REQUEST_URI'] ?? '/', '?');
+    $scheme = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http');
+    $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+    $baseUrl = $scheme . '://' . $host;
+    $currentUrl = $baseUrl . strtok($_SERVER['REQUEST_URI'] ?? '/', '?');
+    $videoAbsoluteUrl = !empty($ogVideo) ? (str_starts_with($ogVideo, 'http') ? $ogVideo : ($baseUrl . '/' . ltrim($ogVideo, '/'))) : '';
   ?>
   <link rel="canonical" href="<?= e($currentUrl) ?>">
+  <link rel="alternate" hreflang="fr" href="<?= e($currentUrl) ?>?lang=fr">
+  <link rel="alternate" hreflang="en" href="<?= e($currentUrl) ?>?lang=en">
+  <link rel="alternate" hreflang="ar" href="<?= e($currentUrl) ?>?lang=ar">
+  <link rel="alternate" hreflang="x-default" href="<?= e($currentUrl) ?>">
 
   <!-- Open Graph / Facebook / WhatsApp -->
-  <meta property="og:type" content="website">
+  <meta property="og:type" content="<?= !empty($ogVideo) ? 'video.other' : 'website' ?>">
   <meta property="og:url" content="<?= e($currentUrl) ?>">
-  <meta property="og:title" content="<?= e($seoTitle ?? 'Djerba Voyage 2026 | Guide Officiel & Excursions VIP') ?>">
-  <meta property="og:description" content="<?= e($seoDescription ?? 'Découvrez l\'île de Djerba en Tunisie : guides PDF interactifs, cartes GPS, pass activités et conciergerie VIP.') ?>">
-  <meta property="og:image" content="<?= asset('images/hero.png') ?>">
+  <meta property="og:title" content="<?= e($seoTitle ?? 'Djerba Voyage 2026 : Guide Officiel, Activités & Excursions') ?>">
+  <meta property="og:description" content="<?= e($seoDescription ?? 'Préparez votre séjour à Djerba : guides complets, réservation d\'excursions, quads, sorties en mer et conciergerie VIP sur-mesure.') ?>">
+  <meta property="og:image" content="<?= e(!empty($ogImage) ? $ogImage : asset('images/hero.png')) ?>">
+  <?php if (!empty($ogVideo)): ?>
+  <meta property="og:video" content="<?= e($videoAbsoluteUrl) ?>">
+  <meta property="og:video:secure_url" content="<?= e($videoAbsoluteUrl) ?>">
+  <meta property="og:video:type" content="video/mp4">
+  <meta property="og:video:width" content="720">
+  <meta property="og:video:height" content="1280">
+  <?php endif; ?>
   <meta property="og:locale" content="fr_FR">
   <meta property="og:site_name" content="Djerba Voyage">
 
   <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="<?= e($seoTitle ?? 'Djerba Voyage 2026') ?>">
-  <meta name="twitter:description" content="<?= e($seoDescription ?? 'Guide touristique officiel & réservation d\'activités à Djerba.') ?>">
-  <meta name="twitter:image" content="<?= asset('images/hero.png') ?>">
+  <meta name="twitter:card" content="<?= !empty($ogVideo) ? 'player' : 'summary_large_image' ?>">
+  <meta name="twitter:title" content="<?= e($seoTitle ?? 'Djerba Voyage 2026 : Guide Officiel, Activités & Excursions') ?>">
+  <meta name="twitter:description" content="<?= e($seoDescription ?? 'Préparez votre séjour à Djerba : guides complets, réservation d\'excursions, quads, sorties en mer et conciergerie VIP sur-mesure.') ?>">
+  <meta name="twitter:image" content="<?= e(!empty($ogImage) ? $ogImage : asset('images/hero.png')) ?>">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="<?= asset('images/favicon.png') ?>">
@@ -69,7 +84,55 @@
   <link rel="stylesheet" href="<?= asset('css/rtl.css') ?>">
 <?php endif; ?>
 
-  <!-- JSON-LD Structured Data Injection -->
+  <!-- JSON-LD Structured Data Injection (Schema.org) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "<?= e($baseUrl) ?>/#website",
+        "url": "<?= e($baseUrl) ?>/",
+        "name": "Djerba Voyage",
+        "description": "Guide touristique officiel et agence d'excursions sur l'île de Djerba en Tunisie.",
+        "inLanguage": "<?= \Core\Lang::getLocale() ?>",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "<?= e($baseUrl) ?>/guide?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": ["TravelAgency", "TouristInformationCenter"],
+        "@id": "<?= e($baseUrl) ?>/#organization",
+        "name": "Djerba Voyage",
+        "url": "<?= e($baseUrl) ?>/",
+        "logo": "<?= e($baseUrl) ?>/assets/images/logo-djerba-voyage-guide-officiel.png",
+        "image": "<?= e($baseUrl) ?>/assets/images/hero.png",
+        "description": "Plateforme indépendante de voyage et conciergerie à Djerba : réservation d'excursions, quads, kitesurf, sorties bateau et guides personnalisés.",
+        "telephone": "+216 98 000 000",
+        "priceRange": "€€",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Zone Touristique",
+          "addressLocality": "Houmt Souk",
+          "addressRegion": "Médenine",
+          "postalCode": "4180",
+          "addressCountry": "TN"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 33.8750,
+          "longitude": 10.8575
+        },
+        "sameAs": [
+          "https://www.facebook.com/photo.djerba",
+          "https://www.tiktok.com/@djerbavoyage"
+        ]
+      }
+    ]
+  }
+  </script>
   <?= $jsonLd ?? '' ?>
 
   <!-- Global App Base URL & Locale Configuration -->

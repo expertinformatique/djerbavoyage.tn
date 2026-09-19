@@ -5,18 +5,26 @@ use App\Models\Article;
 use App\Repositories\PdoArticleRepository;
 
 class AiArticleGeneratorService {
-    private AiImageService $imageService;
-    private ?array $lastFacebookResult = null;
+    private ?FacebookReelPublisherService $reelPublisher = null;
+    private ?ReelVideoProviderService $reelVideoProvider = null;
+    private ?array $lastReelResult = null;
+    private ?array $lastTikTokResult = null;
 
     public function __construct(
         private DjerbaContextFetcherService $contextFetcher,
         private PdoArticleRepository $articleRepo,
         ?AiImageService $imageService = null,
         private ?SitemapService $sitemapService = null,
-        private ?FacebookPublisherService $facebookPublisher = null
+        private ?FacebookPublisherService $facebookPublisher = null,
+        ?FacebookReelPublisherService $reelPublisher = null,
+        ?ReelVideoProviderService $reelVideoProvider = null,
+        private ?TikTokPublisherService $tiktokPublisher = null
     ) {
         $this->imageService = $imageService ?? new AiImageService();
+        $this->reelPublisher = $reelPublisher;
+        $this->reelVideoProvider = $reelVideoProvider ?? new ReelVideoProviderService();
     }
+
 
     public function generateAndSave(): Article {
         $recentArticles = $this->articleRepo->getAllPublished(15);
@@ -61,6 +69,37 @@ class AiArticleGeneratorService {
             ? implode(' ', $articleData['seo_description'])
             : ($articleData['seo_description'] ?? null);
 
+        $themeKey = $this->reelVideoProvider->resolveThemeKey($articleData['title_fr']);
+        $videoRel = 'assets/videos/reels/' . $themeKey . '.mp4';
+        $rootPath = defined('ROOT_PATH') ? ROOT_PATH : dirname(__DIR__, 2);
+        $videoPath = $rootPath . '/public/' . $videoRel;
+        $videoUrl = (file_exists($videoPath) && filesize($videoPath) > 10000) ? $videoRel : null;
+
+        $schemaData = [
+            '@context' => 'https://schema.org',
+            '@type' => 'BlogPosting',
+            'headline' => $articleData['title_fr'],
+            'description' => $seoDesc ?? '',
+            'image' => $featuredImage,
+            'author' => ['@type' => 'Organization', 'name' => 'Rédaction Djerba Voyage'],
+            'publisher' => ['@type' => 'Organization', 'name' => 'Djerba Voyage'],
+            'datePublished' => date('Y-m-d\TH:i:sP'),
+        ];
+        if ($videoUrl) {
+            $absVideo = 'https://djerbavoyage.tn/' . ltrim($videoUrl, '/');
+            $absImg = str_starts_with($featuredImage, 'http') ? $featuredImage : 'https://djerbavoyage.tn/' . ltrim($featuredImage, '/');
+            $schemaData['video'] = [
+                '@type' => 'VideoObject',
+                'name' => $articleData['title_fr'] . ' - Djerba Reel',
+                'description' => $seoDesc ?? 'Immersion vidéo et découverte à Djerba',
+                'thumbnailUrl' => $absImg,
+                'uploadDate' => date('Y-m-d\TH:i:sP'),
+                'contentUrl' => $absVideo,
+                'duration' => 'PT19S',
+                'embedUrl' => 'https://djerbavoyage.tn/guide/' . $uniqueSlug
+            ];
+        }
+
         $article = new Article(
             id: null,
             destinationId: 1,
@@ -76,20 +115,12 @@ class AiArticleGeneratorService {
             seoDescription: $seoDesc,
             metaKeywords: $metaKeywords,
             summaryAi: $summaryAi,
-            schemaJson: json_encode([
-                '@context' => 'https://schema.org',
-                '@type' => 'BlogPosting',
-                'headline' => $articleData['title_fr'],
-                'description' => $seoDesc ?? '',
-                'image' => $featuredImage,
-                'author' => ['@type' => 'Organization', 'name' => 'Rédaction Djerba Voyage'],
-                'publisher' => ['@type' => 'Organization', 'name' => 'Djerba Voyage'],
-                'datePublished' => date('Y-m-d\TH:i:sP'),
-            ], JSON_UNESCAPED_UNICODE),
+            schemaJson: json_encode($schemaData, JSON_UNESCAPED_UNICODE),
             pdfEnabled: true,
             pdfPriceEur: 2.99,
             ctaServicesJson: json_encode($articleData['cta_services'] ?? []),
-            authorName: 'Rédaction Djerba Voyage'
+            authorName: 'Rédaction Djerba Voyage',
+            videoUrl: $videoUrl
         );
 
         $saved = $this->articleRepo->save($article);
@@ -100,12 +131,38 @@ class AiArticleGeneratorService {
             $this->lastFacebookResult = $this->facebookPublisher->publishArticle($saved, $customCaption, $facebookMode);
         }
 
+        // Publication d'un Reel tous les 3 cycles pour dynamiser le format vidéo (ou forcé via ?force_reel=1)
+        $forceReel = isset($_GET['force_reel']) && $_GET['force_reel'] === '1';
+        if ($this->reelPublisher !== null && (($totalCount + 1) % 3 === 0 || $forceReel)) {
+            $videoPath = $this->reelVideoProvider->getVideoPathForTheme($articleData['title_fr']);
+            if ($videoPath && file_exists($videoPath)) {
+                $reelCaption = "🌴 " . $articleData['title_fr'] . " !\n\n"
+                    . ($articleData['seo_description'] ?? '') . "\n\n"
+                    . "#Djerba #Reels #Tunisie #Voyage #PhotoDjerba";
+                $this->lastReelResult = $this->reelPublisher->publishReel($videoPath, $reelCaption);
+
+                if ($this->tiktokPublisher !== null && $this->tiktokPublisher->isEnabled()) {
+                    $tikTokCaption = $this->tiktokPublisher->buildCaption($articleData['title_fr']);
+                    $this->lastTikTokResult = $this->tiktokPublisher->publishVideo($videoPath, $tikTokCaption);
+                }
+            }
+        }
+
         return $saved;
     }
 
     public function getLastFacebookResult(): ?array {
         return $this->lastFacebookResult;
     }
+
+    public function getLastReelResult(): ?array {
+        return $this->lastReelResult;
+    }
+
+    public function getLastTikTokResult(): ?array {
+        return $this->lastTikTokResult;
+    }
+
 
     private function generateWithGemini(string $apiKey, array $context): array {
         $prompt = $this->buildPrompt($context);

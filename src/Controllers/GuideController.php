@@ -83,6 +83,8 @@ class GuideController extends Controller {
         $this->render('pages/guide-single', [
             'seoTitle'        => $article->titleFr . ' | Djerba Voyage',
             'seoDescription'  => $article->seoDescription ?: substr(strip_tags($article->contentFr), 0, 160),
+            'ogImage'         => !empty($article->featuredImage) ? asset($article->featuredImage) : null,
+            'ogVideo'         => !empty($article->videoUrl) ? asset($article->videoUrl) : null,
             'article'         => $article,
             'ctaServices'     => $ctaServices,
             'relatedArticles' => $relatedArticles,

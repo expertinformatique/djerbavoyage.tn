@@ -199,7 +199,8 @@ $sqlitePdo->exec("
         pdf_enabled INTEGER DEFAULT 1,
         pdf_price_eur REAL DEFAULT 2.99,
         cta_services_json TEXT NULL,
-        author_name TEXT DEFAULT 'IA Voyageur Djerba'
+        author_name TEXT DEFAULT 'IA Voyageur Djerba',
+        video_url TEXT NULL
     );
     CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
