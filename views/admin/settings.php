@@ -118,7 +118,7 @@
           <option value="true" <?= $settings->get('fb_auto_publish', $_ENV['FB_AUTO_PUBLISH'] ?? 'true') === 'true' || $settings->get('fb_auto_publish') === '1' ? 'selected' : '' ?>>Activé (Publication automatique)</option>
           <option value="false" <?= $settings->get('fb_auto_publish', $_ENV['FB_AUTO_PUBLISH'] ?? 'true') === 'false' || $settings->get('fb_auto_publish') === '0' ? 'selected' : '' ?>>Désactivé</option>
         </select>
-        <p class="mt-1 text-[11px] text-slate-400">Lorsque le bot appelle l'API toutes les 5 min, l'article sera aussi publié sur Facebook.</p>
+        <p class="mt-1 text-[11px] text-slate-400">Lorsque le bot appelle l'API toutes les 15 min, l'article sera aussi publié sur Facebook.</p>
       </div>
 
       <div>
@@ -131,6 +131,68 @@
         <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Jeton d'accès de Page (Page Access Token)</label>
         <input type="password" name="fb_page_access_token" value="<?= e($settings->get('fb_page_access_token', $_ENV['FB_PAGE_ACCESS_TOKEN'] ?? '')) ?>" class="w-full rounded-md border border-slate-300 dark:border-slate-700 px-3 py-2 text-xs font-mono bg-white dark:bg-slate-950 text-slate-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-[#1877f2]" placeholder="EAA...">
         <p class="mt-1 text-[11px] text-slate-400">Généré sur Meta for Developers avec les permissions <code class="font-mono bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">pages_manage_posts</code> et <code class="font-mono bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">pages_read_engagement</code>.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 5 : Générateur d'Images IA Nano Banana -->
+  <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200/90 dark:border-slate-800 shadow-sm overflow-hidden">
+    <div class="p-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30 flex items-center justify-between">
+      <div>
+        <h2 class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+          <i class="fi fi-rr-picture text-amber-500"></i> Générateur d'Images Réelles (Nano Banana)
+        </h2>
+        <p class="text-xs text-slate-500 dark:text-slate-400">Génération photographique ultra-réaliste pour chaque article de blog</p>
+      </div>
+      <span class="px-2 py-0.5 text-[10px] font-bold bg-amber-50 text-amber-600 dark:bg-amber-950/40 dark:text-amber-400 rounded">
+        Nano Banana Pro
+      </span>
+    </div>
+
+    <div class="p-5 space-y-4">
+      <div>
+        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Génération Nano Banana</label>
+        <select name="nano_banana_enabled" class="w-full max-w-xs rounded-md border border-slate-300 dark:border-slate-700 px-3 py-2 text-xs bg-white dark:bg-slate-950 text-slate-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-amber-500">
+          <option value="true" <?= $settings->get('nano_banana_enabled', $_ENV['NANO_BANANA_ENABLED'] ?? 'true') === 'true' || $settings->get('nano_banana_enabled') === '1' ? 'selected' : '' ?>>Activé (Génération automatique)</option>
+          <option value="false" <?= $settings->get('nano_banana_enabled', $_ENV['NANO_BANANA_ENABLED'] ?? 'true') === 'false' || $settings->get('nano_banana_enabled') === '0' ? 'selected' : '' ?>>Désactivé (Photos HD sélectionnées)</option>
+        </select>
+        <p class="mt-1 text-[11px] text-slate-400">Génère une photo réelle DSLR 8K avec repli sécurisé sur la galerie HD en cas de limite d'API.</p>
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Modèle Nano Banana</label>
+        <select name="nano_banana_model" class="w-full max-w-sm rounded-md border border-slate-300 dark:border-slate-700 px-3 py-2 text-xs bg-white dark:bg-slate-950 text-slate-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-amber-500">
+          <option value="nano-banana-pro-preview" <?= $settings->get('nano_banana_model', $_ENV['NANO_BANANA_MODEL'] ?? 'nano-banana-pro-preview') === 'nano-banana-pro-preview' ? 'selected' : '' ?>>nano-banana-pro-preview (Recommandé)</option>
+          <option value="gemini-2.5-flash-image" <?= $settings->get('nano_banana_model') === 'gemini-2.5-flash-image' ? 'selected' : '' ?>>gemini-2.5-flash-image (Nano Banana 2)</option>
+          <option value="gemini-3.1-flash-image" <?= $settings->get('nano_banana_model') === 'gemini-3.1-flash-image' ? 'selected' : '' ?>>gemini-3.1-flash-image (Dernière version)</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Clé API Dédiée (Optionnel)</label>
+        <input type="password" name="nano_banana_api_key" value="<?= e($settings->get('nano_banana_api_key', $_ENV['NANO_BANANA_API_KEY'] ?? '')) ?>" class="w-full rounded-md border border-slate-300 dark:border-slate-700 px-3 py-2 text-xs font-mono bg-white dark:bg-slate-950 text-slate-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-amber-500" placeholder="Par défaut, utilise GEMINI_API_KEY">
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 6 : Planification du Bot Auto-Blog (Toutes les 15 minutes) -->
+  <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200/90 dark:border-slate-800 shadow-sm overflow-hidden">
+    <div class="p-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30 flex items-center justify-between">
+      <div>
+        <h2 class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+          <i class="fi fi-rr-clock text-emerald-500"></i> Planification du Bot Auto-Blog
+        </h2>
+        <p class="text-xs text-slate-500 dark:text-slate-400">Cadence de publication automatique toutes les 15 minutes</p>
+      </div>
+      <span class="px-2 py-0.5 text-[10px] font-bold bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400 rounded">
+        Toutes les 15 min
+      </span>
+    </div>
+
+    <div class="p-5 space-y-3 text-xs text-slate-600 dark:text-slate-300">
+      <p>Pour planifier l'exécution automatique toutes les 15 minutes sur votre serveur Debian / Linux, ajoutez cette ligne dans votre crontab (<code class="font-mono bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">crontab -e</code>) :</p>
+      <div class="p-3 bg-slate-900 text-emerald-400 font-mono text-[11px] rounded-lg overflow-x-auto select-all">
+        */15 * * * * /usr/bin/php /var/www/djerbavoyage/bin/auto_blog_cron.php >> /var/log/djerba_blog.log 2>&1
       </div>
     </div>
   </div>

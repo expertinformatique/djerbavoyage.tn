@@ -1,9 +1,9 @@
 <?php
 /**
- * Script CLI Cron pour la génération d'articles de blog toutes les 5 minutes
+ * Script CLI Cron pour la génération d'articles de blog toutes les 15 minutes
  * Usage CLI : php bin/auto_blog_cron.php
- * Crontab sur serveur root@192.168.0.107 :
- * EVERY_5_MIN : /usr/bin/php /var/www/djerbavoyage/bin/auto_blog_cron.php >> /var/log/djerba_blog.log 2>&1
+ * Crontab sur serveur Linux/Debian :
+ * Cadence 15 minutes : [star]/15 * * * * /usr/bin/php /var/www/djerbavoyage/bin/auto_blog_cron.php >> /var/log/djerba_blog.log 2>&1
  */
 
 if (php_sapi_name() !== 'cli') {

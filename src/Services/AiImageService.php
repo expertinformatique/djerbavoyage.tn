@@ -81,6 +81,16 @@ class AiImageService {
         return $fallbacks[$key] ?? ($context['angle']['fallback_local_image'] ?? 'images/sidi_mahres.png');
     }
 
+    private NanoBananaImageService $nanoBanana;
+
+    public function __construct(?NanoBananaImageService $nanoBanana = null, ?SettingsService $settings = null) {
+        $this->nanoBanana = $nanoBanana ?? new NanoBananaImageService(null, null, null, $settings);
+    }
+
+    public function getNanoBananaService(): NanoBananaImageService {
+        return $this->nanoBanana;
+    }
+
     public function generateForArticle(string $imagePrompt, string $slug, array $context): string {
         $rootPath = defined('ROOT_PATH') ? ROOT_PATH : dirname(__DIR__, 2);
         $fallback = $this->resolveThemeImage($imagePrompt, $context);
@@ -89,6 +99,13 @@ class AiImageService {
             return $fallback;
         }
 
+        // 1. Tentative de génération d'image réelle avec Nano Banana
+        $nanoImage = $this->nanoBanana->generate($imagePrompt, $slug, $rootPath, $context);
+        if (!empty($nanoImage)) {
+            return $nanoImage;
+        }
+
+        // 2. Repli vers la sélection photographique HD réelle (Unsplash / Wikimedia)
         $themeKey = $this->resolveThemeKey($imagePrompt . ' ' . ($context['angle']['theme'] ?? ''));
         $targetUrl = $this->resolveRemotePhotoUrl($themeKey, $imagePrompt);
         if (empty($targetUrl)) {
