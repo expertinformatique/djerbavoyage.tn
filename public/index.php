@@ -184,6 +184,7 @@ $aiArticleGenerator = new \App\Services\AiArticleGeneratorService(
     $tiktokPublisher
 );
 $container->bind(\App\Services\AiArticleGeneratorService::class, fn() => $aiArticleGenerator);
+$container->bind(\App\Controllers\AutoBlogController::class, fn() => new \App\Controllers\AutoBlogController($aiArticleGenerator));
 
 
 // 3. Configuration des Routes
@@ -285,6 +286,8 @@ $router->get('/admin/articles/edit', [App\Controllers\Admin\ArticlesAdminControl
 $router->post('/admin/articles/edit', [App\Controllers\Admin\ArticlesAdminController::class, 'edit']);
 $router->post('/admin/articles/delete', [App\Controllers\Admin\ArticlesAdminController::class, 'delete']);
 $router->post('/admin/articles/generate-ai', [App\Controllers\Admin\ArticlesAdminController::class, 'generateAi']);
+$router->get('/api/auto-blog/generate', [App\Controllers\AutoBlogController::class, 'generate']);
+$router->post('/api/auto-blog/generate', [App\Controllers\AutoBlogController::class, 'generate']);
 
 // Route de changement de locale (langue + devise)
 $router->post('/api/locale', [LocaleController::class, 'switch']);
