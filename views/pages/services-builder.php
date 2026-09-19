@@ -1,39 +1,50 @@
 <!-- Hero Section Configurateur de Pass -->
-<section class="c-hero" style="background: linear-gradient(180deg, rgba(15, 23, 42, 0.82) 0%, rgba(15, 23, 42, 0.95) 100%), url('<?= asset('images/hero.png') ?>') center/cover no-repeat;">
+<section class="c-hero" style="background: linear-gradient(180deg, rgba(15, 23, 42, 0.78) 0%, rgba(15, 23, 42, 0.95) 100%), url('<?= asset('images/djerba_services_hero.jpg') ?>') center/cover no-repeat; padding: clamp(2rem, 5vw, 4rem) 0;">
   <div class="l-container" data-animate style="text-align: center; max-width: 860px;">
-    <div style="background: rgba(245, 158, 11, 0.18); border: 1px solid var(--clr-terracotta-500); color: #F59E0B; display: inline-flex; align-items: center; gap: 8px; padding: 6px 18px; border-radius: 50px; font-weight: 700; margin-bottom: 1.25rem; font-size: 0.88rem;">
-      <i class="fi fi-rr-sparkles"></i> Djerba Experience Pass 2026 — Tout-en-Un
+    <div style="background: rgba(245, 158, 11, 0.18); border: 1px solid var(--clr-terracotta-500); color: #F59E0B; display: inline-flex; align-items: center; gap: 8px; padding: 5px 16px; border-radius: 50px; font-weight: 700; margin-bottom: 0.85rem; font-size: 0.82rem;">
+      <i class="fi fi-rr-sparkles"></i> Djerba Experience Pass 2026
     </div>
-    <h1 class="c-hero__title" style="color: #FFFFFF; margin-bottom: 1rem;">
+    <h1 class="c-hero__title" style="color: #FFFFFF; margin-bottom: 0.75rem; font-size: clamp(1.45rem, 3.2vw, 2.25rem);">
       Composez Votre Séjour & Vos Activités à Djerba
     </h1>
-    <p class="c-hero__subtitle" style="color: var(--clr-sand-100); margin-bottom: 2rem;">
-      Combinez vos activités favorites, profitez d'une remise dégressive jusqu'à <strong>-15%</strong> et débloquez l'<strong>Accueil Aéroport VIP OFFERT</strong>. Bloquez votre tarif dès aujourd'hui et planifiez vos dates en toute sérénité !
+    <p class="c-hero__subtitle" style="color: var(--clr-sand-100); margin-bottom: 1.25rem; font-size: clamp(0.9rem, 1.8vw, 1.05rem); line-height: 1.5;">
+      Combinez vos activités, profitez de remises jusqu'à <strong>-15%</strong> et débloquez la <strong>Navette Aéroport VIP OFFERTE</strong> dès 3 activités !
     </p>
 
-    <!-- Trust Badges Bar -->
-    <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; color: #fff; font-size: 0.85rem; font-weight: 600;">
-      <span style="background: rgba(255,255,255,0.12); backdrop-filter: blur(8px); padding: 6px 14px; border-radius: 30px; display: inline-flex; align-items: center; gap: 6px;">
-        <i class="fi fi-rr-shield-check" style="color:#10B981;"></i> Annulation Gratuite 24h
+    <!-- Mobile Hero Visual Card -->
+    <div class="sm:hidden" style="margin-bottom: 1.25rem;">
+      <div style="position: relative; border-radius: 16px; overflow: hidden; box-shadow: 0 12px 30px -5px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.15);">
+        <img src="<?= asset('images/djerba_services_hero.jpg') ?>" alt="Activités & Pass Expérience Djerba 2026" style="width: 100%; height: 175px; object-fit: cover; display: block;">
+        <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.05) 35%, rgba(15,23,42,0.88) 100%);"></div>
+        <div style="position: absolute; bottom: 10px; left: 12px; right: 12px; display: flex; justify-content: space-between; align-items: flex-end;">
+          <span style="color: #fff; font-weight: 700; font-size: 0.82rem; display: flex; align-items: center; gap: 4px;">
+            <i class="fi fi-rr-sparkles" style="color: #F59E0B;"></i> Jet-Ski, Quads, Bateaux & Sahara
+          </span>
+          <span style="background: #F59E0B; color: #0F172A; font-weight: 800; font-size: 0.72rem; padding: 2px 8px; border-radius: 12px;">Remise -15%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trust Badges Bar (Responsive Compact) -->
+    <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 0.6rem; color: #fff; font-size: 0.78rem; font-weight: 600;">
+      <span style="background: rgba(255,255,255,0.12); backdrop-filter: blur(8px); padding: 4px 12px; border-radius: 30px; display: inline-flex; align-items: center; gap: 5px;">
+        <i class="fi fi-rr-shield-check" style="color:#10B981;"></i> Annulation Gratuite
       </span>
-      <span style="background: rgba(255,255,255,0.12); backdrop-filter: blur(8px); padding: 6px 14px; border-radius: 30px; display: inline-flex; align-items: center; gap: 6px;">
-        <i class="fi fi-rr-calendar-clock" style="color:#38BDF8;"></i> Flexi-Planning (dates modifiables)
+      <span style="background: rgba(255,255,255,0.12); backdrop-filter: blur(8px); padding: 4px 12px; border-radius: 30px; display: inline-flex; align-items: center; gap: 5px;">
+        <i class="fi fi-rr-calendar-clock" style="color:#38BDF8;"></i> Planning Flexible
       </span>
-      <span style="background: rgba(255,255,255,0.12); backdrop-filter: blur(8px); padding: 6px 14px; border-radius: 30px; display: inline-flex; align-items: center; gap: 6px;">
-        <i class="fi fi-rr-cloud-sun" style="color:#F59E0B;"></i> Garantie Météo Sérénité
-      </span>
-      <span style="background: rgba(255,255,255,0.12); backdrop-filter: blur(8px); padding: 6px 14px; border-radius: 30px; display: inline-flex; align-items: center; gap: 6px;">
-        <i class="fi fi-rr-plane-arrival" style="color:#F43F5E;"></i> Navette Aéroport Offerte
+      <span style="background: rgba(255,255,255,0.12); backdrop-filter: blur(8px); padding: 4px 12px; border-radius: 30px; display: inline-flex; align-items: center; gap: 5px;">
+        <i class="fi fi-rr-plane-arrival" style="color:#F43F5E;"></i> Navette Offerte dès 3 activ.
       </span>
     </div>
   </div>
 </section>
 
 <!-- Main Builder Layout -->
-<div class="l-container" style="margin: 3.5rem auto 5rem auto;">
+<div class="l-container" style="margin: 2rem auto 4.5rem auto;">
 
   <!-- Category Filter Chips -->
-  <div class="c-filter-chips" style="margin-bottom: 2rem;">
+  <div class="c-filter-chips c-scroll-tabs" style="margin-bottom: 1.75rem;">
     <button class="c-filter-chip active" data-category="all">
       <i class="fi fi-rr-apps"></i> Toutes les Expériences
     </button>

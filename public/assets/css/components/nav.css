@@ -95,6 +95,17 @@
   transition: color 0.15s ease, background 0.15s ease;
 }
 
+.c-navbar__link-content {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.c-navbar__link-icon {
+  font-size: 0.95rem;
+  color: var(--clr-terracotta-500, #e07a5f);
+}
+
 .c-navbar__link:hover,
 .c-navbar__item--has-dropdown:hover > .c-navbar__link,
 .c-navbar__item--has-dropdown.is-open > .c-navbar__link {

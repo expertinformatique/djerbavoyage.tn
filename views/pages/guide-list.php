@@ -100,7 +100,7 @@ $getCategory = function(string $title, string $desc = ''): array {
       </button>
     </div>
 
-    <div class="c-blog-filters" id="blogFilterGroup">
+    <div class="c-blog-filters c-scroll-tabs" id="blogFilterGroup">
       <button type="button" class="c-blog-filter-btn is-active" data-filter="all">
         <i class="fi fi-rr-apps"></i> Tous les guides
       </button>

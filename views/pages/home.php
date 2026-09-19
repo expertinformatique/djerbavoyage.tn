@@ -1,20 +1,39 @@
 <!-- Hero Section with Bespoke Background -->
-<section class="c-hero" style="background: linear-gradient(180deg, rgba(15, 23, 42, 0.75) 0%, rgba(15, 23, 42, 0.95) 100%), url('<?= asset('images/hero.png') ?>') center/cover no-repeat;">
+<section class="c-hero" style="background: linear-gradient(180deg, rgba(15, 23, 42, 0.72) 0%, rgba(15, 23, 42, 0.95) 100%), url('<?= asset('images/djerba_mobile_hero.jpg') ?>') center/cover no-repeat;">
   <div class="l-container" data-animate style="text-align: center; max-width: 850px;">
-    <div class="c-hero__badge" style="background: rgba(212, 175, 55, 0.15); border: 1px solid var(--clr-terracotta-500); color: #F59E0B; display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; border-radius: 50px; font-weight: 600; margin-bottom: 1.5rem;">
+    <div class="c-hero__badge" style="background: rgba(212, 175, 55, 0.15); border: 1px solid var(--clr-terracotta-500); color: #F59E0B; display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; border-radius: 50px; font-weight: 600; margin-bottom: 1.25rem;">
       <i class="fi fi-rr-star" style="color:#F59E0B;"></i> <?= __('hero.badge') ?>
     </div>
-    <h1 class="c-hero__title" style="color: #FFFFFF; margin-bottom: 1.25rem;">
+    <h1 class="c-hero__title" style="color: #FFFFFF; margin-bottom: 1rem;">
       <?= __('hero.title') ?>
     </h1>
-    <p class="c-hero__subtitle" style="color: var(--clr-sand-100); margin-bottom: 2.5rem;">
+    <p class="c-hero__subtitle" style="color: var(--clr-sand-100); margin-bottom: 1.75rem;">
       <?= __('hero.subtitle') ?>
     </p>
-    <div style="display:flex; justify-content:center; gap:1.25rem; flex-wrap:wrap;">
-      <button data-open-modal="personalizedPdfModal" class="c-button c-button--primary">
-        <i class="fi fi-rr-document-signed"></i> <?= __('hero.cta_pdf') ?> (<?= money(9.90) ?>)
+
+    <!-- Mobile WAW Showcase Card -->
+    <div class="c-hero__showcase sm:hidden" style="margin-bottom: 1.75rem;">
+      <div style="position: relative; border-radius: 18px; overflow: hidden; box-shadow: 0 15px 35px -5px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.18);">
+        <img src="<?= asset('images/djerba_mobile_hero.jpg') ?>" alt="Djerba Île des Rêves 2026" style="width: 100%; height: 215px; object-fit: cover; display: block;">
+        <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.05) 40%, rgba(15,23,42,0.85) 100%);"></div>
+        <div style="position: absolute; bottom: 12px; left: 14px; right: 14px; display: flex; justify-content: space-between; align-items: flex-end;">
+          <div style="text-align: left;">
+            <div style="color: #F59E0B; font-weight: 700; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 4px;">
+              <i class="fi fi-rr-sparkles"></i> Destination Phare 2026
+            </div>
+            <div style="color: #FFFFFF; font-weight: 800; font-size: 1.05rem; line-height: 1.2;">L'Île aux Eaux Turquoise</div>
+          </div>
+          <span style="background: rgba(255,255,255,0.22); backdrop-filter: blur(8px); color: #fff; padding: 4px 10px; border-radius: 20px; font-weight: 700; font-size: 0.78rem; white-space: nowrap;">★ 4.9/5</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions Buttons (Single-line per button, no multiline break) -->
+    <div style="display: flex; justify-content: center; gap: 0.85rem; flex-wrap: wrap;">
+      <button data-open-modal="personalizedPdfModal" class="c-button c-button--primary" style="white-space: nowrap; padding: 0.75rem 1.25rem; font-size: 0.92rem; font-weight: 700;">
+        <i class="fi fi-rr-document-signed"></i> <span class="hidden sm:inline"><?= __('hero.cta_pdf') ?></span><span class="sm:hidden">Guide PDF Personnalisé</span> (<?= money(9.90) ?>)
       </button>
-      <a href="<?= url('/concierge') ?>" class="c-button c-button--secondary" style="background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.3);">
+      <a href="<?= url('/concierge') ?>" class="c-button c-button--secondary" style="background: rgba(255,255,255,0.12); color: #fff; border: 1px solid rgba(255,255,255,0.3); white-space: nowrap; padding: 0.75rem 1.25rem; font-size: 0.92rem; font-weight: 700;">
         <i class="fi fi-rr-compass"></i> <?= __('hero.cta_concierge') ?> (<?= money(29) ?>)
       </a>
     </div>
@@ -58,7 +77,7 @@
       </p>
     </div>
     <div>
-      <a href="<?= url('/services') ?>" class="c-button c-button--primary" style="background: #F59E0B; border-color: #F59E0B; color: #0F172A; padding: 1rem 1.8rem; font-weight: 800; font-size: 1.05rem; box-shadow: 0 10px 25px rgba(245, 158, 11, 0.4); display: inline-flex; align-items: center; gap: 8px;">
+      <a href="<?= url('/services') ?>" class="c-button c-button--primary" style="background: #F59E0B; border-color: #F59E0B; color: #0F172A; padding: 0.85rem 1.4rem; font-weight: 800; font-size: 0.95rem; white-space: nowrap; box-shadow: 0 10px 25px rgba(245, 158, 11, 0.4); display: inline-flex; align-items: center; gap: 8px;">
         <i class="fi fi-rr-sparkles"></i> <?= __('pass.cta') ?> <i class="fi fi-rr-arrow-right"></i>
       </a>
     </div>
@@ -75,7 +94,7 @@
         Personnalisez votre guide de voyage avec les noms de votre famille ou couple, vos dates et la photo de votre choix ! Génération immédiate en format PDF HD.
       </p>
     </div>
-    <button data-open-modal="personalizedPdfModal" class="c-button" style="background: #ffffff; color: var(--clr-terracotta-600); padding: 0.9rem 1.75rem; font-weight: 800; font-size: 1rem; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">
+    <button data-open-modal="personalizedPdfModal" class="c-button" style="background: #ffffff; color: var(--clr-terracotta-600); padding: 0.85rem 1.4rem; font-weight: 800; font-size: 0.95rem; white-space: nowrap; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">
       Personnaliser Mon PDF (9,90 €) <i class="fi fi-rr-arrow-right"></i>
     </button>
   </div>

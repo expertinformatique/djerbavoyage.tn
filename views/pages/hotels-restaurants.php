@@ -8,7 +8,7 @@
     </div>
 
     <!-- Filter Buttons -->
-    <div class="tabs" style="justify-content: center; margin-bottom: 2.5rem;">
+    <div class="tabs c-scroll-tabs" style="margin-bottom: 2.5rem;">
         <button class="tab-btn active" onclick="filterHotelsRestos('all', this)">Tous les établissements</button>
         <button class="tab-btn" onclick="filterHotelsRestos('hotel', this)">🏨 Hôtels & Menzels de Charme</button>
         <button class="tab-btn" onclick="filterHotelsRestos('resto', this)">🍽️ Restaurants & Gastronomie</button>

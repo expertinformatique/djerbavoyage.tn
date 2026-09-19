@@ -397,6 +397,39 @@ h3, .heading-3 {
   box-shadow: 0 6px 18px rgba(0, 119, 182, 0.3);
 }
 
+/* Mobile Single-line Horizontal Scrolling Tabs */
+@media (max-width: 768px) {
+  .tabs, .c-tabs, .c-blog-filters, .c-filter-chips, .c-scroll-tabs {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    justify-content: flex-start !important;
+    padding-top: 4px !important;
+    padding-bottom: 8px !important;
+    padding-left: 4px !important;
+    padding-right: 4px !important;
+    gap: 0.5rem !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .tabs::-webkit-scrollbar,
+  .c-tabs::-webkit-scrollbar,
+  .c-blog-filters::-webkit-scrollbar,
+  .c-filter-chips::-webkit-scrollbar,
+  .c-scroll-tabs::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .tab-btn, .c-tabs__btn, .c-tabs__button, .c-blog-filter-btn, .c-filter-chip {
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+  }
+}
+
 /* 6.3 ITINERARY TIMELINE */
 .c-timeline {
   position: relative;

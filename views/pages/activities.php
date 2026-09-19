@@ -17,7 +17,7 @@
 <div class="l-container" style="margin: 3.5rem auto 5rem auto;">
 
   <!-- Category Filter Tabs -->
-  <div class="tabs" style="justify-content: center; margin-bottom: 2.5rem;">
+  <div class="tabs c-scroll-tabs" style="margin-bottom: 2.5rem;">
     <button class="tab-btn active" onclick="filterActivities('all', this)">
       <i class="fi fi-rr-apps"></i> Toutes les Activités
     </button>

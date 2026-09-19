@@ -1,45 +1,48 @@
-<div class="l-container" style="margin: 3.5rem auto 6rem auto;">
-    <div class="text-center" style="max-width: 780px; margin: 0 auto 2.5rem auto;">
-        <span class="badge badge--gold" style="background: rgba(245, 158, 11, 0.18); border: 1px solid var(--clr-terracotta-500); color: #F59E0B; padding: 6px 18px; border-radius: 50px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 12px;">
-            <i class="fi fi-rr-sparkles"></i> Catalogue Exclusif 2026 — Téléchargement Instantané
+<div class="l-container" style="margin: clamp(1.75rem, 3.5vw, 3.5rem) auto clamp(3rem, 5vw, 6rem) auto;">
+    <div class="text-center" style="max-width: 780px; margin: 0 auto clamp(1.25rem, 2.5vw, 2.5rem) auto;">
+        <span class="badge badge--gold" style="background: rgba(245, 158, 11, 0.18); border: 1px solid var(--clr-terracotta-500); color: #F59E0B; padding: 4px 16px; border-radius: 50px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 8px; font-size: 0.82rem;">
+            <i class="fi fi-rr-sparkles"></i> Boutique 2026 — Téléchargement Immédiat
         </span>
-        <h1 class="heading-1" style="margin-bottom: 14px; font-size: 2.3rem;">Boutique Numérique & Expériences Djerba</h1>
-        <p class="text-muted" style="color: var(--clr-gray-500); font-size: 1.08rem; line-height: 1.6;">
+        <h1 class="heading-1" style="margin-bottom: 8px; font-size: clamp(1.6rem, 3vw, 2.3rem);">Boutique & Guides Numériques</h1>
+        <p class="text-muted hidden sm:block" style="color: var(--clr-gray-500); font-size: 1.05rem; line-height: 1.55;">
             Explorez nos 80+ guides PDF, cartes GPS interactives, billets d'excursion VIP et audio-guides. Téléchargement immédiat par e-mail après paiement sécurisé.
+        </p>
+        <p class="text-muted sm:hidden" style="color: var(--clr-gray-500); font-size: 0.9rem; line-height: 1.45;">
+            Guides PDF, cartes GPS interactives et pass d'activités avec téléchargement immédiat.
         </p>
     </div>
 
     <!-- Banner Cadeau Artisanal Offert -->
-    <div style="background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); color: #fff; padding: 1.5rem 2rem; border-radius: 20px; margin-bottom: 2.5rem; border: 1px solid var(--clr-terracotta-500); box-shadow: 0 15px 35px rgba(0,0,0,0.3); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.25rem;">
-        <div style="display: flex; align-items: center; gap: 1.25rem;">
-            <div style="width: 56px; height: 56px; border-radius: 16px; background: rgba(245, 158, 11, 0.2); border: 1px solid #F59E0B; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: #F59E0B; flex-shrink: 0;">
+    <div style="background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); color: #fff; padding: clamp(1rem, 2.5vw, 1.5rem) clamp(1.15rem, 3vw, 2rem); border-radius: 20px; margin-bottom: 2rem; border: 1px solid var(--clr-terracotta-500); box-shadow: 0 15px 35px rgba(0,0,0,0.3); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        <div style="display: flex; align-items: center; gap: 0.85rem; max-width: 100%;">
+            <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(245, 158, 11, 0.2); border: 1px solid #F59E0B; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: #F59E0B; flex-shrink: 0;">
                 <i class="fi fi-rr-gift"></i>
             </div>
             <div>
-                <div style="font-weight: 800; font-size: 1.15rem; color: #F59E0B; letter-spacing: 0.3px;">BON CADEAU ARTISANAL INCLUS AVEC CHAQUE GUIDE PDF !</div>
-                <div style="font-size: 0.9rem; color: var(--clr-sand-500); margin-top: 2px; line-height: 1.45;">Recevez un coupon VIP pour retirer votre cadeau artisanal fait main (poterie Guellala, fiole d'huile d'olive ou éponge marine) à l'Aéroport DJE !</div>
+                <div style="font-weight: 800; font-size: clamp(0.92rem, 2vw, 1.1rem); color: #F59E0B; letter-spacing: 0.2px;">CADEAU ARTISANAL INCLUS AVEC CHAQUE GUIDE !</div>
+                <div class="hidden sm:block" style="font-size: 0.85rem; color: var(--clr-sand-500); margin-top: 2px; line-height: 1.4;">Recevez un coupon VIP pour retirer votre cadeau fait main (poterie Guellala, huile d'olive) à l'Aéroport DJE !</div>
             </div>
         </div>
-        <button data-open-modal="personalizedPdfModal" class="c-button c-button--primary" style="padding: 0.75rem 1.4rem; font-size: 0.9rem; white-space: nowrap; font-weight: 700;">
-            <i class="fi fi-rr-document-signed"></i> Guide Personnalisé avec Nom & Photo (9,90 €)
+        <button data-open-modal="personalizedPdfModal" class="c-button c-button--primary w-full sm:w-auto" style="padding: 0.75rem 1.25rem; font-size: 0.88rem; font-weight: 700; box-sizing: border-box; justify-content: center; display: inline-flex; align-items: center; gap: 8px;">
+            <i class="fi fi-rr-document-signed"></i> <span class="hidden sm:inline">Guide Personnalisé avec Nom & Photo</span><span class="sm:hidden">Guide Personnalisé</span> (9,90 €)
         </button>
     </div>
 
     <!-- Controls Bar: Search + Category Filters -->
-    <div class="card" style="padding: 1.5rem; margin-bottom: 2.5rem; background: #fff; border-radius: 20px; border: 1px solid var(--clr-sand-300); box-shadow: var(--shadow-soft);">
-        <div style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; justify-content: space-between;">
+    <div class="card" style="padding: clamp(1rem, 2.5vw, 1.5rem); margin-bottom: 2rem; background: #fff; border-radius: 20px; border: 1px solid var(--clr-sand-300); box-shadow: var(--shadow-soft);">
+        <div style="display: flex; gap: 0.85rem; flex-wrap: wrap; align-items: center; justify-content: space-between;">
             <!-- Real-time Search -->
-            <div style="flex: 1; min-width: 280px; position: relative;">
+            <div style="flex: 1; min-width: 240px; position: relative;">
                 <i class="fi fi-rr-search" style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--clr-gray-500); font-size: 1.1rem;"></i>
-                <input type="text" id="shopSearchInput" placeholder="Rechercher un guide, carte GPS, excursion, audio-guide..." 
-                       style="width: 100%; padding: 0.85rem 1rem 0.85rem 3rem; border-radius: 30px; border: 1px solid var(--clr-sand-300); font-size: 0.95rem; outline: none; transition: all 0.25s ease;"
+                <input type="text" id="shopSearchInput" placeholder="Rechercher un guide, carte GPS, excursion..." 
+                       style="width: 100%; padding: 0.75rem 1rem 0.75rem 2.75rem; border-radius: 30px; border: 1px solid var(--clr-sand-300); font-size: 0.92rem; outline: none; transition: all 0.25s ease;"
                        onkeyup="filterProducts()">
             </div>
 
             <!-- Sort By -->
-            <div style="display: flex; align-items: center; gap: 10px;">
-                <label for="shopSort" style="font-size: 0.9rem; font-weight: 700; color: var(--clr-dark-800); white-space: nowrap;">Trier par :</label>
-                <select id="shopSort" onchange="sortProducts()" style="padding: 0.75rem 1.25rem; border-radius: 30px; border: 1px solid var(--clr-sand-300); font-size: 0.9rem; background: #fff; cursor: pointer; outline: none; font-weight: 600;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <label for="shopSort" style="font-size: 0.85rem; font-weight: 700; color: var(--clr-dark-800); white-space: nowrap;">Trier par :</label>
+                <select id="shopSort" onchange="sortProducts()" style="padding: 0.65rem 1rem; border-radius: 30px; border: 1px solid var(--clr-sand-300); font-size: 0.85rem; background: #fff; cursor: pointer; outline: none; font-weight: 600;">
                     <option value="default">Recommandés</option>
                     <option value="price-asc">Prix : Croissant</option>
                     <option value="price-desc">Prix : Décroissant</option>
@@ -48,8 +51,8 @@
             </div>
         </div>
 
-        <!-- Filter Tabs -->
-        <div class="tabs" style="margin-top: 1.25rem; margin-bottom: 0; padding-bottom: 0; border-bottom: none; gap: 0.6rem; flex-wrap: wrap;">
+        <!-- Filter Tabs (Single line horizontal scroll on mobile) -->
+        <div class="tabs c-scroll-tabs" style="margin-top: 1.25rem; margin-bottom: 0; padding-bottom: 0; border-bottom: none; gap: 0.5rem;">
             <button class="tab-btn active" onclick="filterCategory('all', this)"><i class="fi fi-rr-apps"></i> Tous (<?= count($products) ?>)</button>
             <button class="tab-btn" onclick="filterCategory('guide', this)"><i class="fi fi-rr-book"></i> Guides PDF</button>
             <button class="tab-btn" onclick="filterCategory('gps', this)"><i class="fi fi-rr-map-marker"></i> Cartes GPS</button>

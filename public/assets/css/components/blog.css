@@ -185,6 +185,25 @@
   gap: 0.6rem;
 }
 
+@media (max-width: 768px) {
+  .c-blog-filters {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    justify-content: flex-start !important;
+    padding-bottom: 8px !important;
+    scrollbar-width: none !important;
+  }
+  .c-blog-filters::-webkit-scrollbar {
+    display: none !important;
+  }
+  .c-blog-filter-btn {
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+  }
+}
+
 .c-blog-filter-btn {
   display: inline-flex;
   align-items: center;

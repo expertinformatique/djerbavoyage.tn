@@ -17,7 +17,7 @@
 <div class="l-container" style="margin: 3.5rem auto 5rem auto; max-width: 960px;">
 
   <!-- Tabs Selector -->
-  <div class="tabs" style="justify-content: center; margin-bottom: 3rem;">
+  <div class="tabs c-scroll-tabs" style="margin-bottom: 3rem;">
     <button class="tab-btn active" onclick="switchItinerary('it-3', this)">
       <i class="fi fi-rr-clock"></i> 3 Jours (Week-end Express)
     </button>

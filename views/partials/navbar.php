@@ -21,13 +21,21 @@ $_currentCurrency = \Core\Currency::getCurrency();
     <!-- Menu Principal avec Sous-Menus Groupés -->
     <ul class="c-navbar__menu" id="mainNavMenu">
       <li class="c-navbar__item">
-        <a href="<?= url('/') ?>" class="c-navbar__link"><?= __('nav.home') ?></a>
+        <a href="<?= url('/') ?>" class="c-navbar__link">
+          <span class="c-navbar__link-content">
+            <i class="fi fi-rr-home c-navbar__link-icon"></i>
+            <span><?= __('nav.home') ?></span>
+          </span>
+        </a>
       </li>
 
       <!-- Sous-menu 1 : Découvrir Djerba -->
       <li class="c-navbar__item c-navbar__item--has-dropdown">
         <button type="button" class="c-navbar__link" aria-expanded="false">
-          <span><?= __('nav.discover') ?></span>
+          <span class="c-navbar__link-content">
+            <i class="fi fi-rr-compass c-navbar__link-icon"></i>
+            <span><?= __('nav.discover') ?></span>
+          </span>
           <i class="fi fi-rr-angle-small-down c-navbar__dropdown-arrow"></i>
         </button>
         <div class="c-navbar__dropdown-menu c-navbar__dropdown-menu--wide">
@@ -101,8 +109,10 @@ $_currentCurrency = \Core\Currency::getCurrency();
       <!-- Sous-menu 2 : Pass & Services VIP -->
       <li class="c-navbar__item c-navbar__item--has-dropdown">
         <button type="button" class="c-navbar__link c-navbar__link--highlight" aria-expanded="false">
-          <i class="fi fi-rr-sparkles"></i>
-          <span><?= __('nav.pass') ?></span>
+          <span class="c-navbar__link-content">
+            <i class="fi fi-rr-sparkles c-navbar__link-icon"></i>
+            <span><?= __('nav.pass') ?></span>
+          </span>
           <i class="fi fi-rr-angle-small-down c-navbar__dropdown-arrow"></i>
         </button>
         <div class="c-navbar__dropdown-menu c-navbar__dropdown-menu--wide">
@@ -151,7 +161,10 @@ $_currentCurrency = \Core\Currency::getCurrency();
       <!-- Sous-menu 3 : Club & Infos -->
       <li class="c-navbar__item c-navbar__item--has-dropdown">
         <button type="button" class="c-navbar__link" aria-expanded="false">
-          <span><?= __('nav.club') ?></span>
+          <span class="c-navbar__link-content">
+            <i class="fi fi-rr-crown c-navbar__link-icon"></i>
+            <span><?= __('nav.club') ?></span>
+          </span>
           <i class="fi fi-rr-angle-small-down c-navbar__dropdown-arrow"></i>
         </button>
         <div class="c-navbar__dropdown-menu c-navbar__dropdown-menu--right">
@@ -199,8 +212,10 @@ $_currentCurrency = \Core\Currency::getCurrency();
       <!-- Lien Contact Direct -->
       <li class="c-navbar__item">
         <a href="<?= url('/contact') ?>" class="c-navbar__link">
-          <i class="fi fi-rr-envelope"></i>
-          <span><?= __('nav.contact') ?></span>
+          <span class="c-navbar__link-content">
+            <i class="fi fi-rr-envelope c-navbar__link-icon"></i>
+            <span><?= __('nav.contact') ?></span>
+          </span>
         </a>
       </li>
 
