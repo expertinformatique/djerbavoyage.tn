@@ -137,34 +137,36 @@ $currentUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' 
       </div>
     <?php endif; ?>
 
-    <!-- Lecteur Vidéo Reel 9:16 Optimisé SEO -->
+    <!-- Lecteur Vidéo Reel 9:16 Optimisé SEO & Parfaitement Centré -->
     <?php if (!empty($article->videoUrl)): ?>
-      <section class="my-8 rounded-3xl p-6 bg-gradient-to-br from-slate-900 via-gray-900 to-indigo-950 text-white shadow-2xl border border-slate-700/60" aria-label="Immersion vidéo du guide">
-        <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
-          <div class="flex items-center space-x-2">
-            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
-              <i class="fi fi-rr-play-alt text-xs"></i> Reel Vidéo Exclusif
+      <section class="c-article-reel" aria-label="Immersion vidéo du guide">
+        <div class="c-article-reel__header">
+          <div class="c-article-reel__badges">
+            <span class="c-article-reel__pill">
+              <i class="fi fi-rr-play-alt"></i> Reel Vidéo Exclusif
             </span>
-            <span class="text-xs text-slate-300 font-medium">Format 9:16 HD • 19s</span>
+            <span class="c-article-reel__meta">Format 9:16 HD • 19s</span>
           </div>
-          <span class="text-xs text-amber-300 flex items-center gap-1.5 font-medium">
+          <span class="c-article-reel__audio">
             <i class="fi fi-rr-volume"></i> Audio & musique d'ambiance
           </span>
         </div>
 
-        <div class="relative max-w-[320px] mx-auto rounded-2xl overflow-hidden shadow-2xl border-2 border-white/10 bg-black aspect-[9/16]">
-          <video class="w-full h-full object-cover" 
-                 controls 
-                 playsinline 
-                 preload="metadata" 
-                 poster="<?= !empty($article->featuredImage) ? e(asset($article->featuredImage)) : '' ?>"
-                 aria-label="<?= htmlspecialchars($article->titleFr, ENT_QUOTES, 'UTF-8') ?>">
-            <source src="<?= e(asset($article->videoUrl)) ?>" type="video/mp4">
-            Votre navigateur ne supporte pas la lecture de vidéo HTML5.
-          </video>
+        <div class="c-article-reel__frame-wrap">
+          <div class="c-article-reel__frame">
+            <video class="c-article-reel__video" 
+                   controls 
+                   playsinline 
+                   preload="metadata" 
+                   poster="<?= !empty($article->featuredImage) ? e(asset($article->featuredImage)) : '' ?>"
+                   aria-label="<?= htmlspecialchars($article->titleFr, ENT_QUOTES, 'UTF-8') ?>">
+              <source src="<?= e(asset($article->videoUrl)) ?>" type="video/mp4">
+              Votre navigateur ne supporte pas la lecture de vidéo HTML5.
+            </video>
+          </div>
         </div>
 
-        <p class="text-center text-xs text-slate-400 mt-4 italic">
+        <p class="c-article-reel__caption">
           🎥 Découvrez l'ambiance et les paysages de Djerba en immersion vidéo (19s).
         </p>
       </section>
