@@ -102,4 +102,15 @@ class MobileOptimizationsTest extends TestCase
         $this->assertStringContainsString('tabs c-scroll-tabs', $content);
         $this->assertStringContainsString('w-full sm:w-auto', $content);
     }
+
+    public function testSalesFunnelQuizOptionsAreClickable(): void
+    {
+        $css = file_get_contents(ROOT_PATH . '/public/assets/css/components/sales-funnel-quiz.css');
+        $this->assertStringContainsString('.quiz-opt-btn {', $css);
+        $this->assertStringContainsString('pointer-events: auto', $css);
+
+        $js = file_get_contents(ROOT_PATH . '/public/assets/js/modules/sales-funnel-quiz.js');
+        $this->assertStringContainsString('window.selectQuizOption', $js);
+        $this->assertStringContainsString('setupEventListeners()', $js);
+    }
 }

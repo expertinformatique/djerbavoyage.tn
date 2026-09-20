@@ -211,10 +211,12 @@ function revealOptionsSequentially(stepId) {
     options.forEach((opt, i) => {
         opt.style.opacity = '0';
         opt.style.transform = 'translateY(10px)';
+        opt.style.pointerEvents = 'none';
         setTimeout(() => {
             opt.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
             opt.style.opacity = '1';
             opt.style.transform = 'translateY(0)';
+            opt.style.pointerEvents = 'auto';
         }, i * 60);
     });
 }
@@ -343,6 +345,7 @@ function setupEventListeners() {
     window.switchRecommendationVariant = () => switchRecommendationVariant();
     window.restartQuiz = () => goToStep(1);
     window.goToStep = (step) => goToStep(step);
+    window.selectOption = (key, val, nextStep) => selectOption(key, val, nextStep);
     window.handleAiLeadSubmit = (e) => {
         e.preventDefault();
         processAiLeadSubmission(e.target, quizState, () => {
@@ -358,4 +361,11 @@ function setupEventListeners() {
     };
 }
 
-document.addEventListener('DOMContentLoaded', initSalesFunnelQuiz);
+// Exposer immédiatement les gestionnaires d'événements globaux
+setupEventListeners();
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSalesFunnelQuiz);
+} else {
+    initSalesFunnelQuiz();
+}
