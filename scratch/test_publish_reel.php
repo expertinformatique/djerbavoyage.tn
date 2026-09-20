@@ -1,7 +1,7 @@
 <?php
 // Test complet de publication d'un Reel sur Meta Graph API
 $pageId = "136561653049793";
-$token = "EAAfUfAaCJ84BSvagEKS6pTZCaoeRSrZB5nFmMH8ri3r7pCVcNeyvI4BueGxqO1Jrwb5xpEImrn7nE2Or3x9gKWdV1N0gsJEoT1CuyMPb6B06sMZBAiWVjr50Ya5riiaUaoNo4lqE29Wy62dTdB6qbWD1xXAadAGLJnXFeGL2TEITFQ2B1xCgpaEAhkv4jfGi1IaoaZBHUJM3nkavle0ZD";
+$token = $_ENV['FB_PAGE_ACCESS_TOKEN'] ?? getenv('FB_PAGE_ACCESS_TOKEN') ?: 'YOUR_FACEBOOK_PAGE_ACCESS_TOKEN';
 
 // Télécharger une petite vidéo MP4 d'exemple (nature/plage, libre de droits, 2 secondes, ~300 Ko)
 $sampleVideoUrl = "https://www.w3schools.com/html/mov_bbb.mp4";

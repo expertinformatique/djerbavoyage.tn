@@ -10,6 +10,7 @@ class AutoBlogController extends Controller {
     ) {}
 
     public function generate(): void {
+        @set_time_limit(180);
         header('Content-Type: application/json; charset=utf-8');
 
         $secret = $_ENV['AUTO_BLOG_SECRET'] ?? 'djerba_secret_cron_key_2026';
@@ -28,6 +29,7 @@ class AutoBlogController extends Controller {
             $article = $this->generator->generateAndSave();
             $fbResult = $this->generator->getLastFacebookResult();
             $reelResult = $this->generator->getLastReelResult();
+            $storyResult = $this->generator->getLastStoryResult();
 
             echo json_encode([
                 'success' => true,
@@ -40,7 +42,8 @@ class AutoBlogController extends Controller {
                     'published_at' => $article->publishedAt,
                     'pdf_url' => '/guide/' . $article->slug . '/pdf',
                     'facebook' => $fbResult ?? ['published' => false, 'reason' => 'Service non initialisé'],
-                    'reel' => $reelResult ?? ['published' => false, 'reason' => 'Non planifié sur ce cycle']
+                    'reel' => $reelResult ?? ['published' => false, 'reason' => 'Non planifié sur ce cycle'],
+                    'story' => $storyResult ?? ['published' => false, 'reason' => 'Non planifié sur ce cycle']
                 ]
             ], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 

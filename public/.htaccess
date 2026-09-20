@@ -1,6 +1,13 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
+    # Interdire le listing des répertoires
+    Options -Indexes
+
+    # Bloquer l'accès direct aux dossiers images sans fichier ciblé
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^assets/(images|videos)(/.*)?$ - [F,L]
+
     # Redirection transparente des images demandées sur /images/... vers /assets/images/...
     RewriteRule ^images/(.*)$ assets/images/$1 [L]
 

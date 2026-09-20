@@ -84,13 +84,21 @@
   <!-- Barre de Recherche & Filtres -->
   <div class="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-3.5 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
     <form action="<?= url('/admin/articles') ?>" method="GET" class="flex flex-wrap items-center gap-2 flex-1">
+      <?php if (isset($sort)): ?><input type="hidden" name="sort" value="<?= htmlspecialchars($sort, ENT_QUOTES, 'UTF-8') ?>"><?php endif; ?>
+      <?php if (isset($order)): ?><input type="hidden" name="order" value="<?= htmlspecialchars($order, ENT_QUOTES, 'UTF-8') ?>"><?php endif; ?>
+      <?php if ($status !== 'all'): ?><input type="hidden" name="status" value="<?= htmlspecialchars($status, ENT_QUOTES, 'UTF-8') ?>"><?php endif; ?>
       <div class="relative flex-1 min-w-[200px]">
         <i class="fi fi-rr-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
         <input type="text" name="search" value="<?= htmlspecialchars($search, ENT_QUOTES, 'UTF-8') ?>" placeholder="Rechercher par titre ou mot-clé..." class="w-full pl-8 pr-3 py-1.5 text-xs rounded-md bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:outline-hidden focus:ring-1 focus:ring-[#635bff]">
       </div>
       <div class="flex items-center gap-1.5 text-xs">
-        <?php foreach (['all' => 'Tous', 'published' => 'Publiés', 'draft' => 'Brouillons'] as $stKey => $stLabel): ?>
-          <a href="<?= url('/admin/articles?status=' . $stKey . ($search ? '&search=' . urlencode($search) : '')) ?>" 
+        <?php foreach (['all' => 'Tous', 'published' => 'Publiés', 'draft' => 'Brouillons'] as $stKey => $stLabel): 
+              $filterParams = ['status' => $stKey];
+              if ($search) $filterParams['search'] = $search;
+              if (isset($sort)) $filterParams['sort'] = $sort;
+              if (isset($order)) $filterParams['order'] = $order;
+        ?>
+          <a href="<?= url('/admin/articles?' . http_build_query($filterParams)) ?>" 
              class="px-2.5 py-1 rounded-md text-[11px] font-medium transition-colors <?= $status === $stKey ? 'bg-[#635bff] text-white font-semibold' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700' ?>">
             <?= $stLabel ?>
           </a>
@@ -108,11 +116,40 @@
     <div class="overflow-x-auto w-full">
       <table class="w-full text-xs text-left border-collapse">
         <thead class="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase bg-slate-50/75 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800 tracking-wider">
+          <?php
+            $buildSortUrl = function($field) use ($search, $status, $sort, $order) {
+                $newOrder = ($sort === $field && $order === 'ASC') ? 'DESC' : 'ASC';
+                $params = ['sort' => $field, 'order' => $newOrder];
+                if ($search) $params['search'] = $search;
+                if ($status !== 'all') $params['status'] = $status;
+                return url('/admin/articles?' . http_build_query($params));
+            };
+            $sortIcon = function($field) use ($sort, $order) {
+                if ($sort !== $field) return '<i class="fi fi-rr-sort text-slate-300 dark:text-slate-600"></i>';
+                return $order === 'ASC' ? '<i class="fi fi-rr-sort-alpha-up text-[#635bff]"></i>' : '<i class="fi fi-rr-sort-alpha-down text-[#635bff]"></i>';
+            };
+          ?>
           <tr>
-            <th class="px-4 py-3">Article</th>
-            <th class="px-4 py-3">Statut</th>
-            <th class="px-4 py-3">Vues</th>
-            <th class="px-4 py-3">Date</th>
+            <th class="px-4 py-3">
+              <a href="<?= $buildSortUrl('title_fr') ?>" class="flex items-center gap-1 hover:text-slate-700 dark:hover:text-slate-200">
+                Article <?= $sortIcon('title_fr') ?>
+              </a>
+            </th>
+            <th class="px-4 py-3">
+              <a href="<?= $buildSortUrl('status') ?>" class="flex items-center gap-1 hover:text-slate-700 dark:hover:text-slate-200">
+                Statut <?= $sortIcon('status') ?>
+              </a>
+            </th>
+            <th class="px-4 py-3">
+              <a href="<?= $buildSortUrl('views_count') ?>" class="flex items-center gap-1 hover:text-slate-700 dark:hover:text-slate-200">
+                Vues <?= $sortIcon('views_count') ?>
+              </a>
+            </th>
+            <th class="px-4 py-3">
+              <a href="<?= $buildSortUrl('published_at') ?>" class="flex items-center gap-1 hover:text-slate-700 dark:hover:text-slate-200">
+                Date <?= $sortIcon('published_at') ?>
+              </a>
+            </th>
             <th class="px-4 py-3 text-right">Actions</th>
           </tr>
         </thead>

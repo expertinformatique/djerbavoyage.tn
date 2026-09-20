@@ -1,0 +1,133 @@
+{
+    "bots": [
+        {
+            "id": "bot_guide_patrimoine",
+            "name": "Guide Culture, Histoire & UNESCO",
+            "description": "Récits historiques, villages traditionnels (Erriadh, Guellala, Ajim), patrimoine UNESCO et légendes de Djerba.",
+            "icon": "🏛️",
+            "theme": "Culture, Patrimoine & UNESCO",
+            "status": "active",
+            "schedule": "15m",
+            "schedule_label": "Toutes les 15m",
+            "target_destination": {
+                "type": "djerba_api",
+                "site_name": "Djerba Voyage",
+                "site_url": "https:\/\/djerbavoyage.tn",
+                "api_endpoint": "https:\/\/djerbavoyage.tn\/api\/auto-blog\/generate",
+                "api_secret_token": "djerba_secret_cron_key_2026"
+            },
+            "social_destinations": {
+                "facebook_page_name": "Djerba Voyage Officiel",
+                "facebook_page_id": "104192661073862",
+                "facebook_access_token": "",
+                "instagram_account": "",
+                "tiktok_account": ""
+            },
+            "ai_agents": {
+                "text": "gemini-2.5-flash",
+                "image": "nano-banana",
+                "video": "reel-5photo-kenburns"
+            },
+            "channels": {
+                "website": true,
+                "pdf": true,
+                "facebook_photo": true,
+                "facebook_reel": true,
+                "facebook_story": true,
+                "tiktok": false
+            },
+            "created_at": "2026-09-20 18:13:08",
+            "last_run": "2026-09-20 17:58:08",
+            "last_status": "success",
+            "total_runs": 35,
+            "success_runs": 35,
+            "error_runs": 0
+        },
+        {
+            "id": "bot_menzels_hotels",
+            "name": "Menzels de Charme & Hébergements",
+            "description": "Mise en valeur de l'architecture unique des Menzels djerbiens, maisons d'hôtes de luxe et éco-lodges de l'île.",
+            "icon": "🏡",
+            "theme": "Menzels & Hôtels de Charme",
+            "status": "active",
+            "schedule": "2h",
+            "schedule_label": "Toutes les 2h",
+            "target_destination": {
+                "type": "djerba_api",
+                "site_name": "Djerba Voyage",
+                "site_url": "https:\/\/djerbavoyage.tn",
+                "api_endpoint": "https:\/\/djerbavoyage.tn\/api\/auto-blog\/generate",
+                "api_secret_token": "djerba_secret_cron_key_2026"
+            },
+            "social_destinations": {
+                "facebook_page_name": "Djerba Voyage Officiel",
+                "facebook_page_id": "104192661073862",
+                "facebook_access_token": "",
+                "instagram_account": "",
+                "tiktok_account": ""
+            },
+            "ai_agents": {
+                "text": "gemini-1.5-pro",
+                "image": "nano-banana",
+                "video": "none"
+            },
+            "channels": {
+                "website": true,
+                "pdf": true,
+                "facebook_photo": true,
+                "facebook_reel": false,
+                "facebook_story": true,
+                "tiktok": false
+            },
+            "created_at": "2026-09-20 18:13:08",
+            "last_run": null,
+            "last_status": "idle",
+            "total_runs": 0,
+            "success_runs": 0,
+            "error_runs": 0
+        },
+        {
+            "id": "bot_kitesurf_activites",
+            "name": "Kitesurf, Plages & Aventures Nautiques",
+            "description": "Guides spots de kitesurf, lagune de Djerba, excursions en catamaran, plongée et activités sportives outdoor.",
+            "icon": "🏄‍♂️",
+            "theme": "Kitesurf, Plages & Sports Nautiques",
+            "status": "active",
+            "schedule": "4h",
+            "schedule_label": "Toutes les 4h",
+            "target_destination": {
+                "type": "djerba_api",
+                "site_name": "Djerba Voyage",
+                "site_url": "https:\/\/djerbavoyage.tn",
+                "api_endpoint": "https:\/\/djerbavoyage.tn\/api\/auto-blog\/generate",
+                "api_secret_token": "djerba_secret_cron_key_2026"
+            },
+            "social_destinations": {
+                "facebook_page_name": "Djerba Voyage Officiel",
+                "facebook_page_id": "104192661073862",
+                "facebook_access_token": "",
+                "instagram_account": "",
+                "tiktok_account": ""
+            },
+            "ai_agents": {
+                "text": "gemini-2.5-flash",
+                "image": "nano-banana",
+                "video": "reel-5photo-kenburns"
+            },
+            "channels": {
+                "website": true,
+                "pdf": true,
+                "facebook_photo": true,
+                "facebook_reel": true,
+                "facebook_story": true,
+                "tiktok": false
+            },
+            "created_at": "2026-09-20 18:13:08",
+            "last_run": null,
+            "last_status": "idle",
+            "total_runs": 0,
+            "success_runs": 0,
+            "error_runs": 0
+        }
+    ]
+}

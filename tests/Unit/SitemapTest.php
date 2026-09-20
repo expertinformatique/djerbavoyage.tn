@@ -82,8 +82,9 @@ class DummyArticleRepository implements ArticleRepositoryInterface {
     public function delete(int $id): bool { return true; }
     public function countPublished(): int { return 15; }
     public function countAll(): int { return 15; }
-    public function getPaginated(int $page = 1, int $limit = 10, string $search = '', string $status = ''): array { return []; }
+    public function getPaginated(int $page = 1, int $limit = 10, string $search = '', string $status = '', string $sort = 'published_at', string $order = 'DESC'): array { return []; }
     public function getStats(): array { return []; }
+    public function getAllUsedFeaturedImages(): array { return []; }
 }
 
 class TrackingSitemapService extends SitemapService {

@@ -1,110 +1,182 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
   <url>
     <loc>https://djerbavoyage.tn/</loc>
-    <lastmod>2026-09-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/" />
+    <lastmod>2026-09-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/services</loc>
-    <lastmod>2026-09-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/services" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/services?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/services?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/services" />
+    <lastmod>2026-09-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/shop</loc>
-    <lastmod>2026-09-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/shop" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/shop?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/shop?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/shop" />
+    <lastmod>2026-09-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/activites</loc>
-    <lastmod>2026-09-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/activites" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/activites?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/activites?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/activites" />
+    <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/itineraires</loc>
-    <lastmod>2026-09-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/itineraires" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/itineraires?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/itineraires?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/itineraires" />
+    <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/hotels-restaurants</loc>
-    <lastmod>2026-09-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/hotels-restaurants" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/hotels-restaurants?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/hotels-restaurants?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/hotels-restaurants" />
+    <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/gastronomie</loc>
-    <lastmod>2026-09-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/gastronomie" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/gastronomie?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/gastronomie?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/gastronomie" />
+    <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/transports</loc>
-    <lastmod>2026-09-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/transports" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/transports?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/transports?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/transports" />
+    <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/meteo-climat</loc>
-    <lastmod>2026-09-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/meteo-climat" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/meteo-climat?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/meteo-climat?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/meteo-climat" />
+    <lastmod>2026-09-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/guide</loc>
-    <lastmod>2026-09-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/guide" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/guide?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/guide?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/guide" />
+    <lastmod>2026-09-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/concierge</loc>
-    <lastmod>2026-09-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/concierge" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/concierge?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/concierge?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/concierge" />
+    <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/avis</loc>
-    <lastmod>2026-09-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/avis" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/avis?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/avis?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/avis" />
+    <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/faq</loc>
-    <lastmod>2026-09-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/faq" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/faq?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/faq?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/faq" />
+    <lastmod>2026-09-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/a-propos</loc>
-    <lastmod>2026-09-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/a-propos" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/a-propos?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/a-propos?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/a-propos" />
+    <lastmod>2026-09-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/contact</loc>
-    <lastmod>2026-09-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/contact" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/contact?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/contact?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/contact" />
+    <lastmod>2026-09-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/politique-de-confidentialite</loc>
-    <lastmod>2026-09-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/politique-de-confidentialite" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/politique-de-confidentialite?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/politique-de-confidentialite?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/politique-de-confidentialite" />
+    <lastmod>2026-09-20</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/divulgation-affiliation</loc>
-    <lastmod>2026-09-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/divulgation-affiliation" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/divulgation-affiliation?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/divulgation-affiliation?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/divulgation-affiliation" />
+    <lastmod>2026-09-20</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/shop/guide-djerba-pdf</loc>
-    <lastmod>2026-09-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/shop/guide-djerba-pdf" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/shop/guide-djerba-pdf?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/shop/guide-djerba-pdf?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/shop/guide-djerba-pdf" />
+    <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -114,7 +186,11 @@
   </url>
   <url>
     <loc>https://djerbavoyage.tn/shop/carte-gps-djerba</loc>
-    <lastmod>2026-09-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/shop/carte-gps-djerba" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/shop/carte-gps-djerba?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/shop/carte-gps-djerba?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/shop/carte-gps-djerba" />
+    <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -124,6 +200,10 @@
   </url>
   <url>
     <loc>https://djerbavoyage.tn/guide/guide-test-djerba-1</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/guide/guide-test-djerba-1" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/guide/guide-test-djerba-1?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/guide/guide-test-djerba-1?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/guide/guide-test-djerba-1" />
     <lastmod>2026-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -134,12 +214,20 @@
   </url>
   <url>
     <loc>https://djerbavoyage.tn/guide/guide-test-djerba-1/pdf</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/guide/guide-test-djerba-1/pdf" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/guide/guide-test-djerba-1/pdf?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/guide/guide-test-djerba-1/pdf?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/guide/guide-test-djerba-1/pdf" />
     <lastmod>2026-09-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/guide/guide-test-djerba-2</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/guide/guide-test-djerba-2" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/guide/guide-test-djerba-2?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/guide/guide-test-djerba-2?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/guide/guide-test-djerba-2" />
     <lastmod>2026-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -150,6 +238,10 @@
   </url>
   <url>
     <loc>https://djerbavoyage.tn/guide/guide-test-djerba-3</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/guide/guide-test-djerba-3" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/guide/guide-test-djerba-3?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/guide/guide-test-djerba-3?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/guide/guide-test-djerba-3" />
     <lastmod>2026-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -160,6 +252,10 @@
   </url>
   <url>
     <loc>https://djerbavoyage.tn/guide/guide-test-djerba-4</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/guide/guide-test-djerba-4" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/guide/guide-test-djerba-4?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/guide/guide-test-djerba-4?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/guide/guide-test-djerba-4" />
     <lastmod>2026-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -170,6 +266,10 @@
   </url>
   <url>
     <loc>https://djerbavoyage.tn/guide/guide-test-djerba-5</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/guide/guide-test-djerba-5" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/guide/guide-test-djerba-5?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/guide/guide-test-djerba-5?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/guide/guide-test-djerba-5" />
     <lastmod>2026-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -180,6 +280,10 @@
   </url>
   <url>
     <loc>https://djerbavoyage.tn/guide/guide-test-djerba-6</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/guide/guide-test-djerba-6" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/guide/guide-test-djerba-6?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/guide/guide-test-djerba-6?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/guide/guide-test-djerba-6" />
     <lastmod>2026-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -190,6 +294,10 @@
   </url>
   <url>
     <loc>https://djerbavoyage.tn/guide/guide-test-djerba-7</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/guide/guide-test-djerba-7" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/guide/guide-test-djerba-7?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/guide/guide-test-djerba-7?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/guide/guide-test-djerba-7" />
     <lastmod>2026-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -200,6 +308,10 @@
   </url>
   <url>
     <loc>https://djerbavoyage.tn/guide/guide-test-djerba-8</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/guide/guide-test-djerba-8" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/guide/guide-test-djerba-8?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/guide/guide-test-djerba-8?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/guide/guide-test-djerba-8" />
     <lastmod>2026-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -210,6 +322,10 @@
   </url>
   <url>
     <loc>https://djerbavoyage.tn/guide/guide-test-djerba-9</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/guide/guide-test-djerba-9" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/guide/guide-test-djerba-9?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/guide/guide-test-djerba-9?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/guide/guide-test-djerba-9" />
     <lastmod>2026-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -220,6 +336,10 @@
   </url>
   <url>
     <loc>https://djerbavoyage.tn/guide/guide-test-djerba-10</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/guide/guide-test-djerba-10" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/guide/guide-test-djerba-10?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/guide/guide-test-djerba-10?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/guide/guide-test-djerba-10" />
     <lastmod>2026-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -230,6 +350,10 @@
   </url>
   <url>
     <loc>https://djerbavoyage.tn/guide/guide-test-djerba-11</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/guide/guide-test-djerba-11" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/guide/guide-test-djerba-11?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/guide/guide-test-djerba-11?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/guide/guide-test-djerba-11" />
     <lastmod>2026-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -240,6 +364,10 @@
   </url>
   <url>
     <loc>https://djerbavoyage.tn/guide/guide-test-djerba-12</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/guide/guide-test-djerba-12" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/guide/guide-test-djerba-12?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/guide/guide-test-djerba-12?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/guide/guide-test-djerba-12" />
     <lastmod>2026-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -250,6 +378,10 @@
   </url>
   <url>
     <loc>https://djerbavoyage.tn/guide/guide-test-djerba-13</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/guide/guide-test-djerba-13" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/guide/guide-test-djerba-13?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/guide/guide-test-djerba-13?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/guide/guide-test-djerba-13" />
     <lastmod>2026-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -260,6 +392,10 @@
   </url>
   <url>
     <loc>https://djerbavoyage.tn/guide/guide-test-djerba-14</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/guide/guide-test-djerba-14" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/guide/guide-test-djerba-14?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/guide/guide-test-djerba-14?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/guide/guide-test-djerba-14" />
     <lastmod>2026-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -270,6 +406,10 @@
   </url>
   <url>
     <loc>https://djerbavoyage.tn/guide/guide-test-djerba-15</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/guide/guide-test-djerba-15" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/guide/guide-test-djerba-15?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/guide/guide-test-djerba-15?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/guide/guide-test-djerba-15" />
     <lastmod>2026-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -280,37 +420,61 @@
   </url>
   <url>
     <loc>https://djerbavoyage.tn/destinations/houmt-souk</loc>
-    <lastmod>2026-09-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/destinations/houmt-souk" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/destinations/houmt-souk?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/destinations/houmt-souk?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/destinations/houmt-souk" />
+    <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/destinations/sidi-mahres</loc>
-    <lastmod>2026-09-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/destinations/sidi-mahres" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/destinations/sidi-mahres?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/destinations/sidi-mahres?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/destinations/sidi-mahres" />
+    <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/destinations/djerbahood-erriadh</loc>
-    <lastmod>2026-09-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/destinations/djerbahood-erriadh" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/destinations/djerbahood-erriadh?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/destinations/djerbahood-erriadh?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/destinations/djerbahood-erriadh" />
+    <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/destinations/aghir</loc>
-    <lastmod>2026-09-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/destinations/aghir" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/destinations/aghir?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/destinations/aghir?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/destinations/aghir" />
+    <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/destinations/guellala</loc>
-    <lastmod>2026-09-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/destinations/guellala" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/destinations/guellala?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/destinations/guellala?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/destinations/guellala" />
+    <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://djerbavoyage.tn/destinations/ajim-el-melga</loc>
-    <lastmod>2026-09-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://djerbavoyage.tn/destinations/ajim-el-melga" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://djerbavoyage.tn/destinations/ajim-el-melga?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://djerbavoyage.tn/destinations/ajim-el-melga?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://djerbavoyage.tn/destinations/ajim-el-melga" />
+    <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

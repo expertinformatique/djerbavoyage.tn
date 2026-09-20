@@ -1,5 +1,6 @@
 /**
  * Sales Funnel Quiz Engine — Typewriter Effect & Staggered Options Reveal
+ * Multi-language support (FR / AR / EN)
  */
 import { ROTATING_BADGES, SECRET_TIPS, RECOMMENDATION_VARIANTS } from './ai-recommendation-catalog.js';
 import { processAiLeadSubmission } from './ai-lead-form.js';
@@ -11,32 +12,74 @@ const STORAGE_KEYS = {
     SEED: 'dv_ai_msg_seed'
 };
 
-const GREETINGS_FIRST_VISIT = [
+const IS_AR = typeof document !== 'undefined' && document.documentElement.lang === 'ar';
+const IS_EN = typeof document !== 'undefined' && document.documentElement.lang === 'en';
+
+const GREETINGS_FIRST_VISIT = IS_AR ? [
+    "مرحباً بك في جربة! خذ 30 ثانية لاكتشاف البرنامج المثالي لإقامتك.",
+    "يسعدنا استقبالك! دع الذكاء الاصطناعي يرشدك لأجمل كنوز الجزيرة.",
+    "أهلاً بك! في أسئلة سريعة، اكتشف الأنشطة والإقامة المثالية لك."
+] : (IS_EN ? [
+    "Welcome to Djerba! Take 30 seconds to find the ideal formula for your stay.",
+    "Delighted to welcome you! Let our AI guide you to the island's finest treasures.",
+    "Welcome! Answer a few quick questions to discover your ideal activities and lodging."
+] : [
     "Bienvenue à Djerba ! Prenez 30 secondes pour trouver la formule idéale pour votre séjour.",
     "Ravi de vous accueillir ! Laissez notre IA vous guider vers les plus beaux trésors de l'île.",
     "Bienvenue ! En quelques questions rapides, découvrez vos activités et hébergements idéaux."
-];
+]);
 
-const GREETINGS_HESITATING = [
+const GREETINGS_HESITATING = IS_AR ? [
+    "هل ما زلت متردداً؟ جرب محاكينا المجاني للحصول على أفكار مسارات رائعة!",
+    "لم تقرر بعد إقامتك؟ دع الذكاء الاصطناعي يلهمك في 30 ثانية مجاناً.",
+    "تحتاج إلى إلهام لرحلة جربة؟ مخططنا المجاني هنا لمساعدتك!"
+] : (IS_EN ? [
+    "Still hesitating? Try our free simulator for great itinerary ideas!",
+    "Undecided about your stay? Let our AI inspire you in 30 seconds, 100% free.",
+    "Need inspiration for Djerba? Our free planner is here to help!"
+] : [
     "Vous hésitez encore ? Testez notre simulateur gratuit, il vous donnera de superbes idées d'itinéraires !",
     "Toujours indécis pour votre séjour ? Laissez notre IA vous inspirer en 30 secondes, c'est 100% gratuit.",
     "Besoin d'inspiration pour Djerba ? Notre planificateur gratuit est là pour vous donner un coup de pouce !"
-];
+]);
 
-const GREETINGS_RETURNING_CHOSEN = [
+const GREETINGS_RETURNING_CHOSEN = IS_AR ? [
+    "هل ترغب في تجربة خيارات أخرى؟ جرب الاستكشاف مجدداً مجاناً!",
+    "تود استكشاف آفاق جديدة؟ لدى الذكاء الاصطناعي مقترحات مسارات جديدة لك!",
+    "لدينا العديد من الخيارات! يمكنك <a href='/contact' class='c-ai-quiz__banner-link'>التواصل معنا هنا</a> للحصول على استشارة مخصصة."
+] : (IS_EN ? [
+    "Want to try a different option? Feel free to explore again for free!",
+    "Want to explore new horizons? Our AI has fresh itinerary variants for you!",
+    "We have plenty of choices! Feel free to <a href='/contact' class='c-ai-quiz__banner-link'>contact us here</a> for custom advice."
+] : [
     "Votre choix précédent ne vous plaît plus ? Pourquoi ne pas essayer autre chose, c'est toujours gratuit !",
     "Envie d'explorer d'autres horizons ? Notre IA a de nouvelles variantes d'itinéraires à vous proposer !",
     "Nous avons de nombreux choix ! N'hésitez pas à <a href='/contact' class='c-ai-quiz__banner-link'>nous contacter ici</a> pour un conseil personnalisé."
-];
+]);
 
-const STEP_LABELS = { 1: 'Voyageurs', 2: 'Ambiance', 3: 'Hébergement', 4: 'Rythme', 5: 'Durée' };
-const STEP_TITLES = {
+const STEP_LABELS = IS_AR ? { 1: 'المسافرون', 2: 'الأجواء', 3: 'الإقامة', 4: 'النسق', 5: 'المدة' }
+                  : (IS_EN ? { 1: 'Travelers', 2: 'Atmosphere', 3: 'Lodging', 4: 'Pace', 5: 'Duration' }
+                           : { 1: 'Voyageurs', 2: 'Ambiance', 3: 'Hébergement', 4: 'Rythme', 5: 'Durée' });
+
+const STEP_TITLES = IS_AR ? {
+    1: '1. من هم رفقاؤك في السفر؟',
+    2: '2. ما الأجواء التي تبحث عنها؟',
+    3: '3. ما نمط الإقامة المفضّل؟',
+    4: '4. ما نسق أيامك؟',
+    5: '5. كم مدة إقامتك؟'
+} : (IS_EN ? {
+    1: '1. Who are your travel companions?',
+    2: '2. What atmosphere are you looking for?',
+    3: '3. What is your accommodation style?',
+    4: '4. What pace for your days?',
+    5: '5. What is the length of your stay?'
+} : {
     1: '1. Vos compagnons de voyage ?',
     2: '2. Votre ambiance recherchée ?',
     3: "3. Votre style d'hébergement ?",
     4: '4. Le rythme de vos journées ?',
     5: '5. La durée de votre séjour ?'
-};
+});
 
 const quizState = {
     step: 1,
@@ -98,58 +141,81 @@ function typeText(elementId, fullText, speed = 18, onComplete = null) {
     let index = 0;
     function streamChar() {
         if (index < fullText.length) {
-            textTarget.textContent += fullText.charAt(index++);
+            textTarget.textContent += fullText.charAt(index);
+            index++;
             setTimeout(streamChar, speed);
         } else {
-            if (cursor) setTimeout(() => { cursor.style.display = 'none'; }, 300);
+            if (cursor) cursor.style.display = 'none';
             if (typeof onComplete === 'function') onComplete();
         }
     }
     streamChar();
 }
 
-function hideStepOptions(stepId) {
-    const step = document.getElementById(stepId);
-    if (!step) return;
-    step.querySelectorAll('.quiz-opt-btn').forEach(btn => {
-        btn.style.opacity = '0';
-        btn.style.transform = 'translateY(16px)';
-        btn.style.pointerEvents = 'none';
-    });
-}
-
-function revealOptionsSequentially(stepId) {
-    const step = document.getElementById(stepId);
-    if (!step) return;
-    const buttons = step.querySelectorAll('.quiz-opt-btn');
-    buttons.forEach((btn, index) => {
-        setTimeout(() => {
-            btn.style.opacity = '1';
-            btn.style.transform = 'translateY(0)';
-            btn.style.pointerEvents = 'auto';
-        }, (index + 1) * 160); // apparaît lentement un par un
-    });
-}
-
 function setupIntersectionObserver(quizElem) {
-    let observed = false;
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting && !observed) {
-                observed = true;
-                startAiIntro();
+            if (entry.isIntersecting) {
+                startQuizHeaderTypewriter();
+                observer.disconnect();
             }
         });
-    }, { threshold: 0.2 });
+    }, { threshold: 0.15 });
+
     observer.observe(quizElem);
 }
 
-function startAiIntro() {
-    hideStepOptions('quizStep1');
-    typeText('aiTypedHeader', "Votre Séjour Sur-Mesure par IA", 18, () => {
-        typeText('aiTypedSubtitle', "Itinéraire optimisé, pépites secrètes & meilleures adresses en 30s.", 12, () => {
-            goToStep(1);
+function startQuizHeaderTypewriter() {
+    const headerTitle = IS_AR ? "مخطط الرحلات بالذكاء الاصطناعي" : (IS_EN ? "AI Travel Planner 2026" : "Planificateur de Séjour IA 2026");
+    const headerSub = IS_AR ? "أجب عن 5 أسئلة سريعة لاكتشاف أفضل مسار لك في جربة" : (IS_EN ? "Answer 5 quick questions to get your custom Djerba plan" : "Répondez à 5 questions rapides pour obtenir votre formule idéale à Djerba");
+
+    typeText('aiTypedHeader', headerTitle, 22, () => {
+        typeText('aiTypedSubtitle', headerSub, 14, () => {
+            typeStepHeader(1);
         });
+    });
+}
+
+function updateProgressMeta(step) {
+    const stepLabel = document.getElementById('quizStepLabel');
+    const pctLabel = document.getElementById('quizPercentLabel');
+    const barFill = document.getElementById('quizProgressBar');
+
+    const pct = Math.round((step / 5) * 100);
+    const label = STEP_LABELS[step] || '';
+
+    if (stepLabel) {
+        stepLabel.textContent = IS_AR ? `الخطوة ${step} من 5 • ${label}` : (IS_EN ? `Step ${step} of 5 • ${label}` : `Étape ${step} sur 5 • ${label}`);
+    }
+    if (pctLabel) {
+        pctLabel.textContent = IS_AR ? `${pct}% مكتمل` : (IS_EN ? `${pct}% completed` : `${pct}% complété`);
+    }
+    if (barFill) {
+        barFill.style.width = `${pct}%`;
+    }
+
+    for (let i = 1; i <= 5; i++) {
+        const pill = document.getElementById(`stepPill${i}`);
+        if (pill) {
+            pill.classList.toggle('active', i === step);
+            pill.classList.toggle('completed', i < step);
+        }
+    }
+}
+
+function revealOptionsSequentially(stepId) {
+    const stepElem = document.getElementById(stepId);
+    if (!stepElem) return;
+
+    const options = stepElem.querySelectorAll('.quiz-opt-btn');
+    options.forEach((opt, i) => {
+        opt.style.opacity = '0';
+        opt.style.transform = 'translateY(10px)';
+        setTimeout(() => {
+            opt.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
+            opt.style.opacity = '1';
+            opt.style.transform = 'translateY(0)';
+        }, i * 60);
     });
 }
 
@@ -158,26 +224,14 @@ export function goToStep(stepNum) {
     quizState.step = stepNum;
 
     document.querySelectorAll('.quiz-step').forEach(s => s.style.display = 'none');
-    const target = document.getElementById('quizStep' + stepNum);
-    if (target) target.style.display = 'block';
+    const targetStep = document.getElementById('quizStep' + stepNum);
+    if (targetStep) targetStep.style.display = 'block';
 
-    hideStepOptions('quizStep' + stepNum);
+    updateProgressMeta(stepNum);
+    typeStepHeader(stepNum);
+}
 
-    const pct = stepNum * 20;
-    const pBar = document.getElementById('quizProgressBar');
-    if (pBar) pBar.style.width = pct + '%';
-
-    const stepLbl = document.getElementById('quizStepLabel');
-    if (stepLbl) stepLbl.textContent = `Étape ${stepNum} sur 5 • ${STEP_LABELS[stepNum]}`;
-
-    const pctLbl = document.getElementById('quizPercentLabel');
-    if (pctLbl) pctLbl.textContent = `${pct}% complété`;
-
-    for (let i = 1; i <= 5; i++) {
-        const pill = document.getElementById('stepPill' + i);
-        if (pill) pill.classList.toggle('active', i <= stepNum);
-    }
-
+function typeStepHeader(stepNum) {
     typeText('step' + stepNum + 'Title', STEP_TITLES[stepNum], 16, () => {
         revealOptionsSequentially('quizStep' + stepNum);
     });
@@ -198,7 +252,9 @@ export function finishQuiz(durationVal) {
     const aiBox = document.getElementById('aiAnalyzingBox');
     if (aiBox) aiBox.style.display = 'block';
 
-    typeText('aiAnalyzingText', "Calcul de votre formule optimale par l'IA...", 18, () => {
+    const loadingMsg = IS_AR ? "جاري حساب صيغتك المثالية بالذكاء الاصطناعي..." : (IS_EN ? "Calculating your optimal formula with AI..." : "Calcul de votre formule optimale par l'IA...");
+
+    typeText('aiAnalyzingText', loadingMsg, 18, () => {
         setTimeout(() => {
             if (aiBox) aiBox.style.display = 'none';
             const leadStep = document.getElementById('quizLeadStep');
@@ -226,16 +282,24 @@ function renderRecommendation() {
     const variants = RECOMMENDATION_VARIANTS[style] || RECOMMENDATION_VARIANTS.culture;
     const variant = variants[quizState.variantIndex % variants.length];
 
-    const matchRates = ['🔥 99% Recommandé • Spécial Séjour Sur-Mesure', '⭐ 98% Match Parfait • Certifié Djerba Voyage'];
+    const matchRates = IS_AR ? ['🔥 99% موصى به • برنامج مخصص', '⭐ 98% تطابق ممتاز • توثيق جربة فواياج']
+                     : (IS_EN ? ['🔥 99% Recommended • Bespoke Stay', '⭐ 98% Perfect Match • Verified Djerba Voyage']
+                              : ['🔥 99% Recommandé • Spécial Séjour Sur-Mesure', '⭐ 98% Match Parfait • Certifié Djerba Voyage']);
     const matchBadge = document.getElementById('resMatchBadge');
     if (matchBadge) matchBadge.textContent = matchRates[quizState.variantIndex % matchRates.length];
 
-    const travelerLabels = { couple: 'Couple', family: 'Famille', solo: 'Solo Nomad', friends: 'Amis' };
+    const travelerLabels = IS_AR ? { couple: 'زوجان', family: 'عائلة', solo: 'مسافر مفرد', friends: 'أصدقاء' }
+                         : (IS_EN ? { couple: 'Couple', family: 'Family', solo: 'Solo Nomad', friends: 'Friends' }
+                                  : { couple: 'Couple', family: 'Famille', solo: 'Solo Nomad', friends: 'Amis' });
     const dur = (quizState.answers.duration || '5j').toUpperCase();
-    const trav = travelerLabels[quizState.answers.traveler] || 'Voyageurs';
+    const trav = travelerLabels[quizState.answers.traveler] || (IS_AR ? 'مسافرون' : (IS_EN ? 'Travelers' : 'Voyageurs'));
 
-    typeText('resTitle', `${variant.title} (${dur} • Formule ${trav})`, 16, () => {
-        typeText('resDesc', `Itinéraire optimisé selon vos préférences : hébergement ${quizState.answers.lodging} et rythme ${quizState.answers.pace}.`, 10);
+    const descTxt = IS_AR ? `مسار محسّن حسب تفضيلاتك: إقامة ${quizState.answers.lodging} ونسق ${quizState.answers.pace}.`
+                  : (IS_EN ? `Optimized itinerary based on your preferences: ${quizState.answers.lodging} lodging and ${quizState.answers.pace} pace.`
+                           : `Itinéraire optimisé selon vos préférences : hébergement ${quizState.answers.lodging} et rythme ${quizState.answers.pace}.`);
+
+    typeText('resTitle', `${variant.title} (${dur} • ${trav})`, 16, () => {
+        typeText('resDesc', descTxt, 10);
     });
 
     const itHead = document.getElementById('resItinerary');
@@ -266,7 +330,8 @@ function renderRecommendation() {
     const tip = SECRET_TIPS[(quizState.variantIndex + Math.floor(Math.random() * 2)) % SECRET_TIPS.length];
     const tipTitle = document.getElementById('resTipTitle');
     const tipDesc = document.getElementById('resTipDesc');
-    if (tipTitle) tipTitle.textContent = `Secret Local de l'IA : ${tip.title}`;
+    const tipPrefix = IS_AR ? "سر الذكاء الاصطناعي المحلي:" : (IS_EN ? "AI Local Secret:" : "Secret Local de l'IA :");
+    if (tipTitle) tipTitle.textContent = `${tipPrefix} ${tip.title}`;
     if (tipDesc) tipDesc.textContent = tip.desc;
 
     resElem.scrollIntoView({ behavior: 'smooth', block: 'start' });

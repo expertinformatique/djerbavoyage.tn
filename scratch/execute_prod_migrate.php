@@ -5,6 +5,8 @@ $ftpHost = 'ftp.invoices.tn';
 $localFile = dirname(__DIR__) . '/public/run_migrate_prod_temp.php';
 $remoteUrl = "ftp://{$ftpHost}/djerbavoyage.tn/public/run_migrate_prod_temp.php";
 
+file_put_contents($localFile, "<?php\nrequire_once __DIR__ . '/../database/migrate.php';\n");
+
 // Upload
 $fp = fopen($localFile, 'r');
 $ch = curl_init($remoteUrl);
@@ -19,7 +21,7 @@ fclose($fp);
 echo "Runner uploaded to production.\n";
 
 // Execute via web
-$output = file_get_contents("https://djerbavoyage.tn/run_migrate_prod_temp.php");
+$output = @file_get_contents("https://djerbavoyage.tn/run_migrate_prod_temp.php");
 echo "Migration output:\n" . $output . "\n";
 
 // Delete remote file

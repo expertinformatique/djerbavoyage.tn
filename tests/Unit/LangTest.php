@@ -122,4 +122,26 @@ class LangTest extends TestCase
         $this->assertContains('en', $supported);
         $this->assertContains('ar', $supported);
     }
+
+    public function testCriticalKeysExistInAllLanguages(): void
+    {
+        $criticalKeys = [
+            'nav.home', 'nav.activities', 'nav.destinations', 'nav.shop', 'nav.concierge',
+            'hero.title', 'hero.subtitle', 'home.destinations_badge', 'home.concierge_badge',
+            'activities.hero_title', 'itineraries.hero_title', 'hotels_restos.title',
+            'blog_list.title', 'blog_single.badge_official', 'shop.title',
+            'pdf_modal.badge', 'booking_modal.title', 'quiz.badge', 'quiz_lead.badge',
+            'newsletter.title', 'about.hero_title', 'faq.title', 'reviews.title',
+            'contact.title', 'footer.description'
+        ];
+
+        foreach (['fr', 'en', 'ar'] as $loc) {
+            \Core\Lang::setLocale($loc);
+            foreach ($criticalKeys as $k) {
+                $trans = \Core\Lang::t($k);
+                $this->assertNotEquals($k, $trans, "La clé '{$k}' n'est pas traduite pour la langue '{$loc}'");
+                $this->assertNotEmpty($trans);
+            }
+        }
+    }
 }

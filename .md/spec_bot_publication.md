@@ -34,6 +34,7 @@ Ce document fusionne et synthétise les directives éditoriales de haute qualit�
   - Encadré de terrain : `<blockquote>💡 <strong>Le conseil de l'équipe Djerba Voyage :</strong> ...</blockquote>`.
   - Section FAQ de 3 à 4 questions pratiques avec réponses directes.
   - Maillage interne automatique avec 2 à 3 liens hypertextes issus du catalogue officiel de la plateforme.
+  - **Image Unique et Pertinente** : Le générateur d'images doit recevoir un prompt ultra-spécifique basé sur le contenu exact de l'article pour garantir une image générée 100% unique (aucune réutilisation d'image ou de concept générique).
 
 ---
 

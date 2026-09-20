@@ -23,18 +23,28 @@
     $scheme = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http');
     $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
     $baseUrl = $scheme . '://' . $host;
-    $currentUrl = $baseUrl . strtok($_SERVER['REQUEST_URI'] ?? '/', '?');
+    $currentPath = strtok($_SERVER['REQUEST_URI'] ?? '/', '?');
+    $cleanUrl = $baseUrl . $currentPath;
+    $currentLocale = \Core\Lang::getLocale();
+    $canonicalUrl = ($currentLocale === 'fr') ? $cleanUrl : ($cleanUrl . '?lang=' . $currentLocale);
     $videoAbsoluteUrl = !empty($ogVideo) ? (str_starts_with($ogVideo, 'http') ? $ogVideo : ($baseUrl . '/' . ltrim($ogVideo, '/'))) : '';
+
+    $ogLocaleMap = [
+      'fr' => 'fr_FR',
+      'en' => 'en_US',
+      'ar' => 'ar_TN'
+    ];
+    $currentOgLocale = $ogLocaleMap[$currentLocale] ?? 'fr_FR';
   ?>
-  <link rel="canonical" href="<?= e($currentUrl) ?>">
-  <link rel="alternate" hreflang="fr" href="<?= e($currentUrl) ?>?lang=fr">
-  <link rel="alternate" hreflang="en" href="<?= e($currentUrl) ?>?lang=en">
-  <link rel="alternate" hreflang="ar" href="<?= e($currentUrl) ?>?lang=ar">
-  <link rel="alternate" hreflang="x-default" href="<?= e($currentUrl) ?>">
+  <link rel="canonical" href="<?= e($canonicalUrl) ?>">
+  <link rel="alternate" hreflang="fr" href="<?= e($cleanUrl) ?>">
+  <link rel="alternate" hreflang="en" href="<?= e($cleanUrl) ?>?lang=en">
+  <link rel="alternate" hreflang="ar" href="<?= e($cleanUrl) ?>?lang=ar">
+  <link rel="alternate" hreflang="x-default" href="<?= e($cleanUrl) ?>">
 
   <!-- Open Graph / Facebook / WhatsApp -->
   <meta property="og:type" content="<?= !empty($ogVideo) ? 'video.other' : 'website' ?>">
-  <meta property="og:url" content="<?= e($currentUrl) ?>">
+  <meta property="og:url" content="<?= e($canonicalUrl) ?>">
   <meta property="og:title" content="<?= e($seoTitle ?? 'Djerba Voyage 2026 : Guide Officiel, Activités & Excursions') ?>">
   <meta property="og:description" content="<?= e($seoDescription ?? 'Préparez votre séjour à Djerba : guides complets, réservation d\'excursions, quads, sorties en mer et conciergerie VIP sur-mesure.') ?>">
   <meta property="og:image" content="<?= e(!empty($ogImage) ? $ogImage : asset('images/hero.png')) ?>">
@@ -45,7 +55,12 @@
   <meta property="og:video:width" content="720">
   <meta property="og:video:height" content="1280">
   <?php endif; ?>
-  <meta property="og:locale" content="fr_FR">
+  <meta property="og:locale" content="<?= e($currentOgLocale) ?>">
+  <?php foreach ($ogLocaleMap as $locKey => $locValue): ?>
+    <?php if ($locKey !== $currentLocale): ?>
+  <meta property="og:locale:alternate" content="<?= e($locValue) ?>">
+    <?php endif; ?>
+  <?php endforeach; ?>
   <meta property="og:site_name" content="Djerba Voyage">
 
   <!-- Twitter Card -->
@@ -65,7 +80,7 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
   
   <!-- CSS Main & Modules -->
   <link rel="stylesheet" href="<?= asset('css/main.css') ?>">
@@ -112,6 +127,7 @@
         "description": "Plateforme indépendante de voyage et conciergerie à Djerba : réservation d'excursions, quads, kitesurf, sorties bateau et guides personnalisés.",
         "telephone": "+216 98 000 000",
         "priceRange": "€€",
+        "knowsLanguage": ["fr", "en", "ar"],
         "address": {
           "@type": "PostalAddress",
           "streetAddress": "Zone Touristique",

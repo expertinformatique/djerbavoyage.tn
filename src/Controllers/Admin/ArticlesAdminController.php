@@ -35,8 +35,11 @@ class ArticlesAdminController extends Controller {
             $status = 'all';
         }
 
+        $sort  = trim(Security::sanitize($_GET['sort'] ?? 'published_at'));
+        $order = strtoupper(trim(Security::sanitize($_GET['order'] ?? 'DESC'))) === 'ASC' ? 'ASC' : 'DESC';
+
         $stats = $this->articleRepo->getStats();
-        $data  = $this->articleRepo->getPaginated($page, $limit, $search, $status);
+        $data  = $this->articleRepo->getPaginated($page, $limit, $search, $status, $sort, $order);
 
         $flashSuccess = $_SESSION['admin_flash_success'] ?? null;
         $flashError   = $_SESSION['admin_flash_error'] ?? null;
@@ -49,6 +52,8 @@ class ArticlesAdminController extends Controller {
             'limit'        => $limit,
             'search'       => $search,
             'status'       => $status,
+            'sort'         => $sort,
+            'order'        => $order,
             'stats'        => $stats,
             'flashSuccess' => $flashSuccess,
             'flashError'   => $flashError,
@@ -76,13 +81,24 @@ class ArticlesAdminController extends Controller {
                 $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $titleFr), '-'));
             }
 
+            // Gestion de l'upload de l'image de couverture
+            $featuredImage = trim(Security::sanitize($_POST['featured_image'] ?? 'sidi_mahres.png'));
+            if (isset($_FILES['featured_image_file']) && $_FILES['featured_image_file']['error'] === UPLOAD_ERR_OK) {
+                $uploadResult = $this->handleFileUpload($_FILES['featured_image_file']);
+                if ($uploadResult) {
+                    $featuredImage = $uploadResult;
+                }
+            }
+
             $article = new Article(
                 slug: $slug,
                 titleFr: $titleFr,
                 titleEn: trim(Security::sanitize($_POST['title_en'] ?? '')) ?: null,
+                titleAr: trim(Security::sanitize($_POST['title_ar'] ?? '')) ?: null,
                 contentFr: $content,
                 contentEn: trim($_POST['content_en'] ?? '') ?: null,
-                featuredImage: trim(Security::sanitize($_POST['featured_image'] ?? 'sidi_mahres.png')),
+                contentAr: trim($_POST['content_ar'] ?? '') ?: null,
+                featuredImage: $featuredImage,
                 status: in_array($_POST['status'] ?? '', ['published', 'draft']) ? $_POST['status'] : 'published',
                 seoDescription: trim(Security::sanitize($_POST['seo_description'] ?? '')) ?: null,
                 summaryAi: trim(Security::sanitize($_POST['summary_ai'] ?? '')) ?: null,
@@ -127,12 +143,23 @@ class ArticlesAdminController extends Controller {
                 return;
             }
 
+            // Gestion de l'upload de l'image de couverture
+            $featuredImage = trim(Security::sanitize($_POST['featured_image'] ?? $article->featuredImage));
+            if (isset($_FILES['featured_image_file']) && $_FILES['featured_image_file']['error'] === UPLOAD_ERR_OK) {
+                $uploadResult = $this->handleFileUpload($_FILES['featured_image_file']);
+                if ($uploadResult) {
+                    $featuredImage = $uploadResult;
+                }
+            }
+
             $article->titleFr        = $titleFr;
             $article->slug           = $slug ?: $article->slug;
             $article->titleEn        = trim(Security::sanitize($_POST['title_en'] ?? '')) ?: null;
+            $article->titleAr        = trim(Security::sanitize($_POST['title_ar'] ?? '')) ?: null;
             $article->contentFr      = $content;
             $article->contentEn      = trim($_POST['content_en'] ?? '') ?: null;
-            $article->featuredImage  = trim(Security::sanitize($_POST['featured_image'] ?? $article->featuredImage));
+            $article->contentAr      = trim($_POST['content_ar'] ?? '') ?: null;
+            $article->featuredImage  = $featuredImage;
             $article->status         = in_array($_POST['status'] ?? '', ['published', 'draft']) ? $_POST['status'] : $article->status;
             $article->seoDescription = trim(Security::sanitize($_POST['seo_description'] ?? '')) ?: null;
             $article->summaryAi      = trim(Security::sanitize($_POST['summary_ai'] ?? '')) ?: null;
@@ -185,5 +212,35 @@ class ArticlesAdminController extends Controller {
         }
 
         $this->redirect('/admin/articles');
+    }
+
+    private function handleFileUpload(array $file): ?string {
+        $uploadDir = ROOT_PATH . '/public/assets/images/uploads/';
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0755, true);
+        }
+        $filename = uniqid('img_') . '_' . preg_replace('/[^a-zA-Z0-9.\-_]/', '', basename($file['name']));
+        $target = $uploadDir . $filename;
+        if (move_uploaded_file($file['tmp_name'], $target)) {
+            return 'uploads/' . $filename;
+        }
+        return null;
+    }
+
+    public function uploadImageAjax(): void {
+        $this->requireAuth();
+        header('Content-Type: application/json');
+
+        if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
+            $path = $this->handleFileUpload($_FILES['file']);
+            if ($path) {
+                // Retourner l'URL absolue ou relative pour TinyMCE
+                echo json_encode(['location' => '/assets/images/' . $path]);
+                exit;
+            }
+        }
+        http_response_code(400);
+        echo json_encode(['error' => 'Échec du téléversement de l\'image']);
+        exit;
     }
 }

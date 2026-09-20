@@ -1,123 +1,211 @@
 /**
- * RTL Override CSS — Support Arabe (dir="rtl")
- * Djerba Voyage — Fichier chargé uniquement quand lang=ar
- * Ne contient que les overrides nécessaires pour l'arabe.
+ * RTL Stylesheet — Support Complet Arabe (dir="rtl")
+ * Djerba Voyage — Chargé dynamiquement quand lang=ar
+ * Règle 3 & 4 : Zéro style inline, Responsive dense, Zéro scroll horizontal
  */
 
-/* ── Direction globale ───────────────────────────────────────── */
+/* ── 1. Typographie & Direction Globale ─────────────────────── */
 [dir="rtl"] body {
-    font-family: 'Segoe UI', Tahoma, 'Arabic Typesetting', sans-serif;
+  font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+  direction: rtl;
+  text-align: right;
 }
 
-/* ── Navbar RTL ──────────────────────────────────────────────── */
-[dir="rtl"] .c-navbar__inner {
-    flex-direction: row-reverse;
+[dir="rtl"] h1, 
+[dir="rtl"] h2, 
+[dir="rtl"] h3, 
+[dir="rtl"] h4, 
+[dir="rtl"] h5, 
+[dir="rtl"] h6,
+[dir="rtl"] .c-navbar__brand-main,
+[dir="rtl"] .c-navbar__link,
+[dir="rtl"] .c-button {
+  font-family: 'Cairo', 'Plus Jakarta Sans', sans-serif;
 }
 
+/* ── 2. Navigation Desktop & Sous-menus ──────────────────────── */
+[dir="rtl"] .c-navbar,
+[dir="rtl"] .c-navbar__inner,
 [dir="rtl"] .c-navbar__menu {
-    flex-direction: row-reverse;
+  direction: rtl;
 }
 
-[dir="rtl"] .c-navbar__actions {
-    flex-direction: row-reverse;
+[dir="rtl"] .c-navbar__link {
+  direction: rtl;
 }
 
-[dir="rtl"] .c-navbar__dropdown-item {
-    flex-direction: row-reverse;
-    text-align: right;
-}
-
-[dir="rtl"] .c-navbar__dropdown-info {
-    align-items: flex-end;
+[dir="rtl"] .c-navbar__link-content {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  direction: rtl;
 }
 
 [dir="rtl"] .c-navbar__dropdown-menu {
-    left: auto;
-    right: 0;
+  left: auto;
+  right: 0;
+  text-align: right;
+  direction: rtl;
 }
 
 [dir="rtl"] .c-navbar__dropdown-menu--right {
-    left: 0;
-    right: auto;
+  left: 0;
+  right: auto;
 }
 
-/* ── Sélecteur de locale RTL ─────────────────────────────────── */
-[dir="rtl"] .c-locale-switcher {
-    flex-direction: row-reverse;
+[dir="rtl"] .c-navbar__dropdown-item {
+  text-align: right;
+  direction: rtl;
+  flex-direction: row;
 }
 
+[dir="rtl"] .c-navbar__dropdown-item:hover {
+  transform: translateX(-3px);
+}
+
+[dir="rtl"] .c-navbar__dropdown-info {
+  align-items: flex-start;
+  text-align: right;
+}
+
+[dir="rtl"] .c-navbar__dropdown-tag {
+  margin-left: 0 !important;
+  margin-right: auto !important;
+  margin-inline-start: auto !important;
+}
+
+/* Sélecteur de locale dropdown en RTL */
 [dir="rtl"] .c-locale-switcher__dropdown {
-    left: 0;
-    right: auto;
+  left: 0;
+  right: auto;
+  text-align: right;
+  direction: rtl;
 }
 
-/* ── Container principal ─────────────────────────────────────── */
-[dir="rtl"] .l-container {
+/* ── 3. Tiroir & Menu Mobile (≤ 992px) ───────────────────────── */
+@media (max-width: 992px) {
+  [dir="rtl"] .c-navbar__menu {
+    text-align: right;
     direction: rtl;
-    text-align: right;
-}
+  }
 
-/* ── Cartes et grilles ───────────────────────────────────────── */
-[dir="rtl"] .c-contact-grid {
+  [dir="rtl"] .c-navbar__link {
+    text-align: right;
     direction: rtl;
+    flex-direction: row;
+  }
+
+  [dir="rtl"] .c-navbar__dropdown-item {
+    text-align: right;
+    direction: rtl;
+    flex-direction: row;
+  }
+
+  [dir="rtl"] .c-mobile-locale {
+    text-align: right;
+    direction: rtl;
+  }
+
+  [dir="rtl"] .c-mobile-locale__title {
+    text-align: right;
+    direction: rtl;
+  }
 }
 
-[dir="rtl"] .c-contact-info-card {
-    flex-direction: row-reverse;
-    text-align: right;
+/* Fil d'Ariane Breadcrumb en RTL */
+[dir="rtl"] .c-blog-breadcrumb {
+  direction: rtl;
+  text-align: right;
 }
 
-[dir="rtl"] .c-contact-form-group label {
-    text-align: right;
-    display: block;
+/* ── 4. Icônes Directionnelles (Flèches retournées) ──────────── */
+[dir="rtl"] .fi-rr-arrow-right,
+[dir="rtl"] .fi-rr-arrow-small-right,
+[dir="rtl"] .fi-rr-angle-right,
+[dir="rtl"] .fi-rr-angle-small-right,
+[dir="rtl"] .fi-rr-arrow-up-right,
+[dir="rtl"] .fi-rr-angle-left,
+[dir="rtl"] .fi-rr-angle-small-left,
+[dir="rtl"] .fi-rr-arrow-left {
+  transform: scaleX(-1);
+  display: inline-block;
+}
+
+/* ── 5. Formulaires & Champs de saisie ───────────────────────── */
+[dir="rtl"] input,
+[dir="rtl"] select,
+[dir="rtl"] textarea {
+  direction: rtl;
+  text-align: right;
 }
 
 [dir="rtl"] .c-contact-input,
 [dir="rtl"] .c-contact-select,
-[dir="rtl"] .c-contact-textarea {
-    text-align: right;
-    direction: rtl;
+[dir="rtl"] .c-contact-textarea,
+[dir="rtl"] .c-pdf-input,
+[dir="rtl"] .c-pdf-textarea,
+[dir="rtl"] .c-newsletter-input {
+  text-align: right;
+  direction: rtl;
 }
 
-/* ── Footer RTL ──────────────────────────────────────────────── */
-[dir="rtl"] footer .l-container > div {
-    text-align: right;
+[dir="rtl"] .c-contact-form-group label,
+[dir="rtl"] .c-pdf-form-group label,
+[dir="rtl"] .c-ai-lead-form__group label {
+  text-align: right;
+  display: block;
 }
 
-[dir="rtl"] footer ul {
-    text-align: right;
+/* Barre de recherche avec icône en RTL */
+[dir="rtl"] #shopSearchInput {
+  padding: 0.75rem 2.75rem 0.75rem 1rem !important;
+  text-align: right;
 }
 
-/* ── Flex utilitaires ────────────────────────────────────────── */
-[dir="rtl"] .c-hero {
-    direction: rtl;
+[dir="rtl"] .shop-search-wrap i,
+[dir="rtl"] .c-card .fi-rr-search {
+  left: auto !important;
+  right: 16px !important;
 }
 
-[dir="rtl"] .c-hero__badge {
-    flex-direction: row-reverse;
+/* ── 6. Cartes, Bannières & Conteneurs ───────────────────────── */
+[dir="rtl"] .l-container {
+  direction: rtl;
 }
 
-/* ── Icônes décalées ─────────────────────────────────────────── */
-[dir="rtl"] .fi {
-    transform: scaleX(1); /* reset, certaines icônes directionnelles peuvent être retournées */
+[dir="rtl"] .c-card,
+[dir="rtl"] .c-card__content,
+[dir="rtl"] .c-destination-card .c-card__content {
+  text-align: right;
 }
 
-/* ── Boutons ─────────────────────────────────────────────────── */
-[dir="rtl"] .c-button {
-    flex-direction: row-reverse;
+[dir="rtl"] .c-contact-info-card {
+  text-align: right;
 }
 
-/* ── Formulaires ─────────────────────────────────────────────── */
-[dir="rtl"] input,
-[dir="rtl"] select,
-[dir="rtl"] textarea {
-    direction: rtl;
-    text-align: right;
+[dir="rtl"] .c-newsletter-card {
+  text-align: center;
 }
 
-/* ── Listes ──────────────────────────────────────────────────── */
-[dir="rtl"] ul,
-[dir="rtl"] ol {
-    padding-right: 1.5rem;
-    padding-left: 0;
+/* ── 7. Modals & Popups ──────────────────────────────────────── */
+[dir="rtl"] .c-pdf-modal-header,
+[dir="rtl"] .c-modal__card {
+  text-align: right;
+}
+
+[dir="rtl"] .c-pdf-modal-close,
+[dir="rtl"] .c-modal__close {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+/* ── 8. Footer ───────────────────────────────────────────────── */
+[dir="rtl"] .c-footer__col,
+[dir="rtl"] .c-footer__list,
+[dir="rtl"] .c-footer__bottom {
+  text-align: right;
+}
+
+[dir="rtl"] .c-footer__phone-link {
+  flex-direction: row;
 }

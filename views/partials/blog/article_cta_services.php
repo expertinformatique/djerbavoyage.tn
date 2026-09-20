@@ -10,7 +10,7 @@ if (empty($ctaServices)) {
 ?>
 <div class="c-article-services-section">
   <h3 class="c-article-services-title">
-    <i class="fi fi-rr-compass"></i> Activités & Excursions recommandées pour cet itinéraire
+    <i class="fi fi-rr-compass"></i> <?= __('blog_single.cta_services_title') ?>
   </h3>
   <div class="c-article-services-grid">
     <?php foreach ($ctaServices as $service): ?>
@@ -28,11 +28,11 @@ if (empty($ctaServices)) {
             <?= htmlspecialchars($service->name, ENT_QUOTES, 'UTF-8') ?>
           </h4>
           <p class="c-article-service-card__price">
-            À partir de <?= number_format($service->priceEur, 2) ?> €
+            <?= __('activities.from_price') ?> <?= money($service->priceEur) ?>
           </p>
         </div>
         <a href="<?= url('/services#' . urlencode($service->slug)) ?>" class="c-button c-button--secondary">
-          Réserver
+          <?= __('activities.book_vip') ?>
         </a>
       </div>
     <?php endforeach; ?>

@@ -19,7 +19,7 @@ class SitemapService {
         $currentDate = date('Y-m-d');
 
         $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
-        $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">' . "\n";
+        $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">' . "\n";
 
         $xml .= $this->buildStaticPagesXml($baseUrl, $currentDate);
         $xml .= $this->buildProductsXml($baseUrl, $currentDate);
@@ -38,8 +38,18 @@ class SitemapService {
         $robots .= "Allow: /\n";
         $robots .= "Disallow: /admin/\n";
         $robots .= "Disallow: /api/\n";
-        $robots .= "Disallow: /download\n";
-        $robots .= "\nSitemap: {$baseUrl}/sitemap.xml\n";
+        $robots .= "Disallow: /download\n\n";
+
+        $aiBots = ['GPTBot', 'ChatGPT-User', 'ClaudeBot', 'PerplexityBot', 'Google-Extended', 'Bytespider', 'Applebot-Extended', 'CCBot'];
+        foreach ($aiBots as $bot) {
+            $robots .= "User-agent: {$bot}\n";
+            $robots .= "Allow: /\n";
+            $robots .= "Disallow: /admin/\n";
+            $robots .= "Disallow: /api/\n";
+            $robots .= "Disallow: /download\n\n";
+        }
+
+        $robots .= "Sitemap: {$baseUrl}/sitemap.xml\n";
 
         return $robots;
     }
@@ -74,6 +84,15 @@ class SitemapService {
         return $baseUrl;
     }
 
+    private function buildHreflangTags(string $fullUrl): string {
+        $cleanUrl = strtok($fullUrl, '?');
+        $xml = "    <xhtml:link rel=\"alternate\" hreflang=\"fr\" href=\"" . htmlspecialchars($cleanUrl, ENT_QUOTES, 'UTF-8') . "\" />\n";
+        $xml .= "    <xhtml:link rel=\"alternate\" hreflang=\"en\" href=\"" . htmlspecialchars($cleanUrl . '?lang=en', ENT_QUOTES, 'UTF-8') . "\" />\n";
+        $xml .= "    <xhtml:link rel=\"alternate\" hreflang=\"ar\" href=\"" . htmlspecialchars($cleanUrl . '?lang=ar', ENT_QUOTES, 'UTF-8') . "\" />\n";
+        $xml .= "    <xhtml:link rel=\"alternate\" hreflang=\"x-default\" href=\"" . htmlspecialchars($cleanUrl, ENT_QUOTES, 'UTF-8') . "\" />\n";
+        return $xml;
+    }
+
     private function buildStaticPagesXml(string $baseUrl, string $currentDate): string {
         $staticPages = [
             '/'                            => ['priority' => '1.0', 'freq' => 'daily'],
@@ -97,8 +116,10 @@ class SitemapService {
 
         $xml = '';
         foreach ($staticPages as $path => $meta) {
+            $url = $baseUrl . $path;
             $xml .= "  <url>\n";
-            $xml .= "    <loc>" . htmlspecialchars($baseUrl . $path, ENT_QUOTES, 'UTF-8') . "</loc>\n";
+            $xml .= "    <loc>" . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . "</loc>\n";
+            $xml .= $this->buildHreflangTags($url);
             $xml .= "    <lastmod>{$currentDate}</lastmod>\n";
             $xml .= "    <changefreq>{$meta['freq']}</changefreq>\n";
             $xml .= "    <priority>{$meta['priority']}</priority>\n";
@@ -112,8 +133,10 @@ class SitemapService {
         $products = $this->productRepo->getAllActive();
         foreach ($products as $prod) {
             $slug = !empty($prod->slug) ? $prod->slug : 'produit-' . $prod->id;
+            $url = $baseUrl . '/shop/' . $slug;
             $xml .= "  <url>\n";
-            $xml .= "    <loc>" . htmlspecialchars($baseUrl . '/shop/' . $slug, ENT_QUOTES, 'UTF-8') . "</loc>\n";
+            $xml .= "    <loc>" . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . "</loc>\n";
+            $xml .= $this->buildHreflangTags($url);
             $xml .= "    <lastmod>{$currentDate}</lastmod>\n";
             $xml .= "    <changefreq>weekly</changefreq>\n";
             $xml .= "    <priority>0.8</priority>\n";
@@ -134,8 +157,10 @@ class SitemapService {
         $articles = $this->articleRepo->getAllPublished(1000);
         foreach ($articles as $art) {
             $date = !empty($art->publishedAt) ? date('Y-m-d', strtotime($art->publishedAt)) : (!empty($art->createdAt) ? date('Y-m-d', strtotime($art->createdAt)) : $currentDate);
+            $url = $baseUrl . '/guide/' . $art->slug;
             $xml .= "  <url>\n";
-            $xml .= "    <loc>" . htmlspecialchars($baseUrl . '/guide/' . $art->slug, ENT_QUOTES, 'UTF-8') . "</loc>\n";
+            $xml .= "    <loc>" . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . "</loc>\n";
+            $xml .= $this->buildHreflangTags($url);
             $xml .= "    <lastmod>{$date}</lastmod>\n";
             $xml .= "    <changefreq>weekly</changefreq>\n";
             $xml .= "    <priority>0.8</priority>\n";
@@ -169,8 +194,10 @@ class SitemapService {
             $xml .= "  </url>\n";
 
             if (!empty($art->pdfEnabled)) {
+                $pdfUrl = $baseUrl . '/guide/' . $art->slug . '/pdf';
                 $xml .= "  <url>\n";
-                $xml .= "    <loc>" . htmlspecialchars($baseUrl . '/guide/' . $art->slug . '/pdf', ENT_QUOTES, 'UTF-8') . "</loc>\n";
+                $xml .= "    <loc>" . htmlspecialchars($pdfUrl, ENT_QUOTES, 'UTF-8') . "</loc>\n";
+                $xml .= $this->buildHreflangTags($pdfUrl);
                 $xml .= "    <lastmod>{$date}</lastmod>\n";
                 $xml .= "    <changefreq>monthly</changefreq>\n";
                 $xml .= "    <priority>0.5</priority>\n";
@@ -184,8 +211,10 @@ class SitemapService {
         $xml = '';
         $destinations = ['houmt-souk', 'sidi-mahres', 'djerbahood-erriadh', 'aghir', 'guellala', 'ajim-el-melga'];
         foreach ($destinations as $dest) {
+            $url = $baseUrl . '/destinations/' . $dest;
             $xml .= "  <url>\n";
-            $xml .= "    <loc>" . htmlspecialchars($baseUrl . '/destinations/' . $dest, ENT_QUOTES, 'UTF-8') . "</loc>\n";
+            $xml .= "    <loc>" . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . "</loc>\n";
+            $xml .= $this->buildHreflangTags($url);
             $xml .= "    <lastmod>{$currentDate}</lastmod>\n";
             $xml .= "    <changefreq>weekly</changefreq>\n";
             $xml .= "    <priority>0.8</priority>\n";

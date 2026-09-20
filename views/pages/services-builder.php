@@ -2,13 +2,13 @@
 <section class="c-hero" style="background: linear-gradient(180deg, rgba(15, 23, 42, 0.78) 0%, rgba(15, 23, 42, 0.95) 100%), url('<?= asset('images/djerba_services_hero.jpg') ?>') center/cover no-repeat; padding: clamp(2rem, 5vw, 4rem) 0;">
   <div class="l-container" data-animate style="text-align: center; max-width: 860px;">
     <div style="background: rgba(245, 158, 11, 0.18); border: 1px solid var(--clr-terracotta-500); color: #F59E0B; display: inline-flex; align-items: center; gap: 8px; padding: 5px 16px; border-radius: 50px; font-weight: 700; margin-bottom: 0.85rem; font-size: 0.82rem;">
-      <i class="fi fi-rr-sparkles"></i> Djerba Experience Pass 2026
+      <i class="fi fi-rr-sparkles"></i> <?= __('pass.badge') ?>
     </div>
     <h1 class="c-hero__title" style="color: #FFFFFF; margin-bottom: 0.75rem; font-size: clamp(1.45rem, 3.2vw, 2.25rem);">
-      Composez Votre Séjour & Vos Activités à Djerba
+      <?= __('pass.title') ?>
     </h1>
     <p class="c-hero__subtitle" style="color: var(--clr-sand-100); margin-bottom: 1.25rem; font-size: clamp(0.9rem, 1.8vw, 1.05rem); line-height: 1.5;">
-      Combinez vos activités, profitez de remises jusqu'à <strong>-15%</strong> et débloquez la <strong>Navette Aéroport VIP OFFERTE</strong> dès 3 activités !
+      <?= __('pass.subtitle') ?>
     </p>
 
     <!-- Mobile Hero Visual Card -->

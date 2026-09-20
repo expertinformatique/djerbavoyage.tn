@@ -14,7 +14,7 @@ $_currentCurrency = \Core\Currency::getCurrency();
       <img src="<?= asset('images/logo-djerba-voyage-guide-officiel.png') ?>" alt="Logo Officiel Djerba Voyage - Agence & Guide Touristique 2026" class="c-navbar__logo-img">
       <div class="c-navbar__logo-text">
         <span class="c-navbar__brand-main">DJERBA<span class="c-navbar__brand-accent">VOYAGE</span></span>
-        <span class="c-navbar__brand-sub">Guide 2026</span>
+        <span class="c-navbar__brand-sub"><?= __('nav.guide_sub') ?></span>
       </div>
     </a>
     

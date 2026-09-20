@@ -161,7 +161,7 @@ $articlePdfService = new \App\Services\ArticlePdfService();
 $container->bind(\App\Services\ArticlePdfService::class, fn() => $articlePdfService);
 $djerbaContextFetcher = new \App\Services\DjerbaContextFetcherService();
 $container->bind(\App\Services\DjerbaContextFetcherService::class, fn() => $djerbaContextFetcher);
-$aiImageService = new \App\Services\AiImageService();
+$aiImageService = new \App\Services\AiImageService(null, $settingsService);
 $container->bind(\App\Services\AiImageService::class, fn() => $aiImageService);
 $sitemapService = new \App\Services\SitemapService(new PdoProductRepository($pdo), $localServiceRepo, new PdoArticleRepository($pdo));
 $container->bind(\App\Services\SitemapService::class, fn() => $sitemapService);
@@ -286,6 +286,12 @@ $router->get('/admin/articles/edit', [App\Controllers\Admin\ArticlesAdminControl
 $router->post('/admin/articles/edit', [App\Controllers\Admin\ArticlesAdminController::class, 'edit']);
 $router->post('/admin/articles/delete', [App\Controllers\Admin\ArticlesAdminController::class, 'delete']);
 $router->post('/admin/articles/generate-ai', [App\Controllers\Admin\ArticlesAdminController::class, 'generateAi']);
+$router->post('/admin/upload-image', [App\Controllers\Admin\ArticlesAdminController::class, 'uploadImageAjax']);
+
+// Routes Gestionnaire de Médias
+$router->get('/admin/media', [App\Controllers\Admin\MediaAdminController::class, 'index']);
+$router->post('/admin/media/upload', [App\Controllers\Admin\MediaAdminController::class, 'upload']);
+$router->post('/admin/media/delete', [App\Controllers\Admin\MediaAdminController::class, 'delete']);
 $router->get('/api/auto-blog/generate', [App\Controllers\AutoBlogController::class, 'generate']);
 $router->post('/api/auto-blog/generate', [App\Controllers\AutoBlogController::class, 'generate']);
 

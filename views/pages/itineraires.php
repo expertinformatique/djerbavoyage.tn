@@ -2,13 +2,13 @@
 <section class="c-hero" style="background: linear-gradient(180deg, rgba(15, 23, 42, 0.78) 0%, rgba(15, 23, 42, 0.94) 100%), url('<?= asset('images/hero.png') ?>') center/cover no-repeat;">
   <div class="l-container" data-animate style="text-align: center; max-width: 820px;">
     <div class="c-hero__badge" style="background: rgba(245, 158, 11, 0.15); border: 1px solid var(--clr-terracotta-500); color: #F59E0B; display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; border-radius: 50px; font-weight: 700; margin-bottom: 1.25rem;">
-      <i class="fi fi-rr-calendar" style="color:#F59E0B;"></i> Plannings Clé en Main 2026
+      <i class="fi fi-rr-calendar" style="color:#F59E0B;"></i> <?= __('itineraries.hero_badge') ?>
     </div>
     <h1 class="c-hero__title" style="color: #FFFFFF; margin-bottom: 1rem;">
-      Itinéraires Sur-Mesure à Djerba
+      <?= __('itineraries.hero_title') ?>
     </h1>
     <p class="c-hero__subtitle" style="color: var(--clr-sand-100); margin-bottom: 2rem;">
-      Circuits optimisés 3, 5 et 7 jours élaborés par des résidents passionnés pour vivre le meilleur de Djerba sans perdre de temps.
+      <?= __('itineraries.hero_subtitle') ?>
     </p>
   </div>
 </section>
@@ -19,13 +19,13 @@
   <!-- Tabs Selector -->
   <div class="tabs c-scroll-tabs" style="margin-bottom: 3rem;">
     <button class="tab-btn active" onclick="switchItinerary('it-3', this)">
-      <i class="fi fi-rr-clock"></i> 3 Jours (Week-end Express)
+      <i class="fi fi-rr-clock"></i> <?= __('itineraries.tab_3') ?>
     </button>
     <button class="tab-btn" onclick="switchItinerary('it-5', this)">
-      <i class="fi fi-rr-sun"></i> 5 Jours (Équilibre & Culture)
+      <i class="fi fi-rr-sun"></i> <?= __('itineraries.tab_5') ?>
     </button>
     <button class="tab-btn" onclick="switchItinerary('it-7', this)">
-      <i class="fi fi-rr-crown"></i> 7 Jours (Immersion & Sud Tunisien)
+      <i class="fi fi-rr-crown"></i> <?= __('itineraries.tab_7') ?>
     </button>
   </div>
 
@@ -38,9 +38,9 @@
           <h2 style="font-size: 1.6rem; color: var(--clr-dark-900);">🌴 Circuit 3 Jours : L'Essentiel de Djerba</h2>
         </div>
         <div style="display: flex; gap: 1.5rem; font-size: 0.88rem; color: var(--clr-gray-500);">
-          <div><strong style="color: var(--clr-dark-900); display: block;">Rythme</strong> Modéré</div>
-          <div><strong style="color: var(--clr-dark-900); display: block;">Transport</strong> Taxis ou Scooter</div>
-          <div><strong style="color: var(--clr-dark-900); display: block;">Budget</strong> ~120 € / pers</div>
+          <div><strong style="color: var(--clr-dark-900); display: block;"><?= __('common.pace') ?></strong> <?= __('common.moderate') ?></div>
+          <div><strong style="color: var(--clr-dark-900); display: block;"><?= __('common.transport') ?></strong> Taxis ou Scooter</div>
+          <div><strong style="color: var(--clr-dark-900); display: block;"><?= __('common.budget') ?></strong> ~120 € / pers</div>
         </div>
       </div>
     </div>
@@ -209,16 +209,16 @@
 
   <!-- Call to Action Banner -->
   <div style="background: linear-gradient(135deg, var(--clr-sea-600) 0%, var(--clr-sea-900) 100%); color: #fff; padding: 2.5rem; border-radius: 20px; text-align: center; margin-top: 4rem;">
-    <h2 style="font-size: 1.8rem; margin-bottom: 0.75rem; color: #fff;">Emportez vos Itinéraires avec Coordonnées GPS & Cartes Hors-Ligne</h2>
+    <h2 style="font-size: 1.8rem; margin-bottom: 0.75rem; color: #fff;"><?= __('itineraries.banner_title') ?></h2>
     <p style="color: var(--clr-sand-100); max-width: 650px; margin: 0 auto 2rem auto; font-size: 1rem; line-height: 1.6;">
-      Téléchargez le guide complet au format PDF haute résolution avec adresses secrètes, horaires et réductions locales incluses.
+      <?= __('itineraries.banner_desc') ?>
     </p>
     <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
       <a href="<?= url('/shop') ?>" class="c-button c-button--primary" style="padding: 0.85rem 1.75rem; font-size: 1rem;">
-        <i class="fi fi-rr-download"></i> Pack Voyageur Complet PDF (7,90 €)
+        <i class="fi fi-rr-download"></i> <?= __('itineraries.banner_shop_btn', ['price' => money(7.90)]) ?>
       </a>
       <a href="<?= url('/concierge') ?>" class="c-button" style="background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.4); padding: 0.85rem 1.75rem; font-size: 1rem;">
-        <i class="fi fi-rr-compass"></i> Conciergerie Sur-Mesure (29 €)
+        <i class="fi fi-rr-compass"></i> <?= __('itineraries.banner_concierge_btn', ['price' => money(29)]) ?>
       </a>
     </div>
   </div>

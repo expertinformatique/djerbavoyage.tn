@@ -79,8 +79,10 @@ class PdoArticleRepository implements ArticleRepositoryInterface {
                     slug = :slug,
                     title_fr = :title_fr,
                     title_en = :title_en,
+                    title_ar = :title_ar,
                     content_fr = :content_fr,
                     content_en = :content_en,
+                    content_ar = :content_ar,
                     featured_image = :featured_image,
                     status = :status,
                     seo_description = :seo_description,
@@ -99,11 +101,11 @@ class PdoArticleRepository implements ArticleRepositoryInterface {
                 $stmt->execute($params);
             } else {
                 $sql = "INSERT INTO articles (
-                    destination_id, slug, title_fr, title_en, content_fr, content_en, 
+                    destination_id, slug, title_fr, title_en, title_ar, content_fr, content_en, content_ar,
                     featured_image, status, published_at, seo_description, meta_keywords, 
                     summary_ai, schema_json, pdf_enabled, pdf_price_eur, cta_services_json, author_name, video_url
                 ) VALUES (
-                    :destination_id, :slug, :title_fr, :title_en, :content_fr, :content_en, 
+                    :destination_id, :slug, :title_fr, :title_en, :title_ar, :content_fr, :content_en, :content_ar,
                     :featured_image, :status, CURRENT_TIMESTAMP, :seo_description, :meta_keywords, 
                     :summary_ai, :schema_json, :pdf_enabled, :pdf_price_eur, :cta_services_json, :author_name, :video_url
                 )";
@@ -124,8 +126,10 @@ class PdoArticleRepository implements ArticleRepositoryInterface {
             'slug'             => $article->slug,
             'title_fr'         => $article->titleFr,
             'title_en'         => $article->titleEn,
+            'title_ar'         => $article->titleAr,
             'content_fr'       => $article->contentFr,
             'content_en'       => $article->contentEn,
+            'content_ar'       => $article->contentAr,
             'featured_image'   => $article->featuredImage,
             'status'           => $article->status,
             'seo_description'  => $article->seoDescription,
@@ -198,7 +202,7 @@ class PdoArticleRepository implements ArticleRepositoryInterface {
         }
     }
 
-    public function getPaginated(int $page = 1, int $limit = 10, string $search = '', string $status = ''): array {
+    public function getPaginated(int $page = 1, int $limit = 10, string $search = '', string $status = '', string $sort = 'published_at', string $order = 'DESC'): array {
         $offset = ($page - 1) * $limit;
         $where = [];
         $params = [];
@@ -221,9 +225,13 @@ class PdoArticleRepository implements ArticleRepositoryInterface {
             $total = (int)$countStmt->fetchColumn();
             if ($countStmt) $countStmt->closeCursor();
 
+            $allowedSorts = ['title_fr', 'status', 'views_count', 'published_at'];
+            $sortField = in_array($sort, $allowedSorts) ? $sort : 'published_at';
+            $orderDir = strtoupper($order) === 'ASC' ? 'ASC' : 'DESC';
+
             $stmt = $this->pdo->prepare("
                 SELECT * FROM articles {$whereClause}
-                ORDER BY published_at DESC, id DESC
+                ORDER BY {$sortField} {$orderDir}, id DESC
                 LIMIT :limit OFFSET :offset
             ");
             foreach ($params as $k => $v) {
@@ -242,6 +250,18 @@ class PdoArticleRepository implements ArticleRepositoryInterface {
         } catch (\Throwable $e) {
             $this->logError($e);
             return ['total' => 0, 'items' => []];
+        }
+    }
+
+    public function getAllUsedFeaturedImages(): array {
+        try {
+            $stmt = $this->pdo->query("SELECT DISTINCT featured_image FROM articles WHERE featured_image IS NOT NULL AND featured_image != ''");
+            $res = $stmt ? $stmt->fetchAll(PDO::FETCH_COLUMN) : [];
+            if ($stmt) $stmt->closeCursor();
+            return $res;
+        } catch (\Throwable $e) {
+            $this->logError($e);
+            return [];
         }
     }
 }

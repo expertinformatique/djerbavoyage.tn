@@ -8,8 +8,10 @@ class Article {
         public string $slug = '',
         public string $titleFr = '',
         public ?string $titleEn = null,
+        public ?string $titleAr = null,
         public string $contentFr = '',
         public ?string $contentEn = null,
+        public ?string $contentAr = null,
         public ?string $featuredImage = null,
         public string $status = 'published',
         public int $viewsCount = 0,
@@ -25,6 +27,39 @@ class Article {
         public ?string $videoUrl = null
     ) {}
 
+    public function getTitle(?string $locale = null): string {
+        $loc = $locale ?? (\class_exists('Core\Lang') ? \Core\Lang::getLocale() : 'fr');
+        if ($loc === 'ar' && !empty($this->titleAr)) {
+            return $this->titleAr;
+        }
+        if ($loc === 'en' && !empty($this->titleEn)) {
+            return $this->titleEn;
+        }
+        return $this->titleFr;
+    }
+
+    public function getContent(?string $locale = null): string {
+        $loc = $locale ?? (\class_exists('Core\Lang') ? \Core\Lang::getLocale() : 'fr');
+        if ($loc === 'ar' && !empty($this->contentAr)) {
+            return $this->contentAr;
+        }
+        if ($loc === 'en' && !empty($this->contentEn)) {
+            return $this->contentEn;
+        }
+        return $this->contentFr;
+    }
+
+    public function getAvailableLanguages(): array {
+        $langs = ['fr'];
+        if (!empty($this->titleEn) || !empty($this->contentEn)) {
+            $langs[] = 'en';
+        }
+        if (!empty($this->titleAr) || !empty($this->contentAr)) {
+            $langs[] = 'ar';
+        }
+        return $langs;
+    }
+
     public static function fromArray(array $data): self {
         return new self(
             id: isset($data['id']) ? (int)$data['id'] : null,
@@ -32,8 +67,10 @@ class Article {
             slug: $data['slug'] ?? '',
             titleFr: $data['title_fr'] ?? '',
             titleEn: $data['title_en'] ?? null,
+            titleAr: $data['title_ar'] ?? null,
             contentFr: $data['content_fr'] ?? '',
             contentEn: $data['content_en'] ?? null,
+            contentAr: $data['content_ar'] ?? null,
             featuredImage: $data['featured_image'] ?? null,
             status: $data['status'] ?? 'published',
             viewsCount: isset($data['views_count']) ? (int)$data['views_count'] : 0,

@@ -11,11 +11,25 @@ class Lang
     private static array  $messages  = [];
     private static array  $supported = ['fr', 'en', 'ar'];
 
-    /** Initialise la langue depuis la session */
+    /** Initialise la langue depuis l'URL, la session ou le cookie */
     public static function boot(): void
     {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
+        }
+
+        $requestedLang = $_GET['lang'] ?? null;
+        if ($requestedLang && in_array($requestedLang, self::$supported, true)) {
+            $_SESSION['lang'] = $requestedLang;
+            if (!headers_sent()) {
+                setcookie('dv_lang', $requestedLang, [
+                    'expires'  => time() + (30 * 24 * 3600),
+                    'path'     => '/',
+                    'secure'   => isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on',
+                    'httponly' => true,
+                    'samesite' => 'Lax',
+                ]);
+            }
         }
 
         $lang = $_SESSION['lang'] ?? $_COOKIE['dv_lang'] ?? 'fr';

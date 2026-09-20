@@ -62,10 +62,10 @@ function closeBookingHotelsModal() {
         </div>
         <div>
           <h3 id="bookingModalTitle" style="font-family: var(--font-heading); font-size: 1.2rem; color: var(--clr-dark-900); font-weight: 800; margin: 0; line-height: 1.2;">
-            Hôtels, Menzels & Ryads de Charme à Djerba
+            <?= __('booking_modal.title') ?>
           </h3>
           <span style="font-size: 0.78rem; color: #10B981; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; margin-top: 2px;">
-            <i class="fi fi-rr-check-circle"></i> Intégration Directe Booking.com VIP • Meilleur Tarif Garanti
+            <i class="fi fi-rr-check-circle"></i> <?= __('booking_modal.sub') ?>
           </span>
         </div>
       </div>
@@ -81,8 +81,8 @@ function closeBookingHotelsModal() {
       <!-- Loading Spinner Indicator -->
       <div id="bookingIframeLoader" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #ffffff; z-index: 5; transition: opacity 0.3s ease;">
         <div style="width: 44px; height: 44px; border: 4px solid var(--clr-sand-200); border-top-color: var(--clr-sea-600); border-radius: 50%; animation: spinIframe 0.8s linear infinite;"></div>
-        <p style="margin-top: 1rem; font-size: 0.9rem; font-weight: 700; color: var(--clr-dark-800);">Chargement des hôtels en direct...</p>
-        <p style="font-size: 0.8rem; color: var(--clr-gray-500);">Recherche des meilleures offres Booking.com à Djerba</p>
+        <p style="margin-top: 1rem; font-size: 0.9rem; font-weight: 700; color: var(--clr-dark-800);"><?= __('booking_modal.loading') ?></p>
+        <p style="font-size: 0.8rem; color: var(--clr-gray-500);"><?= __('booking_modal.loading_sub') ?></p>
       </div>
 
       <!-- Live Booking.com Iframe -->
@@ -98,10 +98,10 @@ function closeBookingHotelsModal() {
     <!-- Modal Footer -->
     <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 0.5rem; border-top: 1px solid var(--clr-sand-300); shrink-0;">
       <span style="font-size: 0.82rem; color: var(--clr-gray-500); display: flex; align-items: center; gap: 6px;">
-        <i class="fi fi-rr-shield-check" style="color: #10B981;"></i> Navigation 100% sécurisée sur notre site
+        <i class="fi fi-rr-shield-check" style="color: #10B981;"></i> <?= __('booking_modal.secure_note') ?>
       </span>
       <button type="button" class="c-button c-button--outline" onclick="closeBookingHotelsModal()" style="font-size: 0.85rem; padding: 0.5rem 1.25rem;">
-        Fermer la fenêtre
+        <?= __('booking_modal.close_btn') ?>
       </button>
     </div>
 

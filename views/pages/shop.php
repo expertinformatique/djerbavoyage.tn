@@ -1,14 +1,14 @@
 <div class="l-container" style="margin: clamp(1.75rem, 3.5vw, 3.5rem) auto clamp(3rem, 5vw, 6rem) auto;">
     <div class="text-center" style="max-width: 780px; margin: 0 auto clamp(1.25rem, 2.5vw, 2.5rem) auto;">
         <span class="badge badge--gold" style="background: rgba(245, 158, 11, 0.18); border: 1px solid var(--clr-terracotta-500); color: #F59E0B; padding: 4px 16px; border-radius: 50px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 8px; font-size: 0.82rem;">
-            <i class="fi fi-rr-sparkles"></i> Boutique 2026 — Téléchargement Immédiat
+            <i class="fi fi-rr-sparkles"></i> <?= __('shop.badge') ?>
         </span>
-        <h1 class="heading-1" style="margin-bottom: 8px; font-size: clamp(1.6rem, 3vw, 2.3rem);">Boutique & Guides Numériques</h1>
+        <h1 class="heading-1" style="margin-bottom: 8px; font-size: clamp(1.6rem, 3vw, 2.3rem);"><?= __('shop.title') ?></h1>
         <p class="text-muted hidden sm:block" style="color: var(--clr-gray-500); font-size: 1.05rem; line-height: 1.55;">
-            Explorez nos 80+ guides PDF, cartes GPS interactives, billets d'excursion VIP et audio-guides. Téléchargement immédiat par e-mail après paiement sécurisé.
+            <?= __('shop.subtitle') ?>
         </p>
         <p class="text-muted sm:hidden" style="color: var(--clr-gray-500); font-size: 0.9rem; line-height: 1.45;">
-            Guides PDF, cartes GPS interactives et pass d'activités avec téléchargement immédiat.
+            <?= __('shop.home_subtitle') ?>
         </p>
     </div>
 
@@ -19,12 +19,12 @@
                 <i class="fi fi-rr-gift"></i>
             </div>
             <div>
-                <div style="font-weight: 800; font-size: clamp(0.92rem, 2vw, 1.1rem); color: #F59E0B; letter-spacing: 0.2px;">CADEAU ARTISANAL INCLUS AVEC CHAQUE GUIDE !</div>
-                <div class="hidden sm:block" style="font-size: 0.85rem; color: var(--clr-sand-500); margin-top: 2px; line-height: 1.4;">Recevez un coupon VIP pour retirer votre cadeau fait main (poterie Guellala, huile d'olive) à l'Aéroport DJE !</div>
+                <div style="font-weight: 800; font-size: clamp(0.92rem, 2vw, 1.1rem); color: #F59E0B; letter-spacing: 0.2px;"><?= __('shop.gift_title') ?></div>
+                <div class="hidden sm:block" style="font-size: 0.85rem; color: var(--clr-sand-500); margin-top: 2px; line-height: 1.4;"><?= __('shop.gift_desc') ?></div>
             </div>
         </div>
         <button data-open-modal="personalizedPdfModal" class="c-button c-button--primary w-full sm:w-auto" style="padding: 0.75rem 1.25rem; font-size: 0.88rem; font-weight: 700; box-sizing: border-box; justify-content: center; display: inline-flex; align-items: center; gap: 8px;">
-            <i class="fi fi-rr-document-signed"></i> <span class="hidden sm:inline">Guide Personnalisé avec Nom & Photo</span><span class="sm:hidden">Guide Personnalisé</span> (9,90 €)
+            <i class="fi fi-rr-document-signed"></i> <span class="hidden sm:inline"><?= __('hero.cta_pdf') ?></span><span class="sm:hidden"><?= __('hero.pdf_short') ?></span> (<?= money(9.90) ?>)
         </button>
     </div>
 
@@ -34,39 +34,39 @@
             <!-- Real-time Search -->
             <div style="flex: 1; min-width: 240px; position: relative;">
                 <i class="fi fi-rr-search" style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--clr-gray-500); font-size: 1.1rem;"></i>
-                <input type="text" id="shopSearchInput" placeholder="Rechercher un guide, carte GPS, excursion..." 
+                <input type="text" id="shopSearchInput" placeholder="<?= __('shop.search_placeholder') ?>" 
                        style="width: 100%; padding: 0.75rem 1rem 0.75rem 2.75rem; border-radius: 30px; border: 1px solid var(--clr-sand-300); font-size: 0.92rem; outline: none; transition: all 0.25s ease;"
                        onkeyup="filterProducts()">
             </div>
 
             <!-- Sort By -->
             <div style="display: flex; align-items: center; gap: 8px;">
-                <label for="shopSort" style="font-size: 0.85rem; font-weight: 700; color: var(--clr-dark-800); white-space: nowrap;">Trier par :</label>
+                <label for="shopSort" style="font-size: 0.85rem; font-weight: 700; color: var(--clr-dark-800); white-space: nowrap;"><?= __('shop.sort_label') ?></label>
                 <select id="shopSort" onchange="sortProducts()" style="padding: 0.65rem 1rem; border-radius: 30px; border: 1px solid var(--clr-sand-300); font-size: 0.85rem; background: #fff; cursor: pointer; outline: none; font-weight: 600;">
-                    <option value="default">Recommandés</option>
-                    <option value="price-asc">Prix : Croissant</option>
-                    <option value="price-desc">Prix : Décroissant</option>
-                    <option value="title">Nom (A-Z)</option>
+                    <option value="default"><?= __('shop.sort_recommended') ?></option>
+                    <option value="price-asc"><?= __('shop.sort_price_asc') ?></option>
+                    <option value="price-desc"><?= __('shop.sort_price_desc') ?></option>
+                    <option value="title"><?= __('shop.sort_name') ?></option>
                 </select>
             </div>
         </div>
 
         <!-- Filter Tabs (Single line horizontal scroll on mobile) -->
         <div class="tabs c-scroll-tabs" style="margin-top: 1.25rem; margin-bottom: 0; padding-bottom: 0; border-bottom: none; gap: 0.5rem;">
-            <button class="tab-btn active" onclick="filterCategory('all', this)"><i class="fi fi-rr-apps"></i> Tous (<?= count($products) ?>)</button>
-            <button class="tab-btn" onclick="filterCategory('guide', this)"><i class="fi fi-rr-book"></i> Guides PDF</button>
-            <button class="tab-btn" onclick="filterCategory('gps', this)"><i class="fi fi-rr-map-marker"></i> Cartes GPS</button>
-            <button class="tab-btn" onclick="filterCategory('pass', this)"><i class="fi fi-rr-ticket"></i> Pass Excursions</button>
-            <button class="tab-btn" onclick="filterCategory('pack', this)"><i class="fi fi-rr-box"></i> Packs Complets</button>
-            <button class="tab-btn" onclick="filterCategory('audio', this)"><i class="fi fi-rr-headphones"></i> Audio-Guides</button>
+            <button class="tab-btn active" onclick="filterCategory('all', this)"><i class="fi fi-rr-apps"></i> <?= __('shop.tab_all') ?> (<?= count($products) ?>)</button>
+            <button class="tab-btn" onclick="filterCategory('guide', this)"><i class="fi fi-rr-book"></i> <?= __('shop.tab_guides') ?></button>
+            <button class="tab-btn" onclick="filterCategory('gps', this)"><i class="fi fi-rr-map-marker"></i> <?= __('shop.tab_gps') ?></button>
+            <button class="tab-btn" onclick="filterCategory('pass', this)"><i class="fi fi-rr-ticket"></i> <?= __('shop.tab_pass') ?></button>
+            <button class="tab-btn" onclick="filterCategory('pack', this)"><i class="fi fi-rr-box"></i> <?= __('shop.tab_packs') ?></button>
+            <button class="tab-btn" onclick="filterCategory('audio', this)"><i class="fi fi-rr-headphones"></i> <?= __('shop.tab_audio') ?></button>
         </div>
     </div>
 
     <!-- Product Count Bar -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.75rem;">
-        <span id="productCounter" style="font-size: 0.95rem; font-weight: 700; color: var(--clr-dark-800);">Affichage de <?= count($products) ?> produits</span>
+        <span id="productCounter" style="font-size: 0.95rem; font-weight: 700; color: var(--clr-dark-800);"><?= __('shop.counter', ['count' => count($products)]) ?></span>
         <span style="font-size: 0.88rem; color: #10B981; font-weight: 600; display: flex; align-items: center; gap: 6px;">
-            <i class="fi fi-rr-lock"></i> Paiements 100% Sécurisés Stripe SSL (256-bit)
+            <i class="fi fi-rr-lock"></i> <?= __('shop.secure_ssl') ?>
         </span>
     </div>
 
@@ -134,13 +134,13 @@
                 <div style="padding: 0 1.25rem 1.25rem 1.25rem;">
                     <div style="border-top: 1px dashed var(--clr-sand-300); padding-top: 0.9rem; display: flex; justify-content: space-between; align-items: center;">
                         <div>
-                            <span style="font-size: 0.75rem; color: var(--clr-gray-500); text-transform: uppercase; font-weight: 600;">Prix Unique</span>
+                            <span style="font-size: 0.75rem; color: var(--clr-gray-500); text-transform: uppercase; font-weight: 600;"><?= __('shop.digital_format') ?></span>
                             <div style="font-family: var(--font-heading); font-weight: 800; font-size: 1.4rem; color: var(--clr-sea-900);">
-                                <?= number_format($prod->priceEur, 2) ?> €
+                                <?= money($prod->priceEur) ?>
                             </div>
                         </div>
                         <button class="c-button c-button--primary" onclick="openShopCheckout(<?= $prod->id ?>, '<?= e(addslashes($prod->titleFr)) ?>', <?= $prod->priceEur ?>)" style="padding: 0.65rem 1.15rem; font-size: 0.88rem; font-weight: 700;">
-                            Acheter <i class="fi fi-rr-shopping-cart"></i>
+                            <?= __('shop.buy_btn') ?> <i class="fi fi-rr-shopping-cart"></i>
                         </button>
                     </div>
                 </div>

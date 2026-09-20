@@ -13,8 +13,11 @@ class DjerbaStoryDataProvider {
             'desert_adventure' => [
                 'title_fr' => "Guide Complet de l'Aventure en Quad et Expédition Saharienne à Djerba",
                 'title_en' => "Complete Guide to Quad Adventures and Sahara Expeditions from Djerba",
+                'title_ar' => "دليل شامل لمغامرات الكواد والرحلات الصحراوية في جربة",
                 'seo_description' => "Tarifs réels, circuits dans les dunes d'Aghir et pistes vers Ksar Ghilane : le guide d'expérience terrain à Djerba.",
                 'lead' => "Envie de sensations fortes entre dunes dorées et lagunes sauvages ? Le quad et le buggy sont les meilleurs moyens d'explorer les recoins secrets de Djerba et les portes du Sahara tunisien.",
+                'lead_en' => "Looking for thrilling sensations between golden dunes and wild lagoons? Quad and buggy rides are the best way to explore the hidden gems of Djerba and the gates of the Tunisian Sahara.",
+                'lead_ar' => "هل تبحث عن الإثارة بين الكثبان الرملية الذهبية والبحيرات الهادئة؟ تعد رحلات الكواد والبوجي أفضل وسيلة لاستكشاف معالم جربة الساحرة وبوابات الصحراء التونسية.",
                 'sections' => [
                     [
                         'title' => "Comment se déroule une sortie quad dans les dunes et la lagune d'Aghir ?",
@@ -44,8 +47,11 @@ class DjerbaStoryDataProvider {
             'pottery_heritage' => [
                 'title_fr' => "Guide Artisanal : Visiter les Potiers de Guellala et leurs Ateliers Souterrains à Djerba",
                 'title_en' => "Artisanal Guide: Visiting Guellala Potters and Cave Workshops in Djerba",
+                'title_ar' => "دليل الحرف اليدوية: زيارة فخار قلالة وورش العمل تحت الأرض في جربة",
                 'seo_description' => "Tout savoir sur Guellala à Djerba : ateliers troglodytiques, maîtres potiers berbères, fabrication des amphores et tarifs réels.",
                 'lead' => "Perché sur la plus haute colline de l'île, le village berbère de Guellala abrite un savoir-faire céramique transmis sans interruption depuis plus de 3 000 ans.",
+                'lead_en' => "Perched on the highest hill of the island, the Berber village of Guellala preserves ceramic craftsmanship handed down continuously for over 3,000 years.",
+                'lead_ar' => "تقع قرية قلالة البربرية على أعلى تلة في الجزيرة، وتحتضن تراثاً عريقاً في صناعة الخزف والفخار يتوارثه الحرفيون منذ أكثر من 3000 عام.",
                 'sections' => [
                     [
                         'title' => "Pourquoi les ateliers de poterie de Guellala sont-ils creusés sous terre ?",
@@ -75,8 +81,11 @@ class DjerbaStoryDataProvider {
             'menzel_architecture' => [
                 'title_fr' => "Comprendre les Menzel & Houchs Traditionnels de Djerba : Patrimoine Mondial UNESCO",
                 'title_en' => "Understanding Traditional Menzel & Houch Architecture in Djerba: UNESCO Heritage",
+                'title_ar' => "فهم العمارة التقليدية للمنازل والحوش الجربي: تراث عالمي لليونسكو",
                 'seo_description' => "Histoire secrète, coupoles thermiques et art de vivre dans les Menzel fortifiés de Djerba : analyse du patrimoine bioclimatique.",
                 'lead' => "Classé au patrimoine mondial de l'UNESCO, le paysage culturel de Djerba témoigne d'une ingéniosité architecturale sans équivalent en Méditerranée pour apprivoiser l'eau et le vent.",
+                'lead_en' => "Inscribed on the UNESCO World Heritage list, the cultural landscape of Djerba bears witness to an unprecedented architectural ingenuity in the Mediterranean.",
+                'lead_ar' => "يُعد المشهد الثقافي لجزيرة جربة، المُدرج على قائمة التراث العالمي لليونسكو، شاهداً على عبقرية معمارية فريدة في حوض البحر الأبيض المتوسط للتكيف مع الطبيعة والمناخ.",
                 'sections' => [
                     [
                         'title' => "Qu'est-ce qu'un Menzel djerbien et comment fonctionne le Houch central ?",

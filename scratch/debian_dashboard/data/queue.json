@@ -1,0 +1,66 @@
+{
+    "topics": [
+        {
+            "id": "top_kitesurf_lagoon",
+            "bot_id": "all",
+            "title": "Top 5 des Meilleurs Spots Secrets de Kitesurf à la Lagune de Djerba",
+            "keywords": "kitesurf, lagune, vent, spots secrets, djerba",
+            "guidelines": "Conseils sur les horaires de marée, meilleures orientations de vent et accès spots sauvages.",
+            "max_uses": 3,
+            "uses_count": 0,
+            "status": "active",
+            "created_at": "2026-09-20 18:13:08",
+            "last_used_at": null
+        },
+        {
+            "id": "top_menzel_architecture",
+            "bot_id": "bot_menzels_hotels",
+            "title": "L'Architecture des Menzels et Houchs Traditionnels : Écologie et Climatisation Naturelle",
+            "keywords": "menzel, houch, architecture unesco, coupoles, puit djerba",
+            "guidelines": "Expliquer le système ingénieux des coupoles blanches et des impluviums pour capter l'eau de pluie.",
+            "max_uses": 2,
+            "uses_count": 0,
+            "status": "active",
+            "created_at": "2026-09-20 18:13:08",
+            "last_used_at": null
+        },
+        {
+            "id": "top_guellala_potters",
+            "bot_id": "bot_guide_patrimoine",
+            "title": "Immersion dans les Ateliers Troglodytes des Maîtres Potiers de Guellala",
+            "keywords": "guellala, poterie, argile, troglodyte, artisanat",
+            "guidelines": "Raconter la tradition millénaire de l'argile extraite sous terre et des fours ancestraux.",
+            "max_uses": 2,
+            "uses_count": 0,
+            "status": "active",
+            "created_at": "2026-09-20 18:13:08",
+            "last_used_at": null
+        }
+    ],
+    "images": [
+        {
+            "id": "img_kitesurf_lagoon",
+            "bot_id": "all",
+            "image_url": "https:\/\/djerbavoyage.tn\/assets\/images\/service_kitesurf.jpg",
+            "title": "Kitesurfeur en plein vol au-dessus des eaux turquoise",
+            "style": "reference",
+            "max_uses": 3,
+            "uses_count": 0,
+            "status": "active",
+            "created_at": "2026-09-20 18:13:08",
+            "last_used_at": null
+        },
+        {
+            "id": "img_menzel_patio",
+            "bot_id": "all",
+            "image_url": "https:\/\/djerbavoyage.tn\/assets\/images\/concierge.png",
+            "title": "Patio intérieur d'un Menzel avec olivier centenaire",
+            "style": "text_card",
+            "max_uses": 2,
+            "uses_count": 0,
+            "status": "active",
+            "created_at": "2026-09-20 18:13:08",
+            "last_used_at": null
+        }
+    ]
+}

@@ -27,12 +27,15 @@ if (empty($recentArticles)) {
     </div>
 
     <div class="c-blog-grid">
-      <?php foreach ($recentArticles as $art): ?>
+      <?php foreach ($recentArticles as $art): 
+        $artTitle = $art->getTitle();
+        $artContent = $art->getContent();
+      ?>
         <article class="c-blog-card">
           <?php if (!empty($art->featuredImage)): ?>
             <div class="c-blog-card__media">
               <img src="<?= e(asset($art->featuredImage)) ?>" 
-                   alt="<?= e($art->titleFr) ?>" 
+                   alt="<?= e($artTitle) ?>" 
                    class="c-blog-card__img" 
                    loading="lazy">
               <div class="c-blog-card__badge-overlay">
@@ -54,12 +57,12 @@ if (empty($recentArticles)) {
 
               <h3 class="c-blog-card__title">
                 <a href="<?= url('/guide/' . e($art->slug)) ?>">
-                  <?= e($art->titleFr) ?>
+                  <?= e($artTitle) ?>
                 </a>
               </h3>
 
               <p class="c-blog-card__excerpt">
-                <?= e($art->seoDescription ?: substr(strip_tags($art->contentFr), 0, 130)) ?>...
+                <?= e($art->seoDescription ?: substr(strip_tags($artContent), 0, 130)) ?>...
               </p>
             </div>
 

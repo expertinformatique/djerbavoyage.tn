@@ -104,4 +104,43 @@ class NanoBananaImageTest extends TestCase {
 
         $this->assertTrue($nanoService === $imageService->getNanoBananaService());
     }
+
+    public function testNanoBananaRejectsDuplicateImageHash(): void {
+        $service = new NanoBananaImageService('valid-api-key', 'nano-banana-pro-preview', true);
+        $rootPath = dirname(__DIR__, 2);
+
+        $dummyImageData = "DUPLICATE_IMAGE_CONTENT_" . bin2hex(random_bytes(16));
+        $mockPayload = json_encode([
+            'candidates' => [
+                [
+                    'content' => [
+                        'parts' => [
+                            [
+                                'inlineData' => [
+                                    'mimeType' => 'image/jpeg',
+                                    'data' => base64_encode($dummyImageData)
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]);
+
+        $service->setHttpRequester(function ($url, $payload) use ($mockPayload) {
+            return $mockPayload;
+        });
+
+        $firstSlug = $this->testSlug . '-first';
+        $firstResult = $service->generate('Kitesurf Djerba', $firstSlug, $rootPath);
+        $this->assertNotNull($firstResult);
+
+        // Deuxième tentative avec le même contenu : doit être bloquée
+        $secondSlug = $this->testSlug . '-second';
+        $secondResult = $service->generate('Kitesurf Djerba 2', $secondSlug, $rootPath);
+        $this->assertNull($secondResult, "Une image avec un contenu identique ne doit jamais être réutilisée.");
+
+        $firstPath = dirname(__DIR__, 2) . '/public/assets/images/blog/' . $firstSlug . '.jpg';
+        if (file_exists($firstPath)) @unlink($firstPath);
+    }
 }

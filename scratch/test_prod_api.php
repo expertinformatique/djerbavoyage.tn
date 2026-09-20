@@ -4,7 +4,7 @@ echo "Calling production API: $apiUrl ...\n";
 $start = microtime(true);
 $ch = curl_init($apiUrl);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+curl_setopt($ch, CURLOPT_TIMEOUT, 120);
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
 $res = curl_exec($ch);
 $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);

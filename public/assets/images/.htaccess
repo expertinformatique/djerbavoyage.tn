@@ -1,0 +1,40 @@
+# ==============================================================================
+# Sécurité & Protection des Images — Djerba Voyage
+# ==============================================================================
+
+# 1. Interdiction absolue du listing des répertoires et accès direct aux dossiers
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Bloquer l'accès direct si la cible est un dossier
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [F,L]
+
+    # 2. Protection Anti-Hotlink (Accès aux images en dehors du site)
+    # Empêche les sites tiers d'inclure ou voler nos images et notre bande passante.
+    # Règles d'autorisation :
+    # - Requêtes sans HTTP Referer (accès direct dans la barre d'adresse, applications clientes)
+    # - Domaine officiel djerbavoyage.tn et tous ses sous-domaines
+    # - Environnements locaux de développement (localhost, 127.0.0.1)
+    # - Moteurs de recherche majeurs (pour l'indexation SEO Google Images, Bing, Yahoo)
+    # - Réseaux sociaux (pour la génération des aperçus Open Graph : Facebook, WhatsApp, Twitter, etc.)
+    RewriteCond %{HTTP_REFERER} !^$
+    RewriteCond %{HTTP_REFERER} !^https?://([^/]+\.)?djerbavoyage\.tn [NC]
+    RewriteCond %{HTTP_REFERER} !^https?://(localhost|127\.0\.0\.1|::1)(:\d+)? [NC]
+    RewriteCond %{HTTP_REFERER} !^https?://([^/]+\.)?google\. [NC]
+    RewriteCond %{HTTP_REFERER} !^https?://([^/]+\.)?bing\. [NC]
+    RewriteCond %{HTTP_REFERER} !^https?://([^/]+\.)?yahoo\. [NC]
+    RewriteCond %{HTTP_REFERER} !^https?://([^/]+\.)?duckduckgo\. [NC]
+    RewriteCond %{HTTP_REFERER} !^https?://([^/]+\.)?facebook\. [NC]
+    RewriteCond %{HTTP_REFERER} !^https?://([^/]+\.)?fbcdn\. [NC]
+    RewriteCond %{HTTP_REFERER} !^https?://([^/]+\.)?instagram\. [NC]
+    RewriteCond %{HTTP_REFERER} !^https?://([^/]+\.)?whatsapp\. [NC]
+    RewriteCond %{HTTP_REFERER} !^https?://([^/]+\.)?pinterest\. [NC]
+    RewriteCond %{HTTP_REFERER} !^https?://([^/]+\.)?t\.co [NC]
+    RewriteCond %{HTTP_REFERER} !^https?://([^/]+\.)?twitter\. [NC]
+    RewriteCond %{HTTP_REFERER} !^https?://([^/]+\.)?x\.com [NC]
+    RewriteCond %{HTTP_REFERER} !^https?://([^/]+\.)?linkedin\. [NC]
+    RewriteRule \.(jpe?g|png|gif|webp|svg|bmp|ico)$ - [F,NC,L]
+</IfModule>

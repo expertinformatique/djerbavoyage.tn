@@ -1,8 +1,16 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
+    # Interdire le listing des répertoires
+    Options -Indexes
+
     # Sécurité : Bloquer l'accès direct aux fichiers et dossiers sensibles du backend
     RewriteRule ^(\.git|\.env|config|core|src|storage|database|tests|schema\.sql|seeder\.php) - [F,L]
+
+    # Sécurité : Bloquer l'accès direct aux répertoires images sans fichier ciblé
+    RewriteRule ^images/?$ - [F,L]
+    RewriteRule ^images/blog/?$ - [F,L]
+    RewriteRule ^images/uploads/?$ - [F,L]
 
     # Si la requête cible déjà le dossier public, ne pas réécrire
     RewriteRule ^public(/.*)?$ - [L]

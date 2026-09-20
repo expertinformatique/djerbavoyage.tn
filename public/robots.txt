@@ -5,4 +5,52 @@ Disallow: /admin/
 Disallow: /api/
 Disallow: /download
 
+User-agent: GPTBot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /download
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /download
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /download
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /download
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /download
+
+User-agent: Bytespider
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /download
+
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /download
+
+User-agent: CCBot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /download
+
 Sitemap: https://djerbavoyage.tn/sitemap.xml

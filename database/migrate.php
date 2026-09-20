@@ -76,7 +76,9 @@ try {
     // 3. Tableau $alters pour vérification idempotente des colonnes (Règle 7.3)
     $alters = [
         ['table' => 'articles', 'column' => 'title_en', 'sql' => "ALTER TABLE articles ADD COLUMN title_en VARCHAR(255) NULL"],
+        ['table' => 'articles', 'column' => 'title_ar', 'sql' => "ALTER TABLE articles ADD COLUMN title_ar VARCHAR(255) NULL"],
         ['table' => 'articles', 'column' => 'content_en', 'sql' => "ALTER TABLE articles ADD COLUMN content_en TEXT NULL"],
+        ['table' => 'articles', 'column' => 'content_ar', 'sql' => "ALTER TABLE articles ADD COLUMN content_ar TEXT NULL"],
         ['table' => 'articles', 'column' => 'seo_description', 'sql' => "ALTER TABLE articles ADD COLUMN seo_description TEXT NULL"],
         ['table' => 'articles', 'column' => 'meta_keywords', 'sql' => "ALTER TABLE articles ADD COLUMN meta_keywords VARCHAR(255) NULL"],
         ['table' => 'articles', 'column' => 'summary_ai', 'sql' => "ALTER TABLE articles ADD COLUMN summary_ai TEXT NULL"],

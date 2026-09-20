@@ -14,27 +14,27 @@
 
       <div>
         <span class="c-newsletter-badge">
-          ✨ Cercle Privé Djerba Voyage
+          <?= __('newsletter.badge') ?>
         </span>
       </div>
 
       <h2 class="c-newsletter-title">
-        Recevez Nos Pépites, Réductions & Spots Secrets
+        <?= __('newsletter.title') ?>
       </h2>
 
       <p class="c-newsletter-subtitle">
-        Rejoignez notre cercle de plus de 1 450 voyageurs privilégiés. Recevez en avant-première nos réductions secrètes, nos coordonnées GPS confidentielles et nos conseils d'initiés.
+        <?= __('newsletter.subtitle') ?>
       </p>
 
       <!-- Pass Privilège Immédiat -->
       <div class="c-newsletter-voucher-box">
         <div class="c-newsletter-voucher-info">
-          <div class="c-newsletter-voucher-label">🎁 Votre Privilège de Bienvenue Immédiat</div>
-          <div class="c-newsletter-voucher-code">CLUB-DJERBA-10</div>
-          <div class="c-newsletter-voucher-sub">Code promo envoyé instantanément par e-mail dès validation</div>
+          <div class="c-newsletter-voucher-label"><?= __('newsletter.voucher_label') ?></div>
+          <div class="c-newsletter-voucher-code"><?= __('newsletter.voucher_code') ?></div>
+          <div class="c-newsletter-voucher-sub"><?= __('newsletter.voucher_sub') ?></div>
         </div>
         <div class="c-newsletter-voucher-tag">
-          <i class="fi fi-rr-badge-percent"></i> -10% Immédiat
+          <i class="fi fi-rr-badge-percent"></i> <?= __('newsletter.voucher_tag') ?>
         </div>
       </div>
 
@@ -48,14 +48,14 @@
         <input type="hidden" name="_form_ts" value="<?= time() ?>">
 
         <div class="c-newsletter-form-group">
-          <input type="email" id="homeNewsletterEmail" name="email" placeholder="Votre adresse e-mail personnelle..." required class="c-newsletter-input">
+          <input type="email" id="homeNewsletterEmail" name="email" placeholder="<?= __('newsletter.placeholder') ?>" required class="c-newsletter-input">
           <button type="submit" id="homeNewsletterBtn" class="c-newsletter-button">
-            <span>Rejoindre le Club VIP</span>
+            <span><?= __('newsletter.btn') ?></span>
             <i class="fi fi-rr-paper-plane"></i>
           </button>
         </div>
         <p class="c-newsletter-footer-note">
-          🔒 Inscription 100% gratuite • Zéro spam garanti • Désinscription en 1 clic
+          <?= __('newsletter.footer_note') ?>
         </p>
       </form>
 
@@ -63,30 +63,30 @@
       <div class="c-newsletter-perks">
         <div class="c-newsletter-perk-item">
           <i class="fi fi-rr-badge-percent c-newsletter-perk-icon c-newsletter-perk-icon--amber"></i>
-          <div class="c-newsletter-perk-title">Code Réduction -10%</div>
-          <div class="c-newsletter-perk-desc">Valable sur toutes nos excursions, quads et sorties en mer dès votre confirmation.</div>
+          <div class="c-newsletter-perk-title"><?= __('newsletter.perk1_title') ?></div>
+          <div class="c-newsletter-perk-desc"><?= __('newsletter.perk1_desc') ?></div>
         </div>
         <div class="c-newsletter-perk-item">
           <i class="fi fi-rr-map-marker c-newsletter-perk-icon c-newsletter-perk-icon--emerald"></i>
-          <div class="c-newsletter-perk-title">Spots Secrets & Criques</div>
-          <div class="c-newsletter-perk-desc">Coordonnées GPS des plages sauvages et ateliers traditionnels loin des foules.</div>
+          <div class="c-newsletter-perk-title"><?= __('newsletter.perk2_title') ?></div>
+          <div class="c-newsletter-perk-desc"><?= __('newsletter.perk2_desc') ?></div>
         </div>
         <div class="c-newsletter-perk-item">
           <i class="fi fi-rr-restaurant c-newsletter-perk-icon c-newsletter-perk-icon--terracotta"></i>
-          <div class="c-newsletter-perk-title">Tables d'Hôtes Secrètes</div>
-          <div class="c-newsletter-perk-desc">Les meilleures tables familiales, poissons du jour et dîners sous les palmiers.</div>
+          <div class="c-newsletter-perk-title"><?= __('newsletter.perk3_title') ?></div>
+          <div class="c-newsletter-perk-desc"><?= __('newsletter.perk3_desc') ?></div>
         </div>
         <div class="c-newsletter-perk-item">
           <i class="fi fi-rr-shield-check c-newsletter-perk-icon c-newsletter-perk-icon--sky"></i>
-          <div class="c-newsletter-perk-title">Conciergerie & Zéro Spam</div>
-          <div class="c-newsletter-perk-desc">1 seul e-mail de pépites par mois. Assistance prioritaire pour vos réservations.</div>
+          <div class="c-newsletter-perk-title"><?= __('newsletter.perk4_title') ?></div>
+          <div class="c-newsletter-perk-desc"><?= __('newsletter.perk4_desc') ?></div>
         </div>
       </div>
 
       <!-- Preuve Sociale & Avis Voyageurs -->
       <div class="c-newsletter-proof">
         <span class="c-newsletter-stars">★★★★★</span>
-        <span>Recommandé par <strong>1 450+</strong> voyageurs privilégiés à Djerba</span>
+        <span><?= __('newsletter.proof', ['count' => '<strong>1 450+</strong>']) ?></span>
       </div>
 
     </div>

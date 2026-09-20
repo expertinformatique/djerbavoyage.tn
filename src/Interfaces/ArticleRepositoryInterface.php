@@ -13,6 +13,7 @@ interface ArticleRepositoryInterface {
     public function delete(int $id): bool;
     public function countPublished(): int;
     public function countAll(): int;
-    public function getPaginated(int $page = 1, int $limit = 10, string $search = '', string $status = ''): array;
+    public function getPaginated(int $page = 1, int $limit = 10, string $search = '', string $status = '', string $sort = 'published_at', string $order = 'DESC'): array;
     public function getStats(): array;
+    public function getAllUsedFeaturedImages(): array;
 }

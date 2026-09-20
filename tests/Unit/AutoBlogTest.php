@@ -228,5 +228,38 @@ class AutoBlogTest extends TestCase {
 
         $this->repo->delete($saved->id);
     }
+
+    public function testAiArticleGeneratorCreatesMultiLanguageArticle(): void {
+        $fetcher = new DjerbaContextFetcherService();
+        $generator = new AiArticleGeneratorService($fetcher, $this->repo);
+
+        $article = $generator->generateAndSave();
+
+        $this->assertNotNull($article->id);
+        $this->assertNotEmpty($article->titleFr);
+        $this->assertNotEmpty($article->titleEn);
+        $this->assertNotEmpty($article->titleAr);
+        $this->assertNotEmpty($article->contentFr);
+        $this->assertNotEmpty($article->contentEn);
+        $this->assertNotEmpty($article->contentAr);
+
+        // Test des accesseurs getTitle et getContent
+        $this->assertEquals($article->titleFr, $article->getTitle('fr'));
+        $this->assertEquals($article->titleEn, $article->getTitle('en'));
+        $this->assertEquals($article->titleAr, $article->getTitle('ar'));
+
+        $this->assertEquals($article->contentFr, $article->getContent('fr'));
+        $this->assertEquals($article->contentEn, $article->getContent('en'));
+        $this->assertEquals($article->contentAr, $article->getContent('ar'));
+
+        // Test de la liste des langues disponibles
+        $langs = $article->getAvailableLanguages();
+        $this->assertContains('fr', $langs);
+        $this->assertContains('en', $langs);
+        $this->assertContains('ar', $langs);
+
+        // Nettoyage
+        $this->repo->delete($article->id);
+    }
 }
 

@@ -19,9 +19,9 @@
         <div style="position: absolute; bottom: 12px; left: 14px; right: 14px; display: flex; justify-content: space-between; align-items: flex-end;">
           <div style="text-align: left;">
             <div style="color: #F59E0B; font-weight: 700; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 4px;">
-              <i class="fi fi-rr-sparkles"></i> Destination Phare 2026
+              <i class="fi fi-rr-sparkles"></i> <?= __('hero.mobile_card_badge') ?>
             </div>
-            <div style="color: #FFFFFF; font-weight: 800; font-size: 1.05rem; line-height: 1.2;">L'Île aux Eaux Turquoise</div>
+            <div style="color: #FFFFFF; font-weight: 800; font-size: 1.05rem; line-height: 1.2;"><?= __('hero.mobile_card_title') ?></div>
           </div>
           <span style="background: rgba(255,255,255,0.22); backdrop-filter: blur(8px); color: #fff; padding: 4px 10px; border-radius: 20px; font-weight: 700; font-size: 0.78rem; white-space: nowrap;">★ 4.9/5</span>
         </div>
@@ -31,7 +31,7 @@
     <!-- Actions Buttons (Single-line per button, no multiline break) -->
     <div style="display: flex; justify-content: center; gap: 0.85rem; flex-wrap: wrap;">
       <button data-open-modal="personalizedPdfModal" class="c-button c-button--primary" style="white-space: nowrap; padding: 0.75rem 1.25rem; font-size: 0.92rem; font-weight: 700;">
-        <i class="fi fi-rr-document-signed"></i> <span class="hidden sm:inline"><?= __('hero.cta_pdf') ?></span><span class="sm:hidden">Guide PDF Personnalisé</span> (<?= money(9.90) ?>)
+        <i class="fi fi-rr-document-signed"></i> <span class="hidden sm:inline"><?= __('hero.cta_pdf') ?></span><span class="sm:hidden"><?= __('hero.pdf_short') ?></span> (<?= money(9.90) ?>)
       </button>
       <a href="<?= url('/concierge') ?>" class="c-button c-button--secondary" style="background: rgba(255,255,255,0.12); color: #fff; border: 1px solid rgba(255,255,255,0.3); white-space: nowrap; padding: 0.75rem 1.25rem; font-size: 0.92rem; font-weight: 700;">
         <i class="fi fi-rr-compass"></i> <?= __('hero.cta_concierge') ?> (<?= money(29) ?>)
@@ -88,14 +88,14 @@
 <section style="background: linear-gradient(135deg, #E07A5F 0%, #C85A3C 100%); color: #fff; padding: 2.5rem 0; margin: 3rem 0;">
   <div class="l-container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem;">
     <div style="max-width: 650px;">
-      <span style="background: rgba(255,255,255,0.2); color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; text-transform: uppercase;">✨ EXCLUSIVITÉ VOYAGEUR</span>
-      <h2 style="font-size: 1.75rem; margin: 8px 0; font-weight: 800; line-height: 1.2;">Votre Guide PDF Souvenir avec votre Nom & Photo de Couverture</h2>
+      <span style="background: rgba(255,255,255,0.2); color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; text-transform: uppercase;"><?= __('home.pdf_promo_badge') ?></span>
+      <h2 style="font-size: 1.75rem; margin: 8px 0; font-weight: 800; line-height: 1.2;"><?= __('home.pdf_promo_title') ?></h2>
       <p style="font-size: 0.95rem; opacity: 0.95; line-height: 1.5;">
-        Personnalisez votre guide de voyage avec les noms de votre famille ou couple, vos dates et la photo de votre choix ! Génération immédiate en format PDF HD.
+        <?= __('home.pdf_promo_desc') ?>
       </p>
     </div>
     <button data-open-modal="personalizedPdfModal" class="c-button" style="background: #ffffff; color: var(--clr-terracotta-600); padding: 0.85rem 1.4rem; font-weight: 800; font-size: 0.95rem; white-space: nowrap; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">
-      Personnaliser Mon PDF (9,90 €) <i class="fi fi-rr-arrow-right"></i>
+      <?= __('home.pdf_promo_cta', ['price' => money(9.90)]) ?> <i class="fi fi-rr-arrow-right"></i>
     </button>
   </div>
 </section>
@@ -194,26 +194,31 @@
 <section class="l-container" style="margin: 4rem auto;">
   <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:2rem; flex-wrap:wrap; gap:1rem;">
     <div>
-      <span style="color:var(--clr-sea-600); font-weight:700; text-transform:uppercase; letter-spacing:1px; font-size:0.85rem;">Incontournables</span>
+      <span style="color:var(--clr-sea-600); font-weight:700; text-transform:uppercase; letter-spacing:1px; font-size:0.85rem;"><?= __('destinations.badge') ?></span>
       <h2 style="font-family:var(--font-heading); font-size:2.2rem; color:var(--clr-dark-900); margin-top: 5px;">
-        Les 6 Destinations Phares à Djerba
+        <?= __('destinations.title') ?>
       </h2>
     </div>
-    <a href="<?= url('/hotels-restaurants') ?>" style="font-family:var(--font-heading); font-weight:700; color: var(--clr-terracotta-500);">Découvrir Hôtels & Restaurants <i class="fi fi-rr-arrow-right"></i></a>
+    <a href="<?= url('/hotels-restaurants') ?>" style="font-family:var(--font-heading); font-weight:700; color: var(--clr-terracotta-500);"><?= __('destinations.link_hotels') ?> <i class="fi fi-rr-arrow-right"></i></a>
   </div>
   
   <div class="l-grid-cards" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.75rem;">
-    <?php foreach ($destinations as $index => $dest): ?>
+    <?php 
+      $_curLocale = \Core\Lang::getLocale();
+      foreach ($destinations as $index => $dest): 
+        $destName = $dest['name_' . $_curLocale] ?? $dest['name_fr'];
+        $destDesc = $dest['description_' . $_curLocale] ?? $dest['description_fr'];
+    ?>
       <article class="c-card c-destination-card" data-animate>
         <div class="c-destination-media">
-          <img src="<?= asset($dest['image_url'] ?? 'images/hero.png') ?>" alt="<?= e($dest['name_fr']) ?>" class="c-card__video-img video-anim-<?= ($index % 6) + 1 ?>">
-          <span style="position: absolute; top: 12px; left: 12px; background: rgba(15,23,42,0.7); backdrop-filter: blur(4px); color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 600; z-index: 2;">Djerba 2026</span>
+          <img src="<?= asset($dest['image_url'] ?? 'images/hero.png') ?>" alt="<?= e($destName) ?>" class="c-card__video-img video-anim-<?= ($index % 6) + 1 ?>">
+          <span style="position: absolute; top: 12px; left: 12px; background: rgba(15,23,42,0.7); backdrop-filter: blur(4px); color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 600; z-index: 2;"><?= __('destinations.card_badge') ?></span>
         </div>
         <div class="c-card__content" style="padding: 1.25rem;">
-          <h3 class="c-card__title" style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--clr-dark-900);"><?= e($dest['name_fr']) ?></h3>
-          <p style="color:var(--clr-gray-500); font-size:0.88rem; margin-bottom:1rem; line-height:1.45; min-height: 52px;"><?= e($dest['description_fr']) ?></p>
+          <h3 class="c-card__title" style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--clr-dark-900);"><?= e($destName) ?></h3>
+          <p style="color:var(--clr-gray-500); font-size:0.88rem; margin-bottom:1rem; line-height:1.45; min-height: 52px;"><?= e($destDesc) ?></p>
           <a href="<?= url('/destinations/' . e($dest['slug'])) ?>" class="c-button c-button--secondary" style="width:100%; justify-content:center; padding: 0.65rem 1rem; font-size: 0.88rem;">
-            Explorer le Guide <i class="fi fi-rr-arrow-right"></i>
+            <?= __('destinations.explore_btn') ?> <i class="fi fi-rr-arrow-right"></i>
           </a>
         </div>
       </article>
@@ -262,13 +267,13 @@
 <section style="background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); color: #fff; padding: 4rem 0; margin: 4rem 0;">
   <div class="l-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2.5rem; align-items: center;">
     <div>
-      <span style="background: rgba(212, 175, 55, 0.2); color: #F59E0B; padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; text-transform: uppercase;">Service VIP Exclusif</span>
-      <h2 style="font-size: 2.1rem; margin: 0.85rem 0 1rem; font-weight: 800; line-height: 1.2;">Votre Assistant Concierge Personnel sur WhatsApp</h2>
+      <span style="background: rgba(212, 175, 55, 0.2); color: #F59E0B; padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; text-transform: uppercase;"><?= __('home.concierge_badge') ?></span>
+      <h2 style="font-size: 2.1rem; margin: 0.85rem 0 1rem; font-weight: 800; line-height: 1.2;"><?= __('home.concierge_title') ?></h2>
       <p style="color: var(--clr-sand-500); line-height: 1.6; margin-bottom: 1.75rem;">
-        Besoin d'un quad au coucher du soleil, d'une table réservée dans un ryad secret ou d'un transfert aéroport VIP ? Notre concierge djerbien s'occupe de toutes vos réservations en temps réel.
+        <?= __('home.concierge_desc') ?>
       </p>
       <a href="<?= url('/concierge') ?>" class="c-button c-button--primary" style="padding: 0.9rem 1.75rem;">
-        <i class="fi fi-rr-paper-plane"></i> Commander ma Conciergerie (29€)
+        <i class="fi fi-rr-paper-plane"></i> <?= __('home.concierge_cta', ['price' => money(29)]) ?>
       </a>
     </div>
     <div style="border-radius: 16px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1);">
@@ -281,11 +286,11 @@
 <section style="background:var(--clr-sand-200); padding:4.5rem 0;">
   <div class="l-container">
     <div style="text-align:center; max-width:650px; margin:0 auto 3rem auto;">
-      <span style="color:var(--clr-terracotta-600); font-weight:700; text-transform:uppercase; letter-spacing:1px; font-size:0.85rem;">Boutique Numérique</span>
+      <span style="color:var(--clr-terracotta-600); font-weight:700; text-transform:uppercase; letter-spacing:1px; font-size:0.85rem;"><?= __('shop.badge') ?></span>
       <h2 style="font-family:var(--font-heading); font-size:2.2rem; color:var(--clr-dark-900); margin-top: 5px;">
-        Sélection de Guides PDF & Cartes Secrètes
+        <?= __('shop.home_title') ?>
       </h2>
-      <p style="color:var(--clr-gray-500); margin-top:0.5rem;">Guides classés par familles de voyage avec téléchargement immédiat.</p>
+      <p style="color:var(--clr-gray-500); margin-top:0.5rem;"><?= __('shop.home_subtitle') ?></p>
     </div>
 
     <!-- Featured Curated Grid (6 Items) -->
@@ -298,17 +303,17 @@
           <div>
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
               <span style="background:rgba(0, 119, 182, 0.1); color:var(--clr-sea-600); padding:0.35rem 0.75rem; border-radius:20px; font-size:0.78rem; font-weight:700;">
-                <i class="fi fi-rr-file-pdf"></i> Format Numérique
+                <i class="fi fi-rr-file-pdf"></i> <?= __('shop.digital_format') ?>
               </span>
               <span style="color: #F59E0B; font-weight: 700; font-size: 0.85rem;">★ 4.9</span>
             </div>
             <h3 class="c-card__title" style="font-size:1.15rem; color: var(--clr-dark-900); line-height: 1.35; margin-bottom: 0.75rem; min-height: 48px;"><?= e($prod->titleFr) ?></h3>
-            <p style="color: var(--clr-gray-500); font-size: 0.85rem; line-height: 1.45;">Recommandations d'experts locaux avec cartes interactives et bons plans.</p>
+            <p style="color: var(--clr-gray-500); font-size: 0.85rem; line-height: 1.45;"><?= __('shop.card_desc') ?></p>
           </div>
           <div style="margin-top:1.25rem; display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--clr-sand-200); padding-top:1rem;">
-            <span style="font-family:var(--font-heading); font-weight:800; font-size:1.4rem; color:var(--clr-sea-900);"><?= number_format($prod->priceEur, 2) ?> €</span>
+            <span style="font-family:var(--font-heading); font-weight:800; font-size:1.4rem; color:var(--clr-sea-900);"><?= money($prod->priceEur) ?></span>
             <button class="c-button c-button--primary" onclick="buyProduct(<?= $prod->id ?>, '<?= e(addslashes($prod->titleFr)) ?>')" style="padding: 0.65rem 1.15rem; font-size: 0.88rem;">
-              Acheter <i class="fi fi-rr-shopping-cart"></i>
+              <?= __('shop.buy_btn') ?> <i class="fi fi-rr-shopping-cart"></i>
             </button>
           </div>
         </article>
@@ -318,7 +323,7 @@
     <!-- Prominent "Voir Plus" Button -->
     <div style="text-align: center; margin-top: 3rem;">
       <a href="<?= url('/shop') ?>" class="c-button c-button--secondary" style="padding: 1rem 2.25rem; font-size: 1.05rem;">
-        Voir Tous les Guides & Cartes (80+ Produits) <i class="fi fi-rr-arrow-right"></i>
+        <?= __('shop.see_all_btn') ?> <i class="fi fi-rr-arrow-right"></i>
       </a>
     </div>
   </div>

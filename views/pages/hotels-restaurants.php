@@ -1,17 +1,17 @@
 <div class="container section" style="margin-top: 3rem; margin-bottom: 5rem;">
     <div class="section-title text-center" style="max-width: 800px; margin: 0 auto 3.5rem auto;">
-        <span class="badge badge--gold" style="background: rgba(212,175,55,0.15); color: #F59E0B; padding: 6px 16px; border-radius: 50px; font-weight: 700; display: inline-block; margin-bottom: 10px;">Adresses Sélectionnées 2026</span>
-        <h1 class="heading-1" style="margin-bottom: 12px;">Hôtels de Charme, Menzels & Tables Secrètes</h1>
+        <span class="badge badge--gold" style="background: rgba(212,175,55,0.15); color: #F59E0B; padding: 6px 16px; border-radius: 50px; font-weight: 700; display: inline-block; margin-bottom: 10px;"><?= __('hotels_restos.badge') ?></span>
+        <h1 class="heading-1" style="margin-bottom: 12px;"><?= __('hotels_restos.title') ?></h1>
         <p class="text-muted" style="color: var(--clr-gray-500); font-size: 1.1rem; line-height: 1.6;">
-            Découvrez nos recommandations testées et approuvées par nos concierges locaux : des ryads de charme d'Erriadh aux meilleurs restaurants de poisson d'Houmt Souk.
+            <?= __('hotels_restos.subtitle') ?>
         </p>
     </div>
 
     <!-- Filter Buttons -->
     <div class="tabs c-scroll-tabs" style="margin-bottom: 2.5rem;">
-        <button class="tab-btn active" onclick="filterHotelsRestos('all', this)">Tous les établissements</button>
-        <button class="tab-btn" onclick="filterHotelsRestos('hotel', this)">🏨 Hôtels & Menzels de Charme</button>
-        <button class="tab-btn" onclick="filterHotelsRestos('resto', this)">🍽️ Restaurants & Gastronomie</button>
+        <button class="tab-btn active" onclick="filterHotelsRestos('all', this)"><?= __('hotels_restos.tab_all') ?></button>
+        <button class="tab-btn" onclick="filterHotelsRestos('hotel', this)"><?= __('hotels_restos.tab_hotel') ?></button>
+        <button class="tab-btn" onclick="filterHotelsRestos('resto', this)"><?= __('hotels_restos.tab_resto') ?></button>
     </div>
 
     <!-- Cards Grid -->
@@ -33,8 +33,8 @@
                 </p>
                 <div style="display: flex; flex-direction: column; gap: 0.75rem; border-top: 1px solid var(--clr-sand-200); padding-top: 1rem;">
                     <div class="c-card__price-row">
-                        <span class="c-card__price">À partir de <strong>110 €</strong> <span class="c-card__price-unit">/ nuit</span></span>
-                        <a href="<?= url('/concierge') ?>" class="btn btn--gold c-card__btn-vip">Réserver via VIP</a>
+                        <span class="c-card__price"><?= __('activities.from_price') ?> <strong><?= money(110) ?></strong> <span class="c-card__price-unit"><?= __('hotels_restos.per_night') ?></span></span>
+                        <a href="<?= url('/concierge') ?>" class="btn btn--gold c-card__btn-vip"><?= __('hotels_restos.book_vip') ?></a>
                     </div>
                     <div class="c-card__icon-group" style="justify-content: flex-end;">
                         <button type="button" class="c-icon-btn c-icon-btn--booking" title="Voir sur Booking.com (Partenaire Officiel)" onclick="openBookingHotelsModal('Dar Dhiafa Erriadh', 'https://www.booking.com/city/tn/houmt-souk.html?aid=8073836')">
@@ -69,8 +69,8 @@
                 </p>
                 <div style="display: flex; flex-direction: column; gap: 0.75rem; border-top: 1px solid var(--clr-sand-200); padding-top: 1rem;">
                     <div class="c-card__price-row">
-                        <span class="c-card__price">À partir de <strong>145 €</strong> <span class="c-card__price-unit">/ nuit</span></span>
-                        <a href="<?= url('/concierge') ?>" class="btn btn--gold c-card__btn-vip">Réserver via VIP</a>
+                        <span class="c-card__price"><?= __('activities.from_price') ?> <strong><?= money(145) ?></strong> <span class="c-card__price-unit"><?= __('hotels_restos.per_night') ?></span></span>
+                        <a href="<?= url('/concierge') ?>" class="btn btn--gold c-card__btn-vip"><?= __('hotels_restos.book_vip') ?></a>
                     </div>
                     <div class="c-card__icon-group" style="justify-content: flex-end;">
                         <button type="button" class="c-icon-btn c-icon-btn--booking" title="Voir sur Booking.com (Partenaire Officiel)" onclick="openBookingHotelsModal('Radisson Blu Palace', 'https://www.booking.com/city/tn/houmt-souk.html?aid=8073836')">
@@ -105,8 +105,8 @@
                 </p>
                 <div style="display: flex; flex-direction: column; gap: 0.75rem; border-top: 1px solid var(--clr-sand-200); padding-top: 1rem;">
                     <div class="c-card__price-row">
-                        <span class="c-card__price">Budget : <strong>25 € - 45 €</strong></span>
-                        <a href="<?= url('/concierge') ?>" class="btn btn--gold c-card__btn-vip">Réserver via VIP</a>
+                        <span class="c-card__price"><?= __('hotels_restos.budget') ?> <strong><?= money(25) ?> - <?= money(45) ?></strong></span>
+                        <a href="<?= url('/concierge') ?>" class="btn btn--gold c-card__btn-vip"><?= __('hotels_restos.book_vip') ?></a>
                     </div>
                     <div class="c-card__icon-group" style="justify-content: flex-end;">
                         <button type="button" class="c-icon-btn c-icon-btn--booking" title="Voir sur Booking.com (Partenaire Officiel)" onclick="openBookingHotelsModal('Restaurant El Fondouk', 'https://www.booking.com/city/tn/houmt-souk.html?aid=8073836')">
@@ -141,8 +141,8 @@
                 </p>
                 <div style="display: flex; flex-direction: column; gap: 0.75rem; border-top: 1px solid var(--clr-sand-200); padding-top: 1rem;">
                     <div class="c-card__price-row">
-                        <span class="c-card__price">Budget : <strong>30 € - 55 €</strong></span>
-                        <a href="<?= url('/concierge') ?>" class="btn btn--gold c-card__btn-vip">Réserver via VIP</a>
+                        <span class="c-card__price"><?= __('hotels_restos.budget') ?> <strong><?= money(30) ?> - <?= money(55) ?></strong></span>
+                        <a href="<?= url('/concierge') ?>" class="btn btn--gold c-card__btn-vip"><?= __('hotels_restos.book_vip') ?></a>
                     </div>
                     <div class="c-card__icon-group" style="justify-content: flex-end;">
                         <button type="button" class="c-icon-btn c-icon-btn--booking" title="Voir sur Booking.com (Partenaire Officiel)" onclick="openBookingHotelsModal('Le Haroun Table du Port', 'https://www.booking.com/city/tn/houmt-souk.html?aid=8073836')">
@@ -177,8 +177,8 @@
                 </p>
                 <div style="display: flex; flex-direction: column; gap: 0.75rem; border-top: 1px solid var(--clr-sand-200); padding-top: 1rem;">
                     <div class="c-card__price-row">
-                        <span class="c-card__price">À partir de <strong>85 €</strong> <span class="c-card__price-unit">/ nuit</span></span>
-                        <a href="<?= url('/concierge') ?>" class="btn btn--gold c-card__btn-vip">Réserver via VIP</a>
+                        <span class="c-card__price"><?= __('activities.from_price') ?> <strong><?= money(85) ?></strong> <span class="c-card__price-unit"><?= __('hotels_restos.per_night') ?></span></span>
+                        <a href="<?= url('/concierge') ?>" class="btn btn--gold c-card__btn-vip"><?= __('hotels_restos.book_vip') ?></a>
                     </div>
                     <div class="c-card__icon-group" style="justify-content: flex-end;">
                         <button type="button" class="c-icon-btn c-icon-btn--booking" title="Voir sur Booking.com (Partenaire Officiel)" onclick="openBookingHotelsModal('Menzel Guellala', 'https://www.booking.com/city/tn/houmt-souk.html?aid=8073836')">
@@ -213,8 +213,8 @@
                 </p>
                 <div style="display: flex; flex-direction: column; gap: 0.75rem; border-top: 1px solid var(--clr-sand-200); padding-top: 1rem;">
                     <div class="c-card__price-row">
-                        <span class="c-card__price">Budget : <strong>18 € - 30 €</strong></span>
-                        <a href="<?= url('/concierge') ?>" class="btn btn--gold c-card__btn-vip">Réserver via VIP</a>
+                        <span class="c-card__price"><?= __('hotels_restos.budget') ?> <strong><?= money(18) ?> - <?= money(30) ?></strong></span>
+                        <a href="<?= url('/concierge') ?>" class="btn btn--gold c-card__btn-vip"><?= __('hotels_restos.book_vip') ?></a>
                     </div>
                     <div class="c-card__icon-group" style="justify-content: flex-end;">
                         <button type="button" class="c-icon-btn c-icon-btn--booking" title="Voir sur Booking.com (Partenaire Officiel)" onclick="openBookingHotelsModal('Bistrot de la Marine Ajim', 'https://www.booking.com/city/tn/houmt-souk.html?aid=8073836')">

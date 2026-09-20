@@ -10,15 +10,17 @@ if (empty($relatedArticles)) {
 ?>
 <section class="c-article-related">
   <h3 class="c-article-related__title">
-    <i class="fi fi-rr-bookmark"></i> Poursuivre votre lecture
+    <i class="fi fi-rr-bookmark"></i> <?= __('blog_single.related_title') ?>
   </h3>
   <div class="c-article-related__grid">
-    <?php foreach ($relatedArticles as $rel): ?>
+    <?php foreach ($relatedArticles as $rel): 
+      $relTitle = $rel->getTitle();
+    ?>
       <article class="c-card c-card--blog">
         <?php if (!empty($rel->featuredImage)): ?>
           <div class="c-card__media">
             <img src="<?= e(asset($rel->featuredImage)) ?>" 
-                 alt="<?= htmlspecialchars($rel->titleFr, ENT_QUOTES, 'UTF-8') ?>" 
+                 alt="<?= htmlspecialchars($relTitle, ENT_QUOTES, 'UTF-8') ?>" 
                  class="c-card__image" 
                  loading="lazy">
           </div>
@@ -30,13 +32,13 @@ if (empty($relatedArticles)) {
             </div>
             <h4 class="c-card__title">
               <a href="<?= url('/guide/' . e($rel->slug)) ?>">
-                <?= htmlspecialchars($rel->titleFr, ENT_QUOTES, 'UTF-8') ?>
+                <?= htmlspecialchars($relTitle, ENT_QUOTES, 'UTF-8') ?>
               </a>
             </h4>
           </div>
           <div class="c-card__footer">
             <a href="<?= url('/guide/' . e($rel->slug)) ?>" class="c-button c-button--secondary c-button--sm">
-              <span>Lire le guide</span>
+              <span><?= __('blog.read_guide') ?></span>
               <i class="fi fi-rr-arrow-right"></i>
             </a>
           </div>

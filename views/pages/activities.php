@@ -2,13 +2,13 @@
 <section class="c-hero" style="background: linear-gradient(180deg, rgba(15, 23, 42, 0.78) 0%, rgba(15, 23, 42, 0.94) 100%), url('<?= asset('images/sidi_mahres.png') ?>') center/cover no-repeat;">
   <div class="l-container" data-animate style="text-align: center; max-width: 820px;">
     <div class="c-hero__badge" style="background: rgba(245, 158, 11, 0.15); border: 1px solid var(--clr-terracotta-500); color: #F59E0B; display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; border-radius: 50px; font-weight: 700; margin-bottom: 1.25rem;">
-      <i class="fi fi-rr-compass" style="color:#F59E0B;"></i> Expériences & Incontournables 2026
+      <i class="fi fi-rr-compass" style="color:#F59E0B;"></i> <?= __('activities.hero_badge') ?>
     </div>
     <h1 class="c-hero__title" style="color: #FFFFFF; margin-bottom: 1rem;">
-      Les Meilleures Activités & Excursions à Djerba
+      <?= __('activities.hero_title') ?>
     </h1>
     <p class="c-hero__subtitle" style="color: var(--clr-sand-100); margin-bottom: 2rem;">
-      Des lagunes turquoise aux aventures dans les dunes, découvrez nos expériences d'exception testées et approuvées par nos concierges et guides locaux.
+      <?= __('activities.hero_subtitle') ?>
     </p>
   </div>
 </section>
@@ -19,19 +19,19 @@
   <!-- Category Filter Tabs -->
   <div class="tabs c-scroll-tabs" style="margin-bottom: 2.5rem;">
     <button class="tab-btn active" onclick="filterActivities('all', this)">
-      <i class="fi fi-rr-apps"></i> Toutes les Activités
+      <i class="fi fi-rr-apps"></i> <?= __('activities.tab_all') ?>
     </button>
     <button class="tab-btn" onclick="filterActivities('nautisme', this)">
-      <i class="fi fi-rr-water"></i> Nautisme & Kitesurf
+      <i class="fi fi-rr-water"></i> <?= __('activities.tab_nautisme') ?>
     </button>
     <button class="tab-btn" onclick="filterActivities('culture', this)">
-      <i class="fi fi-rr-palette"></i> Culture & Street Art
+      <i class="fi fi-rr-palette"></i> <?= __('activities.tab_culture') ?>
     </button>
     <button class="tab-btn" onclick="filterActivities('bateau', this)">
-      <i class="fi fi-rr-ship"></i> Bateaux & Lagunes
+      <i class="fi fi-rr-ship"></i> <?= __('activities.tab_bateau') ?>
     </button>
     <button class="tab-btn" onclick="filterActivities('aventure', this)">
-      <i class="fi fi-rr-motorcycle"></i> Quads & Dunes
+      <i class="fi fi-rr-motorcycle"></i> <?= __('activities.tab_aventure') ?>
     </button>
   </div>
 
@@ -50,15 +50,14 @@
         <p class="text-muted" style="font-size: 0.9rem; line-height: 1.5; margin-bottom: 1rem;">
           Profitez de l'un des spots d'eau plate et tiède les plus réputés de Méditerranée avec des instructeurs certifiés IKO. Matériel pro fourni.
         </p>
-      </div>
-      <div style="border-top: 1px solid var(--clr-sand-300); padding-top: 1rem; display: flex; flex-direction: column; gap: 0.75rem;">
+         <div style="border-top: 1px solid var(--clr-sand-300); padding-top: 1rem; display: flex; flex-direction: column; gap: 0.75rem;">
         <div style="display: flex; justify-content: space-between; align-items: center;">
           <div>
-            <span style="font-size: 0.75rem; color: var(--clr-gray-500); text-transform: uppercase;">À partir de</span>
-            <div style="font-weight: 800; font-size: 1.25rem; color: var(--clr-sea-900);">45 € <span style="font-size: 0.85rem; font-weight: normal; color: var(--clr-gray-500);">/ pers</span></div>
+            <span style="font-size: 0.75rem; color: var(--clr-gray-500); text-transform: uppercase;"><?= __('activities.from_price') ?></span>
+            <div style="font-weight: 800; font-size: 1.25rem; color: var(--clr-sea-900);"><?= money(45) ?> <span style="font-size: 0.85rem; font-weight: normal; color: var(--clr-gray-500);"><?= __('activities.per_person') ?></span></div>
           </div>
           <a href="<?= url('/concierge') ?>" class="c-button c-button--primary" style="padding: 0.6rem 1.15rem; font-size: 0.88rem;">
-            Réserver VIP <i class="fi fi-rr-arrow-right"></i>
+            <?= __('activities.book_vip') ?> <i class="fi fi-rr-arrow-right"></i>
           </a>
         </div>
         <div class="c-card__icon-group" style="justify-content: flex-end;">
@@ -95,11 +94,11 @@
       <div style="border-top: 1px solid var(--clr-sand-300); padding-top: 1rem; display: flex; flex-direction: column; gap: 0.75rem;">
         <div style="display: flex; justify-content: space-between; align-items: center;">
           <div>
-            <span style="font-size: 0.75rem; color: var(--clr-gray-500); text-transform: uppercase;">À partir de</span>
-            <div style="font-weight: 800; font-size: 1.25rem; color: var(--clr-sea-900);">30 € <span style="font-size: 0.85rem; font-weight: normal; color: var(--clr-gray-500);">/ groupe</span></div>
+            <span style="font-size: 0.75rem; color: var(--clr-gray-500); text-transform: uppercase;"><?= __('activities.from_price') ?></span>
+            <div style="font-weight: 800; font-size: 1.25rem; color: var(--clr-sea-900);"><?= money(30) ?> <span style="font-size: 0.85rem; font-weight: normal; color: var(--clr-gray-500);"><?= __('activities.per_group') ?></span></div>
           </div>
           <a href="<?= url('/concierge') ?>" class="c-button c-button--primary" style="padding: 0.6rem 1.15rem; font-size: 0.88rem;">
-            Réserver VIP <i class="fi fi-rr-arrow-right"></i>
+            <?= __('activities.book_vip') ?> <i class="fi fi-rr-arrow-right"></i>
           </a>
         </div>
         <div class="c-card__icon-group" style="justify-content: flex-end;">
@@ -136,11 +135,11 @@
       <div style="border-top: 1px solid var(--clr-sand-300); padding-top: 1rem; display: flex; flex-direction: column; gap: 0.75rem;">
         <div style="display: flex; justify-content: space-between; align-items: center;">
           <div>
-            <span style="font-size: 0.75rem; color: var(--clr-gray-500); text-transform: uppercase;">À partir de</span>
-            <div style="font-weight: 800; font-size: 1.25rem; color: var(--clr-sea-900);">35 € <span style="font-size: 0.85rem; font-weight: normal; color: var(--clr-gray-500);">/ pers</span></div>
+            <span style="font-size: 0.75rem; color: var(--clr-gray-500); text-transform: uppercase;"><?= __('activities.from_price') ?></span>
+            <div style="font-weight: 800; font-size: 1.25rem; color: var(--clr-sea-900);"><?= money(35) ?> <span style="font-size: 0.85rem; font-weight: normal; color: var(--clr-gray-500);"><?= __('activities.per_person') ?></span></div>
           </div>
           <a href="<?= url('/concierge') ?>" class="c-button c-button--primary" style="padding: 0.6rem 1.15rem; font-size: 0.88rem;">
-            Réserver VIP <i class="fi fi-rr-arrow-right"></i>
+            <?= __('activities.book_vip') ?> <i class="fi fi-rr-arrow-right"></i>
           </a>
         </div>
         <div class="c-card__icon-group" style="justify-content: flex-end;">
@@ -177,11 +176,11 @@
       <div style="border-top: 1px solid var(--clr-sand-300); padding-top: 1rem; display: flex; flex-direction: column; gap: 0.75rem;">
         <div style="display: flex; justify-content: space-between; align-items: center;">
           <div>
-            <span style="font-size: 0.75rem; color: var(--clr-gray-500); text-transform: uppercase;">À partir de</span>
-            <div style="font-weight: 800; font-size: 1.25rem; color: var(--clr-sea-900);">40 € <span style="font-size: 0.85rem; font-weight: normal; color: var(--clr-gray-500);">/ quad</span></div>
+            <span style="font-size: 0.75rem; color: var(--clr-gray-500); text-transform: uppercase;"><?= __('activities.from_price') ?></span>
+            <div style="font-weight: 800; font-size: 1.25rem; color: var(--clr-sea-900);"><?= money(40) ?> <span style="font-size: 0.85rem; font-weight: normal; color: var(--clr-gray-500);"><?= __('activities.per_quad') ?></span></div>
           </div>
           <a href="<?= url('/concierge') ?>" class="c-button c-button--primary" style="padding: 0.6rem 1.15rem; font-size: 0.88rem;">
-            Réserver VIP <i class="fi fi-rr-arrow-right"></i>
+            <?= __('activities.book_vip') ?> <i class="fi fi-rr-arrow-right"></i>
           </a>
         </div>
         <div class="c-card__icon-group" style="justify-content: flex-end;">
@@ -218,11 +217,11 @@
       <div style="border-top: 1px solid var(--clr-sand-300); padding-top: 1rem; display: flex; flex-direction: column; gap: 0.75rem;">
         <div style="display: flex; justify-content: space-between; align-items: center;">
           <div>
-            <span style="font-size: 0.75rem; color: var(--clr-gray-500); text-transform: uppercase;">À partir de</span>
-            <div style="font-weight: 800; font-size: 1.25rem; color: var(--clr-sea-900);">25 € <span style="font-size: 0.85rem; font-weight: normal; color: var(--clr-gray-500);">/ pers</span></div>
+            <span style="font-size: 0.75rem; color: var(--clr-gray-500); text-transform: uppercase;"><?= __('activities.from_price') ?></span>
+            <div style="font-weight: 800; font-size: 1.25rem; color: var(--clr-sea-900);"><?= money(25) ?> <span style="font-size: 0.85rem; font-weight: normal; color: var(--clr-gray-500);"><?= __('activities.per_person') ?></span></div>
           </div>
           <a href="<?= url('/concierge') ?>" class="c-button c-button--primary" style="padding: 0.6rem 1.15rem; font-size: 0.88rem;">
-            Réserver VIP <i class="fi fi-rr-arrow-right"></i>
+            <?= __('activities.book_vip') ?> <i class="fi fi-rr-arrow-right"></i>
           </a>
         </div>
         <div class="c-card__icon-group" style="justify-content: flex-end;">
@@ -259,11 +258,11 @@
       <div style="border-top: 1px solid var(--clr-sand-300); padding-top: 1rem; display: flex; flex-direction: column; gap: 0.75rem;">
         <div style="display: flex; justify-content: space-between; align-items: center;">
           <div>
-            <span style="font-size: 0.75rem; color: var(--clr-gray-500); text-transform: uppercase;">À partir de</span>
-            <div style="font-weight: 800; font-size: 1.25rem; color: var(--clr-sea-900);">45 € <span style="font-size: 0.85rem; font-weight: normal; color: var(--clr-gray-500);">/ pers</span></div>
+            <span style="font-size: 0.75rem; color: var(--clr-gray-500); text-transform: uppercase;"><?= __('activities.from_price') ?></span>
+            <div style="font-weight: 800; font-size: 1.25rem; color: var(--clr-sea-900);"><?= money(45) ?> <span style="font-size: 0.85rem; font-weight: normal; color: var(--clr-gray-500);"><?= __('activities.per_person') ?></span></div>
           </div>
           <a href="<?= url('/concierge') ?>" class="c-button c-button--primary" style="padding: 0.6rem 1.15rem; font-size: 0.88rem;">
-            Réserver VIP <i class="fi fi-rr-arrow-right"></i>
+            <?= __('activities.book_vip') ?> <i class="fi fi-rr-arrow-right"></i>
           </a>
         </div>
         <div class="c-card__icon-group" style="justify-content: flex-end;">
@@ -287,14 +286,14 @@
   <!-- Concierge VIP Support Banner -->
   <div style="background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); color: #fff; padding: 2.5rem; border-radius: 20px; margin-top: 4rem; border: 1px solid var(--clr-terracotta-500); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">
     <div style="max-width: 650px;">
-      <span class="badge badge--gold" style="margin-bottom: 0.75rem;">Service Conciergerie Dédié</span>
-      <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem; color: #fff;">Besoin d'une Excursion Sur-Mesure ou Privatisée ?</h2>
+      <span class="badge badge--gold" style="margin-bottom: 0.75rem;"><?= __('activities.banner_badge') ?></span>
+      <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem; color: #fff;"><?= __('activities.banner_title') ?></h2>
       <p style="color: var(--clr-sand-500); line-height: 1.6; font-size: 0.95rem;">
-        Nos concierges locaux organisent vos transferts privés, excursions désertiques vers Ksar Ghilane et Matmata, sorties en mer privatives et réservations de tables d'exception.
+        <?= __('activities.banner_desc') ?>
       </p>
     </div>
     <a href="<?= url('/concierge') ?>" class="c-button c-button--primary" style="padding: 0.9rem 1.75rem; font-size: 1rem;">
-      <i class="fi fi-rr-comment-alt"></i> Contacter la Conciergerie VIP
+      <i class="fi fi-rr-comment-alt"></i> <?= __('activities.banner_btn') ?>
     </a>
   </div>
 

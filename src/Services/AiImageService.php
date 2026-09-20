@@ -1,54 +1,20 @@
 <?php
 namespace App\Services;
 
+/**
+ * Service d'Images AI pour les Articles & Guides de Djerba
+ * Intègre le générateur d'images IA Nano Banana (100% uniques et photoréalistes).
+ */
 class AiImageService {
-    /**
-     * Bibliothèque thématique de photographies HD réelles de Djerba et Tunisie
-     * 100% libres de droits, sans logo, sans filigrane, optimisées 1200x675.
-     */
-    private array $curatedPhotos = [
-        'desert_quad' => [
-            'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=1200&h=675&q=85',
-            'https://images.unsplash.com/photo-1547234935-80c7145ec969?auto=format&fit=crop&w=1200&h=675&q=85',
-            'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1200&h=675&q=85'
-        ],
-        'guellala_pottery' => [
-            'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?auto=format&fit=crop&w=1200&h=675&q=85',
-            'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=1200&h=675&q=85'
-        ],
-        'djerbahood_art' => [
-            'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&h=675&q=85',
-            'https://images.unsplash.com/photo-1528728329032-2972f65dfb3f?auto=format&fit=crop&w=1200&h=675&q=85'
-        ],
-        'ajim_maritime' => [
-            'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&h=675&q=85',
-            'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&h=675&q=85'
-        ],
-        'flamants_lagoon' => [
-            'https://images.unsplash.com/photo-1497206365907-f5e630693df0?auto=format&fit=crop&w=1200&h=675&q=85',
-            'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&h=675&q=85'
-        ],
-        'cuisine_souk' => [
-            'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=1200&h=675&q=85',
-            'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&h=675&q=85'
-        ],
-        'menzel_unesco' => [
-            'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=1200&h=675&q=85',
-            'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&h=675&q=85'
-        ],
-        'kitesurf_water' => [
-            'https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=1200&h=675&q=85',
-            'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&h=675&q=85'
-        ],
-        'tataouine_ksar' => [
-            'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=1200&h=675&q=85',
-            'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1200&h=675&q=85'
-        ],
-        'beach_sidi_mahres' => [
-            'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&h=675&q=85',
-            'https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1200&h=675&q=85'
-        ]
-    ];
+    private NanoBananaImageService $nanoBanana;
+
+    public function __construct(?NanoBananaImageService $nanoBanana = null, ?SettingsService $settings = null) {
+        $this->nanoBanana = $nanoBanana ?? new NanoBananaImageService(null, null, null, $settings);
+    }
+
+    public function getNanoBananaService(): NanoBananaImageService {
+        return $this->nanoBanana;
+    }
 
     public function resolveThemeKey(string $text): string {
         $t = strtolower($text);
@@ -81,111 +47,32 @@ class AiImageService {
         return $fallbacks[$key] ?? ($context['angle']['fallback_local_image'] ?? 'images/sidi_mahres.png');
     }
 
-    private NanoBananaImageService $nanoBanana;
-
-    public function __construct(?NanoBananaImageService $nanoBanana = null, ?SettingsService $settings = null) {
-        $this->nanoBanana = $nanoBanana ?? new NanoBananaImageService(null, null, null, $settings);
-    }
-
-    public function getNanoBananaService(): NanoBananaImageService {
-        return $this->nanoBanana;
-    }
-
+    /**
+     * Génère une image 100% unique et photoréaliste pour un article via Nano Banana.
+     */
     public function generateForArticle(string $imagePrompt, string $slug, array $context): string {
         $rootPath = defined('ROOT_PATH') ? ROOT_PATH : dirname(__DIR__, 2);
         $fallback = $this->resolveThemeImage($imagePrompt, $context);
 
+        // Environnement de tests unitaires (mode offline rapide)
         if (defined('PHPUNIT_RUNNING') || getenv('APP_ENV') === 'testing' || (defined('PHPUNIT_COMPAT') && PHPUNIT_COMPAT)) {
             return $fallback;
         }
 
-        // 1. Tentative de génération d'image réelle avec Nano Banana
+        // Génération obligatoire et unique via Nano Banana
         $nanoImage = $this->nanoBanana->generate($imagePrompt, $slug, $rootPath, $context);
         if (!empty($nanoImage)) {
             return $nanoImage;
         }
 
-        // 2. Repli vers la sélection photographique HD réelle (Unsplash / Wikimedia)
-        $themeKey = $this->resolveThemeKey($imagePrompt . ' ' . ($context['angle']['theme'] ?? ''));
-        $targetUrl = $this->resolveRemotePhotoUrl($themeKey, $imagePrompt);
-        if (empty($targetUrl)) {
-            return $fallback;
-        }
-
-        return $this->downloadAndSaveLocal($targetUrl, $slug, $rootPath, $fallback);
-    }
-
-    private function resolveRemotePhotoUrl(string $themeKey, string $imagePrompt): string {
-        // Sélection aléatoire parmi les photographies HD dédiées
-        $pool = $this->curatedPhotos[$themeKey] ?? $this->curatedPhotos['beach_sidi_mahres'];
-        $selectedUrl = $pool[array_rand($pool)];
-
-        // Option Wikimedia si mot-clé très spécifique présent
-        if (stripos($imagePrompt, 'Guellala') !== false || stripos($imagePrompt, 'Ghriba') !== false) {
-            $wikiUrl = $this->fetchFromWikimedia($imagePrompt);
-            if (!empty($wikiUrl)) {
-                return $wikiUrl;
-            }
-        }
-
-        return $selectedUrl;
-    }
-
-    private function fetchFromWikimedia(string $query): ?string {
-        try {
-            $apiUrl = "https://commons.wikimedia.org/w/api.php?action=query&list=search&srsearch="
-                . urlencode("Djerba " . $query) . "&srnamespace=6&format=json";
-            $res = $this->curlGet($apiUrl, 3);
-            if (!$res) return null;
-
-            $data = json_decode($res, true);
-            $first = $data['query']['search'][0]['title'] ?? null;
-            if (!$first) return null;
-
-            $infoUrl = "https://commons.wikimedia.org/w/api.php?action=query&titles="
-                . urlencode($first) . "&prop=imageinfo&iiprop=url&format=json";
-            $infoRes = $this->curlGet($infoUrl, 3);
-            if (!$infoRes) return null;
-
-            $infoData = json_decode($infoRes, true);
-            $pages = $infoData['query']['pages'] ?? [];
-            $page = reset($pages);
-            return $page['imageinfo'][0]['url'] ?? null;
-        } catch (\Throwable $e) {
-            return null;
-        }
-    }
-
-    private function downloadAndSaveLocal(string $remoteUrl, string $slug, string $rootPath, string $fallback): string {
-        $blogDir = $rootPath . '/public/assets/images/blog';
-        if (!is_dir($blogDir)) {
-            @mkdir($blogDir, 0777, true);
-        }
-
-        $localFilename = $slug . '.jpg';
-        $localFilePath = $blogDir . '/' . $localFilename;
-
-        $imageData = $this->curlGet($remoteUrl, 8);
-        if ($imageData && strlen($imageData) > 5000) {
-            if (@file_put_contents($localFilePath, $imageData) !== false) {
-                return 'images/blog/' . $localFilename;
-            }
+        // Deuxième tentative Nano Banana avec le thème précis de l'article
+        $themePrompt = $context['angle']['theme'] ?? $imagePrompt;
+        $retrySlug = $slug . '-nano-' . mt_rand(100, 999);
+        $nanoRetry = $this->nanoBanana->generate($themePrompt, $retrySlug, $rootPath, $context);
+        if (!empty($nanoRetry)) {
+            return $nanoRetry;
         }
 
         return $fallback;
-    }
-
-    private function curlGet(string $url, int $timeout): ?string {
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($ch, CURLOPT_USERAGENT, 'DjerbaVoyageBot/1.0 (Travel Guide HD Images)');
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
-        $data = curl_exec($ch);
-        $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
-
-        return ($code === 200 && $data) ? $data : null;
     }
 }

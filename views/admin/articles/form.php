@@ -47,56 +47,112 @@ $isEdit = !empty($article && $article->id);
   <?php endif; ?>
 
   <!-- Formulaire de Rédaction -->
-  <form action="" method="POST" class="space-y-6">
+  <form action="" method="POST" enctype="multipart/form-data" class="space-y-6">
     
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
       
-      <!-- Colonne Principale (Contenu Rédactionnel) -->
+      <!-- Colonne Principale (Contenu Rédactionnel Multilingue) -->
       <div class="lg:col-span-2 space-y-5">
         
-        <!-- Titre Principal -->
-        <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200/90 dark:border-slate-800 p-4 sm:p-5 shadow-xs space-y-4">
-          <div>
-            <label for="title_fr" class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
-              Titre de l'Article (FR) *
-            </label>
-            <input type="text" id="title_fr" name="title_fr" required 
-                   value="<?= $article ? htmlspecialchars($article->titleFr, ENT_QUOTES, 'UTF-8') : '' ?>" 
-                   placeholder="ex: Les Plus Belles Plages de Djerba en 2026" 
-                   class="w-full rounded-md border border-slate-300 dark:border-slate-700 px-3 py-2 text-sm bg-white dark:bg-slate-950 text-slate-900 dark:text-white font-semibold focus:outline-hidden focus:ring-1 focus:ring-[#635bff]">
+        <!-- Onglets de Langue -->
+        <div class="flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-2">
+          <button type="button" onclick="switchArticleLangTab('fr')" id="artTabBtn-fr" class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-[#635bff] text-white shadow-xs">
+            🇫🇷 Français (Principal)
+          </button>
+          <button type="button" onclick="switchArticleLangTab('en')" id="artTabBtn-en" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
+            🇬🇧 English
+          </button>
+          <button type="button" onclick="switchArticleLangTab('ar')" id="artTabBtn-ar" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
+            🇹🇳 العربية (Arabe)
+          </button>
+        </div>
+
+        <!-- Volet Français -->
+        <div id="artLangTab-fr" class="space-y-4">
+          <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200/90 dark:border-slate-800 p-4 sm:p-5 shadow-xs space-y-4">
+            <div>
+              <label for="title_fr" class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
+                Titre de l'Article (Français) *
+              </label>
+              <input type="text" id="title_fr" name="title_fr" required 
+                     value="<?= $article ? htmlspecialchars($article->titleFr, ENT_QUOTES, 'UTF-8') : '' ?>" 
+                     placeholder="ex: Les Plus Belles Plages de Djerba en 2026" 
+                     class="w-full rounded-md border border-slate-300 dark:border-slate-700 px-3 py-2 text-sm bg-white dark:bg-slate-950 text-slate-900 dark:text-white font-semibold focus:outline-hidden focus:ring-1 focus:ring-[#635bff]">
+            </div>
+
+            <div>
+              <label for="slug" class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
+                Identifiant URL (Slug)
+              </label>
+              <input type="text" id="slug" name="slug" 
+                     value="<?= $article ? htmlspecialchars($article->slug, ENT_QUOTES, 'UTF-8') : '' ?>" 
+                     placeholder="laisser vide pour génération automatique" 
+                     class="w-full rounded-md border border-slate-300 dark:border-slate-700 px-3 py-1.5 text-xs bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white font-mono focus:outline-hidden focus:ring-1 focus:ring-[#635bff]">
+            </div>
           </div>
 
-          <div>
-            <label for="slug" class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
-              Identifiant URL (Slug)
-            </label>
-            <input type="text" id="slug" name="slug" 
-                   value="<?= $article ? htmlspecialchars($article->slug, ENT_QUOTES, 'UTF-8') : '' ?>" 
-                   placeholder="laisser vide pour génération automatique" 
-                   class="w-full rounded-md border border-slate-300 dark:border-slate-700 px-3 py-1.5 text-xs bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white font-mono focus:outline-hidden focus:ring-1 focus:ring-[#635bff]">
+          <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200/90 dark:border-slate-800 p-4 sm:p-5 shadow-xs space-y-3">
+            <div class="flex items-center justify-between">
+              <label for="content_fr" class="block text-xs font-bold text-slate-700 dark:text-slate-300">
+                Contenu Rédactionnel Français (HTML) *
+              </label>
+              <span class="text-[10px] text-slate-400">Balises : &lt;h2&gt;, &lt;h3&gt;, &lt;p&gt;, &lt;table&gt;, &lt;ul&gt;</span>
+            </div>
+            <textarea id="content_fr" name="content_fr" rows="12" 
+                      class="w-full rounded-md border border-slate-300 dark:border-slate-700 p-3 text-xs bg-white dark:bg-slate-950 text-slate-900 dark:text-white font-mono leading-relaxed focus:outline-hidden focus:ring-1 focus:ring-[#635bff]"><?= $article ? htmlspecialchars($article->contentFr, ENT_QUOTES, 'UTF-8') : '' ?></textarea>
           </div>
         </div>
 
-        <!-- Corps de l'Article (Éditeur de Texte) -->
-        <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200/90 dark:border-slate-800 p-4 sm:p-5 shadow-xs space-y-3">
-          <div class="flex items-center justify-between">
-            <label for="content_fr" class="block text-xs font-bold text-slate-700 dark:text-slate-300">
-              Contenu Rédactionnel (HTML / Paragraphes) *
-            </label>
-            <span class="text-[10px] text-slate-400">Balises autorisées : &lt;h2&gt;, &lt;h3&gt;, &lt;p&gt;, &lt;ul&gt;, &lt;strong&gt;</span>
+        <!-- Volet English -->
+        <div id="artLangTab-en" class="space-y-4 hidden">
+          <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200/90 dark:border-slate-800 p-4 sm:p-5 shadow-xs space-y-4">
+            <div>
+              <label for="title_en" class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
+                Article Title (English)
+              </label>
+              <input type="text" id="title_en" name="title_en" 
+                     value="<?= $article ? htmlspecialchars($article->titleEn ?? '', ENT_QUOTES, 'UTF-8') : '' ?>" 
+                     placeholder="e.g. The Best Beaches in Djerba 2026" 
+                     class="w-full rounded-md border border-slate-300 dark:border-slate-700 px-3 py-2 text-sm bg-white dark:bg-slate-950 text-slate-900 dark:text-white font-semibold focus:outline-hidden focus:ring-1 focus:ring-[#635bff]">
+            </div>
           </div>
 
-          <!-- Barre d'outils rapide -->
-          <div class="flex flex-wrap gap-1 p-1 bg-slate-100 dark:bg-slate-800 rounded-md text-[11px]">
-            <button type="button" onclick="insertTag('h2')" class="px-2 py-1 rounded bg-white dark:bg-slate-700 hover:opacity-80 font-bold">H2</button>
-            <button type="button" onclick="insertTag('h3')" class="px-2 py-1 rounded bg-white dark:bg-slate-700 hover:opacity-80 font-bold">H3</button>
-            <button type="button" onclick="insertTag('p')" class="px-2 py-1 rounded bg-white dark:bg-slate-700 hover:opacity-80">Paragraphe</button>
-            <button type="button" onclick="insertTag('strong')" class="px-2 py-1 rounded bg-white dark:bg-slate-700 hover:opacity-80 font-bold">Gras</button>
-            <button type="button" onclick="insertTag('ul')" class="px-2 py-1 rounded bg-white dark:bg-slate-700 hover:opacity-80">Liste</button>
+          <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200/90 dark:border-slate-800 p-4 sm:p-5 shadow-xs space-y-3">
+            <div class="flex items-center justify-between">
+              <label for="content_en" class="block text-xs font-bold text-slate-700 dark:text-slate-300">
+                English Content (HTML)
+              </label>
+              <span class="text-[10px] text-slate-400">Full English version</span>
+            </div>
+            <textarea id="content_en" name="content_en" rows="12" 
+                      class="w-full rounded-md border border-slate-300 dark:border-slate-700 p-3 text-xs bg-white dark:bg-slate-950 text-slate-900 dark:text-white font-mono leading-relaxed focus:outline-hidden focus:ring-1 focus:ring-[#635bff]"><?= $article ? htmlspecialchars($article->contentEn ?? '', ENT_QUOTES, 'UTF-8') : '' ?></textarea>
+          </div>
+        </div>
+
+        <!-- Volet Arabe -->
+        <div id="artLangTab-ar" class="space-y-4 hidden">
+          <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200/90 dark:border-slate-800 p-4 sm:p-5 shadow-xs space-y-4">
+            <div>
+              <label for="title_ar" class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5 text-right">
+                عنوان المقال (باللغة العربية)
+              </label>
+              <input type="text" id="title_ar" name="title_ar" dir="rtl"
+                     value="<?= $article ? htmlspecialchars($article->titleAr ?? '', ENT_QUOTES, 'UTF-8') : '' ?>" 
+                     placeholder="مثال: أجمل شواطئ جزيرة جربة لعام 2026" 
+                     class="w-full rounded-md border border-slate-300 dark:border-slate-700 px-3 py-2 text-sm bg-white dark:bg-slate-950 text-slate-900 dark:text-white font-semibold text-right focus:outline-hidden focus:ring-1 focus:ring-[#635bff]">
+            </div>
           </div>
 
-          <textarea id="content_fr" name="content_fr" rows="14" required 
-                    class="w-full rounded-md border border-slate-300 dark:border-slate-700 p-3 text-xs bg-white dark:bg-slate-950 text-slate-900 dark:text-white font-mono leading-relaxed focus:outline-hidden focus:ring-1 focus:ring-[#635bff]"><?= $article ? htmlspecialchars($article->contentFr, ENT_QUOTES, 'UTF-8') : '' ?></textarea>
+          <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200/90 dark:border-slate-800 p-4 sm:p-5 shadow-xs space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] text-slate-400">تنسيق HTML غني باللغة العربية</span>
+              <label for="content_ar" class="block text-xs font-bold text-slate-700 dark:text-slate-300 text-right">
+                محتوى المقال باللغة العربية (HTML)
+              </label>
+            </div>
+            <textarea id="content_ar" name="content_ar" rows="12" dir="rtl"
+                      class="w-full rounded-md border border-slate-300 dark:border-slate-700 p-3 text-xs bg-white dark:bg-slate-950 text-slate-900 dark:text-white font-mono leading-relaxed text-right focus:outline-hidden focus:ring-1 focus:ring-[#635bff]"><?= $article ? htmlspecialchars($article->contentAr ?? '', ENT_QUOTES, 'UTF-8') : '' ?></textarea>
+          </div>
         </div>
 
         <!-- Résumé Voyageur & Synthèse IA -->
@@ -143,14 +199,46 @@ $isEdit = !empty($article && $article->id);
         <!-- Image d'Illustration -->
         <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200/90 dark:border-slate-800 p-4 sm:p-5 shadow-xs space-y-3">
           <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400">Illustration</h3>
+
+          <!-- Aperçu de l'image actuelle -->
+          <?php
+            $currentImg = $article ? $article->featuredImage : 'sidi_mahres.png';
+            $previewSrc = asset($currentImg);
+          ?>
+          <div class="relative group rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800">
+            <img id="image-preview" src="<?= htmlspecialchars($previewSrc, ENT_QUOTES, 'UTF-8') ?>" alt="Aperçu" class="w-full h-40 object-cover transition-transform duration-300 group-hover:scale-105">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-2.5">
+              <span class="text-white text-[10px] font-semibold truncate" id="image-preview-name"><?= htmlspecialchars($currentImg, ENT_QUOTES, 'UTF-8') ?></span>
+            </div>
+          </div>
+
           <div>
-            <label for="featured_image" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Photo de couverture</label>
+            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Téléverser une image</label>
+            <input type="file" id="featured_image_file" name="featured_image_file" accept="image/*" class="w-full text-xs text-slate-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-slate-100 dark:file:bg-slate-800 file:text-slate-700 dark:file:text-slate-200 hover:file:bg-slate-200 dark:hover:file:bg-slate-700 cursor-pointer">
+          </div>
+          <div class="relative pt-2">
+            <div class="absolute inset-0 flex items-center" aria-hidden="true">
+              <div class="w-full border-t border-slate-200 dark:border-slate-700"></div>
+            </div>
+            <div class="relative flex justify-center">
+              <span class="bg-white dark:bg-slate-900 px-2 text-[10px] text-slate-500 uppercase">Ou choisir une image existante</span>
+            </div>
+          </div>
+          <div>
             <select id="featured_image" name="featured_image" class="w-full rounded-md border border-slate-300 dark:border-slate-700 px-3 py-1.5 text-xs bg-white dark:bg-slate-950 text-slate-900 dark:text-white focus:ring-1 focus:ring-[#635bff]">
               <?php foreach (['sidi_mahres.png' => 'Plage Sidi Mahres', 'djerbahood.png' => 'Street Art Djerbahood', 'guellala.png' => 'Coucher de Soleil Guellala', 'ajim.png' => 'Port de Pêche d\'Ajim', 'desert_camp.png' => 'Camp & Dunes Sahara', 'quad_desert.png' => 'Quad & Aventure'] as $file => $label): ?>
                 <option value="<?= $file ?>" <?= ($article && $article->featuredImage === $file) ? 'selected' : '' ?>><?= $label ?></option>
               <?php endforeach; ?>
+              <?php if ($article && !in_array($article->featuredImage, ['sidi_mahres.png', 'djerbahood.png', 'guellala.png', 'ajim.png', 'desert_camp.png', 'quad_desert.png'])): ?>
+                <option value="<?= htmlspecialchars($article->featuredImage, ENT_QUOTES, 'UTF-8') ?>" selected>Image Actuelle (Uploadée)</option>
+              <?php endif; ?>
             </select>
           </div>
+
+          <!-- Lien vers le gestionnaire de médias -->
+          <a href="<?= url('/admin/media') ?>" target="_blank" class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-[#635bff] hover:text-[#5349e0] transition-colors mt-1">
+            <i class="fi fi-rr-picture text-xs"></i> Ouvrir le Gestionnaire de Médias
+          </a>
         </div>
 
         <!-- Référencement SEO -->
@@ -179,16 +267,83 @@ $isEdit = !empty($article && $article->id);
 
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.3/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
-function insertTag(tag) {
-  const textarea = document.getElementById('content_fr');
-  if (!textarea) return;
-  const start = textarea.selectionStart;
-  const end = textarea.selectionEnd;
-  const selected = textarea.value.substring(start, end) || 'Votre texte';
-  const replacement = (tag === 'ul') 
-    ? `\n<ul>\n  <li>${selected}</li>\n</ul>\n` 
-    : `<${tag}>${selected}</${tag}>`;
-  textarea.setRangeText(replacement, start, end, 'select');
-}
+  function switchArticleLangTab(lang) {
+    ['fr', 'en', 'ar'].forEach(l => {
+      const panel = document.getElementById('artLangTab-' + l);
+      const btn = document.getElementById('artTabBtn-' + l);
+      if (panel) {
+        if (l === lang) {
+          panel.classList.remove('hidden');
+        } else {
+          panel.classList.add('hidden');
+        }
+      }
+      if (btn) {
+        if (l === lang) {
+          btn.className = 'px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-[#635bff] text-white shadow-xs';
+        } else {
+          btn.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all';
+        }
+      }
+    });
+  }
+
+  // Aperçu dynamique de l'image de couverture
+  (function() {
+    const preview = document.getElementById('image-preview');
+    const previewName = document.getElementById('image-preview-name');
+    const selectEl = document.getElementById('featured_image');
+    const fileInput = document.getElementById('featured_image_file');
+    const assetBase = '<?= asset('') ?>';
+
+    if (selectEl) {
+      selectEl.addEventListener('change', function() {
+        const val = this.value;
+        if (val) {
+          preview.src = assetBase.replace(/\?.*$/, '').replace(/\/$/, '') + '/' + val;
+          previewName.textContent = val;
+        }
+      });
+    }
+
+    if (fileInput) {
+      fileInput.addEventListener('change', function() {
+        if (this.files && this.files[0]) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            preview.src = e.target.result;
+            previewName.textContent = fileInput.files[0].name;
+          };
+          reader.readAsDataURL(this.files[0]);
+        }
+      });
+    }
+  })();
+
+  // TinyMCE
+  tinymce.init({
+    selector: '#content_fr',
+    height: 500,
+    menubar: false,
+    images_upload_url: '<?= url('/admin/upload-image') ?>',
+    automatic_uploads: true,
+    file_picker_types: 'image',
+    plugins: [
+      'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+      'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+      'insertdatetime', 'media', 'table', 'help', 'wordcount'
+    ],
+    toolbar: 'undo redo | blocks | ' +
+    'bold italic backcolor | alignleft aligncenter ' +
+    'alignright alignjustify | bullist numlist outdent indent | ' +
+    'image media | removeformat | code | help',
+    content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 14px }',
+    setup: function (editor) {
+      editor.on('change', function () {
+        editor.save();
+      });
+    }
+  });
 </script>
