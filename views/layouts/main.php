@@ -20,13 +20,41 @@
 
   <!-- Canonical & International SEO (Hreflang) -->
   <?php 
-    $scheme = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http');
     $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
-    $baseUrl = $scheme . '://' . $host;
-    $currentPath = strtok($_SERVER['REQUEST_URI'] ?? '/', '?');
-    $cleanUrl = $baseUrl . $currentPath;
+    $isProd = (strpos($host, 'djerbavoyage.tn') !== false);
+
+    $isHttps = $isProd || (
+        (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ||
+        (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') ||
+        (!empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] === 'on') ||
+        (isset($_SERVER['SERVER_PORT']) && (int)$_SERVER['SERVER_PORT'] === 443)
+    );
+    $scheme = $isHttps ? 'https' : 'http';
+    $cleanHost = $isProd ? 'djerbavoyage.tn' : $host;
+    $baseUrl = $scheme . '://' . $cleanHost;
+
+    // Normaliser le chemin : sans query string ni trailing slash (sauf racine)
+    $rawPath = strtok($_SERVER['REQUEST_URI'] ?? '/', '?');
+    $currentPath = rtrim($rawPath, '/');
+    $cleanUrl = $baseUrl . ($currentPath ? $currentPath : '/');
+
     $currentLocale = \Core\Lang::getLocale();
-    $canonicalUrl = ($currentLocale === 'fr') ? $cleanUrl : ($cleanUrl . '?lang=' . $currentLocale);
+
+    // Gestion de la pagination pour éviter le conflit "Google n'a pas choisi la même URL canonique"
+    $pageParam = (isset($_GET['page']) && (int)$_GET['page'] > 1) ? (int)$_GET['page'] : null;
+
+    if (empty($canonicalUrl)) {
+        $canonicalParams = [];
+        if ($pageParam) {
+            $canonicalParams['page'] = $pageParam;
+        }
+        if ($currentLocale !== 'fr') {
+            $canonicalParams['lang'] = $currentLocale;
+        }
+        $canonicalQuery = !empty($canonicalParams) ? ('?' . http_build_query($canonicalParams)) : '';
+        $canonicalUrl = $cleanUrl . $canonicalQuery;
+    }
+
     $videoAbsoluteUrl = !empty($ogVideo) ? (str_starts_with($ogVideo, 'http') ? $ogVideo : ($baseUrl . '/' . ltrim($ogVideo, '/'))) : '';
 
     $ogLocaleMap = [

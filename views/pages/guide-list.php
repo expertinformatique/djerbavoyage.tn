@@ -200,7 +200,7 @@ $getCategory = function(string $title, string $desc = ''): array {
                   <i class="fi fi-rr-bed"></i>
                   <span><?= __('blog_list.hotels_btn') ?></span>
                 </button>
-                <a href="<?= url('/guide/' . e($art->slug) . '/pdf') ?>" target="_blank" class="c-card__pdf-btn" title="Télécharger la fiche pratique PDF">
+                <a href="<?= url('/guide/' . e($art->slug) . '/pdf') ?>" target="_blank" rel="nofollow" class="c-card__pdf-btn" title="Télécharger la fiche pratique PDF">
                   <i class="fi fi-rr-file-pdf"></i>
                   <span>PDF</span>
                 </a>

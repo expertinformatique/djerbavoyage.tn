@@ -50,6 +50,31 @@ class PdoOrderRepository implements OrderRepositoryInterface {
         return $order;
     }
 
+    public function update(Order $order): bool {
+        if (!$order->id) {
+            return false;
+        }
+        $stmt = $this->pdo->prepare("
+            UPDATE orders 
+            SET customer_email = :email, 
+                total_amount = :amount, 
+                currency = :currency, 
+                stripe_session_id = :session_id, 
+                status = :status, 
+                type = :type
+            WHERE id = :id
+        ");
+        return $stmt->execute([
+            'email'      => $order->customerEmail,
+            'amount'     => $order->totalAmount,
+            'currency'   => $order->currency,
+            'session_id' => $order->stripeSessionId,
+            'status'     => $order->status,
+            'type'       => $order->type,
+            'id'         => $order->id,
+        ]);
+    }
+
     public function updateStatus(int $orderId, string $status): bool {
         $stmt = $this->pdo->prepare("UPDATE orders SET status = :status WHERE id = :id");
         return $stmt->execute(['status' => $status, 'id' => $orderId]);

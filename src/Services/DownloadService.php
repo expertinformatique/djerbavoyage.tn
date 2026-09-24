@@ -45,4 +45,15 @@ class DownloadService {
         $stmt = $this->pdo->prepare("UPDATE download_tokens SET downloads_left = downloads_left - 1 WHERE token = :token");
         $stmt->execute(['token' => $token]);
     }
+
+    public function getActiveTokenForOrder(int $orderId): ?string {
+        $stmt = $this->pdo->prepare("
+            SELECT token FROM download_tokens 
+            WHERE order_id = :order_id AND downloads_left > 0 AND expires_at > CURRENT_TIMESTAMP 
+            ORDER BY id DESC LIMIT 1
+        ");
+        $stmt->execute(['order_id' => $orderId]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row ? (string)$row['token'] : null;
+    }
 }

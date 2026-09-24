@@ -21,6 +21,11 @@ class DummyProductRepository implements ProductRepositoryInterface {
         return new Product(id: $id, slug: 'guide-djerba-2026', titleFr: 'Guide Voyage Djerba 2026', priceEur: 19.99);
     }
     public function findBySlug(string $slug): ?Product {
+        foreach ($this->getAllActive() as $p) {
+            if ($p->slug === $slug) {
+                return $p;
+            }
+        }
         return new Product(id: 1, slug: $slug, titleFr: 'Guide Voyage Djerba 2026', priceEur: 19.99);
     }
     public function getAllActive(): array {
@@ -109,8 +114,20 @@ class SitemapTest extends TestCase {
         $this->assertStringContainsString('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"', $xml);
         $this->assertStringContainsString('<loc>https://djerbavoyage.tn/</loc>', $xml);
         $this->assertStringContainsString('<loc>https://djerbavoyage.tn/guide/guide-test-djerba-1</loc>', $xml);
-        $this->assertStringContainsString('<loc>https://djerbavoyage.tn/guide/guide-test-djerba-1/pdf</loc>', $xml);
+        $this->assertStringNotContainsString('/pdf</loc>', $xml);
         $this->assertStringContainsString('<image:loc>https://djerbavoyage.tn/images/blog/test-1.jpg</image:loc>', $xml);
+    }
+
+    public function testPdfUrlsAreExcludedFromSitemapToPreventDuplicateContent() {
+        $productRepo = new DummyProductRepository();
+        $serviceRepo = new DummyServiceRepository();
+        $articleRepo = new DummyArticleRepository();
+
+        $service = new SitemapService($productRepo, $serviceRepo, $articleRepo);
+        $xml = $service->generateXml('https://djerbavoyage.tn');
+
+        $this->assertStringNotContainsString('/pdf</loc>', $xml);
+        $this->assertStringNotContainsString('/pdf?lang=', $xml);
     }
 
     public function testGenerateXmlIncludesActiveProductsWithImages() {

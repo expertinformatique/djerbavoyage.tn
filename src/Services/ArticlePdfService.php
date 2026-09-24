@@ -22,12 +22,18 @@ class ArticlePdfService {
         $baseUrl = $this->getBaseUrl();
         $isRtl = ($lang === 'ar');
         $dirAttr = $isRtl ? 'dir="rtl"' : 'dir="ltr"';
+        $canonicalUrl = rtrim($baseUrl, '/') . '/guide/' . urlencode($article->slug);
+        if ($lang && $lang !== 'fr') {
+            $canonicalUrl .= '?lang=' . urlencode($lang);
+        }
 
         return <<<HTML
 <!DOCTYPE html>
 <html lang="{$lang}" {$dirAttr}>
 <head>
     <meta charset="UTF-8">
+    <meta name="robots" content="noindex, follow">
+    <link rel="canonical" href="{$canonicalUrl}">
     <base href="{$baseUrl}/">
     <title>Guide Djerba — {$title}</title>
     <style>

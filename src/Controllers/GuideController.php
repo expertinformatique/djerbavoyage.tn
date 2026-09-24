@@ -100,8 +100,18 @@ class GuideController extends Controller {
             return;
         }
 
-        $html = $this->pdfService->generateHtmlForPdf($article);
+        $lang = isset($_GET['lang']) ? trim((string)$_GET['lang']) : null;
+        $html = $this->pdfService->generateHtmlForPdf($article, $lang);
+
+        $baseUrl = rtrim(absolute_url(''), '/');
+        $canonicalUrl = $baseUrl . '/guide/' . urlencode($article->slug);
+        if ($lang && $lang !== 'fr') {
+            $canonicalUrl .= '?lang=' . urlencode($lang);
+        }
+
         header('Content-Type: text/html; charset=utf-8');
+        header('X-Robots-Tag: noindex, follow');
+        header('Link: <' . $canonicalUrl . '>; rel="canonical"');
         echo $html;
     }
 }

@@ -2,10 +2,12 @@
 namespace App\Controllers;
 
 use Core\Controller;
+use Core\Lang;
 use App\Interfaces\ProductRepositoryInterface;
 use App\Models\Product;
 use App\Services\AnalyticsService;
 use App\Services\SettingsService;
+use App\Services\ProductLocalizationService;
 
 class ShopController extends Controller {
     public function __construct(
@@ -64,9 +66,14 @@ class ShopController extends Controller {
             JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
         ) . '</script>';
 
-        $this->render('pages/shop', [
-            'seoTitle'        => htmlspecialchars($product->titleFr) . ' | Boutique Djerba Voyage',
-            'seoDescription'  => 'Commandez le ' . htmlspecialchars($product->titleFr) . ' pour ' . number_format($product->priceEur, 2) . ' €. Téléchargement immédiat sécurisé.',
+        $activeLang = Lang::getLocale();
+        $displayTitle = ProductLocalizationService::getTitle($product, $activeLang);
+        $displayDesc = ProductLocalizationService::getDescription($product, $activeLang);
+
+        $this->render('pages/shop-single', [
+            'seoTitle'        => htmlspecialchars($displayTitle) . ' | Boutique Djerba Voyage',
+            'seoDescription'  => htmlspecialchars($displayDesc) . ' - ' . number_format($product->priceEur, 2) . ' €. Téléchargement immédiat sécurisé.',
+            'product'         => $product,
             'products'        => $products,
             'selectedProduct' => $product,
             'settings'        => $this->settings,

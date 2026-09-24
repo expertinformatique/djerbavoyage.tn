@@ -111,4 +111,21 @@ class OrdersAdminTest extends TestCase {
         $orderCancelled = $this->orderRepo->findById(20);
         $this->assertEquals('cancelled', $orderCancelled->status);
     }
+
+    public function testUpdateOrder() {
+        $order = $this->orderRepo->findById(20);
+        $this->assertNotNull($order);
+        $this->assertEquals('sess_20', $order->stripeSessionId);
+
+        $order->stripeSessionId = 'sess_updated_123';
+        $order->status = 'paid';
+        $order->customerEmail = 'sarah_new@test.tn';
+        $result = $this->orderRepo->update($order);
+
+        $this->assertTrue($result);
+        $reloaded = $this->orderRepo->findById(20);
+        $this->assertEquals('sess_updated_123', $reloaded->stripeSessionId);
+        $this->assertEquals('paid', $reloaded->status);
+        $this->assertEquals('sarah_new@test.tn', $reloaded->customerEmail);
+    }
 }

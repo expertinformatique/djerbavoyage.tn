@@ -1,6 +1,16 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
+    # 1. Redirection 301 de www.djerbavoyage.tn vers djerbavoyage.tn (non-www)
+    RewriteCond %{HTTP_HOST} ^www\.djerbavoyage\.tn$ [NC]
+    RewriteRule ^(.*)$ https://djerbavoyage.tn/$1 [R=301,L]
+
+    # 2. Redirection 301 HTTP vers HTTPS en production
+    RewriteCond %{HTTP_HOST} ^djerbavoyage\.tn$ [NC]
+    RewriteCond %{HTTPS} off
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    RewriteRule ^(.*)$ https://djerbavoyage.tn/$1 [R=301,L]
+
     # Interdire le listing des répertoires
     Options -Indexes
 

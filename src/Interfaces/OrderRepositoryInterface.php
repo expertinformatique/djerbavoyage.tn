@@ -7,6 +7,7 @@ interface OrderRepositoryInterface {
     public function findById(int $id): ?Order;
     public function findByStripeSessionId(string $sessionId): ?Order;
     public function create(Order $order): Order;
+    public function update(Order $order): bool;
     public function findByOrderNumber(string $orderNumber): ?Order;
     public function updateStatus(int $orderId, string $status): bool;
     public function getPaidOrdersCount(): int;

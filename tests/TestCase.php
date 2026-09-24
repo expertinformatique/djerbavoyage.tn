@@ -107,6 +107,13 @@ if (!class_exists('PHPUnit\Framework\TestCase')) {
             }
         }
 
+        protected function assertStringNotContainsString(string $needle, string $haystack, string $message = ''): void {
+            self::$assertionsCount++;
+            if (str_contains($haystack, $needle)) {
+                throw new \Exception($message ?: "Échec : Le texte contient '$needle' alors qu'il ne devrait pas");
+            }
+        }
+
         protected function assertFileExists(string $filename, string $message = ''): void {
             self::$assertionsCount++;
             if (!file_exists($filename)) {

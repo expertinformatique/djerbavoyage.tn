@@ -72,7 +72,7 @@ if (empty($recentArticles)) {
                 <i class="fi fi-rr-arrow-right"></i>
               </a>
               <?php if (!empty($art->pdfEnabled)): ?>
-                <a href="<?= url('/guide/' . e($art->slug) . '/pdf') ?>" target="_blank" class="c-blog-card__pdf-btn" title="Télécharger la fiche PDF">
+                <a href="<?= url('/guide/' . e($art->slug) . '/pdf') ?>" target="_blank" rel="nofollow" class="c-blog-card__pdf-btn" title="Télécharger la fiche PDF">
                   <i class="fi fi-rr-file-pdf"></i>
                   <span>PDF</span>
                 </a>

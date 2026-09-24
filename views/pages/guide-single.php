@@ -131,6 +131,7 @@ $currentUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' 
           </button>
           <a href="<?= url('/guide/' . urlencode($article->slug) . '/pdf') ?>" 
              target="_blank" 
+             rel="nofollow"
              class="c-article-share-btn c-article-share-btn--pdf" 
              title="Télécharger la fiche pratique PDF">
             <i class="fi fi-rr-file-pdf"></i>
@@ -288,7 +289,7 @@ $currentUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' 
           <?= __('blog_single.pdf_banner_desc') ?>
         </p>
       </div>
-      <a href="<?= url('/guide/' . urlencode($article->slug) . '/pdf') ?>" target="_blank" class="c-button c-button--primary">
+      <a href="<?= url('/guide/' . urlencode($article->slug) . '/pdf') ?>" target="_blank" rel="nofollow" class="c-button c-button--primary">
         <span><?= __('blog_single.pdf_download_btn') ?></span>
         <i class="fi fi-rr-download"></i>
       </a>

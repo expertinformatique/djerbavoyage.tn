@@ -193,16 +193,6 @@ class SitemapService {
             }
             $xml .= "  </url>\n";
 
-            if (!empty($art->pdfEnabled)) {
-                $pdfUrl = $baseUrl . '/guide/' . $art->slug . '/pdf';
-                $xml .= "  <url>\n";
-                $xml .= "    <loc>" . htmlspecialchars($pdfUrl, ENT_QUOTES, 'UTF-8') . "</loc>\n";
-                $xml .= $this->buildHreflangTags($pdfUrl);
-                $xml .= "    <lastmod>{$date}</lastmod>\n";
-                $xml .= "    <changefreq>monthly</changefreq>\n";
-                $xml .= "    <priority>0.5</priority>\n";
-                $xml .= "  </url>\n";
-            }
         }
         return $xml;
     }
