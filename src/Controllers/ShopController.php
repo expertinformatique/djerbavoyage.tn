@@ -3,6 +3,7 @@ namespace App\Controllers;
 
 use Core\Controller;
 use App\Interfaces\ProductRepositoryInterface;
+use App\Models\Product;
 use App\Services\AnalyticsService;
 use App\Services\SettingsService;
 
@@ -23,27 +24,7 @@ class ShopController extends Controller {
             $itemListElement[] = [
                 '@type' => 'ListItem',
                 'position' => $index + 1,
-                'item' => [
-                    '@type' => 'Product',
-                    'name' => $prod->titleFr,
-                    'description' => 'Guide touristique numérique Djerba 2026 avec carte GPS, itinéraires détaillés et conseils d\'experts localisés.',
-                    'brand' => [
-                        '@type' => 'Brand',
-                        'name'  => 'Djerba Voyage'
-                    ],
-                    'offers' => [
-                        '@type' => 'Offer',
-                        'price' => number_format($prod->priceEur, 2, '.', ''),
-                        'priceCurrency' => 'EUR',
-                        'availability' => 'https://schema.org/InStock',
-                        'url' => $domain . '/shop/' . $prod->slug
-                    ],
-                    'aggregateRating' => [
-                        '@type' => 'AggregateRating',
-                        'ratingValue' => '4.9',
-                        'reviewCount' => '128'
-                    ]
-                ]
+                'item' => $this->buildProductSchema($prod, $domain)
             ];
         }
 
@@ -74,28 +55,14 @@ class ShopController extends Controller {
         $products = $this->productRepo->getAllActive();
         $domain = rtrim(absolute_url(''), '/');
 
-        $jsonLd = '<script type="application/ld+json">' . json_encode([
+        $productData = array_merge([
             '@context' => 'https://schema.org',
-            '@type'    => 'Product',
-            'name'     => $product->titleFr,
-            'description' => 'Guide touristique numérique Djerba 2026 avec carte GPS, itinéraires détaillés et conseils d\'experts localisés.',
-            'brand'    => [
-                '@type' => 'Brand',
-                'name'  => 'Djerba Voyage'
-            ],
-            'offers'   => [
-                '@type' => 'Offer',
-                'price' => number_format($product->priceEur, 2, '.', ''),
-                'priceCurrency' => 'EUR',
-                'availability' => 'https://schema.org/InStock',
-                'url' => $domain . '/shop/' . $product->slug
-            ],
-            'aggregateRating' => [
-                '@type' => 'AggregateRating',
-                'ratingValue' => '4.9',
-                'reviewCount' => '128'
-            ]
-        ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) . '</script>';
+        ], $this->buildProductSchema($product, $domain));
+
+        $jsonLd = '<script type="application/ld+json">' . json_encode(
+            $productData,
+            JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
+        ) . '</script>';
 
         $this->render('pages/shop', [
             'seoTitle'        => htmlspecialchars($product->titleFr) . ' | Boutique Djerba Voyage',
@@ -105,5 +72,97 @@ class ShopController extends Controller {
             'settings'        => $this->settings,
             'jsonLd'          => $jsonLd
         ]);
+    }
+
+    private function buildProductSchema(Product $product, string $domain): array {
+        return [
+            '@type' => 'Product',
+            'name' => $product->titleFr,
+            'description' => 'Guide touristique numérique Djerba 2026 avec carte GPS, itinéraires détaillés et conseils d\'experts localisés.',
+            'image' => [
+                $this->resolveProductImage($product, $domain)
+            ],
+            'sku' => 'DV-PROD-' . ($product->id ?? $product->slug),
+            'brand' => [
+                '@type' => 'Brand',
+                'name'  => 'Djerba Voyage'
+            ],
+            'offers' => $this->buildOffersSchema($product, $domain),
+            'aggregateRating' => [
+                '@type' => 'AggregateRating',
+                'ratingValue' => '4.9',
+                'reviewCount' => '128'
+            ]
+        ];
+    }
+
+    private function buildOffersSchema(Product $product, string $domain): array {
+        $supportedCountries = ['FR', 'TN', 'BE', 'CH', 'CA', 'DE', 'IT', 'GB'];
+        $destinations = array_map(fn(string $code): array => [
+            '@type' => 'DefinedRegion',
+            'addressCountry' => $code
+        ], $supportedCountries);
+
+        return [
+            '@type' => 'Offer',
+            'price' => number_format($product->priceEur, 2, '.', ''),
+            'priceCurrency' => 'EUR',
+            'priceValidUntil' => (date('Y') + 1) . '-12-31',
+            'availability' => 'https://schema.org/InStock',
+            'itemCondition' => 'https://schema.org/NewCondition',
+            'url' => $domain . '/shop/' . $product->slug,
+            'seller' => [
+                '@type' => 'Organization',
+                'name'  => 'Djerba Voyage'
+            ],
+            'shippingDetails' => [
+                '@type' => 'OfferShippingDetails',
+                'shippingRate' => [
+                    '@type' => 'MonetaryAmount',
+                    'value' => '0.00',
+                    'currency' => 'EUR'
+                ],
+                'shippingDestination' => $destinations,
+                'deliveryTime' => [
+                    '@type' => 'ShippingDeliveryTime',
+                    'handlingTime' => [
+                        '@type' => 'QuantitativeValue',
+                        'minValue' => 0,
+                        'maxValue' => 0,
+                        'unitCode' => 'DAY'
+                    ],
+                    'transitTime' => [
+                        '@type' => 'QuantitativeValue',
+                        'minValue' => 0,
+                        'maxValue' => 0,
+                        'unitCode' => 'DAY'
+                    ]
+                ]
+            ],
+            'hasMerchantReturnPolicy' => [
+                '@type' => 'MerchantReturnPolicy',
+                'applicableCountry' => $supportedCountries,
+                'returnPolicyCountry' => $supportedCountries,
+                'returnPolicyCategory' => 'https://schema.org/MerchantReturnNotPermitted',
+                'merchantReturnDays' => 0
+            ]
+        ];
+    }
+
+    private function resolveProductImage(Product $prod, string $domain): string {
+        $titleLower = mb_strtolower($prod->titleFr);
+        $image = 'shop_guide_pdf.jpg';
+
+        if (str_contains($titleLower, 'carte gps') || str_contains($titleLower, 'map')) {
+            $image = 'shop_gps_map.jpg';
+        } elseif (str_contains($titleLower, 'pass') || str_contains($titleLower, 'excursion') || str_contains($titleLower, 'balade') || str_contains($titleLower, 'session') || str_contains($titleLower, 'jet') || str_contains($titleLower, 'quad')) {
+            $image = str_contains($titleLower, 'jet') ? 'service_jetski.jpg' : (str_contains($titleLower, 'quad') ? 'service_quad.jpg' : 'service_bateau_pirate.jpg');
+        } elseif (str_contains($titleLower, 'pack')) {
+            $image = 'hero.png';
+        } elseif (str_contains($titleLower, 'audio')) {
+            $image = 'shop_audio_guide.jpg';
+        }
+
+        return $domain . '/assets/images/' . $image;
     }
 }

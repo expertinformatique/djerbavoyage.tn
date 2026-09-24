@@ -36,6 +36,10 @@ class LocalServicesController extends Controller {
 
         $itemListElement = [];
         foreach ($services as $index => $s) {
+            $serviceImg = !empty($s->imageUrl) 
+                ? (str_starts_with($s->imageUrl, 'http') ? $s->imageUrl : (str_contains($s->imageUrl, 'assets/') ? $domain . '/' . ltrim($s->imageUrl, '/') : $domain . '/assets/images/' . ltrim($s->imageUrl, '/'))) 
+                : $domain . '/assets/images/hero.png';
+
             $itemListElement[] = [
                 '@type' => 'ListItem',
                 'position' => $index + 1,
@@ -43,6 +47,7 @@ class LocalServicesController extends Controller {
                     '@type' => 'Service',
                     'name' => $s->name,
                     'description' => $s->shortDescription,
+                    'image' => $serviceImg,
                     'provider' => [
                         '@type' => 'LocalBusiness',
                         'name' => 'Djerba Voyage Services',
