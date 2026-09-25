@@ -52,7 +52,12 @@ export function initLocaleSwitcher() {
 
     if (field === 'lang') {
       langInput.value = value;
-      if (triggerFlag && btn.dataset.flag) triggerFlag.textContent = btn.dataset.flag;
+      const optionFlag = btn.querySelector('.lang-flag');
+      if (triggerFlag && optionFlag) {
+        triggerFlag.innerHTML = optionFlag.innerHTML;
+      } else if (triggerFlag && btn.dataset.flag) {
+        triggerFlag.innerHTML = btn.dataset.flag;
+      }
       if (triggerCode && btn.dataset.label) triggerCode.textContent = btn.dataset.label;
     }
     if (field === 'currency') {

@@ -25,7 +25,6 @@ $_currentCurrency = \Core\Currency::getCurrency();
           class="c-locale-switcher__option--lang <?= $_lng === $_currentLang ? 'is-active' : '' ?>"
           data-field="lang"
           data-value="<?= $_lng ?>"
-          data-flag="<?= \Core\Lang::flag($_lng) ?>"
           data-label="<?= strtoupper($_lng) ?>">
           <span class="lang-flag"><?= \Core\Lang::flag($_lng) ?></span>
           <span class="lang-name"><?= \Core\Lang::nativeName($_lng) ?></span>

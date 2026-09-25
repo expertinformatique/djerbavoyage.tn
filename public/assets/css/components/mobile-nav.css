@@ -295,8 +295,17 @@
   }
 
   .c-mobile-locale__flag {
-    font-size: 1.15rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     line-height: 1;
+  }
+
+  .c-mobile-locale__flag .c-flag {
+    width: 22px;
+    height: 15px;
+    border-radius: 3px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
   }
 
   .c-mobile-locale__name {

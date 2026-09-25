@@ -227,14 +227,14 @@
           <li class="c-footer__phone-item">
             <a href="tel:+353896110430" class="c-footer__phone-link" aria-label="Appeler Irlande +353 89 611 0430">
               <i class="fi fi-rr-phone-call c-footer__phone-icon"></i>
-              <span class="c-footer__phone-flag">🇮🇪</span>
+              <span class="c-footer__phone-flag"><?= \Core\Lang::flag('ie', 18, 12) ?></span>
               <span class="c-footer__phone-num">+353 89 611 0430</span>
             </a>
           </li>
           <li class="c-footer__phone-item">
             <a href="tel:+21622168875" class="c-footer__phone-link" aria-label="Appeler Tunisie +216 22 168 875">
               <i class="fi fi-rr-phone-call c-footer__phone-icon"></i>
-              <span class="c-footer__phone-flag">🇹🇳</span>
+              <span class="c-footer__phone-flag"><?= \Core\Lang::flag('tn', 18, 12) ?></span>
               <span class="c-footer__phone-num">+216 22 168 875</span>
             </a>
           </li>

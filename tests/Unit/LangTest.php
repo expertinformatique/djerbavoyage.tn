@@ -144,4 +144,33 @@ class LangTest extends TestCase
             }
         }
     }
+
+    public function testFlagHtmlOutput(): void
+    {
+        $frFlag = \Core\Lang::flag('fr');
+        $this->assertStringContainsString('<img', $frFlag);
+        $this->assertStringContainsString('class="c-flag"', $frFlag);
+        $this->assertStringContainsString('fr.svg', $frFlag);
+
+        $enFlag = \Core\Lang::flag('en');
+        $this->assertStringContainsString('en.svg', $enFlag);
+
+        $arFlag = \Core\Lang::flag('ar');
+        $this->assertStringContainsString('ar.svg', $arFlag);
+    }
+
+    public function testFlagUrlOutput(): void
+    {
+        $this->assertStringContainsString('flags/fr.svg', \Core\Lang::flagUrl('fr'));
+        $this->assertStringContainsString('flags/en.svg', \Core\Lang::flagUrl('en'));
+        $this->assertStringContainsString('flags/ar.svg', \Core\Lang::flagUrl('ar'));
+    }
+
+    public function testFlagEmojiOutput(): void
+    {
+        $this->assertEquals('🇫🇷', \Core\Lang::flagEmoji('fr'));
+        $this->assertEquals('🇬🇧', \Core\Lang::flagEmoji('en'));
+        $this->assertEquals('🇹🇳', \Core\Lang::flagEmoji('ar'));
+    }
 }
+

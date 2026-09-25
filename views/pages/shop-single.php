@@ -48,16 +48,16 @@ $thumbImage = ProductLocalizationService::getProductImage($product);
                     </span>
                     <div style="display: flex; gap: 0.4rem;">
                         <a href="<?= url('/shop/' . $product->slug . '?lang=fr') ?>" 
-                           style="text-decoration:none; padding: 4px 10px; border-radius: 8px; font-size: 0.82rem; font-weight: 600; border: 1px solid var(--clr-sand-300); background: <?= $activeLang === 'fr' ? '#0284C7' : '#fff' ?>; color: <?= $activeLang === 'fr' ? '#fff' : 'var(--clr-dark-800)' ?>;">
-                           🇫🇷 FR
+                           style="text-decoration:none; padding: 4px 10px; border-radius: 8px; font-size: 0.82rem; font-weight: 600; border: 1px solid var(--clr-sand-300); display: inline-flex; align-items: center; gap: 5px; background: <?= $activeLang === 'fr' ? '#0284C7' : '#fff' ?>; color: <?= $activeLang === 'fr' ? '#fff' : 'var(--clr-dark-800)' ?>;">
+                           <?= \Core\Lang::flag('fr', 16, 11) ?> <span>FR</span>
                         </a>
                         <a href="<?= url('/shop/' . $product->slug . '?lang=en') ?>" 
-                           style="text-decoration:none; padding: 4px 10px; border-radius: 8px; font-size: 0.82rem; font-weight: 600; border: 1px solid var(--clr-sand-300); background: <?= $activeLang === 'en' ? '#0284C7' : '#fff' ?>; color: <?= $activeLang === 'en' ? '#fff' : 'var(--clr-dark-800)' ?>;">
-                           🇬🇧 EN
+                           style="text-decoration:none; padding: 4px 10px; border-radius: 8px; font-size: 0.82rem; font-weight: 600; border: 1px solid var(--clr-sand-300); display: inline-flex; align-items: center; gap: 5px; background: <?= $activeLang === 'en' ? '#0284C7' : '#fff' ?>; color: <?= $activeLang === 'en' ? '#fff' : 'var(--clr-dark-800)' ?>;">
+                           <?= \Core\Lang::flag('en', 16, 11) ?> <span>EN</span>
                         </a>
                         <a href="<?= url('/shop/' . $product->slug . '?lang=ar') ?>" 
-                           style="text-decoration:none; padding: 4px 10px; border-radius: 8px; font-size: 0.82rem; font-weight: 600; border: 1px solid var(--clr-sand-300); background: <?= $activeLang === 'ar' ? '#0284C7' : '#fff' ?>; color: <?= $activeLang === 'ar' ? '#fff' : 'var(--clr-dark-800)' ?>;">
-                           🇹🇳 AR
+                           style="text-decoration:none; padding: 4px 10px; border-radius: 8px; font-size: 0.82rem; font-weight: 600; border: 1px solid var(--clr-sand-300); display: inline-flex; align-items: center; gap: 5px; background: <?= $activeLang === 'ar' ? '#0284C7' : '#fff' ?>; color: <?= $activeLang === 'ar' ? '#fff' : 'var(--clr-dark-800)' ?>;">
+                           <?= \Core\Lang::flag('ar', 16, 11) ?> <span>AR</span>
                         </a>
                     </div>
                 </div>

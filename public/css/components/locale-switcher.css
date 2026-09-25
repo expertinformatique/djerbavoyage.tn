@@ -71,7 +71,7 @@
     position: absolute;
     top: calc(100% + 10px);
     right: 0;
-    min-width: 260px;
+    width: 300px;
     background: #1a2744;
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 14px;
@@ -100,12 +100,12 @@
 
 /* ── Titres de section ──────────────────────────────────────── */
 .c-locale-switcher__section-title {
-    font-size: 0.65rem;
+    font-size: 0.63rem;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: rgba(255, 255, 255, 0.35);
-    margin: 0 0 0.55rem 0;
+    margin: 0 0 0.5rem 0;
     display: flex;
     align-items: center;
     gap: 0.4rem;
@@ -118,53 +118,157 @@
     background: rgba(255, 255, 255, 0.08);
 }
 
-/* ── Options groupe ─────────────────────────────────────────── */
-.c-locale-switcher__options {
+/* ── Options groupe LANGUES — vertical, 1 par ligne ─────────── */
+.c-locale-switcher__options--lang {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-bottom: 1rem;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin-bottom: 0.9rem;
 }
 
-/* ── Option individuelle ────────────────────────────────────── */
-.c-locale-switcher__option {
-    flex: 1;
-    min-width: 68px;
-    text-align: center;
-    padding: 0.5rem 0.55rem;
+/* ── Options groupe DEVISES — horizontal, 3 colonnes égales ─── */
+.c-locale-switcher__options--currency {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.35rem;
+    margin-bottom: 0.9rem;
+}
+
+/* ── Option langue : rangée complète avec drapeau + nom ─────── */
+.c-locale-switcher__option--lang {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    width: 100%;
+    padding: 0.55rem 0.8rem;
     border-radius: 9px;
     border: 1.5px solid rgba(255, 255, 255, 0.1);
     background: rgba(255, 255, 255, 0.04);
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 0.82rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.15s ease;
     font-family: var(--font-heading, "Plus Jakarta Sans", sans-serif);
+    text-align: left;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.c-locale-switcher__option:hover {
+/* ── Drapeau SVG unifié ────────────────────────────────── */
+.c-flag {
+    display: inline-block;
+    vertical-align: middle;
+    object-fit: cover;
+    border-radius: 2.5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.28);
+    border: 0.5px solid rgba(255, 255, 255, 0.25);
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.c-locale-switcher__option--lang .lang-flag {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.c-locale-switcher__option--lang .lang-flag .c-flag {
+    width: 22px;
+    height: 15px;
+    border-radius: 3px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+}
+
+.c-locale-switcher__option--lang .lang-name {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.c-locale-switcher__option--lang:hover {
     background: rgba(255, 255, 255, 0.1);
     color: #fff;
-    border-color: rgba(255, 255, 255, 0.25);
-    transform: translateY(-1px);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateX(2px);
 }
 
-.c-locale-switcher__option.is-active {
+.c-locale-switcher__option--lang.is-active {
+    background: linear-gradient(135deg, rgba(224, 122, 95, 0.25), rgba(245, 158, 11, 0.2));
+    border-color: rgba(224, 122, 95, 0.6);
+    color: #fff;
+    font-weight: 700;
+}
+
+.c-locale-switcher__option--lang.is-active::after {
+    content: '✓';
+    margin-left: auto;
+    color: #f59e0b;
+    font-size: 0.75rem;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+
+/* ── Option devise : colonne compacte ───────────────────────── */
+.c-locale-switcher__option--currency {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+    padding: 0.55rem 0.3rem;
+    border-radius: 9px;
+    border: 1.5px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(255, 255, 255, 0.65);
+    font-family: var(--font-heading, "Plus Jakarta Sans", sans-serif);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    text-align: center;
+    min-width: 0;
+}
+
+.c-locale-switcher__option--currency .cur-symbol {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+}
+
+.c-locale-switcher__option--currency .cur-code {
+    font-size: 0.62rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.45);
+    letter-spacing: 0.05em;
+    line-height: 1;
+}
+
+.c-locale-switcher__option--currency:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.c-locale-switcher__option--currency.is-active {
     background: linear-gradient(135deg, #e07a5f, #f59e0b);
     border-color: transparent;
+    box-shadow: 0 4px 14px rgba(224, 122, 95, 0.45);
+    transform: translateY(-2px);
+}
+
+.c-locale-switcher__option--currency.is-active .cur-symbol,
+.c-locale-switcher__option--currency.is-active .cur-code {
     color: #fff;
-    font-weight: 800;
-    box-shadow: 0 4px 12px rgba(224, 122, 95, 0.4);
-    transform: translateY(-1px);
 }
 
 /* ── Divider ─────────────────────────────────────────────────── */
 .c-locale-switcher__divider {
     height: 1px;
     background: rgba(255, 255, 255, 0.07);
-    margin: 0.1rem 0 0.9rem 0;
+    margin: 0.15rem 0 0.85rem 0;
 }
 
 /* ── Bouton Appliquer ────────────────────────────────────────── */
@@ -174,30 +278,39 @@
     justify-content: center;
     gap: 0.4rem;
     width: 100%;
-    padding: 0.6rem;
+    padding: 0.65rem;
     background: linear-gradient(135deg, #e07a5f 0%, #f59e0b 100%);
     color: #fff;
     border: none;
     border-radius: 9px;
-    font-size: 0.82rem;
+    font-size: 0.84rem;
     font-weight: 800;
     cursor: pointer;
-    transition: opacity 0.2s, transform 0.15s;
+    transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
     font-family: var(--font-heading, "Plus Jakarta Sans", sans-serif);
-    margin-top: 0.15rem;
+    margin-top: 0.2rem;
     letter-spacing: 0.02em;
+    white-space: nowrap;
 }
 
 .c-locale-switcher__apply:hover {
     opacity: 0.9;
     transform: translateY(-1px);
-    box-shadow: 0 6px 16px rgba(224, 122, 95, 0.4);
+    box-shadow: 0 6px 18px rgba(224, 122, 95, 0.45);
 }
 
 /* ── Badge locale actuelle (visible dans le trigger) ─────────── */
 .c-locale-switcher__flag {
-    font-size: 1rem;
     line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.c-locale-switcher__flag .c-flag {
+    width: 20px;
+    height: 14px;
+    border-radius: 2.5px;
 }
 
 .c-locale-switcher__code {
@@ -216,36 +329,45 @@
     line-height: 1.4;
 }
 
-/* ── Mobile : navbar sombre sur mobile ───────────────────────── */
+/* ── Mobile ───────────────────────────────────────────────────── */
 @media (max-width: 992px) {
     .c-locale-switcher {
         order: -1;
     }
 
     .c-locale-switcher__trigger {
-        /* Sur mobile la navbar devient sombre */
-        background: rgba(255, 255, 255, 0.1);
-        border-color: rgba(255, 255, 255, 0.2);
-        color: #fff;
+        background: rgba(15, 23, 42, 0.08);
+        border-color: rgba(15, 23, 42, 0.18);
+        color: var(--clr-dark-900, #0f172a);
         padding: 0.35rem 0.6rem;
     }
 
     .c-locale-switcher__trigger:hover {
-        background: rgba(255, 255, 255, 0.18);
-        color: #fff;
+        background: rgba(224, 122, 95, 0.12);
+        color: var(--clr-terracotta-500, #e07a5f);
     }
 
     .c-locale-switcher__sep {
-        color: rgba(255, 255, 255, 0.3);
+        color: rgba(15, 23, 42, 0.3);
     }
 
     .c-locale-switcher__trigger .arrow {
-        color: rgba(255, 255, 255, 0.5);
+        color: rgba(15, 23, 42, 0.5);
     }
 
     .c-locale-switcher__dropdown {
-        right: auto;
-        left: 0;
-        min-width: 240px;
+        right: 0;
+        left: auto;
+        width: 280px;
+        max-width: calc(100vw - 1.5rem);
+    }
+
+    .c-locale-switcher__option--lang {
+        padding: 0.65rem 0.85rem;
+        font-size: 0.88rem;
+    }
+
+    .c-locale-switcher__option--lang .lang-flag {
+        font-size: 1.25rem;
     }
 }

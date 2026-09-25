@@ -864,8 +864,22 @@ h3, .heading-3 {
   font-size: 0.95rem;
 }
 
+/* ── Drapeaux de langue et pays (SVG) ────────────────────────── */
+.c-flag {
+  display: inline-block;
+  vertical-align: middle;
+  object-fit: cover;
+  border-radius: 2.5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  border: 0.5px solid rgba(255, 255, 255, 0.2);
+  flex-shrink: 0;
+  line-height: 1;
+}
+
 .c-footer__phone-flag {
-  font-size: 1.1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   line-height: 1;
 }
 

@@ -156,10 +156,31 @@
     text-overflow: ellipsis;
 }
 
+/* ── Drapeau SVG unifié ────────────────────────────────── */
+.c-flag {
+    display: inline-block;
+    vertical-align: middle;
+    object-fit: cover;
+    border-radius: 2.5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.28);
+    border: 0.5px solid rgba(255, 255, 255, 0.25);
+    flex-shrink: 0;
+    line-height: 1;
+}
+
 .c-locale-switcher__option--lang .lang-flag {
-    font-size: 1.1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     line-height: 1;
     flex-shrink: 0;
+}
+
+.c-locale-switcher__option--lang .lang-flag .c-flag {
+    width: 22px;
+    height: 15px;
+    border-radius: 3px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
 }
 
 .c-locale-switcher__option--lang .lang-name {
@@ -280,10 +301,16 @@
 
 /* ── Badge locale actuelle (visible dans le trigger) ─────────── */
 .c-locale-switcher__flag {
-    font-size: 1.15rem;
     line-height: 1;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
+}
+
+.c-locale-switcher__flag .c-flag {
+    width: 20px;
+    height: 14px;
+    border-radius: 2.5px;
 }
 
 .c-locale-switcher__code {

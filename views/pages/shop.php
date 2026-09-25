@@ -15,18 +15,18 @@
         <div style="display: flex; justify-content: center; gap: 0.5rem; margin-top: 1.25rem; flex-wrap: wrap;">
             <a href="<?= url('/shop?lang=fr') ?>" 
                class="c-button" 
-               style="text-decoration:none; padding: 0.45rem 1rem; border-radius: 30px; font-size: 0.85rem; font-weight: 700; border: 1px solid <?= \Core\Lang::getLocale() === 'fr' ? '#0284C7' : 'var(--clr-sand-300)' ?>; background: <?= \Core\Lang::getLocale() === 'fr' ? '#0284C7' : '#fff' ?>; color: <?= \Core\Lang::getLocale() === 'fr' ? '#fff' : 'var(--clr-dark-800)' ?>; box-shadow: var(--shadow-sm);">
-              🇫🇷 Français
+               style="text-decoration:none; padding: 0.45rem 1rem; border-radius: 30px; font-size: 0.85rem; font-weight: 700; border: 1px solid <?= \Core\Lang::getLocale() === 'fr' ? '#0284C7' : 'var(--clr-sand-300)' ?>; background: <?= \Core\Lang::getLocale() === 'fr' ? '#0284C7' : '#fff' ?>; color: <?= \Core\Lang::getLocale() === 'fr' ? '#fff' : 'var(--clr-dark-800)' ?>; box-shadow: var(--shadow-sm); display: inline-flex; align-items: center; gap: 6px;">
+              <?= \Core\Lang::flag('fr', 18, 13) ?> <span>Français</span>
             </a>
             <a href="<?= url('/shop?lang=en') ?>" 
                class="c-button" 
-               style="text-decoration:none; padding: 0.45rem 1rem; border-radius: 30px; font-size: 0.85rem; font-weight: 700; border: 1px solid <?= \Core\Lang::getLocale() === 'en' ? '#0284C7' : 'var(--clr-sand-300)' ?>; background: <?= \Core\Lang::getLocale() === 'en' ? '#0284C7' : '#fff' ?>; color: <?= \Core\Lang::getLocale() === 'en' ? '#fff' : 'var(--clr-dark-800)' ?>; box-shadow: var(--shadow-sm);">
-              🇬🇧 English
+               style="text-decoration:none; padding: 0.45rem 1rem; border-radius: 30px; font-size: 0.85rem; font-weight: 700; border: 1px solid <?= \Core\Lang::getLocale() === 'en' ? '#0284C7' : 'var(--clr-sand-300)' ?>; background: <?= \Core\Lang::getLocale() === 'en' ? '#0284C7' : '#fff' ?>; color: <?= \Core\Lang::getLocale() === 'en' ? '#fff' : 'var(--clr-dark-800)' ?>; box-shadow: var(--shadow-sm); display: inline-flex; align-items: center; gap: 6px;">
+              <?= \Core\Lang::flag('en', 18, 13) ?> <span>English</span>
             </a>
             <a href="<?= url('/shop?lang=ar') ?>" 
                class="c-button" 
-               style="text-decoration:none; padding: 0.45rem 1rem; border-radius: 30px; font-size: 0.85rem; font-weight: 700; border: 1px solid <?= \Core\Lang::getLocale() === 'ar' ? '#0284C7' : 'var(--clr-sand-300)' ?>; background: <?= \Core\Lang::getLocale() === 'ar' ? '#0284C7' : '#fff' ?>; color: <?= \Core\Lang::getLocale() === 'ar' ? '#fff' : 'var(--clr-dark-800)' ?>; box-shadow: var(--shadow-sm);">
-              🇹🇳 العربية
+               style="text-decoration:none; padding: 0.45rem 1rem; border-radius: 30px; font-size: 0.85rem; font-weight: 700; border: 1px solid <?= \Core\Lang::getLocale() === 'ar' ? '#0284C7' : 'var(--clr-sand-300)' ?>; background: <?= \Core\Lang::getLocale() === 'ar' ? '#0284C7' : '#fff' ?>; color: <?= \Core\Lang::getLocale() === 'ar' ? '#fff' : 'var(--clr-dark-800)' ?>; box-shadow: var(--shadow-sm); display: inline-flex; align-items: center; gap: 6px;">
+              <?= \Core\Lang::flag('ar', 18, 13) ?> <span>العربية</span>
             </a>
         </div>
     </div>

@@ -104,14 +104,51 @@ class Lang
         };
     }
 
-    /** Retourne le drapeau emoji d'une locale */
-    public static function flag(string $locale): string
+    /** Retourne l'URL du drapeau SVG */
+    public static function flagUrl(string $locale): string
     {
-        return match ($locale) {
+        $code = strtolower(trim($locale));
+        $flagFile = match ($code) {
+            'fr' => 'fr',
+            'en', 'gb' => 'en',
+            'ar', 'tn' => 'ar',
+            'ie' => 'ie',
+            default => 'fr',
+        };
+
+        if (function_exists('asset')) {
+            return asset('images/flags/' . $flagFile . '.svg');
+        }
+
+        return '/assets/images/flags/' . $flagFile . '.svg';
+    }
+
+    /** Retourne le balisage HTML complet de l'icône de drapeau */
+    public static function flag(string $locale, int $width = 20, int $height = 14): string
+    {
+        $code = strtolower(trim($locale));
+        $url = self::flagUrl($code);
+        $alt = strtoupper($code);
+
+        return sprintf(
+            '<img src="%s" alt="%s" class="c-flag" width="%d" height="%d" loading="lazy">',
+            htmlspecialchars($url, ENT_QUOTES, 'UTF-8'),
+            htmlspecialchars($alt, ENT_QUOTES, 'UTF-8'),
+            $width,
+            $height
+        );
+    }
+
+    /** Retourne le drapeau emoji (fallback) */
+    public static function flagEmoji(string $locale): string
+    {
+        return match (strtolower(trim($locale))) {
             'fr' => '🇫🇷',
-            'en' => '🇬🇧',
-            'ar' => '🇹🇳',
+            'en', 'gb' => '🇬🇧',
+            'ar', 'tn' => '🇹🇳',
+            'ie' => '🇮🇪',
             default => '🌐',
         };
     }
 }
+
