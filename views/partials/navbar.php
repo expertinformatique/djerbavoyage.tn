@@ -223,17 +223,11 @@ $_currentCurrency = \Core\Currency::getCurrency();
       <?php require __DIR__ . '/locale_switcher_mobile.php'; ?>
     </ul>
 
-    <!-- Groupe Actions : Sélecteur Locale Desktop + Bouton CTA (Desktop) + Toggle Burger Mobile -->
+    <!-- Groupe Actions : Sélecteur Locale Desktop + Toggle Burger Mobile -->
     <div class="c-navbar__actions">
 
       <!-- Sélecteur Langue + Devise Desktop -->
       <?php require __DIR__ . '/locale_switcher.php'; ?>
-
-      <button data-open-modal="personalizedPdfModal" class="c-navbar__cta">
-        <i class="fi fi-rr-star"></i>
-        <span class="cta-label-full"><?= __('nav.pdf_cta') ?> (<?= money(9.90) ?>)</span>
-        <span class="cta-label-short"><?= money(9.90) ?></span>
-      </button>
 
       <button class="c-navbar__toggle" id="mobileMenuToggle" aria-label="<?= __('nav.menu_label') ?>">
         <i class="fi fi-rr-menu-burger"></i>

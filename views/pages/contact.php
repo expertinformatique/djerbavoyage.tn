@@ -79,16 +79,15 @@
         </div>
       </div>
 
-      <div class="c-contact-info-card">
+      <div class="c-contact-info-card js-open-chat" role="button" tabindex="0">
         <div class="c-contact-info-icon-box c-contact-info-icon-box--emerald">
-          <i class="fi fi-rr-phone-call"></i>
+          <i class="fi fi-rr-comment-alt"></i>
         </div>
         <div>
-          <h3 class="c-contact-info-title"><?= __('contact.phone_title') ?></h3>
+          <h3 class="c-contact-info-title"><?= __('contact.ai_assistant_title', 'Concierge Virtuel IA') ?></h3>
           <p class="c-contact-info-text">
-            <a href="tel:+353896110430" class="c-contact-info-link">🇮🇪 +353 89 611 0430</a><br>
-            <a href="tel:+21622168875" class="c-contact-info-link">🇹🇳 +216 22 168 875</a><br>
-            <?= __('contact.phone_available') ?>
+            <?= __('contact.ai_assistant_desc', 'Conseils, devis et réservations instantanées 24/7.') ?><br>
+            <span class="c-contact-info-link"><?= __('contact.ai_assistant_btn', 'Démarrer une discussion') ?> &rarr;</span>
           </p>
         </div>
       </div>
@@ -101,7 +100,7 @@
           <h3 class="c-contact-info-title"><?= __('contact.hours_title') ?></h3>
           <p class="c-contact-info-text">
             <?= __('contact.hours_text') ?><br>
-            <?= __('contact.hours_whatsapp') ?>
+            <?= __('contact.hours_online', 'Assistance en ligne et Concierge IA 24h/24.') ?>
           </p>
         </div>
       </div>

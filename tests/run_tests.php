@@ -212,7 +212,22 @@ $sqlitePdo->exec("
         role TEXT DEFAULT 'admin',
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
+    CREATE TABLE IF NOT EXISTS chat_conversations (
+        id TEXT PRIMARY KEY,
+        session_id TEXT NOT NULL,
+        client_name TEXT,
+        client_email TEXT,
+        client_phone TEXT,
+        client_company TEXT,
+        detected_need TEXT,
+        summary TEXT,
+        messages_json TEXT NOT NULL,
+        ip_hash TEXT NOT NULL,
+        status TEXT DEFAULT 'active',
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
 ");
+
 
 // Données initiales pour les tests
 $sqlitePdo->exec("INSERT INTO products (id, slug, title_fr, price_eur, file_path) VALUES (1, 'guide-test', 'Guide Test', 9.90, 'storage/downloads/test.pdf')");

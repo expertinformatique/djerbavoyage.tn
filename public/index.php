@@ -127,8 +127,15 @@ $aiLeadRepo = new PdoAiLeadRepository($pdo);
 $aiLeadService = new AiLeadService($aiLeadRepo, $smtpMailerService, $spamService);
 $contactRepo = new PdoContactRepository($pdo);
 $contactService = new ContactService($contactRepo, $smtpMailerService, $spamService);
+$chatRepo = new \App\Repositories\PdoChatConversationRepository($pdo);
+$googleAi = new \App\Services\GoogleAiService();
+$chatKnowledge = new \App\Services\ChatKnowledgeService($googleAi);
+$chatController = new \App\Controllers\ChatBotController($chatRepo, $chatKnowledge, $smtpMailerService, $spamService);
 
 // 2. Liaisons Repositories (DI Container)
+$container->bind(\App\Interfaces\ChatConversationRepositoryInterface::class, fn() => $chatRepo);
+$container->bind(\App\Services\ChatKnowledgeService::class, fn() => $chatKnowledge);
+$container->bind(\App\Controllers\ChatBotController::class, fn() => $chatController);
 $container->bind(ArticleRepositoryInterface::class, fn() => new PdoArticleRepository($pdo));
 $container->bind(OrderRepositoryInterface::class, fn() => new PdoOrderRepository($pdo));
 $container->bind(ProductRepositoryInterface::class, fn() => new PdoProductRepository($pdo));
@@ -204,6 +211,8 @@ $router->get('/pdf/preview', [App\Controllers\PersonalizedPdfController::class, 
 $router->post('/api/pdf/personalized-order', [App\Controllers\PersonalizedPdfController::class, 'submitOrder']);
 $router->get('/api/auto-blog/generate', [App\Controllers\AutoBlogController::class, 'generate']);
 $router->post('/api/auto-blog/generate', [App\Controllers\AutoBlogController::class, 'generate']);
+$router->post('/api/chat', [App\Controllers\ChatBotController::class, 'handleEndpoint']);
+$router->post('/api/chat.php', [App\Controllers\ChatBotController::class, 'handleEndpoint']);
 
 // SEO & Indexation Routes
 $router->get('/sitemap.xml', [App\Controllers\SitemapController::class, 'sitemap']);

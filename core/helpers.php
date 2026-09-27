@@ -74,7 +74,11 @@ if (!function_exists('e')) {
  * Usage : __('nav.home') ou __('hello.name', ['name' => 'Ahmed'])
  */
 if (!function_exists('__')) {
-    function __(string $key, array $replace = []): string {
+    function __(string $key, array|string $replace = []): string {
+        if (is_string($replace)) {
+            $translated = \Core\Lang::t($key);
+            return ($translated === $key && $replace !== '') ? $replace : $translated;
+        }
         return \Core\Lang::t($key, $replace);
     }
 }

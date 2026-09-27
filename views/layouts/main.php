@@ -123,6 +123,7 @@
   <link rel="stylesheet" href="<?= asset('css/components/contact.css') ?>">
   <link rel="stylesheet" href="<?= asset('css/components/personalized-pdf-editor.css') ?>">
   <link rel="stylesheet" href="<?= asset('css/components/locale-switcher.css') ?>">
+  <link rel="stylesheet" href="<?= asset('css/components/chat-bot.css') ?>">
 <?php if (\Core\Lang::isRtl()): ?>
   <link rel="stylesheet" href="<?= asset('css/rtl.css') ?>">
 <?php endif; ?>
@@ -153,7 +154,6 @@
         "logo": "<?= e($baseUrl) ?>/assets/images/logo-djerba-voyage-guide-officiel.png",
         "image": "<?= e($baseUrl) ?>/assets/images/hero.png",
         "description": "Plateforme indépendante de voyage et conciergerie à Djerba : réservation d'excursions, quads, kitesurf, sorties bateau et guides personnalisés.",
-        "telephone": "+216 98 000 000",
         "priceRange": "€€",
         "knowsLanguage": ["fr", "en", "ar"],
         "address": {
@@ -224,20 +224,7 @@
           <li><a href="<?= url('/avis') ?>" class="c-footer__link"><?= __('footer.reviews') ?></a></li>
           <li><a href="<?= url('/faq') ?>" class="c-footer__link"><?= __('footer.faq') ?></a></li>
           <li><a href="<?= url('/newsletter') ?>" class="c-footer__link"><?= __('footer.newsletter') ?></a></li>
-          <li class="c-footer__phone-item">
-            <a href="tel:+353896110430" class="c-footer__phone-link" aria-label="Appeler Irlande +353 89 611 0430">
-              <i class="fi fi-rr-phone-call c-footer__phone-icon"></i>
-              <span class="c-footer__phone-flag"><?= \Core\Lang::flag('ie', 18, 12) ?></span>
-              <span class="c-footer__phone-num">+353 89 611 0430</span>
-            </a>
-          </li>
-          <li class="c-footer__phone-item">
-            <a href="tel:+21622168875" class="c-footer__phone-link" aria-label="Appeler Tunisie +216 22 168 875">
-              <i class="fi fi-rr-phone-call c-footer__phone-icon"></i>
-              <span class="c-footer__phone-flag"><?= \Core\Lang::flag('tn', 18, 12) ?></span>
-              <span class="c-footer__phone-num">+216 22 168 875</span>
-            </a>
-          </li>
+          <li><a href="#" class="c-footer__link js-open-chat"><i class="fi fi-rr-comment-alt"></i> <?= __('footer.ai_concierge', 'Concierge IA 24/7') ?></a></li>
         </ul>
       </div>
 
@@ -258,6 +245,7 @@
 
   <?php require __DIR__ . '/../partials/personalized_pdf_modal.php'; ?>
   <?php require __DIR__ . '/../partials/booking_hotels_modal.php'; ?>
+  <?php require __DIR__ . '/../partials/chat-bot.php'; ?>
 
   <script type="module" src="<?= asset('js/main.js') ?>"></script>
 </body>
